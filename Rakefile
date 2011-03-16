@@ -1,8 +1,14 @@
-require 'rubygems'
 require 'rake/gempackagetask'
+require 'rake/testtask'
+require 'rubygems'
 
 task :clean do
   rm_rf 'pkg'
+end
+
+Rake::TestTask.new(:test) do |test|
+    test.libs << 'lib' << 'tests'
+    test.pattern = 'tests/**/ts_*.rb'
 end
 
 # Gem stuff

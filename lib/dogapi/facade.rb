@@ -22,10 +22,10 @@ module Dogapi
       @device = device
 
       @metric_svc = Dogapi::MetricService.new(@datadog_host)
-      #@event_svc = EventService.new(@datadog_host)
+      @event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
-    def emit_point(metric, value, options)
+    def emit_point(metric, value, options={})
       defaults = {:timestamp => Time.now, :host => nil, :device => nil}
       options = defaults.merge(options)
 
@@ -35,7 +35,7 @@ module Dogapi
                        :device => options[:device]
     end
 
-    def emit_points(metric, points, options)
+    def emit_points(metric, points, options={})
       defaults = {:host => nil, :device => nil}
       options = defaults.merge(options)
 
@@ -47,6 +47,15 @@ module Dogapi
       end
 
       @metric_svc.submit @api_key, scope, metric, points
+    end
+
+    def emit_event(event, options={})
+      defaults = {:host => nil, :device => nil, :source_type => nil}
+      options = defaults.merge(options)
+
+      scope = override_scope options[:host], options[:device]
+
+      @event_svc.submit(@api_key, event, scope, options[:source_type])
     end
 
     private

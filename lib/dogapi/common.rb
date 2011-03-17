@@ -65,7 +65,6 @@ module Dogapi
         end
 
         if resp_obj.has_key? 'error'
-          params[:series] = JSON.parse(params[:series])
           request_string = params.pretty_inspect
           error_string = resp_obj['error']
           raise "Failed request\n#{request_string}#{error_string}"

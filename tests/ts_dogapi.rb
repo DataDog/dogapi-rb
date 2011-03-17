@@ -60,8 +60,11 @@ class TestClient < Test::Unit::TestCase
                     [[Time.now - 60, 10], [Time.now - 30, 20], [Time.now, 30]],
                     :host => 'test.dogclient.fake',
                     :device => 'eth0'
-#    my_event = Event.new('Testing Event API')
-#    dog.emit_event my_event, 'test.dogclient.fake', 'eth0'
+
+    my_event = Dogapi::Event.new('Testing Event API')
+    dog.emit_event my_event,
+      :host => 'test.dogclient.fake',
+      :device => 'eth0'
 #
 #    my_event = Event.new('Testing Event API with a duration')
 #    event_id = dog.start_event my_event, 'test.dogclient.fake', 'eth0'

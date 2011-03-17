@@ -22,17 +22,10 @@ module Dogapi
   end
 
   class Scope
+    attr_reader :host, :device
     def initialize(host=nil, device=nil)
       @host = host
       @device = device
-    end
-
-    def host
-      @host
-    end
-
-    def device
-      @device
     end
   end
 

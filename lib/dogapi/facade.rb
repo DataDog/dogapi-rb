@@ -58,6 +58,17 @@ module Dogapi
       @event_svc.submit(@api_key, event, scope, options[:source_type])
     end
 
+    def start_event(event, options={})
+      defaults = {:host => nil, :device => nil, :source_type => nil}
+      options = defaults.merge(options)
+
+      scope = override_scope options[:host], options[:device]
+
+      @event_svc.start(@api_key, event, scope, options[:source_type]) do
+        yield
+    end
+    end
+
     private
 
     def override_scope(host, device)

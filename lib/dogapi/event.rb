@@ -68,5 +68,30 @@ module Dogapi
 
       request Net::HTTP::Post, '/event/submit', params
     end
+
+    def start(api_key, event, scope, source_type=nil)
+      result = submit api_key, event, scope, source_type
+      success = nil
+
+      begin
+        yield result
+      rescue
+        success = false
+        raise
+      else
+        success = true
+      ensure
+        finish api_key, result['id'], success
+      end
+    end
+
+    def finish(api_key, event_id, successful=nil)
+      params = {
+        :api_key => api_key,
+        :event_id => event_id
+      }
+
+      return request Net::HTTP::Post, '/event/ended', params
+    end
   end
 end

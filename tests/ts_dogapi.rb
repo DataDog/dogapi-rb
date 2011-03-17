@@ -65,10 +65,10 @@ class TestClient < Test::Unit::TestCase
     dog.emit_event my_event,
       :host => 'test.dogclient.fake',
       :device => 'eth0'
-#
-#    my_event = Event.new('Testing Event API with a duration')
-#    event_id = dog.start_event my_event, 'test.dogclient.fake', 'eth0'
-#    sleep 1
-#    dog.end_event event_id
+
+    my_event = Dogapi::Event.new('Testing Event API with a duration')
+    dog.start_event(my_event, :host =>'test.dogclient.fake', :device => 'eth0') do
+      sleep 1
+    end
   end
 end

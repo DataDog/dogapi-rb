@@ -9,18 +9,7 @@ require 'json'
 
 module Dogapi
 
-  def Dogapi.find_datadog_host
-    ENV['DATADOG_HOST'] rescue nil
-  end
-
-  def Dogapi.find_api_key
-    ENV['DATADOG_KEY'] rescue nil
-  end
-
-  def Dogapi.find_localhost
-    Socket.gethostname
-  end
-
+  # Metadata class to hold the scope of an API call
   class Scope
     attr_reader :host, :device
     def initialize(host=nil, device=nil)
@@ -29,11 +18,13 @@ module Dogapi
     end
   end
 
+  # Superclass that deals with the details of communicating with the DataDog API
   class Service
     def initialize(api_host=find_datadog_host)
       @host = api_host
     end
 
+    # Manages the HTTP connection
     def connect(api_key=nil, host=nil)
 
       @api_key = api_key
@@ -48,6 +39,11 @@ module Dogapi
       end
     end
 
+    # Prepares the request and handles the response
+    #
+    # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)
+    #
+    # +params+ is a Hash that will be converted to request parameters
     def request(method, url, params)
       if !params.has_key? :api_key
         params[:api_key] = @api_key
@@ -72,5 +68,19 @@ module Dogapi
       end
       resp_obj
     end
+  end
+
+  private
+
+  def Dogapi.find_datadog_host
+    ENV['DATADOG_HOST'] rescue nil
+  end
+
+  def Dogapi.find_api_key
+    ENV['DATADOG_KEY'] rescue nil
+  end
+
+  def Dogapi.find_localhost
+    Socket.gethostname
   end
 end

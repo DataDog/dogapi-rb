@@ -3,8 +3,12 @@ require 'dogapi/metric'
 
 module Dogapi
 
+  # A simple DogAPI client
+  #
+  # See Dogapi::EventService and Dogapi::MetricService for the thick underlying clients
   class Client
 
+    # Create a new Client optionally specifying a default host and device
     def initialize(api_key, host=nil, device=nil)
 
       if api_key
@@ -25,6 +29,12 @@ module Dogapi
       @event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
+    # Record a single point of metric data
+    #
+    # Optional arguments:
+    #  :timestamp => Ruby stdlib Time
+    #  :host      => String
+    #  :device    => String
     def emit_point(metric, value, options={})
       defaults = {:timestamp => Time.now, :host => nil, :device => nil}
       options = defaults.merge(options)
@@ -35,6 +45,13 @@ module Dogapi
                        :device => options[:device]
     end
 
+    # Record a set of points of metric data
+    #
+    # +points+ is an array of <tt>[Time, value]</tt> doubles
+    #
+    # Optional arguments:
+    #  :host   => String
+    #  :device => String
     def emit_points(metric, points, options={})
       defaults = {:host => nil, :device => nil}
       options = defaults.merge(options)
@@ -49,6 +66,14 @@ module Dogapi
       @metric_svc.submit @api_key, scope, metric, points
     end
 
+    # Record an event with no duration
+    #
+    # If <tt>:source_type</tt> is unset, a generic "system" event will be reported
+    #
+    # Optional arguments:
+    #  :host        => String
+    #  :device      => String
+    #  :source_type => String
     def emit_event(event, options={})
       defaults = {:host => nil, :device => nil, :source_type => nil}
       options = defaults.merge(options)
@@ -58,6 +83,18 @@ module Dogapi
       @event_svc.submit(@api_key, event, scope, options[:source_type])
     end
 
+    # Record an event with a duration
+    #
+    # 0. The start time is recorded immediately
+    # 0. The given block is executed
+    # 0. The end time is recorded once the block completes execution
+    #
+    # If <tt>:source_type</tt> is unset, a generic "system" event will be reported
+    #
+    # Optional arguments:
+    #  :host        => String
+    #  :device      => String
+    #  :source_type => String
     def start_event(event, options={})
       defaults = {:host => nil, :device => nil, :source_type => nil}
       options = defaults.merge(options)
@@ -66,7 +103,7 @@ module Dogapi
 
       @event_svc.start(@api_key, event, scope, options[:source_type]) do
         yield
-    end
+      end
     end
 
     private
@@ -84,9 +121,5 @@ module Dogapi
       end
       Scope.new(h, d)
     end
-  end
-
-  def Dogapi.init(api_key, host=nil, device=nil)
-    Client.new(api_key, host, device)
   end
 end

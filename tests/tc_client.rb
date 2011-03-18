@@ -22,7 +22,7 @@ class TestClient < Test::Unit::TestCase
   end
 
   def test_simple_client
-    dog = Dogapi.init(@api_key)
+    dog = Dogapi::Client.new(@api_key)
 
     dog.emit_point 'test.dogclient.emit_point',
                    999,

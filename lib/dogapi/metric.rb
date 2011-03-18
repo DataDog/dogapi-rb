@@ -9,6 +9,7 @@ module Dogapi
 
     API_VERSION = "1.0.0"
 
+    # Records some number of points for a given metric
     def submit(api_key, scope, metric, points)
       series = [{
         :host    =>  scope.host,

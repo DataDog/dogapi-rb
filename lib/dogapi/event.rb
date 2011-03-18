@@ -5,6 +5,7 @@ require 'json'
 
 module Dogapi
 
+  # Metadata class for storing the details of an event
   class Event
     attr_reader :metric,
       :date_detected,
@@ -16,6 +17,15 @@ module Dogapi
       :msg_text,
       :json_payload
 
+  # Optional arguments:
+  #  :metric        => String
+  #  :date_detected => time in seconds since the epoch (defaults to now)
+  #  :date_happened => time in seconds since the epoch (defaults to now)
+  #  :alert_type    => String
+  #  :event_type    => String
+  #  :event_object  => String
+  #  :msg_title     => String
+  #  :json_payload  => String
     def initialize(msg_text, options={})
       defaults = {
         :metric => '',
@@ -41,12 +51,17 @@ module Dogapi
     end
   end
 
+  # Event-specific client affording more granular control than the simple Dogapi::Client
   class EventService < Dogapi::Service
 
+    API_VERSION = "1.0.0"
+
+    # Records an Event with no duration
     def submit(api_key, event, scope=nil, source_type=nil)
       scope = scope || Dogapi::Scope.new()
       params = {
         :api_key => api_key,
+        :api_version  =>  API_VERSION,
 
         :host =>    scope.host,
         :device =>  scope.device,
@@ -69,21 +84,28 @@ module Dogapi
       request Net::HTTP::Post, '/event/submit', params
     end
 
+    # Manages recording an event with a duration
+    #
+    # 0. The start time is recorded immediately
+    # 0. The given block is executed with access to the response of the start request
+    # 0. The end time is recorded once the block completes execution
     def start(api_key, event, scope, source_type=nil)
-      result = submit api_key, event, scope, source_type
+      response = submit api_key, event, scope, source_type
       success = nil
 
       begin
-        yield result
+        yield response
       rescue
         success = false
         raise
       else
         success = true
       ensure
-        return finish api_key, result['id'], success
+        return finish api_key, response['id'], success
       end
     end
+
+    private
 
     def finish(api_key, event_id, successful=nil)
       params = {

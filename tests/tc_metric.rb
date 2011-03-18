@@ -7,7 +7,7 @@ class TestEnvironment < Test::Unit::TestCase
   def config_client_test_env
     @api_key = Dogapi.find_api_key
     if !@api_key
-      @api_key = 'apikey_3'
+      @api_key = 'apikey_2'
       ENV['DATADOG_KEY'] = @api_key
     end
 

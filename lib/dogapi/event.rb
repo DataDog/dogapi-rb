@@ -81,7 +81,7 @@ module Dogapi
       else
         success = true
       ensure
-        finish api_key, result['id'], success
+        return finish api_key, result['id'], success
       end
     end
 
@@ -91,7 +91,7 @@ module Dogapi
         :event_id => event_id
       }
 
-      return request Net::HTTP::Post, '/event/ended', params
+      request Net::HTTP::Post, '/event/ended', params
     end
   end
 end

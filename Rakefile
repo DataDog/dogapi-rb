@@ -26,6 +26,8 @@ spec = Gem::Specification.new do |s|
   s.has_rdoc = true
   #s.extra_rdoc_files = ["README"]
   s.license = 'BSD'
+
+  s.add_dependency 'json', '>=1.5.1'
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

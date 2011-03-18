@@ -44,7 +44,7 @@ module Dogapi
   class EventService < Dogapi::Service
 
     def submit(api_key, event, scope=nil, source_type=nil)
-      scope = scope or Dogapi::Scope.new()
+      scope = scope || Dogapi::Scope.new()
       params = {
         :api_key => api_key,
 

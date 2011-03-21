@@ -14,7 +14,7 @@ end
 prog = File.basename(__FILE__)
 help = "usage: #{prog} [options] /path/to/local_git_dir"
 options = {}
-p = OptionParser.new do |opts|
+OptionParser.new do |opts|
   opts.banner = help
   opts.on('-t', '--target [target]', 'Host to post events to') do |v|
     options[:target] = v

@@ -14,7 +14,7 @@ Available at: https://github.com/DataDog/dogapi-rb
 
 == RubyGems
 
-Gem page: ???
+Gem page: https://rubygems.org/gems/dogapi
 
  $ gem install dogapi
 

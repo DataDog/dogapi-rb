@@ -2,6 +2,7 @@
 # if there were new changes pulled down. Useful for setups that use git as
 # their deployment mechanism, so you know when new code has been released.
 
+require 'rubygems'
 require 'dogapi'
 require 'optparse'
 

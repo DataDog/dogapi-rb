@@ -1,5 +1,6 @@
 # An example of how to submit long-running events.
 
+require 'rubygems'
 require 'dogapi'
 require 'optparse'
 

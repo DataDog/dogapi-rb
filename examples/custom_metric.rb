@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'dogapi'
 
 # TODO: remove explicit devices after fixing N/A issues

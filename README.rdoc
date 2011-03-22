@@ -10,7 +10,7 @@ Available at: https://github.com/DataDog/dogapi-rb
 
  $ cd dogapi-rb
  $ rake gem
- $ gem install pkg/dogapi-1.0.0.gem
+ $ gem install pkg/dogapi-*.gem
 
 == RubyGems
 
@@ -26,6 +26,7 @@ The client expects the +DATADOG_HOST+ environment variable to be set to the host
 
 Minimal example:
 
+ require 'rubygems'
  require 'dogapi'
  
  dog = Dogapi::Client.new(@api_key)

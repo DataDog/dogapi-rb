@@ -2,7 +2,7 @@ require 'test/unit'
 require 'time'
 require 'dogapi'
 
-class TestEnvironment < Test::Unit::TestCase
+class TestMetricClient < Test::Unit::TestCase
 
   def config_client_test_env
     @api_key = Dogapi.find_api_key

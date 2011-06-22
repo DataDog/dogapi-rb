@@ -39,7 +39,6 @@ class TestEventClient < Test::Unit::TestCase
   end
 
   def test_submit_event
-    submit_event(Dogapi::Scope.new('typed-testhost', 'testdevice'), 'Nagios')
     submit_event(Dogapi::Scope.new('typed-testhost', 'testdevice'), 'GitHub')
   end
 

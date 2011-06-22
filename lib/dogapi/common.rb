@@ -1,5 +1,5 @@
 require 'cgi'
-require 'net/http'
+require 'net/https'
 require 'pp'
 require 'socket'
 require 'uri'
@@ -31,10 +31,12 @@ module Dogapi
       host = host || @host
 
       uri = URI.parse(host)
-      Net::HTTP.start(uri.host, uri.port) do |conn|
-        if 'https' == uri.scheme
-          conn.use_ssl = true
-        end
+      session = Net::HTTP.new(uri.host, uri.port)
+      if 'https' == uri.scheme
+        session.use_ssl = true
+        session.verify_mode = OpenSSL::SSL::VERIFY_PEER
+      end
+      session.start do |conn|
         yield(conn)
       end
     end

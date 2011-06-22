@@ -35,6 +35,9 @@ module Dogapi
       if 'https' == uri.scheme
         session.use_ssl = true
         session.verify_mode = OpenSSL::SSL::VERIFY_PEER
+        if File.directory? '/etc/ssl/certs'
+          session.ca_path = '/etc/ssl/certs'
+        end
       end
       session.start do |conn|
         yield(conn)

@@ -20,7 +20,7 @@ end
 # Gem stuff
 spec = Gem::Specification.new do |s|
   s.name = 'dogapi'
-  s.version = '1.0.2'
+  s.version = '1.0.3'
   s.author = 'Datadog, Inc.'
   s.email = 'packages@datadoghq.com'
   s.homepage = 'http://datadoghq.com/'

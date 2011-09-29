@@ -78,7 +78,7 @@ module Dogapi
   private
 
   def Dogapi.find_datadog_host
-    ENV['DATADOG_HOST'] rescue nil
+    ENV['DATADOG_HOST'] rescue "app.datadoghq.com"
   end
 
   def Dogapi.find_api_key

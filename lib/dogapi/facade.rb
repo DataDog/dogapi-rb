@@ -18,9 +18,6 @@ module Dogapi
       end
 
       @datadog_host = Dogapi.find_datadog_host()
-      if !@datadog_host
-        raise 'DATADOG_HOST env variable not set'
-      end
 
       @host = host
       @device = device

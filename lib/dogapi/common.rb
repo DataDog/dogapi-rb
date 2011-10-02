@@ -20,17 +20,14 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class Service
-    def initialize(api_host=find_datadog_host)
+    def initialize(api_key, api_host=Dogapi.find_datadog_host)
+      @api_key = api_key
       @host = api_host
     end
 
     # Manages the HTTP connection
-    def connect(api_key=nil, host=nil)
-
-      @api_key = api_key
-      host = host || @host
-
-      uri = URI.parse(host)
+    def connect
+      uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
         session.use_ssl = true
@@ -75,14 +72,9 @@ module Dogapi
     end
   end
 
-  private
-
   def Dogapi.find_datadog_host
-    ENV['DATADOG_HOST'] rescue "app.datadoghq.com"
-  end
-
-  def Dogapi.find_api_key
-    ENV['DATADOG_KEY'] rescue nil
+    # allow env-based overriding, useful for tests
+    ENV["DATADOG_HOST"] || "https://app.datadoghq.com"
   end
 
   def Dogapi.find_localhost

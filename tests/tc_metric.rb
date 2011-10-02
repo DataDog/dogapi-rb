@@ -5,17 +5,7 @@ require 'dogapi'
 class TestMetricClient < Test::Unit::TestCase
 
   def config_client_test_env
-    @api_key = Dogapi.find_api_key
-    if !@api_key
-      @api_key = 'apikey_2'
-      ENV['DATADOG_KEY'] = @api_key
-    end
-
-    @host = Dogapi.find_datadog_host
-    if !@host
-      @host = 'localhost:5000'
-      ENV['DATADOG_HOST'] = @host
-    end
+    @api_key = 'apikey_2'
   end
 
   def setup
@@ -34,14 +24,6 @@ class TestMetricClient < Test::Unit::TestCase
     ]
     res = metric_service.submit(@api_key, scope, metric, points)
     assert_equal(res['status'], 'ok')
-    assert_equal(res['results'].size, 1)
-    r = res['results'][0]
-    assert_equal(r['host'], scope.host)
-    if scope.device
-      assert_equal(r['device'], scope.device)
-    end
-    assert_equal(r['metric'], metric)
-    assert_equal(r['length'], points.size)
   end
 
 end

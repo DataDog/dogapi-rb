@@ -8,15 +8,15 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 Available at: https://github.com/DataDog/dogapi-rb
 
- $ cd dogapi-rb
- $ rake gem
- $ gem install pkg/dogapi-*.gem
+    $ cd dogapi-rb
+    $ rake gem
+    $ gem install pkg/dogapi-*.gem
 
 ## RubyGems
 
 Gem page: https://rubygems.org/gems/dogapi
 
- $ gem install dogapi
+    $ gem install dogapi
 
 # Usage
 

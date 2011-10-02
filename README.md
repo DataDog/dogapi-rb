@@ -2,9 +2,9 @@ Ruby client for Datadog API v1.0.3
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
-= Installation
+# Installation
 
-== Source
+## Source
 
 Available at: https://github.com/DataDog/dogapi-rb
 
@@ -12,21 +12,21 @@ Available at: https://github.com/DataDog/dogapi-rb
  $ rake gem
  $ gem install pkg/dogapi-*.gem
 
-== RubyGems
+## RubyGems
 
 Gem page: https://rubygems.org/gems/dogapi
 
  $ gem install dogapi
 
-= Usage
+# Usage
 
-== How to find your API Key
+## How to find your API Key
 
 Go to [https://app.datadoghq.com/account/setup](your setup page).
 
-== Submit an event to Datadog
+## Submit an event to Datadog
 
-=== If the event has no duration
+### If the event has no duration
 
 ```ruby
 require 'rubygems'
@@ -39,7 +39,7 @@ dog = Dogapi::Client.new(api_key)
 dog.emit_event(Dogapi::Event.new('Testing done, FTW'), host => "my_host")
 ```
 
-=== If the event has a duration
+### If the event has a duration
 
 ```ruby
 require 'rubygems'
@@ -53,10 +53,10 @@ dog.start_event(Dogapi::Event.new('My event with a duration'), host => "my_host"
   # do your work here...
   # e.g. sleep 1
 end
-# stop_event will be sent automatically
+  # stop_event will be sent automatically
 ```
 
-== Submit a metric to Datadog
+## Submit a metric to Datadog
 
 You want to track a new metric called `some.metric.name` and have just sampled it from `my_device` on `my_host`.
 Its value is 50. Here is how you submit the value to Datadog.

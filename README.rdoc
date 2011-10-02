@@ -28,7 +28,7 @@ Go to [https://app.datadoghq.com/account/setup](your setup page).
 
 === If the event has no duration
 
-``` ruby
+```ruby
 require 'rubygems'
 require 'dogapi'
 
@@ -41,7 +41,7 @@ dog.emit_event(Dogapi::Event.new('Testing done, FTW'), host => "my_host")
 
 === If the event has a duration
 
-``` ruby
+```ruby
 require 'rubygems'
 require 'dogapi'
 
@@ -61,7 +61,7 @@ end
 You want to track a new metric called `some.metric.name` and have just sampled it from `my_device` on `my_host`.
 Its value is 50. Here is how you submit the value to Datadog.
 
-``` ruby
+```ruby
 require 'rubygems'
 require 'dogapi'
 
@@ -76,7 +76,7 @@ Let us now assume that you have sampled the metric multiple times and you would 
 You can use the `emit_points` method (instead of `emit_point`). Since you are submitting more than one
 data point you will need to pass a list of `Time`, `float` pairs, instead of a simple `float` value.
 
-``` ruby
+```ruby
 require 'rubygems'
 require 'dogapi'
 

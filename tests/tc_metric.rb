@@ -23,16 +23,7 @@ class TestMetricClient < Test::Unit::TestCase
       [Time.now,    8.0]
     ]
     res = metric_service.submit(@api_key, scope, metric, points)
-    puts res
     assert_equal(res['status'], 'ok')
-    assert_equal(res['results'].size, 1, "Results #{res}")
-    r = res['results'][0]
-    assert_equal(r['host'], scope.host)
-    if scope.device
-      assert_equal(r['device'], scope.device)
-    end
-    assert_equal(r['metric'], metric)
-    assert_equal(r['length'], points.size)
   end
 
 end

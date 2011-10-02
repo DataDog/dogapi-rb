@@ -1,10 +1,10 @@
-Ruby client for Datadog API v1.0.3
+# Ruby client for Datadog API v1.0.3
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
 # Installation
 
-## Source
+## From Source
 
 Available at: https://github.com/DataDog/dogapi-rb
 
@@ -12,7 +12,7 @@ Available at: https://github.com/DataDog/dogapi-rb
     $ rake gem
     $ gem install pkg/dogapi-*.gem
 
-## RubyGems
+## Using RubyGems
 
 Gem page: https://rubygems.org/gems/dogapi
 
@@ -23,6 +23,14 @@ Gem page: https://rubygems.org/gems/dogapi
 ## How to find your API Key
 
 Go to [https://app.datadoghq.com/account/settings](your setup page).
+
+## A word about hosts and devices
+
+Events and metric data points can be attached to hosts
+to take advantage of automatic tagging with the host's tags.
+
+If you want to attach events and points to a specific device
+on a host, simply specify the device when calling emit functions.
 
 ## Submit an event to Datadog
 

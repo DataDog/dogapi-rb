@@ -22,7 +22,7 @@ Gem page: https://rubygems.org/gems/dogapi
 
 ## How to find your API Key
 
-Go to [https://app.datadoghq.com/account/setup](your setup page).
+Go to [https://app.datadoghq.com/account/settings](your setup page).
 
 ## Submit an event to Datadog
 

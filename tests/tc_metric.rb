@@ -5,7 +5,7 @@ require 'dogapi'
 class TestMetricClient < Test::Unit::TestCase
 
   def config_client_test_env
-    @api_key = 'apikey_2'
+    @api_key = ENV['DATADOG_KEY']
   end
 
   def setup

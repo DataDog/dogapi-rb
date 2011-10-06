@@ -2,6 +2,12 @@
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
+# What is new?
+
+## v1.1.0
+
+* You do not need to use environment variables anymore to use the client.
+
 # Installation
 
 ## From Source

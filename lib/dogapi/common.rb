@@ -31,10 +31,10 @@ module Dogapi
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
         session.use_ssl = true
-        session.verify_mode = OpenSSL::SSL::VERIFY_PEER
-        if File.directory? '/etc/ssl/certs'
-          session.ca_path = '/etc/ssl/certs'
-        end
+        # FIXME - turn off SSL verification for now until we can spend
+        # some time figuring out how to find certs across platforms.
+        # - matt 10/06/2011
+        session.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       session.start do |conn|
         yield(conn)

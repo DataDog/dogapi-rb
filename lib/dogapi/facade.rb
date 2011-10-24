@@ -1,5 +1,5 @@
 require 'time'
-require 'dogapi/metric'
+require 'dogapi/v1'
 
 module Dogapi
 
@@ -9,7 +9,7 @@ module Dogapi
   class Client
 
     # Create a new Client optionally specifying a default host and device
-    def initialize(api_key, host=nil, device=nil)
+    def initialize(api_key, application_key=nil, host=nil, device=nil)
 
       if api_key
         @api_key = api_key
@@ -17,13 +17,16 @@ module Dogapi
         raise 'Please provide an API key to submit your data'
       end
 
+      @application_key = application_key
+
       @datadog_host = Dogapi.find_datadog_host()
 
       @host = host
       @device = device
 
-      @metric_svc = Dogapi::MetricService.new(@datadog_host)
-      @event_svc = Dogapi::EventService.new(@datadog_host)
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key)
+      @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
     # Record a single point of metric data
@@ -36,10 +39,10 @@ module Dogapi
       defaults = {:timestamp => Time.now, :host => nil, :device => nil}
       options = defaults.merge(options)
 
-      self.emit_points metric,
+      self.emit_points(metric,
                        [[options[:timestamp], value]],
                        :host => options[:host],
-                       :device => options[:device]
+                       :device => options[:device])
     end
 
     # Record a set of points of metric data
@@ -60,45 +63,31 @@ module Dogapi
         p[1].to_f # TODO: stupid to_f will never raise and exception
       end
 
-      @metric_svc.submit @api_key, scope, metric, points
+      @metric_svc.submit(metric, points, scope)
     end
 
-    # Record an event with no duration
-    #
-    # If <tt>:source_type</tt> is unset, a generic "system" event will be reported
+    # Record an event
     #
     # Optional arguments:
     #  :host        => String
     #  :device      => String
-    #  :source_type => String
     def emit_event(event, options={})
-      defaults = {:host => nil, :device => nil, :source_type => nil}
+      defaults = {:host => nil, :device => nil}
       options = defaults.merge(options)
 
-      scope = override_scope options[:host], options[:device]
+      scope = override_scope(options[:host], options[:device])
 
-      @event_svc.submit(@api_key, event, scope, options[:source_type])
+      @event_svc.submit(event, scope)
     end
 
-    # Record an event with a duration
-    #
-    # 0. The start time is recorded immediately
-    # 0. The given block is executed
-    # 0. The end time is recorded once the block completes execution
-    #
-    # If <tt>:source_type</tt> is unset, a generic "system" event will be reported
-    #
-    # Optional arguments:
-    #  :host        => String
-    #  :device      => String
-    #  :source_type => String
+    # DEPRECATED
     def start_event(event, options={})
       defaults = {:host => nil, :device => nil, :source_type => nil}
       options = defaults.merge(options)
 
       scope = override_scope options[:host], options[:device]
 
-      @event_svc.start(@api_key, event, scope, options[:source_type]) do
+      @legacy_event_svc.start(@api_key, event, scope, options[:source_type]) do
         yield
       end
     end

@@ -15,6 +15,9 @@ module Dogapi
       :event_object,
       :msg_title,
       :msg_text,
+      :priority,
+      :parent,
+      :tags,
       :json_payload
 
   # Optional arguments:
@@ -25,6 +28,9 @@ module Dogapi
   #  :event_type    => String
   #  :event_object  => String
   #  :msg_title     => String
+  #  :priority      => String
+  #  :parent        => event ID (integer)
+  #  :tags          => array of Strings
   #  :json_payload  => String
     def initialize(msg_text, options={})
       defaults = {
@@ -35,6 +41,9 @@ module Dogapi
         :event_type => '',
         :event_object => '',
         :msg_title => '',
+        :priority => "normal",
+        :parent => nil,
+        :tags => [],
         :json_payload => ''
       }
       options = defaults.merge(options)
@@ -47,6 +56,9 @@ module Dogapi
       @event_type = options[:event_type]
       @event_object = options[:event_object]
       @msg_title = options[:msg_title]
+      @priority = options[:priority]
+      @parent = options[:parent]
+      @tags = options[:tags]
       @json_payload = options[:json_payload]
     end
   end

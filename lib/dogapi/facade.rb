@@ -60,7 +60,8 @@ module Dogapi
 
       points.each do |p|
         p[0].kind_of? Time or raise "Not a Time"
-        p[1].to_f # TODO: stupid to_f will never raise and exception
+        p[0] = p[0].to_i
+        p[1] = p[1].to_f # TODO: stupid to_f will never raise an exception
       end
 
       @metric_svc.submit(metric, points, scope)

@@ -120,7 +120,7 @@ module Dogapi
         resp = conn.request(req)
         resp_str = resp.body
 
-        if resp.code != '204'
+        if resp.code != 204 and resp.body != '' and resp.body != 'null'
           begin
             resp_obj = JSON.parse(resp.body)
           rescue

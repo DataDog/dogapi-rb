@@ -78,7 +78,15 @@ module Dogapi
 
       scope = override_scope(options[:host], options[:device])
 
-      @event_svc.submit(event, scope)
+      @event_svc.post(event, scope)
+    end
+
+    def get_event(id)
+      @event_svc.get(id)
+    end
+
+    def stream(start, stop, options={})
+      @event_svc.stream(start, stop, options)
     end
 
     # DEPRECATED

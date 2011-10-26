@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = "v1"
 
       # Records an Event with no duration
-      def submit(event, scope=nil)
+      def post(event, scope=nil)
         scope = scope || Dogapi::Scope.new()
         params = {
           :api_key => @api_key
@@ -26,6 +26,45 @@ module Dogapi
 
         request(Net::HTTP::Post, '/api/v1/events', params, body, true)
       end
+
+      def get(id)
+        params = {
+          :api_key => @api_key,
+          :application_key => @application_key
+        }
+
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, params, nil, false)
+      end
+
+      def stream(start, stop, options={})
+        defaults = {
+          :priority => nil,
+          :sources => nil,
+          :tags => nil
+        }
+        options = defaults.merge(options)
+
+        params = {
+          :api_key => @api_key,
+          :application_key => @application_key,
+
+          :start => start.to_i,
+          :end => stop.to_i
+        }
+
+        if options[:priority]:
+          params[:priority] = options[:priority]
+        end
+        if options[:sources]:
+          params[:sources] = options[:sources]
+        end
+        if options[:tags]:
+          params[:tags] = options[:tags]
+        end
+
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', params, nil, false)
+      end
+
     end
 
   end

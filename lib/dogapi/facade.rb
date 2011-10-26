@@ -26,6 +26,8 @@ module Dogapi
 
       @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key)
       @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key)
+      
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
@@ -99,6 +101,26 @@ module Dogapi
       @legacy_event_svc.start(@api_key, event, scope, options[:source_type]) do
         yield
       end
+    end
+    
+    def all_tags()
+      @tag_svc.get_all()
+    end
+    
+    def host_tags(host_id)
+      @tag_svc.get(host_id)
+    end
+    
+    def add_tags(host_id, tags)
+      @tag_svc.add(host_id, tags)
+    end
+    
+    def update_tags(host_id, tags)
+      @tag_svc.update(host_id, tags)
+    end
+    
+    def detatch_tags()
+      @tag_svc.update()
     end
 
     private

@@ -5,7 +5,7 @@ module Dogapi
 
   # A simple DogAPI client
   #
-  # See Dogapi::EventService and Dogapi::MetricService for the thick underlying clients
+  # See Dogapi::V1  for the thick underlying clients
   class Client
 
     # Create a new Client optionally specifying a default host and device
@@ -30,6 +30,9 @@ module Dogapi
       
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
+
+    #
+    # METRICS
 
     # Record a single point of metric data
     #
@@ -69,6 +72,9 @@ module Dogapi
       @metric_svc.submit(metric, points, scope)
     end
 
+    #
+    # EVENTS
+
     # Record an event
     #
     # Optional arguments:
@@ -83,16 +89,31 @@ module Dogapi
       @event_svc.post(event, scope)
     end
 
+    # Get the details of an event
+    #
+    # +id+ of the event to get
     def get_event(id)
       @event_svc.get(id)
     end
 
+    # Get an optionally filtered event stream
+    #
+    # +start+ is a Time object for when to start the stream
+    #
+    # +stop+ is a Time object for when to end the stream
+    #
+    # Optional arguments:
+    #   :priority   => "normal" or "low"
+    #   :sources    => String, see https://github.com/DataDog/dogapi/wiki/Event for a current list of sources
+    #   :tags       => Array of Strings
     def stream(start, stop, options={})
       @event_svc.stream(start, stop, options)
     end
 
-    # DEPRECATED
+    # <b>DEPRECATED:</b> Recording events with a duration has been deprecated.
+    # The functionality will be removed in a later release.
     def start_event(event, options={})
+      warn "[DEPRECATION] `start_event` is deprecated. Use `emit_event` instead."
       defaults = {:host => nil, :device => nil, :source_type => nil}
       options = defaults.merge(options)
 
@@ -102,25 +123,45 @@ module Dogapi
         yield
       end
     end
-    
+
+    #
+    # TAGS
+   
+    # Get all tags and their associated hosts at your org
     def all_tags()
       @tag_svc.get_all()
     end
-    
+   
+    # Get all tags for the given host
+    #
+    # +host_id+ can be the host's numeric id or string name
     def host_tags(host_id)
       @tag_svc.get(host_id)
     end
     
+    # Add the tags to the given host
+    #
+    # +host_id+ can be the host's numeric id or string name
+    #
+    # +tags+ is and Array of Strings
     def add_tags(host_id, tags)
       @tag_svc.add(host_id, tags)
     end
-    
+   
+    # Replace the tags on the given host
+    #
+    # +host_id+ can be the host's numeric id or string name
+    #
+    # +tags+ is and Array of Strings
     def update_tags(host_id, tags)
       @tag_svc.update(host_id, tags)
     end
     
-    def detatch_tags()
-      @tag_svc.update()
+    # Remove all tags from the given host
+    #
+    # +host_id+ can be the host's numeric id or string name
+    def detatch_tags(host_id)
+      @tag_svc.detatch(host_id)
     end
 
     private

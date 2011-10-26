@@ -18,15 +18,18 @@ module Dogapi
     end
   end
 
-  # Superclass that deals with the details of communicating with the DataDog API
+  # <b>DEPRECATED:</b> Going forward, use the newer APIService.
   class Service
+    # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def initialize(api_key, api_host=Dogapi.find_datadog_host)
+      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
       @api_key = api_key
       @host = api_host
     end
 
-    # Manages the HTTP connection
+    # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def connect
+      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
       uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
@@ -41,12 +44,9 @@ module Dogapi
       end
     end
 
-    # Prepares the request and handles the response
-    #
-    # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)
-    #
-    # +params+ is a Hash that will be converted to request parameters
+    # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def request(method, url, params)
+      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
@@ -72,6 +72,7 @@ module Dogapi
     end
   end
 
+  # Superclass that deals with the details of communicating with the DataDog API
   class APIService
     def initialize(api_key, application_key)
       @api_key = api_key

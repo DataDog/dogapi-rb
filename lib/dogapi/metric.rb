@@ -5,12 +5,16 @@ require 'json'
 
 module Dogapi
 
+  # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
+  # removed in an upcoming release.
   class MetricService < Dogapi::Service
 
     API_VERSION = "1.0.0"
 
-    # Records some number of points for a given metric
+    # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
+    # removed in an upcoming release.
     def submit(api_key, scope, metric, points)
+      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
       series = [{
         :host    =>  scope.host,
         :device  =>  scope.device,

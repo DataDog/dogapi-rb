@@ -50,7 +50,7 @@ api_key = "abcdef123456"
 
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_event(Dogapi::Event.new('Testing done, FTW'), host => "my_host")
+dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :host => "my_host")
 ```
 
 ### If the event has a duration
@@ -63,7 +63,7 @@ api_key = "abcdef123456"
 
 dog = Dogapi::Client.new(api_key)
 
-dog.start_event(Dogapi::Event.new('My event with a duration'), host => "my_host") do
+dog.start_event(Dogapi::Event.new('My event with a duration'), :host => "my_host") do
   # do your work here...
   # e.g. sleep 1
 end
@@ -83,7 +83,7 @@ api_key = "abcdef123456"
 
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_point 'some.metric.name', 50.0, host => "my_host", device => "my_device"
+dog.emit_point 'some.metric.name', 50.0, :host => "my_host", :device => "my_device"
 ```
 
 Let us now assume that you have sampled the metric multiple times and you would like to submit the results.
@@ -110,5 +110,5 @@ api_key = "abcdef123456"
 
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_points 'some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], host => "my_host", device => "my_device"
+dog.emit_points 'some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device"
 ```

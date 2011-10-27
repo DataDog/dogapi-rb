@@ -68,11 +68,12 @@ class TestClient < Test::Unit::TestCase
     before_message = 'test message ' + before_ts.to_i.to_s
 
     dog = Dogapi::Client.new(@api_key, @app_key)
+    dog_r = Dogapi::Client.new(@api_key)
 
-    code, resp = dog.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts))
+    code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts))
     now_event_id = resp["event"]["id"]
     sleep 1
-    code, resp = dog.emit_event(Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts))
+    code, resp = dog_r.emit_event(Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts))
     before_event_id = resp["event"]["id"]
 
     code, resp = dog.stream(before_ts, now_ts + 1)
@@ -93,9 +94,10 @@ class TestClient < Test::Unit::TestCase
   def test_metrics
     # FIXME: actually verify this once there's a way to look at metrics through the api
     dog = Dogapi::Client.new(@api_key, @app_key)
+    dog_r = Dogapi::Client.new(@api_key)
 
-    dog.emit_point('test.metric.metric', 10, :host => 'test.metric.host')
-    dog.emit_points('test.metric.metric', [[Time.now-5*60, 0]], :host => 'test.metric.host')
+    dog_r.emit_point('test.metric.metric', 10, :host => 'test.metric.host')
+    dog_r.emit_points('test.metric.metric', [[Time.now-5*60, 0]], :host => 'test.metric.host')
   end
 
 end

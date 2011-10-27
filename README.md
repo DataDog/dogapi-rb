@@ -1,8 +1,15 @@
-# Ruby client for Datadog API v1.1.0
+# Ruby client for Datadog API v1.2.0
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
-# What is new?
+# What's new?
+
+## v1.2.0
+
+* You can now manage host tags
+* You can now get event details and query the stream in addition to posting events
+* Functionality relating to events with a duration has been deprecated
+* The underlying clients have been updated to use Datadog's new [https://github.com/DataDog/dogapi/wiki](public HTTP API)
 
 ## v1.1.0
 
@@ -26,7 +33,7 @@ Gem page: https://rubygems.org/gems/dogapi
 
 # Usage
 
-## How to find your API Key
+## How to find your API and application keys
 
 Go to [https://app.datadoghq.com/account/settings](your setup page).
 
@@ -40,34 +47,30 @@ on a host, simply specify the device when calling emit functions.
 
 ## Submit an event to Datadog
 
-### If the event has no duration
-
 ```ruby
 require 'rubygems'
 require 'dogapi'
 
 api_key = "abcdef123456"
 
+# submitting events doesn't require an application_key, so we don't bother setting it
 dog = Dogapi::Client.new(api_key)
 
 dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :host => "my_host")
 ```
 
-### If the event has a duration
+## Tag a host in Datadog
 
 ```ruby
 require 'rubygems'
 require 'dogapi'
 
 api_key = "abcdef123456"
+application_key = "fedcba654321"
 
-dog = Dogapi::Client.new(api_key)
+dog = Dogapi::Client.new(api_key, application_key)
 
-dog.start_event(Dogapi::Event.new('My event with a duration'), :host => "my_host") do
-  # do your work here...
-  # e.g. sleep 1
-end
-  # stop_event will be sent automatically
+dog.add_tags("my_host", ["tagA", "tagB"])
 ```
 
 ## Submit a metric to Datadog
@@ -81,9 +84,10 @@ require 'dogapi'
 
 api_key = "abcdef123456"
 
+# submitting events doesn't require an application_key, so we don't bother setting it
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_point 'some.metric.name', 50.0, :host => "my_host", :device => "my_device"
+dog.emit_point('some.metric.name', 50.0, :host => "my_host", :device => "my_device")
 ```
 
 Let us now assume that you have sampled the metric multiple times and you would like to submit the results.
@@ -110,5 +114,5 @@ api_key = "abcdef123456"
 
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_points 'some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device"
+dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device")
 ```

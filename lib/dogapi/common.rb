@@ -22,14 +22,13 @@ module Dogapi
   class Service
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def initialize(api_key, api_host=Dogapi.find_datadog_host)
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
       @api_key = api_key
       @host = api_host
     end
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def connect
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
       uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
@@ -46,7 +45,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def request(method, url, params)
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
@@ -121,7 +120,7 @@ module Dogapi
         resp = conn.request(req)
         resp_str = resp.body
 
-        if resp.code != 204 and resp.body != '' and resp.body != 'null'
+        if resp.code != 204 and resp.body != '' and resp.body != 'null' and resp.body != nil
           begin
             resp_obj = JSON.parse(resp.body)
           rescue

@@ -6,6 +6,8 @@ module Dogapi
   # A simple DogAPI client
   #
   # See Dogapi::V1  for the thick underlying clients
+  #
+  # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client
 
     # Create a new Client optionally specifying a default host and device
@@ -27,7 +29,7 @@ module Dogapi
       @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key)
       @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key)
       @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key)
-      
+
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
@@ -113,7 +115,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Recording events with a duration has been deprecated.
     # The functionality will be removed in a later release.
     def start_event(event, options={})
-      warn "[DEPRECATION] `start_event` is deprecated. Use `emit_event` instead."
+      warn "[DEPRECATION] Dogapi::Client.start_event() is deprecated. Use `emit_event` instead."
       defaults = {:host => nil, :device => nil, :source_type => nil}
       options = defaults.merge(options)
 

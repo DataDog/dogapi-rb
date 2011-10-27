@@ -14,7 +14,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def submit(api_key, scope, metric, points)
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogapi::MetricService.submit() has been deprecated in favor of the newer V1 services"
       series = [{
         :host    =>  scope.host,
         :device  =>  scope.device,

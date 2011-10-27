@@ -18,7 +18,7 @@ module Dogapi
         body = {
           :title => event.msg_title,
           :text => event.msg_text,
-          :date_happened => event.date_happened,
+          :date_happened => event.date_happened.to_i,
           :priority => event.priority,
           :parent => event.parent,
           :tags => event.tags,

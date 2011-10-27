@@ -72,7 +72,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def submit(api_key, event, scope=nil, source_type=nil)
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogapi::EventService.submit() has been deprecated in favor of the newer V1 services"
       scope = scope || Dogapi::Scope.new()
       params = {
         :api_key => api_key,
@@ -102,7 +102,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def start(api_key, event, scope, source_type=nil)
-      warn "[DEPRECATION] this service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogapi::EventService.start() has been deprecated in favor of the newer V1 services"
       response = submit api_key, event, scope, source_type
       success = nil
 

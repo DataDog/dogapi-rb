@@ -7,59 +7,35 @@ module Dogapi
 
   # Metadata class for storing the details of an event
   class Event
-    attr_reader :metric,
-      :date_detected,
-      :date_happened,
-      :alert_type,
-      :event_type,
-      :event_object,
+    attr_reader :date_happened,
       :msg_title,
       :msg_text,
       :priority,
       :parent,
-      :tags,
-      :json_payload
+      :tags
 
   # Optional arguments:
-  #  :metric        => String
-  #  :date_detected => time in seconds since the epoch (defaults to now)
   #  :date_happened => time in seconds since the epoch (defaults to now)
-  #  :alert_type    => String
-  #  :event_type    => String
-  #  :event_object  => String
   #  :msg_title     => String
   #  :priority      => String
   #  :parent        => event ID (integer)
   #  :tags          => array of Strings
-  #  :json_payload  => String
     def initialize(msg_text, options={})
       defaults = {
-        :metric => '',
-        :date_detected => Time.now.to_i,
         :date_happened => Time.now.to_i,
-        :alert_type => '',
-        :event_type => '',
-        :event_object => '',
         :msg_title => '',
         :priority => "normal",
         :parent => nil,
-        :tags => [],
-        :json_payload => ''
+        :tags => []
       }
       options = defaults.merge(options)
 
       @msg_text = msg_text
-      @metric = options[:metric]
-      @date_detected = options[:date_detected]
       @date_happened = options[:date_happened]
-      @alert_type = options[:alert_type]
-      @event_type = options[:event_type]
-      @event_object = options[:event_object]
       @msg_title = options[:msg_title]
       @priority = options[:priority]
       @parent = options[:parent]
       @tags = options[:tags]
-      @json_payload = options[:json_payload]
     end
   end
 

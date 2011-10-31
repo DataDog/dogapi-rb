@@ -22,6 +22,8 @@ module Dogapi
           :priority => event.priority,
           :parent => event.parent,
           :tags => event.tags,
+          :host => scope.host,
+          :device => scope.device
         }
 
         request(Net::HTTP::Post, '/api/v1/events', params, body, true)

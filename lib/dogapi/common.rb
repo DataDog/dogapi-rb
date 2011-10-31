@@ -91,6 +91,7 @@ module Dogapi
         session.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       session.start do |conn|
+        conn.read_timeout = 5
         yield(conn)
       end
     end

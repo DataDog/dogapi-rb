@@ -26,7 +26,7 @@ class TestClient < Test::Unit::TestCase
 
     dog.all_tags()
 
-    dog.detatch_tags(hostname)
+    dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
     assert resp["tags"].size == 0
 
@@ -51,7 +51,7 @@ class TestClient < Test::Unit::TestCase
     assert new_tags.size == 1
     assert new_tags.include?('test.tag.4')
 
-    dog.detatch_tags(hostname)
+    dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
     assert resp["tags"].size == 0
   end

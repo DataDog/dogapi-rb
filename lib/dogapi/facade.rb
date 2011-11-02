@@ -162,8 +162,8 @@ module Dogapi
     # Remove all tags from the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def detatch_tags(host_id)
-      @tag_svc.detatch(host_id)
+    def detach_tags(host_id)
+      @tag_svc.detach(host_id)
     end
 
     private

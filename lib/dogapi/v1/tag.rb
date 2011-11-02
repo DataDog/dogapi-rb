@@ -57,7 +57,7 @@ module Dogapi
       end
 
       # Remove all tags from a host
-      def detatch(host_id)
+      def detach(host_id)
         params = {
           :api_key => @api_key,
           :application_key => @application_key

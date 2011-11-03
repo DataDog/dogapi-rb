@@ -158,7 +158,13 @@ module Dogapi
     def update_tags(host_id, tags)
       @tag_svc.update(host_id, tags)
     end
-    
+
+    # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
+    def detatch_tags(host_id)
+      warn "[DEPRECATION] Dogapi::Client.detatch() is deprecated. Use `detach` instead."
+      detach_tags(host_id)
+    end
+
     # Remove all tags from the given host
     #
     # +host_id+ can be the host's numeric id or string name

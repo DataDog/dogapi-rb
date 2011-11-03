@@ -56,6 +56,12 @@ module Dogapi
         request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
       end
 
+      # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
+      def detatch(host_id)
+        warn "[DEPRECATION] Dogapi::V1::TagService.detatch() is deprecated. Use `detach` instead."
+        detach(host_id)
+      end
+
       # Remove all tags from a host
       def detach(host_id)
         params = {

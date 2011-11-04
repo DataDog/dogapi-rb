@@ -56,7 +56,7 @@ api_key = "abcdef123456"
 # submitting events doesn't require an application_key, so we don't bother setting it
 dog = Dogapi::Client.new(api_key)
 
-dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :host => "my_host")
+dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :host => "my_host", :tags => ["tag1", "tag2", "tag3"])
 ```
 
 ## Tag a host in Datadog

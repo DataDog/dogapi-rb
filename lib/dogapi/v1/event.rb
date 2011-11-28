@@ -54,13 +54,13 @@ module Dogapi
           :end => stop.to_i
         }
 
-        if options[:priority].nil?
+        if options[:priority]
           params[:priority] = options[:priority]
         end
-        if options[:sources].nil?
+        if options[:sources]
           params[:sources] = options[:sources]
         end
-        if options[:tags].nil?
+        if options[:tags]
           params[:tags] = options[:tags]
         end
 

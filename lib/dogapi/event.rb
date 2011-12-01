@@ -20,6 +20,10 @@ module Dogapi
   #  :priority      => String
   #  :parent        => event ID (integer)
   #  :tags          => array of Strings
+  #  :event_object  => String
+  #  :alert_type    => 'success', 'error'
+  #  :event_type    => String
+  #  :source_type_name => String
     def initialize(msg_text, options={})
       defaults = {
         :date_happened => Time.now.to_i,
@@ -36,6 +40,18 @@ module Dogapi
       @priority = options[:priority]
       @parent = options[:parent]
       @tags = options[:tags]
+      @event_object = options[:event_object]
+      @alert_type = options[:alert_type]
+      @event_type = options[:event_type]
+      @source_type_name = options[:source_type_name]
+    end
+    
+    # Copy and pasted from the internets 
+    # http://stackoverflow.com/a/5031637/25276
+    def to_hash
+      Hash[instance_variables.map { |var| 
+        [var[1..-1].to_sym, instance_variable_get(var)] 
+      }]
     end
   end
 

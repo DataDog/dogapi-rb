@@ -14,18 +14,15 @@ module Dogapi
         params = {
           :api_key => @api_key
         }
-
-        body = {
+        
+        body = event.to_hash.merge({
           :title => event.msg_title,
           :text => event.msg_text,
           :date_happened => event.date_happened.to_i,
-          :priority => event.priority,
-          :parent => event.parent,
-          :tags => event.tags,
           :host => scope.host,
           :device => scope.device
-        }
-
+        })
+        
         request(Net::HTTP::Post, '/api/v1/events', params, body, true)
       end
 

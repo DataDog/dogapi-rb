@@ -20,7 +20,7 @@ end
 # Gem stuff
 spec = Gem::Specification.new do |s|
   s.name = 'dogapi'
-  s.version = '1.2.7'
+  s.version = '1.2.8'
   s.author = 'Datadog, Inc.'
   s.email = 'packages@datadoghq.com'
   s.homepage = 'http://datadoghq.com/'
@@ -37,7 +37,7 @@ spec = Gem::Specification.new do |s|
                     '--main' << 'README.rdoc' <<
                     '--line-numbers' << '--inline-source'
 
-  s.add_dependency 'json', '~> 1.5.1'
+  s.add_dependency 'json', '>= 1.5.1'
 end
 
 Rake::GemPackageTask.new(spec) do |pkg|

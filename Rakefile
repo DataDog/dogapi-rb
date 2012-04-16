@@ -5,7 +5,7 @@ require 'rubygems'
 
 Rake::TestTask.new(:test) do |test|
     test.libs << 'lib' << 'tests'
-    test.pattern = 'tests/**/ts_*.rb'
+    test.pattern = 'tests/**/test_*.rb'
 end
 
 # Doc stuff

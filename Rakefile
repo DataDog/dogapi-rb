@@ -28,7 +28,7 @@ spec = Gem::Specification.new do |s|
   s.summary = 'Ruby bindings for Datadog\'s API'
   s.files = FileList['{lib,tests}/**/*'].exclude('rdoc').to_a
   s.require_path = 'lib'
-  s.test_file = 'tests/ts_dogapi.rb'
+  s.test_file = 'tests/test_client.rb'
   s.license = 'BSD'
 
   s.has_rdoc = true
@@ -42,4 +42,8 @@ end
 
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_tar = true
+end
+
+task :clean do
+  sh "rm -rf pkg/*"
 end

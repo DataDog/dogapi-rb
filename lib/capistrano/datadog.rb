@@ -126,14 +126,18 @@ module Capistrano
     namespace :datadog do
       desc "Submit the tasks that have run to Datadog as events"
       task :submit do |ns|
-        api_key = variables[:datadog_api_key]
-        if api_key
-          dog = Dogapi::Client.new(api_key)
-          Datadog::reporter.report.each do |event|
-            dog.emit_event event
+        begin 
+          api_key = variables[:datadog_api_key]
+          if api_key
+            dog = Dogapi::Client.new(api_key)
+            Datadog::reporter.report.each do |event|
+              dog.emit_event event
+            end
+          else
+            puts "No api key set, not submitting to Datadog"
           end
-        else
-          puts "No api key set, not submitting to Datadog"
+        rescue => e
+          puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
         end
       end
     end

@@ -24,7 +24,8 @@ class TestClient < Test::Unit::TestCase
     # post a metric to make sure the test host context exists
     dog.emit_point('test.tag.metric', 1, :host => hostname)
 
-    dog.all_tags()
+    # Disable this call until we fix the timeouts
+    # dog.all_tags()
 
     dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)

@@ -3,6 +3,7 @@ require "etc"
 require "md5"
 require "socket"
 require "time"
+require "timeout"
 
 require "dogapi"
 
@@ -136,6 +137,8 @@ module Capistrano
           else
             puts "No api key set, not submitting to Datadog"
           end
+        rescue Timeout::Error => e
+          puts "Could not submit to Datadog, request timed out."
         rescue => e
           puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
         end

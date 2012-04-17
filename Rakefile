@@ -3,6 +3,10 @@ require 'rake/rdoctask'
 require 'rake/testtask'
 require 'rubygems'
 
+def version()
+  ENV["DOGAPI_VERSION"] || File.open(File.join(File.dirname(__FILE__), "VERSION")).read.strip
+end
+
 Rake::TestTask.new(:test) do |test|
     test.libs << 'lib' << 'tests'
     test.pattern = 'tests/**/test_*.rb'
@@ -20,7 +24,7 @@ end
 # Gem stuff
 spec = Gem::Specification.new do |s|
   s.name = 'dogapi'
-  s.version = '1.3.0'
+  s.version = version
   s.author = 'Datadog, Inc.'
   s.email = 'packages@datadoghq.com'
   s.homepage = 'http://datadoghq.com/'

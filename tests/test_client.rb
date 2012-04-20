@@ -24,7 +24,8 @@ class TestClient < Test::Unit::TestCase
     # post a metric to make sure the test host context exists
     dog.emit_point('test.tag.metric', 1, :host => hostname)
 
-    dog.all_tags()
+    # Disable this call until we fix the timeouts
+    # dog.all_tags()
 
     dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
@@ -72,9 +73,9 @@ class TestClient < Test::Unit::TestCase
 
     code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts))
     now_event_id = resp["event"]["id"]
-    sleep 1
     code, resp = dog_r.emit_event(Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts))
     before_event_id = resp["event"]["id"]
+    sleep 3
 
     code, resp = dog.stream(before_ts, now_ts + 1)
     stream = resp["events"]

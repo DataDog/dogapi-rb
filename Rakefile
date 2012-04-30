@@ -3,9 +3,13 @@ require 'rake/rdoctask'
 require 'rake/testtask'
 require 'rubygems'
 
+def version()
+  ENV["DOGAPI_VERSION"] || File.open(File.join(File.dirname(__FILE__), "VERSION")).read.strip
+end
+
 Rake::TestTask.new(:test) do |test|
     test.libs << 'lib' << 'tests'
-    test.pattern = 'tests/**/ts_*.rb'
+    test.pattern = 'tests/**/test_*.rb'
 end
 
 # Doc stuff
@@ -20,7 +24,7 @@ end
 # Gem stuff
 spec = Gem::Specification.new do |s|
   s.name = 'dogapi'
-  s.version = '1.2.8'
+  s.version = version
   s.author = 'Datadog, Inc.'
   s.email = 'packages@datadoghq.com'
   s.homepage = 'http://datadoghq.com/'
@@ -28,7 +32,7 @@ spec = Gem::Specification.new do |s|
   s.summary = 'Ruby bindings for Datadog\'s API'
   s.files = FileList['{lib,tests}/**/*'].exclude('rdoc').to_a
   s.require_path = 'lib'
-  s.test_file = 'tests/ts_dogapi.rb'
+  s.test_file = 'tests/test_client.rb'
   s.license = 'BSD'
 
   s.has_rdoc = true
@@ -42,4 +46,8 @@ end
 
 Rake::GemPackageTask.new(spec) do |pkg|
   pkg.need_tar = true
+end
+
+task :clean do
+  sh "rm -rf pkg/*"
 end

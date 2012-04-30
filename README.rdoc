@@ -6,7 +6,7 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 == v1.3.0
 
-* Capistrano integration. See [https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano](https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano)
+* Capistrano integration. See https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano
 
 == v1.2.x
 

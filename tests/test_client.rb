@@ -90,6 +90,14 @@ class TestClient < Test::Unit::TestCase
 
     assert now_event['text'] == now_message
     assert before_event['text'] == before_message
+
+    # Testing priorities
+    code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts, :priority => "low"))
+    low_event_id = resp["event"]["id"]
+    code, resp = dog.get_event(low_event_id)
+    low_event = resp['event']
+    puts low_event
+    assert low_event['priority'] == "low" 
   end
 
   def test_metrics
@@ -99,6 +107,8 @@ class TestClient < Test::Unit::TestCase
 
     dog_r.emit_point('test.metric.metric', 10, :host => 'test.metric.host')
     dog_r.emit_points('test.metric.metric', [[Time.now-5*60, 0]], :host => 'test.metric.host')
+
+    dog_r.emit_points('test.metric.metric', [[Time.now-60, 20], [Time.now-30, 10], [Time.now, 5]], :tags => ["test:tag.1", "test:tag2"])
   end
 
 end

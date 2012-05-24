@@ -42,6 +42,10 @@ module Dogapi
     #  :timestamp => Ruby stdlib Time
     #  :host      => String
     #  :device    => String
+    #  :options   => Map
+    #
+    # options[:type] = "counter" to specify a counter metric
+    # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options={})
       defaults = {:timestamp => Time.now, :host => nil, :device => nil}
       options = defaults.merge(options)
@@ -58,6 +62,10 @@ module Dogapi
     # Optional arguments:
     #  :host   => String
     #  :device => String
+    #  :options   => Map
+    #
+    # options[:type] = "counter" to specify a counter metric
+    # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_points(metric, points, options={})
       defaults = {:host => nil, :device => nil}
       options = defaults.merge(options)

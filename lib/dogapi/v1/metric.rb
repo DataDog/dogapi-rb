@@ -13,19 +13,29 @@ module Dogapi
         params = {
           :api_key => @api_key
         }
-        type = options[:type] || "gauge"
+        typ = options[:type] || "gauge"
+
+        if typ != "gauge" && typ == "counter"
+          raise ArgumentError, "metric type must be gauge or counter"
+        end
 
         body = { :series => [
             {
               :metric => metric,
               :points => points,
-              :type => type,
+              :type => typ,
               :host => scope.host,
               :device => scope.device
             }
           ]
         }
-        #puts 'POSTING ' + body.inspect
+
+
+        # Add tags if there are any
+        if not options[:tags].nil?
+          body[:series][0][:tags] = options[:tags]
+        end
+
         request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
       end
     end

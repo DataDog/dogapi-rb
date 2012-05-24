@@ -42,14 +42,17 @@ module Dogapi
     #  :timestamp => Ruby stdlib Time
     #  :host      => String
     #  :device    => String
+    #  :options   => Map
+    #
+    # options[:type] = "counter" to specify a counter metric
+    # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options={})
       defaults = {:timestamp => Time.now, :host => nil, :device => nil}
       options = defaults.merge(options)
 
       self.emit_points(metric,
                        [[options[:timestamp], value]],
-                       :host => options[:host],
-                       :device => options[:device])
+                       options)
     end
 
     # Record a set of points of metric data
@@ -59,6 +62,10 @@ module Dogapi
     # Optional arguments:
     #  :host   => String
     #  :device => String
+    #  :options   => Map
+    #
+    # options[:type] = "counter" to specify a counter metric
+    # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_points(metric, points, options={})
       defaults = {:host => nil, :device => nil}
       options = defaults.merge(options)
@@ -71,7 +78,7 @@ module Dogapi
         p[1] = p[1].to_f # TODO: stupid to_f will never raise an exception
       end
 
-      @metric_svc.submit(metric, points, scope)
+      @metric_svc.submit(metric, points, scope, options)
     end
 
     #

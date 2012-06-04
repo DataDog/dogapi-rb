@@ -12,7 +12,8 @@ module Dogapi
       :msg_text,
       :priority,
       :parent,
-      :tags
+      :tags,
+      :aggregation_key
 
   # Optional arguments:
   #  :date_happened => time in seconds since the epoch (defaults to now)
@@ -24,13 +25,15 @@ module Dogapi
   #  :alert_type    => 'success', 'error'
   #  :event_type    => String
   #  :source_type_name => String
+  #  :aggregation_key => String
     def initialize(msg_text, options={})
       defaults = {
         :date_happened => Time.now.to_i,
         :msg_title => '',
         :priority => "normal",
         :parent => nil,
-        :tags => []
+        :tags => [],
+        :aggregation_key => nil
       }
       options = defaults.merge(options)
 
@@ -40,7 +43,7 @@ module Dogapi
       @priority = options[:priority]
       @parent = options[:parent]
       @tags = options[:tags]
-      @event_object = options[:event_object]
+      @aggregation_key = options[:event_object] || options[:aggregation_key]
       @alert_type = options[:alert_type]
       @event_type = options[:event_type]
       @source_type_name = options[:source_type_name]

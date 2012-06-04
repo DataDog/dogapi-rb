@@ -20,9 +20,10 @@ module Dogapi
           :text => event.msg_text,
           :date_happened => event.date_happened.to_i,
           :host => scope.host,
-          :device => scope.device
+          :device => scope.device,
+          :aggregation_key => event.aggregation_key.to_s
         })
-        
+
         request(Net::HTTP::Post, '/api/v1/events', params, body, true)
       end
 

@@ -61,20 +61,23 @@ class TestClient < Test::Unit::TestCase
     now = Time.now()
 
     now_ts = now
-    now_title = 'end test title ' + now_ts.to_i.to_s
+    now_title = 'dogapi-rb end test title ' + now_ts.to_i.to_s
     now_message = 'test message ' + now_ts.to_i.to_s
 
     before_ts = (now - 5*60)
-    before_title = 'start test title ' + before_ts.to_i.to_s
+    before_title = 'dogapi-rb start test title ' + before_ts.to_i.to_s
     before_message = 'test message ' + before_ts.to_i.to_s
 
     dog = Dogapi::Client.new(@api_key, @app_key)
     dog_r = Dogapi::Client.new(@api_key)
 
-    code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts))
+    e1 = Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts)
+    e2 = Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts)
+    code, resp = dog_r.emit_event(e1)
     now_event_id = resp["event"]["id"]
-    code, resp = dog_r.emit_event(Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts))
+    code, resp = dog_r.emit_event(e2)
     before_event_id = resp["event"]["id"]
+
     sleep 3
 
     code, resp = dog.stream(before_ts, now_ts + 1)
@@ -97,7 +100,23 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog.get_event(low_event_id)
     low_event = resp['event']
     puts low_event
-    assert low_event['priority'] == "low" 
+    assert low_event['priority'] == "low"
+
+    # Testing aggregates
+    agg_ts = Time.now()
+    code, resp = dog_r.emit_event(Dogapi::Event.new("Testing Aggregation (first)", :aggregation_key => now_ts.to_i))
+    first = resp["event"]["id"]
+    code, resp = dog_r.emit_event(Dogapi::Event.new("Testing Aggregation (second)", :aggregation_key => now_ts.to_i))
+    second = resp["event"]["id"]
+
+    sleep 3
+
+    code, resp = dog.get_event(first)
+    agg1 = resp["event"]
+    code, resp = dog.get_event(second)
+    agg2 = resp["event"]
+
+    # FIXME Need to export is_aggregate/children fields
   end
 
   def test_metrics
@@ -110,5 +129,4 @@ class TestClient < Test::Unit::TestCase
 
     dog_r.emit_points('test.metric.metric', [[Time.now-60, 20], [Time.now-30, 10], [Time.now, 5]], :tags => ["test:tag.1", "test:tag2"])
   end
-
 end

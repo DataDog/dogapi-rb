@@ -4,6 +4,10 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 = What's new?
 
+== v1.3.2
+
+* Support an aggregation key to aggregate events together
+
 == v1.3.1
 
 * Metrics can be counters, rather than just gauges (thanks to @treeder)

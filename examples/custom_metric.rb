@@ -29,11 +29,4 @@ end
 dog.emit_points('test.api.test_metric', points)
 
 # Send an event too, automatically tied to the same host
-dog.emit_event(Dogapi::Event.new('Testing done, FTW'))
-
-# To record an event with duration
-dog.start_event(Dogapi::Event.new('My event with a duration')) do
-  # do your work here...
-  sleep 1
-end
-# stop_event will be sent automatically
+dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :tags => ["my-tag", "my-other-tag"])

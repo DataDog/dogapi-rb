@@ -52,9 +52,9 @@ module Dogapi
     # Copy and pasted from the internets 
     # http://stackoverflow.com/a/5031637/25276
     def to_hash
-      Hash[instance_variables.map { |var| 
-        [var[1..-1].to_sym, instance_variable_get(var)] 
-      }]
+        hash = {}
+        instance_variables.each {|var| hash[var[1..-1].to_sym] = instance_variable_get(var) }
+        hash
     end
   end
 

@@ -10,50 +10,86 @@ module Dogapi
 
       # Gets all tags in your org and the hosts tagged with them
       def get_all()
-        params = {
-          :api_key => @api_key,
-          :application_key => @application_key
-        }
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
 
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', params, nil, false)
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', params, nil, false)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
       end
 
       # Gets all tags for a given host
       def get(host_id)
-        params = {
-          :api_key => @api_key,
-          :application_key => @application_key
-        }
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
 
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
       end
 
       # Adds a list of tags to a host
       def add(host_id, tags)
-        params = {
-          :api_key => @api_key,
-          :application_key => @application_key
-        }
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
 
-        body = {
-          :tags => tags
-        }
+          body = {
+            :tags => tags
+          }
 
-        request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+          request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
       end
 
       # Remove all tags from a host and replace them with a new list
       def update(host_id, tags)
-        params = {
-          :api_key => @api_key,
-          :application_key => @application_key
-        }
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
 
-        body = {
-          :tags => tags
-        }
+          body = {
+            :tags => tags
+          }
 
-        request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+          request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
       end
 
       # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
@@ -64,12 +100,21 @@ module Dogapi
 
       # Remove all tags from a host
       def detach(host_id)
-        params = {
-          :api_key => @api_key,
-          :application_key => @application_key
-        }
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
 
-        request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+          request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
       end
 
     end

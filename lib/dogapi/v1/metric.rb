@@ -10,33 +10,42 @@ module Dogapi
 
       # Records an Event with no duration
       def submit(metric, points, scope, options={})
-        params = {
-          :api_key => @api_key
-        }
-        typ = options[:type] || "gauge"
+        begin
+          params = {
+            :api_key => @api_key
+          }
+          typ = options[:type] || "gauge"
 
-        if typ != "gauge" && typ == "counter"
-          raise ArgumentError, "metric type must be gauge or counter"
+          if typ != "gauge" && typ == "counter"
+            raise ArgumentError, "metric type must be gauge or counter"
+          end
+
+          body = { :series => [
+              {
+                :metric => metric,
+                :points => points,
+                :type => typ,
+                :host => scope.host,
+                :device => scope.device
+              }
+            ]
+          }
+
+
+          # Add tags if there are any
+          if not options[:tags].nil?
+            body[:series][0][:tags] = options[:tags]
+          end
+
+          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
         end
-
-        body = { :series => [
-            {
-              :metric => metric,
-              :points => points,
-              :type => typ,
-              :host => scope.host,
-              :device => scope.device
-            }
-          ]
-        }
-
-
-        # Add tags if there are any
-        if not options[:tags].nil?
-          body[:series][0][:tags] = options[:tags]
-        end
-
-        request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
       end
     end
 

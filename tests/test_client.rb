@@ -97,9 +97,11 @@ class TestClient < Test::Unit::TestCase
     # Testing priorities
     code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts, :priority => "low"))
     low_event_id = resp["event"]["id"]
+
+    sleep 3
+
     code, resp = dog.get_event(low_event_id)
     low_event = resp['event']
-    puts low_event
     assert low_event['priority'] == "low"
 
     # Testing aggregates

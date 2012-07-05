@@ -7,14 +7,14 @@ require 'dogapi'
 # You typically want to do:
 #   Dogapi::Client.new(your_actual_api_key_as_a_string, ...)
 # We are using ENV to let you experiment via an environment variable.
-dog = Dogapi::Client.new(ENV['DATADOG_KEY'], 'test-api.datadoghq.com')
+dog = Dogapi::Client.new(ENV['DATADOG_KEY'])
 
 # Emit points one by one, timestamp is omitted and is the time this call is made.
 dog.emit_point('test.api.test_metric', 4.0)
 
 sleep 1
 
-dog.emit_point('test.api.test_metric', 5.0, :host => 'test-api-2.datadoghq.com')
+dog.emit_point('test.api.test_metric', 5.0)
 
 # Emit a list of points in one go as a list of (timestamp, value)
 # here we pretend to send a point a minute for the past hour

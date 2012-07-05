@@ -11,7 +11,7 @@ module Dogapi
   class Client
 
     # Create a new Client optionally specifying a default host and device
-    def initialize(api_key, application_key=nil, host=nil, device=nil)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true)
 
       if api_key
         @api_key = api_key
@@ -26,9 +26,9 @@ module Dogapi
       @host = host
       @device = device
 
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key)
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end

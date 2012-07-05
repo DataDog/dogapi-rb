@@ -73,10 +73,11 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
-    def initialize(api_key, application_key)
+    def initialize(api_key, application_key, silent=true)
       @api_key = api_key
       @application_key = application_key
       @api_host = Dogapi.find_datadog_host()
+      @silent = silent
     end
 
     # Manages the HTTP connection

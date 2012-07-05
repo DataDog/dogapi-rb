@@ -16,7 +16,7 @@ module Dogapi
           }
           typ = options[:type] || "gauge"
 
-          if typ != "gauge" && typ == "counter"
+          if typ != "gauge" && typ != "counter"
             raise ArgumentError, "metric type must be gauge or counter"
           end
 

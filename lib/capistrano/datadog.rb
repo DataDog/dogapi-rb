@@ -62,10 +62,14 @@ module Capistrano
       end
 
       def record_task(task, timing)
+        roles = task.options[:roles]
+        if roles.is_a? Proc
+          roles = roles.call
+        end
         @tasks << {
           :name   => task.fully_qualified_name,
           :timing => timing.real,
-          :roles  => task.options[:roles]
+          :roles  => roles
         }
       end
 

@@ -1,6 +1,6 @@
 require "benchmark"
 require "etc"
-require "md5"
+require "digest/md5"
 require "socket"
 require "time"
 require "timeout"

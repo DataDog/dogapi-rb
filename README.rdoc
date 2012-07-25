@@ -4,6 +4,10 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 = What's new?
 
+== v1.3.5
+
+* Small fix for capistrano integration
+
 == v1.3.4
 
 * Various bug fixes (event.to_hash, md5 import, capistrano lambda roles)

@@ -90,7 +90,7 @@ module Capistrano
         # Convert the tasks into Datadog events
         @tasks.map do |task|
           name  = task[:name]
-          roles = Array(task[:roles]).sort
+          roles = Array(task[:roles]).map(&:to_s).sort
           tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t })
           title = "%s@%s ran %s on %s with capistrano in %.2f secs" % [user, hostname, name, roles.join(', '), task[:timing]]
           type  = "deploy"

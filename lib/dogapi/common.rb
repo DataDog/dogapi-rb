@@ -151,6 +151,14 @@ module Dogapi
   end
 
   def Dogapi.find_localhost
-    Socket.gethostname
+    begin
+      # prefer hostname -f
+      hostname = %x[hostname -f].strip
+      if hostname.length == 0
+        raise "Cannot determine local hostname via hostname -f"
+      end
+    rescue
+      raise "Cannot determine local hostname via hostname -f"
+    end
   end
 end

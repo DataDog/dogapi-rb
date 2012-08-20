@@ -81,7 +81,7 @@ module Capistrano
       end
 
       def report()
-        hostname = Socket.gethostname
+        hostname = %x[hostname -f].strip
         user = Etc.getlogin
 
         # Lazy randomness

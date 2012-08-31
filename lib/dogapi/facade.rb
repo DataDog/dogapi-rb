@@ -30,6 +30,7 @@ module Dogapi
       @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
       @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -151,6 +152,16 @@ module Dogapi
     def delete_comment(comment_id)
       @comment_svc.delete_comment(comment_id)
     end
+
+    #
+    # SEARCH
+    #
+
+    # Run the given search query.
+    def search(query)
+      @search_svc.search query
+    end
+
 
     #
     # TAGS

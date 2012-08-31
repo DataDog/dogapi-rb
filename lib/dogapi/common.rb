@@ -97,6 +97,15 @@ module Dogapi
       end
     end
 
+    def suppress_error_if_silent(e)
+      if @silent
+        warn e
+        return -1, {}
+      else
+        raise e
+      end
+    end
+
     # Prepares the request and handles the response
     #
     # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)

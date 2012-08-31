@@ -29,6 +29,7 @@ module Dogapi
       @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
       @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
       @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -134,20 +135,38 @@ module Dogapi
     end
 
     #
+    # COMMENTS
+    #
+
+    # Post a comment
+    def comment(message, options={})
+      @comment_svc.comment(message, options)
+    end
+
+    # Post a comment
+    def update_comment(comment_id, options={})
+      @comment_svc.update_comment(comment_id, options)
+    end
+
+    def delete_comment(comment_id)
+      @comment_svc.delete_comment(comment_id)
+    end
+
+    #
     # TAGS
-   
+
     # Get all tags and their associated hosts at your org
     def all_tags()
       @tag_svc.get_all()
     end
-   
+
     # Get all tags for the given host
     #
     # +host_id+ can be the host's numeric id or string name
     def host_tags(host_id)
       @tag_svc.get(host_id)
     end
-    
+
     # Add the tags to the given host
     #
     # +host_id+ can be the host's numeric id or string name
@@ -156,7 +175,7 @@ module Dogapi
     def add_tags(host_id, tags)
       @tag_svc.add(host_id, tags)
     end
-   
+
     # Replace the tags on the given host
     #
     # +host_id+ can be the host's numeric id or string name

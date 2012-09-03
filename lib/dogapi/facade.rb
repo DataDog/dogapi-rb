@@ -31,6 +31,7 @@ module Dogapi
       @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -165,6 +166,7 @@ module Dogapi
 
     #
     # TAGS
+    #
 
     # Get all tags and their associated hosts at your org
     def all_tags()
@@ -207,6 +209,30 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     def detach_tags(host_id)
       @tag_svc.detach(host_id)
+    end
+
+    #
+    # DASHES
+    #
+
+    # Create a dashboard.
+    def create_dashboard(title, description, graphs)
+      @dash_service.create_dashboard(title, description, graphs)
+    end
+
+    # Update a dashboard.
+    def update_dashboard(dash_id, title, description, graphs)
+      @dash_service.update_dashboard(dash_id, title, description, graphs)
+    end
+
+    # Fetch the given dashboard.
+    def get_dashboard(dash_id)
+      @dash_service.get_dashboard(dash_id)
+    end
+
+    # Delete the given dashboard.
+    def delete_dashboard(dash_id)
+      @dash_service.delete_dashboard(dash_id)
     end
 
     private

@@ -78,7 +78,8 @@ module Dogapi
             params[:sources] = options[:sources]
           end
           if options[:tags]
-            params[:tags] = options[:tags]
+            tags = options[:tags]
+            params[:tags] = tags.kind_of?(Array) ? tags.join(",") : tags
           end
 
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', params, nil, false)

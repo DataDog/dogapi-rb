@@ -1,8 +1,12 @@
-= Ruby client for Datadog API v1.4.0
+= Ruby client for Datadog API v1.4.1
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
 = What's new?
+
+== v1.4.1
+
+* Fixed searching for events with tags.
 
 == v1.4.0
 
@@ -18,8 +22,7 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 == v1.3.3
 
-* Bug fix for submitting counters 
-
+* Bug fix for submitting counters
 
 == v1.3.2
 

@@ -13,7 +13,7 @@ ENV["DATADOG_APP_KEY"] ||= '87ce4a24b5553d2e482ea8a8500e71b8ad4554ff'
 
 Rake::TestTask.new(:test) do |test|
     test.libs << 'lib' << 'tests'
-    test.pattern = 'tests/**/test_*.rb'
+    test.test_files = FileList['tests/test_*.rb']
 end
 
 # Doc stuff

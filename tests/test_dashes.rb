@@ -2,7 +2,8 @@ require 'dogapi'
 require 'time'
 require_relative 'test_base.rb'
 
-class TestDashes < TestBase
+class TestDashes < Test::Unit::TestCase
+  include TestBase
 
   def test_dashes
     dog = Dogapi::Client.new(@api_key, @app_key)

@@ -11,7 +11,7 @@ unless Kernel.respond_to?(:require_relative)
 end
 
 
-class TestBase < Test::Unit::TestCase
+module TestBase
 
   def config_client_test_env
     @api_key = ENV['DATADOG_API_KEY']
@@ -25,5 +25,6 @@ class TestBase < Test::Unit::TestCase
   def setup
     config_client_test_env()
   end
+
 end
 

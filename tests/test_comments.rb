@@ -2,7 +2,9 @@ require 'dogapi'
 require 'time'
 require_relative 'test_base.rb'
 
-class TestComments < TestBase
+class TestComments < Test::Unit::TestCase
+  include TestBase
+
 
   def test_comments
     dog = Dogapi::Client.new(@api_key, @app_key)

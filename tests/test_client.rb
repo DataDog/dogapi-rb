@@ -2,7 +2,8 @@ require 'dogapi'
 require 'time'
 require_relative 'test_base.rb'
 
-class TestClient < TestBase
+class TestClient < Test::Unit::TestCase
+  include TestBase
 
   def test_tags
     hostname = 'test.tag.host'

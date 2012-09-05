@@ -15,6 +15,8 @@ class TestClient < Test::Unit::TestCase
     # Disable this call until we fix the timeouts
     # dog.all_tags()
 
+    sleep 3
+
     dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
     assert resp["tags"].size == 0

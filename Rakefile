@@ -2,6 +2,8 @@ require 'rake/gempackagetask'
 require 'rake/rdoctask'
 require 'rake/testtask'
 require 'rubygems'
+require 'bundler'
+
 
 def version()
   ENV["DOGAPI_VERSION"] || File.open(File.join(File.dirname(__FILE__), "VERSION")).read.strip
@@ -54,4 +56,8 @@ end
 
 task :clean do
   sh "rm -rf pkg/*"
+end
+
+task :release => [:clean, :gem] do
+  sh "cd pkg && gem push *.gem"
 end

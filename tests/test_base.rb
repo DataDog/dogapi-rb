@@ -17,5 +17,9 @@ module TestBase
     config_client_test_env()
   end
 
+  def random
+    Kernel.rand 100000
+  end
+
 end
 

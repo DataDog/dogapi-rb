@@ -1,6 +1,6 @@
 require 'dogapi'
 require 'time'
-require_relative 'test_base.rb'
+require 'test_base.rb'
 
 class TestSearch < Test::Unit::TestCase
   include TestBase

@@ -6,7 +6,7 @@ class TestClient < Test::Unit::TestCase
   include TestBase
 
   def test_tags
-    hostname = "test.tag.host.#{Random.rand()}"
+    hostname = "test.tag.host.#{random}"
     dog = Dogapi::Client.new(@api_key, @app_key)
 
     # post a metric to make sure the test host context exists
@@ -48,7 +48,7 @@ class TestClient < Test::Unit::TestCase
   def test_events
     now = Time.now()
 
-    tags = ["test-run:#{Random.rand()}"]
+    tags = ["test-run:#{random}"]
 
     now_ts = now
     now_title = 'dogapi-rb end test title ' + now_ts.to_i.to_s

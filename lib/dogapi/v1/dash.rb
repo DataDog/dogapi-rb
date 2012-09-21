@@ -60,6 +60,20 @@ module Dogapi
         end
       end
 
+      def get_dashboards
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/dash", params, nil, false)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
+
       def delete_dashboard(dash_id)
         begin
           params = {

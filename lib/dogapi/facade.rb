@@ -230,6 +230,11 @@ module Dogapi
       @dash_service.get_dashboard(dash_id)
     end
 
+    # Fetch all of the dashboards.
+    def get_dashboards
+      @dash_service.get_dashboards
+    end
+
     # Delete the given dashboard.
     def delete_dashboard(dash_id)
       @dash_service.delete_dashboard(dash_id)

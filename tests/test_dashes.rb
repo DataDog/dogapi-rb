@@ -60,6 +60,15 @@ class TestDashes < Test::Unit::TestCase
     assert_equal description, dash["description"]
     assert_equal graphs, dash["graphs"]
 
+    # Fetch all the dashboards.
+    status, dash_response = dog.get_dashboards()
+    assert_equal "200", status, "fetch failed"
+    dashes = dash_response["dashes"]
+    assert dashes.length
+    dash = dashes.sort{|x,y| x["id"] <=> y["id"]}.last
+    assert_equal title, dash["title"]
+    assert_equal dash_id.to_s, dash["id"]
+
     # Delete the dashboard.
     status, dash_response = dog.delete_dashboard(dash_id)
     assert_equal "204", status, "Deleted failed"

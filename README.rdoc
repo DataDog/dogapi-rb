@@ -4,6 +4,10 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 = What's new?
 
+== v1.4.2
+
+* Added missing dashboards endpoint.
+
 == v1.4.1
 
 * Fixed searching for events with tags.

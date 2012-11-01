@@ -112,6 +112,7 @@ module Capistrano
 
     class LogCapture
       def initialize(device)
+        puts 'what the hell is going on here?'
         @device = device
       end
 

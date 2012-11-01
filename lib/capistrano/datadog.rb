@@ -4,6 +4,7 @@ require "digest/md5"
 require "socket"
 require "time"
 require "timeout"
+require "delegate"
 
 require "dogapi"
 
@@ -110,9 +111,17 @@ module Capistrano
       end
     end
 
-    class LogCapture
+    class LogCapture < Delegator
       def initialize(device)
-        @device = device
+        super
+      end
+
+      def __getobj__
+        @device
+      end
+
+      def __setobj__(obj)
+        @device = obj
       end
 
       def puts(message)

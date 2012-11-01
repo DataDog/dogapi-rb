@@ -119,6 +119,14 @@ module Capistrano
         Capistrano::Datadog::reporter.record_log message
         @device.puts message
       end
+
+      def close
+        @device.close
+      end
+
+      def tty?
+        @device.tty?
+      end
     end
   end
 

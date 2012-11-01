@@ -111,22 +111,10 @@ module Capistrano
       end
     end
 
-    class LogCapture < Delegator
-      def initialize(device)
-        super
-      end
-
-      def __getobj__
-        @device
-      end
-
-      def __setobj__(obj)
-        @device = obj
-      end
-
+    class LogCapture < SimpleDelegator
       def puts(message)
         Capistrano::Datadog::reporter.record_log message
-        @device.puts message
+        __getobj__.puts message
       end
     end
   end

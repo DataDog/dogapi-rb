@@ -32,6 +32,7 @@ module Dogapi
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -238,6 +239,38 @@ module Dogapi
     # Delete the given dashboard.
     def delete_dashboard(dash_id)
       @dash_service.delete_dashboard(dash_id)
+    end
+
+    #
+    # ALERTS
+    #
+
+    def alert(query, options={})
+      @alert_svc.alert(query, options)
+    end
+
+    def update_alert(alert_id, query, options={})
+      @alert_svc.update_alert(alert_id, query, options)
+    end
+
+    def get_alert(alert_id)
+      @alert_svc.get_alert(alert_id)
+    end
+
+    def delete_alert(alert_id)
+      @alert_svc.delete_alert(alert_id)
+    end
+
+    def get_all_alerts()
+      @alert_svc.get_all_alerts()
+    end
+
+    def mute_alerts()
+      @alert_svc.mute_alerts()
+    end
+
+    def unmute_alerts()
+      @alert_svc.unmute_alerts()
     end
 
     private

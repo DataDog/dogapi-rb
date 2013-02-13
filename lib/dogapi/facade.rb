@@ -170,15 +170,15 @@ module Dogapi
     #
 
     # Get all tags and their associated hosts at your org
-    def all_tags()
-      @tag_svc.get_all()
+    def all_tags(source=nil)
+      @tag_svc.get_all(source)
     end
 
     # Get all tags for the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def host_tags(host_id)
-      @tag_svc.get(host_id)
+    def host_tags(host_id, source=nil, by_source=false)
+      @tag_svc.get(host_id, source, by_source)
     end
 
     # Add the tags to the given host
@@ -186,8 +186,8 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def add_tags(host_id, tags)
-      @tag_svc.add(host_id, tags)
+    def add_tags(host_id, tags, source=nil)
+      @tag_svc.add(host_id, tags, source)
     end
 
     # Replace the tags on the given host
@@ -195,8 +195,8 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def update_tags(host_id, tags)
-      @tag_svc.update(host_id, tags)
+    def update_tags(host_id, tags, source=nil)
+      @tag_svc.update(host_id, tags, source)
     end
 
     # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
@@ -208,8 +208,8 @@ module Dogapi
     # Remove all tags from the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def detach_tags(host_id)
-      @tag_svc.detach(host_id)
+    def detach_tags(host_id, source=nil)
+      @tag_svc.detach(host_id, source)
     end
 
     #

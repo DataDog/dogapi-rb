@@ -4,7 +4,7 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 
 = What's new?
 
-== v1.5.1
+== v1.5.2
 * Fix a bug in hashing the Event object when the instance variables are symbols.
 
 == v1.5.0

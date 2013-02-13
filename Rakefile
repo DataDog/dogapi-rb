@@ -1,7 +1,6 @@
-require 'rake/gempackagetask'
-require 'rake/rdoctask'
+require 'rubygems/package_task'
+require 'rdoc/task'
 require 'rake/testtask'
-require 'rubygems'
 require 'bundler'
 
 
@@ -19,7 +18,7 @@ Rake::TestTask.new(:test) do |test|
 end
 
 # Doc stuff
-Rake::RDocTask.new do |rd|
+RDoc::Task.new do |rd|
   rd.main = 'README.rdoc'
   rd.rdoc_files.include('README.rdoc', 'lib/**/*.rb')
   rd.options << '--line-numbers' << '--inline-source'
@@ -50,7 +49,7 @@ spec = Gem::Specification.new do |s|
   s.add_dependency 'json', '>= 1.5.1'
 end
 
-Rake::GemPackageTask.new(spec) do |pkg|
+Gem::PackageTask.new(spec) do |pkg|
   pkg.need_tar = true
 end
 

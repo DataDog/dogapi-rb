@@ -70,7 +70,8 @@ module Capistrano
         @tasks << {
           :name   => task.fully_qualified_name,
           :timing => timing.real,
-          :roles  => roles
+          :roles  => roles,
+          :stage  => task.namespace.variables[:stage]
         }
       end
 
@@ -92,7 +93,7 @@ module Capistrano
         @tasks.map do |task|
           name  = task[:name]
           roles = Array(task[:roles]).map(&:to_s).sort
-          tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t })
+          tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t }) + Array(task[:stage])
           title = "%s@%s ran %s on %s with capistrano in %.2f secs" % [user, hostname, name, roles.join(', '), task[:timing]]
           type  = "deploy"
           alert_type = "success"

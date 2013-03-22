@@ -97,7 +97,7 @@ module Capistrano
           type  = "deploy"
           alert_type = "success"
           source_type = "capistrano"
-          message = "@@@" + "\n" + @logging_output[name].join('') + "@@@"
+          message = "@@@" + "\n" + (@logging_output[name] || []).join('') + "@@@"
 
           Dogapi::Event.new(message,
             :msg_title        => title,

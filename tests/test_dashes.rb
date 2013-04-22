@@ -23,13 +23,13 @@ class TestDashes < Test::Unit::TestCase
     }]
 
     status, dash_response = dog.create_dashboard(title, description, graphs)
-    assert_equal "200", status, "Creation failed"
+    assert_equal "200", status, "Creation failed, response: #{dash_response}"
 
     dash_id = dash_response["dash"]["id"]
 
     # Fetch the dashboard and assert all is well.
     status, dash_response = dog.get_dashboard(dash_id)
-    assert_equal "200", status, "Fetch failed"
+    assert_equal "200", status, "Fetch failed, response: #{dash_response}"
     dash = dash_response["dash"]
     assert_equal title, dash["title"]
     assert_equal description, dash["description"]
@@ -50,11 +50,11 @@ class TestDashes < Test::Unit::TestCase
     }]
 
     status, dash_response = dog.update_dashboard(dash_id, title, description, graphs)
-    assert_equal "200", status, "Updated failed"
+    assert_equal "200", status, "Updated failed, response: #{dash_response}"
 
     # Fetch the dashboard and assert all is well.
     status, dash_response = dog.get_dashboard(dash_id)
-    assert_equal "200", status, "Fetch failed"
+    assert_equal "200", status, "Fetch failed, response: #{dash_response}"
     dash = dash_response["dash"]
     assert_equal title, dash["title"]
     assert_equal description, dash["description"]
@@ -62,7 +62,7 @@ class TestDashes < Test::Unit::TestCase
 
     # Fetch all the dashboards.
     status, dash_response = dog.get_dashboards()
-    assert_equal "200", status, "fetch failed"
+    assert_equal "200", status, "fetch failed, response: #{dash_response}"
     dashes = dash_response["dashes"]
     assert dashes.length
     dash = dashes.sort{|x,y| x["id"] <=> y["id"]}.last
@@ -71,11 +71,11 @@ class TestDashes < Test::Unit::TestCase
 
     # Delete the dashboard.
     status, dash_response = dog.delete_dashboard(dash_id)
-    assert_equal "204", status, "Deleted failed"
+    assert_equal "204", status, "Deleted failed, response: #{dash_response}"
 
     # Fetch the dashboard and assert all it's gone.
     status, dash_response = dog.get_dashboard(dash_id)
-    assert_equal "404", status, "Still there failed"
+    assert_equal "404", status, "Still there failed, response: #{dash_response}"
 
   end
 end

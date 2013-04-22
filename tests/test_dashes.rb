@@ -14,10 +14,10 @@ class TestDashes < Test::Unit::TestCase
     graphs =  [{
       "definition" => {
         "events" => [],
-        "requests "=> [
+        "requests" => [
           {"q" => "avg:system.mem.free{*}"}
         ],
-      "viz" => "timeseries"
+        "viz" => "timeseries"
       },
       "title" => "Average Memory Free"
     }]
@@ -41,10 +41,10 @@ class TestDashes < Test::Unit::TestCase
     graphs =  [{
       "definition" => {
         "events" => [],
-        "requests "=> [
+        "requests" => [
           {"q" => "sum:system.mem.free{*}"}
         ],
-      "viz" => "timeseries"
+        "viz" => "timeseries"
       },
       "title" => "Sum Memory Free"
     }]

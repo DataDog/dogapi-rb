@@ -16,12 +16,12 @@ class TestComments < Test::Unit::TestCase
     handle = "carlo+14.1@datadoghq.com"
     status, comment_response = dog.comment('test comment with handle', :handle => handle)
     comment = comment_response["comment"]
-    assert_equal "200", status, "Comment did not succeed"
+    assert_equal "200", status, "Comment did not succeed, response: #{comment_response}"
 
     # Reply to a comment.
     status, reply_response = dog.comment('replying!', :related_event_id => comment["id"])
     reply = reply_response["comment"]
-    assert_equal "200", status, "Reply did not work."
+    assert_equal "200", status, "Reply did not work, response: #{reply_response}"
     # HACK: issue #900 on dogweb. id types should be the same.
     assert_equal comment["id"].to_s, reply["related_event_id"]
 

@@ -8,7 +8,7 @@ class TestUsers < Test::Unit::TestCase
   def test_users
     dog = Dogapi::Client.new(@api_key, @app_key)
 
-    emails = ["jack@datadoghq.com", "jill@datadoghq.com"]
+    emails = ["notarealperson@datadoghq.com", "alsoreallyfake@datadoghq.com"]
 
     invited = dog.invite(emails)
     assert_equal emails, invited[1]["emails"], invited

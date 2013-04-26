@@ -33,6 +33,7 @@ module Dogapi
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -271,6 +272,14 @@ module Dogapi
 
     def unmute_alerts()
       @alert_svc.unmute_alerts()
+    end
+
+    #
+    # USERS
+    #
+
+    def invite(emails, options={})
+      @user_svc.invite(emails, options)
     end
 
     private

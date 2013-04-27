@@ -8,8 +8,12 @@ class TestDashes < Test::Unit::TestCase
   def test_dashes
     dog = Dogapi::Client.new(@api_key, @app_key)
 
+    # Get the Travis ENV and use that to 'seed' the dashboard titles, in attempt
+    # to prevent parallel testing conflicts
+    job_number = ENV['TRAVIS_JOB_NUMBER'] || '1'
+
     # Create a dashboard.
-    title = 'foobar'
+    title = "foobar-#{job_number}"
     description = 'desc'
     graphs =  [{
       "definition" => {
@@ -36,7 +40,7 @@ class TestDashes < Test::Unit::TestCase
     assert_equal graphs, dash["graphs"]
 
     # Update the dashboard.
-    title = 'blahfoobar'
+    title = "blahfoobar-#{job_number}"
     description = 'asdfdesc'
     graphs =  [{
       "definition" => {

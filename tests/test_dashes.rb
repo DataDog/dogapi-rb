@@ -60,12 +60,12 @@ class TestDashes < Test::Unit::TestCase
     assert_equal description, dash["description"]
     assert_equal graphs, dash["graphs"]
 
-    # Fetch all the dashboards.
+    # Fetch all the dashboards, assert our created one is in the list of all
     status, dash_response = dog.get_dashboards()
     assert_equal "200", status, "fetch failed, response: #{dash_response}"
     dashes = dash_response["dashes"]
-    assert dashes.length
-    dash = dashes.sort{|x,y| x["id"] <=> y["id"]}.last
+    assert dashes.any? { |d| title == d["title"] }
+    dash = dashes.find { |d| title == d["title"] }
     assert_equal title, dash["title"]
     assert_equal dash_id.to_s, dash["id"]
 

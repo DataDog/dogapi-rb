@@ -14,12 +14,12 @@ class TestSnapshot < Test::Unit::TestCase
     start_ts = end_ts - 60 * 60 # go back 1 hour
 
     # Try without an event query
-    status, result = dog.snapshot(metric_query, start_ts, end_ts)
+    status, result = dog.graph_snapshot(metric_query, start_ts, end_ts)
     assert_equal status, "200", "invalid HTTP response: #{status}"
     assert result["metric_query"] = metric_query
 
     # Try with an event query
-    status, result = dog.snapshot(metric_query, start_ts, end_ts,
+    status, result = dog.graph_snapshot(metric_query, start_ts, end_ts,
                                   event_query=event_query)
     assert_equal status, "200", "invalid HTTP response: #{status}"
     assert result["metric_query"] = metric_query

@@ -34,6 +34,7 @@ module Dogapi
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -274,12 +275,14 @@ module Dogapi
       @alert_svc.unmute_alerts()
     end
 
-    #
-    # USERS
-    #
-
+    # User invite
     def invite(emails, options={})
       @user_svc.invite(emails, options)
+    end
+
+    # Graph snapshot
+    def snapshot(metric_query, start_ts, end_ts, event_query=nil)
+      @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
     end
 
     private

@@ -35,6 +35,7 @@ module Dogapi
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -283,6 +284,29 @@ module Dogapi
     # Graph snapshot
     def graph_snapshot(metric_query, start_ts, end_ts, event_query=nil)
       @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
+    end
+
+    #
+    # SCREENBOARD
+    #
+    def create_screenboard(description)
+      @screenboard_svc.create_screenboard(description)
+    end
+
+    def update_screenboard(board_id, description)
+      @screenboard_svc.update_screenboard(board_id, description)
+    end
+
+    def get_screenboard(board_id)
+      @screenboard_svc.get_screenboard(board_id)
+    end
+
+    def delete_screenboard(board_id)
+      @screenboard_svc.delete_screenboard(board_id)
+    end
+
+    def share_screenboard(board_id)
+      @screenboard_svc.share_screenboard(board_id)
     end
 
     private

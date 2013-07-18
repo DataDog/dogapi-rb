@@ -1,2 +1,8 @@
 *.rb~
-pkg
+.DS_store
+.rbenv
+.ruby-gemset
+.ruby-version
+.rvm
+Gemfile.lock
+pkg/

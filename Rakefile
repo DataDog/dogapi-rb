@@ -1,7 +1,6 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rdoc/task'
-require 'cane/rake_task'
 require 'tailor/rake_task'
 
 # Assign some test keys if they aren't already set.
@@ -21,13 +20,6 @@ RDoc::Task.new do |rd|
   rd.options << '--line-numbers' << '--inline-source'
   rd.rdoc_dir = 'doc'
   rd.title = 'DogAPI -- DataDog Client'
-end
-
-desc "Run cane to check quality metrics"
-Cane::RakeTask.new(:quality) do |cane|
-  cane.abc_max = 10
-  cane.no_style = true
-  cane.max_violations = 20 # 2013-07-18 Try to drive this down
 end
 
 require 'tailor/rake_task'

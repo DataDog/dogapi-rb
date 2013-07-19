@@ -13,8 +13,8 @@ See CHANGELOG.md for details
 Available at: https://github.com/DataDog/dogapi-rb
 
     $ cd dogapi-rb
-    $ rake gem
-    $ gem install pkg/dogapi-*.gem
+    $ bundle
+    $ rake install
 
 == Using RubyGems
 
@@ -28,7 +28,7 @@ If you get a permission error, you might need to run the install process with su
 
 If you get a LoadError, missing mkmf, you need to install the development packages for ruby.
 
-    $ # on ubuntu e.g.
+    # on ubuntu e.g.
     $ sudo apt-get install ruby-dev
 
 = Usage

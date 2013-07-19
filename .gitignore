@@ -5,4 +5,5 @@
 .ruby-version
 .rvm
 Gemfile.lock
+doc/
 pkg/

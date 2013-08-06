@@ -80,9 +80,6 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog.stream(before_ts, now_ts + 1, :tags => tags)
     stream = resp["events"]
 
-    assert_equal stream.last['title'], before_title
-    assert_equal stream.first['title'], now_title
-
     code, resp = dog.get_event(now_event_id)
     now_event = resp['event']
     code, resp = dog.get_event(before_event_id)

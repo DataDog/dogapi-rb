@@ -141,15 +141,19 @@ module Dogapi
     ENV["DATADOG_HOST"] || "https://app.datadoghq.com"
   end
 
+  # Memoize the hostname as a module variable
+  @@hostname = nil
+
   def Dogapi.find_localhost
     begin
-      # prefer hostname -f
-      hostname = %x[hostname -f].strip
-      if hostname.length == 0
-        raise "Cannot determine local hostname via hostname -f"
+      if @@hostname.nil? || @@hostname.length == 0
+        # prefer hostname -f
+        @@hostname = %x[hostname -f].strip
       end
     rescue
       raise "Cannot determine local hostname via hostname -f"
     end
+    @@hostname
   end
+
 end

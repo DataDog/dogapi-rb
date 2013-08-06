@@ -53,7 +53,7 @@ module Dogapi
     # http://stackoverflow.com/a/5031637/25276
     def to_hash
         hash = {}
-        instance_variables.each {|var| hash[var[1..-1].to_sym] = instance_variable_get(var) }
+        instance_variables.each {|var| hash[var.to_s[1..-1].to_sym] = instance_variable_get(var) }
         hash
     end
   end

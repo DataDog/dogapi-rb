@@ -1,0 +1,10 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    json (1.7.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  json

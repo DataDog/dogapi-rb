@@ -29,6 +29,13 @@ module Dogapi
       @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
       @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
       @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -134,36 +141,65 @@ module Dogapi
     end
 
     #
-    # TAGS
-   
-    # Get all tags and their associated hosts at your org
-    def all_tags()
-      @tag_svc.get_all()
+    # COMMENTS
+    #
+
+    # Post a comment
+    def comment(message, options={})
+      @comment_svc.comment(message, options)
     end
-   
+
+    # Post a comment
+    def update_comment(comment_id, options={})
+      @comment_svc.update_comment(comment_id, options)
+    end
+
+    def delete_comment(comment_id)
+      @comment_svc.delete_comment(comment_id)
+    end
+
+    #
+    # SEARCH
+    #
+
+    # Run the given search query.
+    def search(query)
+      @search_svc.search query
+    end
+
+
+    #
+    # TAGS
+    #
+
+    # Get all tags and their associated hosts at your org
+    def all_tags(source=nil)
+      @tag_svc.get_all(source)
+    end
+
     # Get all tags for the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def host_tags(host_id)
-      @tag_svc.get(host_id)
+    def host_tags(host_id, source=nil, by_source=false)
+      @tag_svc.get(host_id, source, by_source)
     end
-    
+
     # Add the tags to the given host
     #
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def add_tags(host_id, tags)
-      @tag_svc.add(host_id, tags)
+    def add_tags(host_id, tags, source=nil)
+      @tag_svc.add(host_id, tags, source)
     end
-   
+
     # Replace the tags on the given host
     #
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def update_tags(host_id, tags)
-      @tag_svc.update(host_id, tags)
+    def update_tags(host_id, tags, source=nil)
+      @tag_svc.update(host_id, tags, source)
     end
 
     # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
@@ -175,8 +211,102 @@ module Dogapi
     # Remove all tags from the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def detach_tags(host_id)
-      @tag_svc.detach(host_id)
+    def detach_tags(host_id, source=nil)
+      @tag_svc.detach(host_id, source)
+    end
+
+    #
+    # DASHES
+    #
+
+    # Create a dashboard.
+    def create_dashboard(title, description, graphs)
+      @dash_service.create_dashboard(title, description, graphs)
+    end
+
+    # Update a dashboard.
+    def update_dashboard(dash_id, title, description, graphs)
+      @dash_service.update_dashboard(dash_id, title, description, graphs)
+    end
+
+    # Fetch the given dashboard.
+    def get_dashboard(dash_id)
+      @dash_service.get_dashboard(dash_id)
+    end
+
+    # Fetch all of the dashboards.
+    def get_dashboards
+      @dash_service.get_dashboards
+    end
+
+    # Delete the given dashboard.
+    def delete_dashboard(dash_id)
+      @dash_service.delete_dashboard(dash_id)
+    end
+
+    #
+    # ALERTS
+    #
+
+    def alert(query, options={})
+      @alert_svc.alert(query, options)
+    end
+
+    def update_alert(alert_id, query, options={})
+      @alert_svc.update_alert(alert_id, query, options)
+    end
+
+    def get_alert(alert_id)
+      @alert_svc.get_alert(alert_id)
+    end
+
+    def delete_alert(alert_id)
+      @alert_svc.delete_alert(alert_id)
+    end
+
+    def get_all_alerts()
+      @alert_svc.get_all_alerts()
+    end
+
+    def mute_alerts()
+      @alert_svc.mute_alerts()
+    end
+
+    def unmute_alerts()
+      @alert_svc.unmute_alerts()
+    end
+
+    # User invite
+    def invite(emails, options={})
+      @user_svc.invite(emails, options)
+    end
+
+    # Graph snapshot
+    def graph_snapshot(metric_query, start_ts, end_ts, event_query=nil)
+      @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
+    end
+
+    #
+    # SCREENBOARD
+    #
+    def create_screenboard(description)
+      @screenboard_svc.create_screenboard(description)
+    end
+
+    def update_screenboard(board_id, description)
+      @screenboard_svc.update_screenboard(board_id, description)
+    end
+
+    def get_screenboard(board_id)
+      @screenboard_svc.get_screenboard(board_id)
+    end
+
+    def delete_screenboard(board_id)
+      @screenboard_svc.delete_screenboard(board_id)
+    end
+
+    def share_screenboard(board_id)
+      @screenboard_svc.share_screenboard(board_id)
     end
 
     private

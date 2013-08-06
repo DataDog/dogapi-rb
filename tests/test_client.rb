@@ -1,21 +1,9 @@
-require 'test/unit'
 require 'dogapi'
 require 'time'
+require 'test_base.rb'
 
 class TestClient < Test::Unit::TestCase
-
-  def config_client_test_env
-    @api_key = ENV['DATADOG_API_KEY']
-    @app_key = ENV['DATADOG_APP_KEY']
-    if not @api_key or not @app_key
-      puts "\n"
-      abort "To run tests in your environment, set 'DATADOG_API_KEY' and 'DATADOG_APP_KEY' to appropriate values for your account. Be aware that the tests will submit data, some of which won't be removed at the end.\n\n"
-    end
-  end
-
-  def setup
-    config_client_test_env()
-  end
+  include TestBase
 
   def test_find_localhost
     # Must be an FQDN
@@ -25,7 +13,7 @@ class TestClient < Test::Unit::TestCase
   end
 
   def test_tags
-    hostname = 'test.tag.host'
+    hostname = "test.tag.host.#{random}"
     dog = Dogapi::Client.new(@api_key, @app_key)
 
     # post a metric to make sure the test host context exists
@@ -34,8 +22,11 @@ class TestClient < Test::Unit::TestCase
     # Disable this call until we fix the timeouts
     # dog.all_tags()
 
+    sleep 3
+
     dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
+    assert code == 200, "resp code #{code}"
     assert resp["tags"].size == 0
 
     dog.add_tags(hostname, ['test.tag.1', 'test.tag.2'])
@@ -67,6 +58,8 @@ class TestClient < Test::Unit::TestCase
   def test_events
     now = Time.now()
 
+    tags = ["test-run:#{random}"]
+
     now_ts = now
     now_title = 'dogapi-rb end test title ' + now_ts.to_i.to_s
     now_message = 'test message ' + now_ts.to_i.to_s
@@ -78,23 +71,27 @@ class TestClient < Test::Unit::TestCase
     dog = Dogapi::Client.new(@api_key, @app_key)
     dog_r = Dogapi::Client.new(@api_key)
 
-    e1 = Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts)
-    e2 = Dogapi::Event.new(before_message, :msg_title =>before_title, :date_happened => before_ts)
+    # Tag the events with the build number, because traivs
+    e1 = Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts, :tags => tags)
+    e2 = Dogapi::Event.new(before_message, :msg_title =>before_title,
+    :date_happened => before_ts, :tags => tags)
+
     code, resp = dog_r.emit_event(e1)
     now_event_id = resp["event"]["id"]
     code, resp = dog_r.emit_event(e2)
     before_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
-    code, resp = dog.stream(before_ts, now_ts + 1)
+    code, resp = dog.stream(before_ts, now_ts + 1, :tags => tags)
     stream = resp["events"]
 
     code, resp = dog.get_event(now_event_id)
-    assert !resp['event'].nil?
+    assert code == 200 || code == 202, "resp code #{code}"
     now_event = resp['event']
+
     code, resp = dog.get_event(before_event_id)
-    assert !resp['event'].nil?
+    assert code == 200 || code == 202, "resp code #{code}"
     before_event = resp['event']
 
     assert now_event['text'] == now_message
@@ -104,10 +101,10 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title =>now_title, :date_happened => now_ts, :priority => "low"))
     low_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
     code, resp = dog.get_event(low_event_id)
-    assert !resp['event'].nil?
+    assert code == 200 || code == 202, "resp code #{code}"
     low_event = resp['event']
     assert low_event['priority'] == "low"
 

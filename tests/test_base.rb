@@ -21,5 +21,10 @@ module TestBase
     Kernel.rand 100000
   end
 
-end
+  def job_number
+    # Get the Travis ENV and use that to 'seed' the dashboard titles, in attempt
+    # to prevent parallel testing conflicts
+    job_number = ENV['TRAVIS_JOB_NUMBER'] || '1'
+  end
 
+end

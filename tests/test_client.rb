@@ -5,6 +5,13 @@ require 'test_base.rb'
 class TestClient < Test::Unit::TestCase
   include TestBase
 
+  def test_find_localhost
+    # Must be an FQDN
+    assert Dogapi.find_localhost.index(".") > 0
+    assert Dogapi.find_localhost.split(".").length > 1
+    assert Dogapi.find_localhost == %x[hostname -f].strip
+  end
+
   def test_tags
     hostname = "test.tag.host.#{job_number}"
     dog = Dogapi::Client.new(@api_key, @app_key)
@@ -75,14 +82,17 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog_r.emit_event(e2)
     before_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
     code, resp = dog.stream(before_ts, now_ts + 1, :tags => tags)
     stream = resp["events"]
 
     code, resp = dog.get_event(now_event_id)
+    assert !resp['event'].nil?
     now_event = resp['event']
+
     code, resp = dog.get_event(before_event_id)
+    assert !resp['event'].nil?
     before_event = resp['event']
 
     assert now_event['text'] == now_message
@@ -92,9 +102,10 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title => now_title, :date_happened => now_ts, :priority => "low"))
     low_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
     code, resp = dog.get_event(low_event_id)
+    assert !resp['event'].nil?
     low_event = resp['event']
     assert low_event['priority'] == "low"
 

@@ -88,17 +88,11 @@ class TestClient < Test::Unit::TestCase
     stream = resp["events"]
 
     code, resp = dog.get_event(now_event_id)
-<<<<<<< HEAD
     assert !resp['event'].nil?
-=======
->>>>>>> Remove response code asserts.
     now_event = resp['event']
 
     code, resp = dog.get_event(before_event_id)
-<<<<<<< HEAD
     assert !resp['event'].nil?
-=======
->>>>>>> Remove response code asserts.
     before_event = resp['event']
 
     assert now_event['text'] == now_message
@@ -111,10 +105,7 @@ class TestClient < Test::Unit::TestCase
     sleep 5
 
     code, resp = dog.get_event(low_event_id)
-<<<<<<< HEAD
     assert !resp['event'].nil?
-=======
->>>>>>> Remove response code asserts.
     low_event = resp['event']
     assert low_event['priority'] == "low"
 

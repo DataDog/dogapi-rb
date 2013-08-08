@@ -1,85 +1,11 @@
 = Ruby client for Datadog API v1.8.0
+{<img src="https://travis-ci.org/DataDog/dogapi-rb.png?branch=master" alt="Build Status" />}[https://travis-ci.org/DataDog/dogapi-rb]
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
 = What's new?
 
-== v1.8.0
-
-* Add an API for interacting with Screenboards
-
-== v1.7.1
-
-* Add an API for inviting users
-* Add an API for taking graph snapshots
-* Fix bug in capistrano integration with logging of nil (thanks @arielo)
-
-== v1.7.0
-
-* Not released.
-
-== v1.6.0
-
-* Support for setting `source` type when submitting host tags
-
-== v1.5.2
-* Fix a bug in hashing the Event object when the instance variables are symbols.
-
-== v1.5.0
-
-* Alerting API
-
-== v1.4.3
-
-* Fix bug with capistrano integration for capistrano 2.13.5 (thanks @ansel1)
-
-== v1.4.2
-
-* Added missing dashboards endpoint.
-
-== v1.4.1
-
-* Fixed searching for events with tags.
-
-== v1.4.0
-
-* Added support for the dashboard, search and comment API endpoints.
-
-== v1.3.6
-
-* Small fix for capistrano integration
-
-== v1.3.4
-
-* Various bug fixes (event.to_hash, md5 import, capistrano lambda roles)
-
-== v1.3.3
-
-* Bug fix for submitting counters
-
-== v1.3.2
-
-* Support an aggregation key to aggregate events together
-
-== v1.3.1
-
-* Metrics can be counters, rather than just gauges (thanks to @treeder)
-* Metrics can be tagged.
-
-== v1.3.0
-
-* Capistrano integration. See https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano
-
-== v1.2.x
-
-* You can now manage host tags
-* You can now get event details and query the stream in addition to posting events
-* Functionality relating to events with a duration has been deprecated
-* The underlying clients have been updated to use Datadog's new public HTTP API[https://github.com/DataDog/dogapi/wiki]
-
-== v1.1.x
-
-* You do not need to use environment variables anymore to use the client.
+See CHANGELOG.md for details
 
 = Installation
 
@@ -88,8 +14,8 @@ The Ruby client is a library suitable for inclusion in existing Ruby projects or
 Available at: https://github.com/DataDog/dogapi-rb
 
     $ cd dogapi-rb
-    $ rake gem
-    $ gem install pkg/dogapi-*.gem
+    $ bundle
+    $ rake install
 
 == Using RubyGems
 
@@ -103,7 +29,7 @@ If you get a permission error, you might need to run the install process with su
 
 If you get a LoadError, missing mkmf, you need to install the development packages for ruby.
 
-    $ # on ubuntu e.g.
+    # on ubuntu e.g.
     $ sudo apt-get install ruby-dev
 
 = Usage

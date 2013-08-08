@@ -82,7 +82,7 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog_r.emit_event(e2)
     before_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
     code, resp = dog.stream(before_ts, now_ts + 1, :tags => tags)
     stream = resp["events"]
@@ -93,6 +93,7 @@ class TestClient < Test::Unit::TestCase
 =======
 >>>>>>> Remove response code asserts.
     now_event = resp['event']
+
     code, resp = dog.get_event(before_event_id)
 <<<<<<< HEAD
     assert !resp['event'].nil?
@@ -107,7 +108,7 @@ class TestClient < Test::Unit::TestCase
     code, resp = dog_r.emit_event(Dogapi::Event.new(now_message, :msg_title => now_title, :date_happened => now_ts, :priority => "low"))
     low_event_id = resp["event"]["id"]
 
-    sleep 3
+    sleep 5
 
     code, resp = dog.get_event(low_event_id)
 <<<<<<< HEAD

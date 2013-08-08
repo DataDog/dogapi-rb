@@ -26,7 +26,6 @@ class TestClient < Test::Unit::TestCase
 
     dog.detach_tags(hostname)
     code, resp = dog.host_tags(hostname)
-    assert code == 200, "resp code #{code}"
     assert resp["tags"].size == 0
 
     dog.add_tags(hostname, ['test.tag.1', 'test.tag.2'])
@@ -89,11 +88,9 @@ class TestClient < Test::Unit::TestCase
     stream = resp["events"]
 
     code, resp = dog.get_event(now_event_id)
-    assert code == 200 || code == 202, "resp code #{code}"
     now_event = resp['event']
 
     code, resp = dog.get_event(before_event_id)
-    assert code == 200 || code == 202, "resp code #{code}"
     before_event = resp['event']
 
     assert now_event['text'] == now_message
@@ -106,7 +103,6 @@ class TestClient < Test::Unit::TestCase
     sleep 5
 
     code, resp = dog.get_event(low_event_id)
-    assert code == 200 || code == 202, "resp code #{code}"
     low_event = resp['event']
     assert low_event['priority'] == "low"
 

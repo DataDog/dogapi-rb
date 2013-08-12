@@ -7,7 +7,7 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      def create_dashboard(title, description, graphs)
+      def create_dashboard(title, description, graphs, template_variables=nil)
 
         begin
           params = {
@@ -18,7 +18,8 @@ module Dogapi
           body = {
             :title => title,
             :description => description,
-            :graphs => graphs
+            :graphs => graphs,
+            :template_variables => (template_variables or [])
           }
 
           request(Net::HTTP::Post, "/api/#{API_VERSION}/dash", params, body, true)
@@ -27,7 +28,7 @@ module Dogapi
         end
       end
 
-      def update_dashboard(dash_id, title, description, graphs)
+      def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
 
         begin
           params = {
@@ -38,7 +39,8 @@ module Dogapi
           body = {
             :title => title,
             :description => description,
-            :graphs => graphs
+            :graphs => graphs,
+            :template_variables => (template_variables or [])
           }
 
           request(Net::HTTP::Put, "/api/#{API_VERSION}/dash/#{dash_id}", params, body, true)

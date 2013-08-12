@@ -48,8 +48,9 @@ class TestDashes < Test::Unit::TestCase
       },
       "title" => "Sum Memory Free"
     }]
+    tpl_vars = ["foo", "bar"]
 
-    status, dash_response = dog.update_dashboard(dash_id, title, description, graphs)
+    status, dash_response = dog.update_dashboard(dash_id, title, description, graphs, tpl_vars)
     assert_equal "200", status, "Updated failed, response: #{dash_response}"
 
     # Fetch the dashboard and assert all is well.
@@ -59,6 +60,7 @@ class TestDashes < Test::Unit::TestCase
     assert_equal title, dash["title"]
     assert_equal description, dash["description"]
     assert_equal graphs, dash["graphs"]
+    assert_equal tpl_vars, dash["template_variables"]
 
     # Fetch all the dashboards, assert our created one is in the list of all
     status, dash_response = dog.get_dashboards()

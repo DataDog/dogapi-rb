@@ -220,13 +220,13 @@ module Dogapi
     #
 
     # Create a dashboard.
-    def create_dashboard(title, description, graphs)
-      @dash_service.create_dashboard(title, description, graphs)
+    def create_dashboard(title, description, graphs, template_variables=nil)
+      @dash_service.create_dashboard(title, description, graphs, template_variables)
     end
 
     # Update a dashboard.
-    def update_dashboard(dash_id, title, description, graphs)
-      @dash_service.update_dashboard(dash_id, title, description, graphs)
+    def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
+      @dash_service.update_dashboard(dash_id, title, description, graphs, template_variables)
     end
 
     # Fetch the given dashboard.

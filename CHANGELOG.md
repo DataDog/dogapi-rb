@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 1.8.1 / 2013-08-22
+* Update Dash API to support template variables.
+
 # 1.8.0 / 2013-07-16
 * Add an API for interacting with Screenboards
 

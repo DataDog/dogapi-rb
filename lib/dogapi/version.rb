@@ -1,3 +1,3 @@
 module Dogapi
-  VERSION = "1.8.1.dev"
+  VERSION = "1.8.1"
 end

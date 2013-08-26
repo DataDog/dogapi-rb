@@ -23,4 +23,8 @@ RDoc::Task.new do |rd|
   rd.title = 'DogAPI -- DataDog Client'
 end
 
-task :default => [:test]
+
+desc "Find notes in code"
+task :notes do
+  puts `grep --exclude=Rakefile -r 'OPTIMIZE:\\|FIXME:\\|TODO:' .`
+end

@@ -29,10 +29,10 @@ Tailor::RakeTask.new do |task|
     style.max_line_length 160, level: :warn
     style.max_code_lines_in_method 40, level: :warn
   end
-  # task.file_set 'spec/**/*.rb', :tests do |style|
-  #   style.max_line_length 160, level: :warn
-  #   style.max_code_lines_in_method 40, level: :warn
-  # end
+  task.file_set 'spec/**/*.rb', :tests do |style|
+    style.max_line_length 160, level: :warn
+    style.max_code_lines_in_method 40, level: :warn
+  end
 end
 
 desc "Find notes in code"

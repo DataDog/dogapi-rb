@@ -7,9 +7,10 @@ class TestDashes < Test::Unit::TestCase
 
   def test_dashes
     dog = Dogapi::Client.new(@api_key, @app_key)
+    now = Time.now.to_i.to_s
 
     # Create a dashboard.
-    title = "foobar-#{job_number}"
+    title = "foobar-#{job_number}-#{now}"
     description = 'desc'
     graphs =  [{
       "definition" => {
@@ -36,7 +37,7 @@ class TestDashes < Test::Unit::TestCase
     assert_equal graphs, dash["graphs"]
 
     # Update the dashboard.
-    title = "blahfoobar-#{job_number}"
+    title = "blahfoobar-#{job_number}-#{now}"
     description = 'asdfdesc'
     graphs =  [{
       "definition" => {

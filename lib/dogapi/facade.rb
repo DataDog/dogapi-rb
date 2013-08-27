@@ -55,7 +55,7 @@ module Dogapi
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options = {})
-      defaults = {:timestamp => Time.now}
+      defaults = { :timestamp => Time.now }
       options = defaults.merge(options)
 
       self.emit_points(
@@ -308,8 +308,8 @@ module Dogapi
 
     private
 
-    def override_scope(options={})
-      defaults = {:host => @host, :device => @device}
+    def override_scope(options= {})
+      defaults = { :host => @host, :device => @device }
       options = defaults.merge(options)
       Scope.new(options[:host], options[:device])
     end

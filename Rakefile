@@ -8,7 +8,7 @@ require 'tailor/rake_task'
 ENV["DATADOG_API_KEY"] ||= '9775a026f1ca7d1c6c5af9d94d9595a4'
 ENV["DATADOG_APP_KEY"] ||= '87ce4a24b5553d2e482ea8a8500e71b8ad4554ff'
 
-task :default => [:test]
+task :default => [:tailor, :spec, :test]
 
 Rake::TestTask.new(:test) do |test|
   test.libs.push 'lib'

@@ -1,4 +1,9 @@
 require 'rspec'
+require 'vcr'
+
+# include our code and methods
+require 'dogapi'
+
 # Load any custom matchers
 Dir[File.join(File.dirname(__FILE__), "/support/**/*.rb")].each { |f| require f }
 
@@ -15,5 +20,9 @@ RSpec.configure do |config|
   config.order = 'random'
 end
 
-# include our code and methods
-require 'dogapi'
+VCR.configure do |c|
+  c.cassette_library_dir = 'spec/support/cassettes'
+  c.configure_rspec_metadata!
+  c.default_cassette_options = { :record => :new_episodes, :re_record_interval => 2592000 } # 30 days, in seconds
+  c.hook_into :webmock
+end

@@ -1,0 +1,90 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/alert?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: UTF-8
+      string: ! '{"query":"sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5"}'
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Aug 2013 01:53:07 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.153-293-3859d5c
+      Content-Length:
+      - '328'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"notify_no_data": false, "event_object": "6ff46ab05ac9ab0f1603d727426efbe7",
+        "state": "OK", "name": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "silenced": false, "query": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "message": null, "creator": 3658, "id": 37315, "timeout_h": null}'
+    http_version: 
+  recorded_at: Tue, 27 Aug 2013 01:53:24 GMT
+- request:
+    method: delete
+    uri: https://app.datadoghq.com/api/v1/alert/37315?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 27 Aug 2013 01:53:08 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.153-293-3859d5c
+      Content-Length:
+      - '315'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"notify_no_data": false, "event_object": "6ff46ab05ac9ab0f1603d727426efbe7",
+        "state": "OK", "name": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "silenced": false, "query": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "message": null, "creator": 3658, "timeout_h": null}'
+    http_version: 
+  recorded_at: Tue, 27 Aug 2013 01:53:25 GMT
+recorded_with: VCR 2.5.0

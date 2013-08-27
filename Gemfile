@@ -6,6 +6,8 @@ group :test do
   gem 'rake', '>= 2.4.2'
   gem 'rdoc'
   gem 'rspec'
+  gem 'vcr'
+  gem 'webmock'
 end
 
 group :quality do

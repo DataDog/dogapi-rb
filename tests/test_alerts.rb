@@ -8,7 +8,7 @@ class TestAlerts < Test::Unit::TestCase
   def test_alerts
     dog = Dogapi::Client.new(@api_key, @app_key)
 
-    query = 'sum(last_1d):sum:system.net.bytes_rcvd{host:host0} > 100'
+    query = 'avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 100'
 
     alert_id = dog.alert(query)[1]['id']
     status, alert = dog.get_alert(alert_id)
@@ -22,8 +22,8 @@ class TestAlerts < Test::Unit::TestCase
 
     dog.delete_alert(alert_id)
 
-    query1 = 'sum(last_1d):sum:system.net.bytes_rcvd{host:host0} > 100'
-    query2 = 'sum(last_1d):sum:system.net.bytes_rcvd{host:host0} > 200'
+    query1 = 'avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 100'
+    query2 = 'avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 200'
 
     alert_id1 = dog.alert(query1)[1]['id']
     alert_id2 = dog.alert(query2)[1]['id']

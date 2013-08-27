@@ -23,11 +23,7 @@ module Dogapi
 
       @datadog_host = Dogapi.find_datadog_host()
 
-      if host
-        @host = host
-      else
-        @host = Dogapi.find_localhost()
-      end
+      @host = host ||= Dogapi.find_localhost()
 
       @device = device
 

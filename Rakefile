@@ -1,6 +1,7 @@
 require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rdoc/task'
+require 'rspec/core/rake_task'
 require 'tailor/rake_task'
 
 # Assign some test keys if they aren't already set.
@@ -34,6 +35,8 @@ Tailor::RakeTask.new do |task|
     style.max_code_lines_in_method 40, level: :warn
   end
 end
+
+RSpec::Core::RakeTask.new
 
 desc "Find notes in code"
 task :notes do

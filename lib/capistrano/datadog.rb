@@ -13,16 +13,16 @@ module Capistrano
   class Configuration
     module Execution
       # Attempts to locate the task at the given fully-qualified path, and
-      # execute it. If no such task exists, a Capistrano::NoSuchTaskError 
+      # execute it. If no such task exists, a Capistrano::NoSuchTaskError
       # will be raised.
-      # Also, capture the time the task took to execute, and the logs it 
+      # Also, capture the time the task took to execute, and the logs it
       # outputted for submission to Datadog
-      def find_and_execute_task(path, hooks={})
+      def find_and_execute_task(path, hooks = {})
         task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
         result = nil
         reporter = Capistrano::Datadog.reporter
         timing = Benchmark.measure(task.fully_qualified_name) do
-          # Set the current task so that the logger knows which task to 
+          # Set the current task so that the logger knows which task to
           # associate the logs with
           reporter.current_task = task.fully_qualified_name
           trigger(hooks[:before], task) if hooks[:before]
@@ -75,7 +75,7 @@ module Capistrano
       end
 
       def record_log(message)
-        if not @logging_output[@current_task] 
+        if not @logging_output[@current_task]
           @logging_output[@current_task] = []
         end
         @logging_output[@current_task] << message
@@ -128,7 +128,7 @@ module Capistrano
     namespace :datadog do
       desc "Submit the tasks that have run to Datadog as events"
       task :submit do |ns|
-        begin 
+        begin
           api_key = variables[:datadog_api_key]
           if api_key
             dog = Dogapi::Client.new(api_key)
@@ -147,8 +147,4 @@ module Capistrano
     end
   end
 
-
 end
-
-
-

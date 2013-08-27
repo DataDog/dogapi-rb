@@ -7,7 +7,7 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      def create_dashboard(title, description, graphs, template_variables=nil)
+      def create_dashboard(title, description, graphs, template_variables = nil)
 
         begin
           params = {
@@ -74,7 +74,6 @@ module Dogapi
           suppress_error_if_silent e
         end
       end
-
 
       def delete_dashboard(dash_id)
         begin

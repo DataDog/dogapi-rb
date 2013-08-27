@@ -53,13 +53,15 @@ module Dogapi
     #
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
-    def emit_point(metric, value, options={})
-      defaults = {:timestamp => Time.now, :host => nil, :device => nil}
+    def emit_point(metric, value, options = {})
+      defaults = { :timestamp => Time.now, :host => nil, :device => nil }
       options = defaults.merge(options)
 
-      self.emit_points(metric,
-                       [[options[:timestamp], value]],
-                       options)
+      self.emit_points(
+        metric,
+        [[options[:timestamp], value]],
+        options
+      )
     end
 
     # Record a set of points of metric data
@@ -73,8 +75,8 @@ module Dogapi
     #
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
-    def emit_points(metric, points, options={})
-      defaults = {:host => nil, :device => nil}
+    def emit_points(metric, points, options = {})
+      defaults = { :host => nil, :device => nil }
       options = defaults.merge(options)
 
       scope = override_scope options[:host], options[:device]
@@ -96,8 +98,8 @@ module Dogapi
     # Optional arguments:
     #  :host        => String
     #  :device      => String
-    def emit_event(event, options={})
-      defaults = {:host => nil, :device => nil}
+    def emit_event(event, options = {})
+      defaults = { :host => nil, :device => nil }
       options = defaults.merge(options)
 
       scope = override_scope(options[:host], options[:device])
@@ -122,15 +124,15 @@ module Dogapi
     #   :priority   => "normal" or "low"
     #   :sources    => String, see https://github.com/DataDog/dogapi/wiki/Event for a current list of sources
     #   :tags       => Array of Strings
-    def stream(start, stop, options={})
+    def stream(start, stop, options = {})
       @event_svc.stream(start, stop, options)
     end
 
     # <b>DEPRECATED:</b> Recording events with a duration has been deprecated.
     # The functionality will be removed in a later release.
-    def start_event(event, options={})
+    def start_event(event, options = {})
       warn "[DEPRECATION] Dogapi::Client.start_event() is deprecated. Use `emit_event` instead."
-      defaults = {:host => nil, :device => nil, :source_type => nil}
+      defaults = { :host => nil, :device => nil, :source_type => nil }
       options = defaults.merge(options)
 
       scope = override_scope options[:host], options[:device]
@@ -145,12 +147,12 @@ module Dogapi
     #
 
     # Post a comment
-    def comment(message, options={})
+    def comment(message, options = {})
       @comment_svc.comment(message, options)
     end
 
     # Post a comment
-    def update_comment(comment_id, options={})
+    def update_comment(comment_id, options = {})
       @comment_svc.update_comment(comment_id, options)
     end
 
@@ -173,14 +175,14 @@ module Dogapi
     #
 
     # Get all tags and their associated hosts at your org
-    def all_tags(source=nil)
+    def all_tags(source = nil)
       @tag_svc.get_all(source)
     end
 
     # Get all tags for the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def host_tags(host_id, source=nil, by_source=false)
+    def host_tags(host_id, source = nil, by_source = false)
       @tag_svc.get(host_id, source, by_source)
     end
 
@@ -189,7 +191,7 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def add_tags(host_id, tags, source=nil)
+    def add_tags(host_id, tags, source = nil)
       @tag_svc.add(host_id, tags, source)
     end
 
@@ -198,7 +200,7 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def update_tags(host_id, tags, source=nil)
+    def update_tags(host_id, tags, source = nil)
       @tag_svc.update(host_id, tags, source)
     end
 
@@ -211,7 +213,7 @@ module Dogapi
     # Remove all tags from the given host
     #
     # +host_id+ can be the host's numeric id or string name
-    def detach_tags(host_id, source=nil)
+    def detach_tags(host_id, source = nil)
       @tag_svc.detach(host_id, source)
     end
 
@@ -220,12 +222,12 @@ module Dogapi
     #
 
     # Create a dashboard.
-    def create_dashboard(title, description, graphs, template_variables=nil)
+    def create_dashboard(title, description, graphs, template_variables = nil)
       @dash_service.create_dashboard(title, description, graphs, template_variables)
     end
 
     # Update a dashboard.
-    def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
+    def update_dashboard(dash_id, title, description, graphs, template_variables = nil)
       @dash_service.update_dashboard(dash_id, title, description, graphs, template_variables)
     end
 
@@ -248,11 +250,11 @@ module Dogapi
     # ALERTS
     #
 
-    def alert(query, options={})
+    def alert(query, options = {})
       @alert_svc.alert(query, options)
     end
 
-    def update_alert(alert_id, query, options={})
+    def update_alert(alert_id, query, options = {})
       @alert_svc.update_alert(alert_id, query, options)
     end
 
@@ -277,12 +279,12 @@ module Dogapi
     end
 
     # User invite
-    def invite(emails, options={})
+    def invite(emails, options = {})
       @user_svc.invite(emails, options)
     end
 
     # Graph snapshot
-    def graph_snapshot(metric_query, start_ts, end_ts, event_query=nil)
+    def graph_snapshot(metric_query, start_ts, end_ts, event_query = nil)
       @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
     end
 

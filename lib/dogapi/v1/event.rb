@@ -54,7 +54,7 @@ module Dogapi
         end
       end
 
-      def stream(start, stop, options={})
+      def stream(start, stop, options = {})
         begin
           defaults = {
             :priority => nil,

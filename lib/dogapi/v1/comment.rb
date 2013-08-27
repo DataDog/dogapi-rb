@@ -8,7 +8,7 @@ module Dogapi
       API_VERSION = "v1"
 
       # Submit a comment.
-      def comment(message, options={})
+      def comment(message, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -16,7 +16,7 @@ module Dogapi
           }
 
           body = {
-           'message' => message,
+            'message' => message,
           }.merge options
 
           request(Net::HTTP::Post, "/api/#{API_VERSION}/comments", params, body, true)
@@ -26,7 +26,7 @@ module Dogapi
       end
 
       # Update a comment.
-      def update_comment(comment_id, options={})
+      def update_comment(comment_id, options = {})
         begin
           params = {
             :api_key => @api_key,

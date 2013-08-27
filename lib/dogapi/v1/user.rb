@@ -7,7 +7,7 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      def invite(emails, options={})
+      def invite(emails, options = {})
         begin
           params = {
             :api_key => @api_key,

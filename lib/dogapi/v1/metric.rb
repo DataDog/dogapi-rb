@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = "v1"
 
       # Records an Event with no duration
-      def submit(metric, points, scope, options={})
+      def submit(metric, points, scope, options = {})
         begin
           params = {
             :api_key => @api_key
@@ -20,7 +20,8 @@ module Dogapi
             raise ArgumentError, "metric type must be gauge or counter"
           end
 
-          body = { :series => [
+          body = {
+            :series => [
               {
                 :metric => metric,
                 :points => points,
@@ -30,7 +31,6 @@ module Dogapi
               }
             ]
           }
-
 
           # Add tags if there are any
           if not options[:tags].nil?

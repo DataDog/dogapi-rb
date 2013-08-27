@@ -26,7 +26,7 @@ module Dogapi
   #  :event_type    => String
   #  :source_type_name => String
   #  :aggregation_key => String
-    def initialize(msg_text, options={})
+    def initialize(msg_text, options = {})
       defaults = {
         :date_happened => Time.now.to_i,
         :msg_title => '',
@@ -48,13 +48,13 @@ module Dogapi
       @event_type = options[:event_type]
       @source_type_name = options[:source_type_name]
     end
-    
-    # Copy and pasted from the internets 
+
+    # Copy and pasted from the internets
     # http://stackoverflow.com/a/5031637/25276
     def to_hash
-        hash = {}
-        instance_variables.each {|var| hash[var.to_s[1..-1].to_sym] = instance_variable_get(var) }
-        hash
+      hash = {}
+      instance_variables.each { |var| hash[var.to_s[1..-1].to_sym] = instance_variable_get(var) }
+      hash
     end
   end
 

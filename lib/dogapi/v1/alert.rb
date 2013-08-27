@@ -7,7 +7,7 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      def alert(query, options={})
+      def alert(query, options = {})
         begin
           params = {
             :api_key => @api_key,

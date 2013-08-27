@@ -116,7 +116,7 @@ module Dogapi
       resp = nil
       connect do |conn|
         if params and params.size > 0
-          qs_params = params.map { |k,v| k.to_s + "=" + v.to_s }
+          qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
           qs = "?" + qs_params.join("&")
           url = url + qs
         end

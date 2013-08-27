@@ -5,7 +5,7 @@ http_interactions:
     uri: https://app.datadoghq.com/api/v1/alert?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
     body:
       encoding: UTF-8
-      string: ! '{"query":"sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+      string: ! '{"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
         > 5"}'
     headers:
       Accept:
@@ -24,7 +24,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 27 Aug 2013 01:53:08 GMT
+      - Tue, 27 Aug 2013 16:13:41 GMT
       Pragma:
       - no-cache
       Server:
@@ -39,15 +39,15 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"notify_no_data": false, "event_object": "6ff46ab05ac9ab0f1603d727426efbe7",
-        "state": "OK", "name": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "silenced": false, "query": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "message": null, "creator": 3658, "id": 37316, "timeout_h": null}'
+      string: ! '{"notify_no_data": false, "event_object": "6bc5a22ffc9d267c3cd6eb3ad79623e0",
+        "state": "OK", "name": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "silenced": false, "query": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "message": null, "creator": 3658, "id": 37496, "timeout_h": null}'
     http_version: 
-  recorded_at: Tue, 27 Aug 2013 01:53:26 GMT
+  recorded_at: Tue, 27 Aug 2013 16:13:41 GMT
 - request:
     method: delete
-    uri: https://app.datadoghq.com/api/v1/alert/37316?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    uri: https://app.datadoghq.com/api/v1/alert/37496?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
     body:
       encoding: US-ASCII
       string: ''
@@ -66,7 +66,7 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Tue, 27 Aug 2013 01:53:09 GMT
+      - Tue, 27 Aug 2013 16:13:41 GMT
       Pragma:
       - no-cache
       Server:
@@ -81,10 +81,10 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"notify_no_data": false, "event_object": "6ff46ab05ac9ab0f1603d727426efbe7",
-        "state": "OK", "name": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "silenced": false, "query": "sum(last_10m):avg:test.metric.metric{host:test.metric.host}
+      string: ! '{"notify_no_data": false, "event_object": "6bc5a22ffc9d267c3cd6eb3ad79623e0",
+        "state": "OK", "name": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5", "silenced": false, "query": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
         > 5", "message": null, "creator": 3658, "timeout_h": null}'
     http_version: 
-  recorded_at: Tue, 27 Aug 2013 01:53:26 GMT
+  recorded_at: Tue, 27 Aug 2013 16:13:41 GMT
 recorded_with: VCR 2.5.0

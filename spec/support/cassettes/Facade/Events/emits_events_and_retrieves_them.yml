@@ -1,0 +1,67 @@
+--- 
+http_interactions: 
+- request: 
+    method: post
+    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body: 
+      string: "{\"parent\":null,\"msg_title\":\"dogapi-rb end test title 1377812141\",\"event_type\":null,\"msg_text\":\"test message\",\"host\":\"dogbox\",\"date_happened\":1377812141,\"source_type_name\":null,\"device\":null,\"aggregation_key\":\"\",\"tags\":[\"test-run:1\"],\"title\":\"dogapi-rb end test title 1377812141\",\"alert_type\":null,\"text\":\"test message\",\"priority\":\"normal\"}"
+    headers: 
+      Content-Type: 
+      - application/json
+      Accept: 
+      - "*/*"
+  response: 
+    status: 
+      code: 202
+      message: Accepted
+    headers: 
+      Content-Length: 
+      - "312"
+      Content-Type: 
+      - text/json; charset=UTF-8
+      Server: 
+      - dogdispatcher/4.7.0
+      Connection: 
+      - keep-alive
+      Date: 
+      - Thu, 29 Aug 2013 21:35:41 GMT
+    body: 
+      string: "{\"status\": \"ok\", \"event\": {\"priority\": \"normal\", \"date_happened\": 1377812141, \"handle\": null, \"title\": \"dogapi-rb end test title 1377812141\", \"url\": \"https://app.datadoghq.com/event/jump_to?event_id=1905040728720298327\", \"text\": null, \"tags\": [\"test-run:1\"], \"related_event_id\": null, \"id\": 1905040728720298327}}"
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:35:41 GMT
+- request: 
+    method: get
+    uri: https://app.datadoghq.com/api/v1/events/1905040728720298327?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body: 
+      string: ""
+    headers: 
+      Accept: 
+      - "*/*"
+  response: 
+    status: 
+      code: 200
+      message: OK
+    headers: 
+      Content-Length: 
+      - "367"
+      Cache-Control: 
+      - no-cache
+      Content-Type: 
+      - application/json
+      X-Dd-Version: 
+      - 31.160-300-bedcb85
+      Set-Cookie: 
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      Server: 
+      - gunicorn/0.17.4
+      Connection: 
+      - keep-alive
+      Pragma: 
+      - no-cache
+      Date: 
+      - Thu, 29 Aug 2013 21:35:47 GMT
+    body: 
+      string: "{\"event\": {\"date_happened\": 1377812141, \"alert_type\": \"info\", \"resource\": \"/api/v1/events/1905040728720298327\", \"title\": \"dogapi-rb end test title 1377812141\", \"url\": \"/event/jump_to?event_id=1905040728720298327\", \"text\": \"test message\", \"tags\": [\"test-run:1\"], \"id\": 1905040728720298327, \"priority\": \"normal\", \"host\": \"dogbox\", \"device_name\": null, \"payload\": \"{}\"}}"
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 21:35:46 GMT
+recorded_with: VCR 2.5.0

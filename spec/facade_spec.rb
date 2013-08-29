@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe "Facade", :vcr => true do
 
-  before(:all) do
+  before(:each) do
     @api_key = ENV["DATADOG_API_KEY"]
     @app_key = ENV["DATADOG_APP_KEY"]
     @job_number = ENV['TRAVIS_JOB_NUMBER'] || '1'
@@ -36,7 +36,7 @@ describe "Facade", :vcr => true do
       metric_svc = double
       @dog.instance_variable_set("@metric_svc", metric_svc)
       metric_svc.should_receive(:submit) do |metric, points, scope, options|
-        expect(scope.host).to eq nil
+        expect(scope.host).to be_nil
       end
       @dog.emit_point("metric.name", 0, :host => nil)
     end
@@ -64,7 +64,7 @@ describe "Facade", :vcr => true do
       now_event_id = resp["event"]["id"]
 
       code, resp = @dog.get_event(now_event_id)
-      expect(resp['event']).not_to eq(nil)
+      expect(resp['event']).not_to be_nil
       expect(resp['event']['text']).to eq(now_message)
     end
 
@@ -74,7 +74,7 @@ describe "Facade", :vcr => true do
       low_event_id = resp["event"]["id"]
 
       code, resp = @dog.get_event(low_event_id)
-      expect(resp['event']).not_to eq(nil)
+      expect(resp['event']).not_to be_nil
       low_event = resp['event']
       expect(low_event['priority']).to eq("low")
     end
@@ -87,11 +87,37 @@ describe "Facade", :vcr => true do
       second = resp["event"]["id"]
 
       code, resp = @dog.get_event(first)
-      expect(resp["event"]).not_to eq(nil)
+      expect(resp["event"]).not_to be_nil
       code, resp = @dog.get_event(second)
-      expect(resp["event"]).not_to eq(nil)
+      expect(resp["event"]).not_to be_nil
     end
 
+  end
+
+  context "Tags" do
+    it "adds, updates and detaches tags" do
+      hostname = "test.tag.host"
+
+      @dog.emit_point('test.tag.metric', 1, :host => hostname)
+
+      @dog.detach_tags(hostname)
+      code, resp = @dog.host_tags(hostname)
+      expect(resp["tags"]).to be_empty
+
+      @dog.add_tags(hostname, ['test.tag.1', 'test.tag.2'])
+      code, resp = @dog.host_tags(hostname)
+      new_tags = resp["tags"]
+      expect(new_tags).to match_array(['test.tag.1', 'test.tag.2'])
+
+      @dog.add_tags(hostname, ['test.tag.3'])
+      code, resp = @dog.host_tags(hostname)
+      new_tags = resp["tags"]
+      expect(new_tags).to match_array(['test.tag.1', 'test.tag.2', 'test.tag.3'])
+
+      @dog.detach_tags(hostname)
+      code, resp = @dog.host_tags(hostname)
+      expect(resp["tags"]).to be_empty
+    end
   end
 
 end

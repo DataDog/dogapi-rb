@@ -1,0 +1,352 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/series?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body:
+      encoding: UTF-8
+      string: ! '{"series":[{"metric":"test.tag.metric","points":[[1377814456,1.0]],"type":"gauge","host":"test.tag.host","device":null}]}'
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Content-Type:
+      - text/json; charset=UTF-8
+      Date:
+      - Thu, 29 Aug 2013 22:14:17 GMT
+      Server:
+      - dogdispatcher/4.7.0
+      Content-Length:
+      - '15'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"status":"ok"}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:14:17 GMT
+- request:
+    method: delete
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:15:11 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:15:11 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:15:26 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '12'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"tags": []}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:15:26 GMT
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: UTF-8
+      string: ! '{"tags":["test.tag.1","test.tag.2"]}'
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:17:11 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '63'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"host": "test.tag.host", "tags": ["test.tag.2", "test.tag.1"]}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:17:11 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:17:11 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '38'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"tags": ["test.tag.2", "test.tag.1"]}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:17:11 GMT
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: UTF-8
+      string: ! '{"tags":["test.tag.3"]}'
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 201
+      message: Created
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:22:15 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '77'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"host": "test.tag.host", "tags": ["test.tag.2", "test.tag.3", "test.tag.1"]}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:22:15 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:22:16 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '52'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"tags": ["test.tag.2", "test.tag.3", "test.tag.1"]}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:22:16 GMT
+- request:
+    method: delete
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 204
+      message: No Content
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Length:
+      - '4'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:23:47 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ''
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:23:47 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/tags/hosts/test.tag.host?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 29 Aug 2013 22:23:47 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
+      X-Dd-Version:
+      - 31.161-301-21fcab4
+      Content-Length:
+      - '12'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"tags": []}'
+    http_version: 
+  recorded_at: Thu, 29 Aug 2013 22:23:48 GMT
+recorded_with: VCR 2.5.0

@@ -6,7 +6,6 @@ describe "Facade", :vcr => true do
     @api_key = ENV["DATADOG_API_KEY"]
     @app_key = ENV["DATADOG_APP_KEY"]
     @job_number = ENV['TRAVIS_JOB_NUMBER'] || '1'
-    @dog_r = Dogapi::Client.new(@api_key)
     @dog = Dogapi::Client.new(@api_key, @app_key)
   end
 
@@ -60,7 +59,7 @@ describe "Facade", :vcr => true do
       event = Dogapi::Event.new(now_message, :msg_title => now_title,
         :date_happened => now_ts, :tags => tags)
 
-      code, resp = @dog_r.emit_event(event)
+      code, resp = @dog.emit_event(event)
       now_event_id = resp["event"]["id"]
 
       code, resp = @dog.get_event(now_event_id)
@@ -70,7 +69,7 @@ describe "Facade", :vcr => true do
 
     it "emits events with specified priority" do
       event = Dogapi::Event.new('test message', :msg_title => 'title', :date_happened => Time.now(), :priority => "low")
-      code, resp = @dog_r.emit_event(event)
+      code, resp = @dog.emit_event(event)
       low_event_id = resp["event"]["id"]
 
       code, resp = @dog.get_event(low_event_id)
@@ -81,9 +80,9 @@ describe "Facade", :vcr => true do
 
     it "emits aggregate events" do
       now = Time.now()
-      code, resp = @dog_r.emit_event(Dogapi::Event.new("Testing Aggregation (first)", :aggregation_key => now.to_i))
+      code, resp = @dog.emit_event(Dogapi::Event.new("Testing Aggregation (first)", :aggregation_key => now.to_i))
       first = resp["event"]["id"]
-      code, resp = @dog_r.emit_event(Dogapi::Event.new("Testing Aggregation (second)", :aggregation_key => now.to_i))
+      code, resp = @dog.emit_event(Dogapi::Event.new("Testing Aggregation (second)", :aggregation_key => now.to_i))
       second = resp["event"]["id"]
 
       code, resp = @dog.get_event(first)

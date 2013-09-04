@@ -23,7 +23,8 @@ module Dogapi
 
       @datadog_host = Dogapi.find_datadog_host()
 
-      @host = host
+      @host = host ||= Dogapi.find_localhost()
+
       @device = device
 
       @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
@@ -54,7 +55,7 @@ module Dogapi
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options = {})
-      defaults = { :timestamp => Time.now, :host => nil, :device => nil }
+      defaults = { :timestamp => Time.now }
       options = defaults.merge(options)
 
       self.emit_points(
@@ -76,10 +77,7 @@ module Dogapi
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_points(metric, points, options = {})
-      defaults = { :host => nil, :device => nil }
-      options = defaults.merge(options)
-
-      scope = override_scope options[:host], options[:device]
+      scope = override_scope options
 
       points.each do |p|
         p[0].kind_of? Time or raise "Not a Time"
@@ -99,10 +97,7 @@ module Dogapi
     #  :host        => String
     #  :device      => String
     def emit_event(event, options = {})
-      defaults = { :host => nil, :device => nil }
-      options = defaults.merge(options)
-
-      scope = override_scope(options[:host], options[:device])
+      scope = override_scope options
 
       @event_svc.post(event, scope)
     end
@@ -132,10 +127,10 @@ module Dogapi
     # The functionality will be removed in a later release.
     def start_event(event, options = {})
       warn "[DEPRECATION] Dogapi::Client.start_event() is deprecated. Use `emit_event` instead."
-      defaults = { :host => nil, :device => nil, :source_type => nil }
+      defaults = { :source_type => nil }
       options = defaults.merge(options)
 
-      scope = override_scope options[:host], options[:device]
+      scope = override_scope options
 
       @legacy_event_svc.start(@api_key, event, scope, options[:source_type]) do
         yield
@@ -313,18 +308,10 @@ module Dogapi
 
     private
 
-    def override_scope(host, device)
-      if host
-        h = host
-      else
-        h = @host
-      end
-      if device
-        d = device
-      else
-        d = @device
-      end
-      Scope.new(h, d)
+    def override_scope(options= {})
+      defaults = { :host => @host, :device => @device }
+      options = defaults.merge(options)
+      Scope.new(options[:host], options[:device])
     end
   end
 end

@@ -18,7 +18,7 @@ describe "Facade", :vcr => true do
     end
 
     it "emit_point passes data" do
-      @metric_svc.should_receive(:submit) do |metric, points, scope, options|
+      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
         expect(metric).to eq "metric.name"
         expect(points[0][1]).to eq 0
         expect(scope.host).to eq "myhost"
@@ -27,14 +27,14 @@ describe "Facade", :vcr => true do
     end
 
     it "emit_point uses localhost default" do
-      @metric_svc.should_receive(:submit) do |metric, points, scope, options|
+      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
         expect(scope.host).to eq Dogapi.find_localhost
       end
       @dogmock.emit_point("metric.name", 0)
     end
 
     it "emit_point can pass nil host" do
-      @metric_svc.should_receive(:submit) do |metric, points, scope, options|
+      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
         expect(scope.host).to be_nil
       end
       @dogmock.emit_point("metric.name", 0, :host => nil)

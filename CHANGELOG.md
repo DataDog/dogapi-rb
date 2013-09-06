@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 1.9.0 / 2013-09-06
+* When emitting a metric without an explicit host, default to local hostname.
+
 # 1.8.1 / 2013-08-22
 * Update Dash API to support template variables.
 

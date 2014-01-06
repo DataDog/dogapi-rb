@@ -1,6 +1,9 @@
 Changes
 =======
 
+# 1.9.1 / 2014-01-06
+* Log a warning instead of crashing when trying to integration with capistrano v3
+
 # 1.9.0 / 2013-09-06
 * When emitting a metric without an explicit host, default to local hostname.
 

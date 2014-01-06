@@ -119,32 +119,38 @@ module Capistrano
     end
   end
 
-  Configuration.instance(:must_exist).load do
-    # Wrap the existing logging target with the Datadog capture class
-    logger.device = Datadog::LogCapture.new logger.device
+  if Configuration.respond_to? :instance then
+    # Capistrano v2
+    Configuration.instance(:must_exist).load do
+      # Wrap the existing logging target with the Datadog capture class
+      logger.device = Datadog::LogCapture.new logger.device
 
-    # Trigger the Datadog submission once all the tasks have run
-    on :exit, "datadog:submit"
-    namespace :datadog do
-      desc "Submit the tasks that have run to Datadog as events"
-      task :submit do |ns|
-        begin
-          api_key = variables[:datadog_api_key]
-          if api_key
-            dog = Dogapi::Client.new(api_key)
-            Datadog::reporter.report.each do |event|
-              dog.emit_event event
+      # Trigger the Datadog submission once all the tasks have run
+      on :exit, "datadog:submit"
+      namespace :datadog do
+        desc "Submit the tasks that have run to Datadog as events"
+        task :submit do |ns|
+          begin
+            api_key = variables[:datadog_api_key]
+            if api_key
+              dog = Dogapi::Client.new(api_key)
+              Datadog::reporter.report.each do |event|
+                dog.emit_event event
+              end
+            else
+              puts "No api key set, not submitting to Datadog"
             end
-          else
-            puts "No api key set, not submitting to Datadog"
+          rescue Timeout::Error => e
+            puts "Could not submit to Datadog, request timed out."
+          rescue => e
+            puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
           end
-        rescue Timeout::Error => e
-          puts "Could not submit to Datadog, request timed out."
-        rescue => e
-          puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
         end
       end
     end
+  else
+    # No support yet for Capistrano v3
+    puts "No Datadog events will be sent since Datadog currently only supports Capistrano v2. For more info, see https://github.com/DataDog/dogapi-rb/issues/40."
   end
 
 end

@@ -150,7 +150,7 @@ module Capistrano
     end
   else
     # No support yet for Capistrano v3
-    puts "Datadog could not monkeypatch Capistrano, no Datadog events will be sent"
+    puts "No Datadog events will be sent since Datadog currently only supports Capistrano v2. For more info, see https://github.com/DataDog/dogapi-rb/issues/40."
   end
 
 end

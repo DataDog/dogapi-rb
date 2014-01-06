@@ -1,0 +1,81 @@
+require "benchmark"
+require "delegate"
+
+# Capistrano v2
+
+# Monkeypatch capistrano to collect data about the tasks that it's running
+module Capistrano
+  class Configuration
+    module Execution
+      # Attempts to locate the task at the given fully-qualified path, and
+      # execute it. If no such task exists, a Capistrano::NoSuchTaskError
+      # will be raised.
+      # Also, capture the time the task took to execute, and the logs it
+      # outputted for submission to Datadog
+      def find_and_execute_task(path, hooks = {})
+        task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
+        result = nil
+        reporter = Capistrano::Datadog.reporter
+        timing = Benchmark.measure(task.fully_qualified_name) do
+          # Set the current task so that the logger knows which task to
+          # associate the logs with
+          reporter.current_task = task.fully_qualified_name
+          trigger(hooks[:before], task) if hooks[:before]
+          result = execute_task(task)
+          trigger(hooks[:after], task) if hooks[:after]
+          reporter.current_task = nil
+        end
+        # Collect the timing in a list for later reporting
+        reporter.record_task task, timing
+        result
+      end
+    end
+  end
+
+  class Logger
+    # Make the device attribute writeable so we can swap it out
+    # with something that captures logging out by task
+    attr_accessor   :device
+  end
+end
+
+
+module Capistrano
+  module Datadog
+    class LogCapture < SimpleDelegator
+      def puts(message)
+        Capistrano::Datadog::reporter.record_log message
+        __getobj__.puts message
+      end
+    end
+
+    Configuration.instance(:must_exist).load do
+      # Wrap the existing logging target with the Datadog capture class
+      logger.device = Datadog::LogCapture.new logger.device
+
+      # Trigger the Datadog submission once all the tasks have run
+      on :exit, "datadog:submit"
+      namespace :datadog do
+        desc "Submit the tasks that have run to Datadog as events"
+        task :submit do |ns|
+          begin
+            api_key = variables[:datadog_api_key]
+            if api_key
+              dog = Dogapi::Client.new(api_key)
+              Datadog::reporter.report.each do |event|
+                dog.emit_event event
+              end
+            else
+              puts "No api key set, not submitting to Datadog"
+            end
+          rescue Timeout::Error => e
+            puts "Could not submit to Datadog, request timed out."
+          rescue => e
+            puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
+          end
+        end
+      end
+    end
+  end
+end
+

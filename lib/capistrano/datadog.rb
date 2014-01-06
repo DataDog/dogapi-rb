@@ -1,5 +1,7 @@
 require "etc"
 require "digest/md5"
+require "timeout"
+
 require "dogapi"
 
 module Capistrano
@@ -20,6 +22,23 @@ module Capistrano
       @cap_version
     end
 
+    def self.submit(api_key)
+      begin
+        if api_key
+          dog = Dogapi::Client.new(api_key)
+          reporter.report.each do |event|
+            dog.emit_event event
+          end
+        else
+          puts "No api key set, not submitting to Datadog"
+        end
+      rescue Timeout::Error => e
+        puts "Could not submit to Datadog, request timed out."
+      rescue => e
+        puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
+      end
+    end
+
     # Collects info about the tasks that ran in order to submit to Datadog
     class Reporter
       attr_accessor :current_task
@@ -30,14 +49,10 @@ module Capistrano
         @logging_output = {}
       end
 
-      def record_task(task, timing)
-        roles = task.options[:roles]
-        if roles.is_a? Proc
-          roles = roles.call
-        end
+      def record_task(task_name, timing, roles)
         @tasks << {
-          :name   => task.fully_qualified_name,
-          :timing => timing.real,
+          :name   => task_name,
+          :timing => timing,
           :roles  => roles
         }
       end

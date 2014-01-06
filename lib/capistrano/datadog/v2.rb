@@ -16,17 +16,25 @@ module Capistrano
         task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
         result = nil
         reporter = Capistrano::Datadog.reporter
-        timing = Benchmark.measure(task.fully_qualified_name) do
+        task_name = task.fully_qualified_name
+        timing = Benchmark.measure(task_name) do
           # Set the current task so that the logger knows which task to
           # associate the logs with
-          reporter.current_task = task.fully_qualified_name
+          reporter.current_task = task_name
           trigger(hooks[:before], task) if hooks[:before]
           result = execute_task(task)
           trigger(hooks[:after], task) if hooks[:after]
           reporter.current_task = nil
         end
-        # Collect the timing in a list for later reporting
-        reporter.record_task task, timing
+
+        # Record the task name, its timing and roles
+        roles = task.options[:roles]
+        if roles.is_a? Proc
+          roles = roles.call
+        end
+        reporter.record_task(task_name, timing.real, roles)
+
+        # Return the original result
         result
       end
     end
@@ -58,21 +66,7 @@ module Capistrano
       namespace :datadog do
         desc "Submit the tasks that have run to Datadog as events"
         task :submit do |ns|
-          begin
-            api_key = variables[:datadog_api_key]
-            if api_key
-              dog = Dogapi::Client.new(api_key)
-              Datadog::reporter.report.each do |event|
-                dog.emit_event event
-              end
-            else
-              puts "No api key set, not submitting to Datadog"
-            end
-          rescue Timeout::Error => e
-            puts "Could not submit to Datadog, request timed out."
-          rescue => e
-            puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
-          end
+          Capistrano::Datadog.submit variables[:datadog_api_key]
         end
       end
     end

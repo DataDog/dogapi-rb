@@ -86,6 +86,8 @@ module Capistrano
           source_type = "capistrano"
           message_content = (@logging_output[name] || []).join('')
           message = if !message_content.empty? then
+            # Strip out color control characters
+            message_content = message_content.gsub(/\e\[(\d+)m/, '')
             "@@@\n#{message_content}@@@" else "" end
 
           Dogapi::Event.new(message,

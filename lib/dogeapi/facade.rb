@@ -1,13 +1,13 @@
 require 'time'
-require 'dogapi/v1'
+require 'dogeapi/v1'
 
-module Dogapi
+module Dogeapi
 
   # A simple DogAPI client
   #
-  # See Dogapi::V1  for the thick underlying clients
+  # See Dogeapi::V1  for the thick underlying clients
   #
-  # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
+  # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDoge/dogeapi/wiki].
   class Client
 
     # Create a new Client optionally specifying a default host and device
@@ -21,24 +21,24 @@ module Dogapi
 
       @application_key = application_key
 
-      @datadog_host = Dogapi.find_datadog_host()
+      @datadog_host = Dogeapi.find_datadog_host()
 
-      @host = host ||= Dogapi.find_localhost()
+      @host = host ||= Dogeapi.find_localhost()
 
       @device = device
 
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent)
+      @metric_svc = Dogeapi::V1::MetricService.new(@api_key, @application_key, silent)
+      @event_svc = Dogeapi::V1::EventService.new(@api_key, @application_key, silent)
+      @tag_svc = Dogeapi::V1::TagService.new(@api_key, @application_key, silent)
+      @comment_svc = Dogeapi::V1::CommentService.new(@api_key, @application_key, silent)
+      @search_svc = Dogeapi::V1::SearchService.new(@api_key, @application_key, silent)
+      @dash_service = Dogeapi::V1::DashService.new(@api_key, @application_key, silent)
+      @alert_svc = Dogeapi::V1::AlertService.new(@api_key, @application_key, silent)
+      @user_svc = Dogeapi::V1::UserService.new(@api_key, @application_key, silent)
+      @snapshot_svc = Dogeapi::V1::SnapshotService.new(@api_key, @application_key, silent)
+      @screenboard_svc = Dogeapi::V1::ScreenboardService.new(@api_key, @application_key, silent)
 
-      @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
+      @legacy_event_svc = Dogeapi::EventService.new(@datadog_host)
     end
 
     #
@@ -117,7 +117,7 @@ module Dogapi
     #
     # Optional arguments:
     #   :priority   => "normal" or "low"
-    #   :sources    => String, see https://github.com/DataDog/dogapi/wiki/Event for a current list of sources
+    #   :sources    => String, see https://github.com/DataDoge/dogeapi/wiki/Event for a current list of sources
     #   :tags       => Array of Strings
     def stream(start, stop, options = {})
       @event_svc.stream(start, stop, options)
@@ -126,7 +126,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Recording events with a duration has been deprecated.
     # The functionality will be removed in a later release.
     def start_event(event, options = {})
-      warn "[DEPRECATION] Dogapi::Client.start_event() is deprecated. Use `emit_event` instead."
+      warn "[DEPRECATION] Dogeapi::Client.start_event() is deprecated. Use `emit_event` instead."
       defaults = { :source_type => nil }
       options = defaults.merge(options)
 
@@ -201,7 +201,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
     def detatch_tags(host_id)
-      warn "[DEPRECATION] Dogapi::Client.detatch() is deprecated. Use `detach` instead."
+      warn "[DEPRECATION] Dogeapi::Client.detatch() is deprecated. Use `detach` instead."
       detach_tags(host_id)
     end
 

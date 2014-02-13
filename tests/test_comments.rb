@@ -1,4 +1,4 @@
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 require 'test_base.rb'
 
@@ -7,7 +7,7 @@ class TestComments < Test::Unit::TestCase
 
 
   def test_comments
-    dog = Dogapi::Client.new(@api_key, @app_key)
+    dog = Dogeapi::Client.new(@api_key, @app_key)
 
     # Create a comment
     dog.comment('test comment')

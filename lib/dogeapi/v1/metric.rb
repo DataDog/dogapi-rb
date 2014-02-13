@@ -1,10 +1,10 @@
-require 'dogapi'
+require 'dogeapi'
 
-module Dogapi
+module Dogeapi
   class V1 # for namespacing
 
-    # Event-specific client affording more granular control than the simple Dogapi::Client
-    class MetricService < Dogapi::APIService
+    # Event-specific client affording more granular control than the simple Dogeapi::Client
+    class MetricService < Dogeapi::APIService
 
       API_VERSION = "v1"
 

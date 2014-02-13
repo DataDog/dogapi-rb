@@ -3,7 +3,7 @@ require 'net/http'
 require 'rubygems'
 require 'json'
 
-module Dogapi
+module Dogeapi
 
   # Metadata class for storing the details of an event
   class Event
@@ -60,15 +60,15 @@ module Dogapi
 
   # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
   # removed in an upcoming release.
-  class EventService < Dogapi::Service
+  class EventService < Dogeapi::Service
 
     API_VERSION = "1.0.0"
 
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def submit(api_key, event, scope=nil, source_type=nil)
-      warn "[DEPRECATION] Dogapi::EventService.submit() has been deprecated in favor of the newer V1 services"
-      scope = scope || Dogapi::Scope.new()
+      warn "[DEPRECATION] Dogeapi::EventService.submit() has been deprecated in favor of the newer V1 services"
+      scope = scope || Dogeapi::Scope.new()
       params = {
         :api_key => api_key,
         :api_version  =>  API_VERSION,
@@ -97,7 +97,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def start(api_key, event, scope, source_type=nil)
-      warn "[DEPRECATION] Dogapi::EventService.start() has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogeapi::EventService.start() has been deprecated in favor of the newer V1 services"
       response = submit api_key, event, scope, source_type
       success = nil
 

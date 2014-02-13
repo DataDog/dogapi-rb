@@ -1,17 +1,17 @@
-require 'dogapi'
+require 'dogeapi'
 
-module Dogapi
+module Dogeapi
   class V1 # for namespacing
 
-    # Event-specific client affording more granular control than the simple Dogapi::Client
-    class EventService < Dogapi::APIService
+    # Event-specific client affording more granular control than the simple Dogeapi::Client
+    class EventService < Dogeapi::APIService
 
       API_VERSION = "v1"
 
       # Records an Event with no duration
       def post(event, scope=nil)
         begin
-          scope = scope || Dogapi::Scope.new()
+          scope = scope || Dogeapi::Scope.new()
           params = {
             :api_key => @api_key
           }

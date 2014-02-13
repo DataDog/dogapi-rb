@@ -6,13 +6,13 @@ describe "Facade", :vcr => true do
     @api_key = ENV["DATADOG_API_KEY"]
     @app_key = ENV["DATADOG_APP_KEY"]
     @job_number = ENV['TRAVIS_JOB_NUMBER'] || '1'
-    @dog = Dogapi::Client.new(@api_key, @app_key)
+    @dog = Dogeapi::Client.new(@api_key, @app_key)
   end
 
   context "Client" do
 
     before(:each) do
-      @dogmock = Dogapi::Client.new(@api_key, @app_key)
+      @dogmock = Dogeapi::Client.new(@api_key, @app_key)
       @metric_svc = double
       @dogmock.instance_variable_set("@metric_svc", @metric_svc)
     end
@@ -28,7 +28,7 @@ describe "Facade", :vcr => true do
 
     it "emit_point uses localhost default" do
       expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
-        expect(scope.host).to eq Dogapi.find_localhost
+        expect(scope.host).to eq Dogeapi.find_localhost
       end
       @dogmock.emit_point("metric.name", 0)
     end
@@ -52,11 +52,11 @@ describe "Facade", :vcr => true do
       tags = ["test-run:#{@job_number}"]
 
       now_ts = now
-      now_title = 'dogapi-rb end test title ' + now_ts.to_i.to_s
+      now_title = 'dogeapi-rb end test title ' + now_ts.to_i.to_s
       now_message = 'test message'
 
 
-      event = Dogapi::Event.new(now_message, :msg_title => now_title,
+      event = Dogeapi::Event.new(now_message, :msg_title => now_title,
         :date_happened => now_ts, :tags => tags)
 
       code, resp = @dog.emit_event(event)
@@ -68,7 +68,7 @@ describe "Facade", :vcr => true do
     end
 
     it "emits events with specified priority" do
-      event = Dogapi::Event.new('test message', :msg_title => 'title', :date_happened => Time.now(), :priority => "low")
+      event = Dogeapi::Event.new('test message', :msg_title => 'title', :date_happened => Time.now(), :priority => "low")
       code, resp = @dog.emit_event(event)
       low_event_id = resp["event"]["id"]
 
@@ -80,9 +80,9 @@ describe "Facade", :vcr => true do
 
     it "emits aggregate events" do
       now = Time.now()
-      code, resp = @dog.emit_event(Dogapi::Event.new("Testing Aggregation (first)", :aggregation_key => now.to_i))
+      code, resp = @dog.emit_event(Dogeapi::Event.new("Testing Aggregation (first)", :aggregation_key => now.to_i))
       first = resp["event"]["id"]
-      code, resp = @dog.emit_event(Dogapi::Event.new("Testing Aggregation (second)", :aggregation_key => now.to_i))
+      code, resp = @dog.emit_event(Dogeapi::Event.new("Testing Aggregation (second)", :aggregation_key => now.to_i))
       second = resp["event"]["id"]
 
       code, resp = @dog.get_event(first)

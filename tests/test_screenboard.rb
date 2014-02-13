@@ -1,4 +1,4 @@
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 require 'test_base.rb'
 
@@ -6,12 +6,12 @@ class TestScreenboard < Test::Unit::TestCase
   include TestBase
 
   def test_screenboard
-    dog = Dogapi::Client.new(@api_key, @app_key)
+    dog = Dogeapi::Client.new(@api_key, @app_key)
 
         board = {
             "width" => 1024,
             "height" => 768,
-            "board_title" => "dogapi-rb test",
+            "board_title" => "dogeapi-rb test",
             "widgets" => [
                 {
                     "type" => "event_stream",
@@ -37,7 +37,7 @@ class TestScreenboard < Test::Unit::TestCase
         updated_board = {
             "width" => 1024,
             "height" => 768,
-            "board_title" => "dogapi test",
+            "board_title" => "dogeapi test",
             "widgets" => [
                 {
                   "type" => "image",

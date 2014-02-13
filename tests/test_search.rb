@@ -1,4 +1,4 @@
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 require 'test_base.rb'
 
@@ -6,7 +6,7 @@ class TestSearch < Test::Unit::TestCase
   include TestBase
 
   def test_search
-    dog = Dogapi::Client.new(@api_key, @app_key)
+    dog = Dogeapi::Client.new(@api_key, @app_key)
 
     facets = ["hosts", "metrics"]
     facets.each do |facet|

@@ -1,4 +1,4 @@
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 require 'test_base.rb'
 
@@ -7,15 +7,15 @@ class TestClient < Test::Unit::TestCase
 
   def test_find_localhost
     # Must be an FQDN
-    assert Dogapi.find_localhost.index(".") > 0
-    assert Dogapi.find_localhost.split(".").length > 1
-    assert Dogapi.find_localhost == %x[hostname -f].strip
+    assert Dogeapi.find_localhost.index(".") > 0
+    assert Dogeapi.find_localhost.split(".").length > 1
+    assert Dogeapi.find_localhost == %x[hostname -f].strip
   end
 
   def test_metrics
     # FIXME: actually verify this once there's a way to look at metrics through the api
-    dog = Dogapi::Client.new(@api_key, @app_key)
-    dog_r = Dogapi::Client.new(@api_key)
+    dog = Dogeapi::Client.new(@api_key, @app_key)
+    dog_r = Dogeapi::Client.new(@api_key)
 
     dog_r.emit_point('test.metric.metric', 10, :host => 'test.metric.host')
     dog_r.emit_points('test.metric.metric', [[Time.now-5*60, 0]], :host => 'test.metric.host')

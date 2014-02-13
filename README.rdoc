@@ -1,8 +1,8 @@
 = Ruby Client for Datadog API
 
-{<img src="https://badge.fury.io/rb/dogapi.png" alt="Gem Version" />}[http://badge.fury.io/rb/dogapi]
+{<img src="https://badge.fury.io/rb/dogeapi.png" alt="Gem Version" />}[http://badge.fury.io/rb/dogeapi]
 
-{<img src="https://travis-ci.org/DataDog/dogapi-rb.png?branch=master" alt="Build Status" />}[https://travis-ci.org/DataDog/dogapi-rb]
+{<img src="https://travis-ci.org/DataDoge/dogeapi-rb.png?branch=master" alt="Build Status" />}[https://travis-ci.org/DataDoge/dogeapi-rb]
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
@@ -14,21 +14,21 @@ See CHANGELOG.md for details
 
 == From Source
 
-Available at: https://github.com/DataDog/dogapi-rb
+Available at: https://github.com/DataDoge/dogeapi-rb
 
-    $ cd dogapi-rb
+    $ cd dogeapi-rb
     $ bundle
     $ rake install
 
 == Using RubyGems
 
-Gem page: https://rubygems.org/gems/dogapi
+Gem page: https://rubygems.org/gems/dogeapi
 
-    $ gem install dogapi
+    $ gem install dogeapi
 
 If you get a permission error, you might need to run the install process with sudo:
 
-    $ sudo gem install dogapi
+    $ sudo gem install dogeapi
 
 If you get a LoadError, missing mkmf, you need to install the development packages for ruby.
 
@@ -53,26 +53,26 @@ on a host, simply specify the device when calling emit functions.
 
 
     require 'rubygems'
-    require 'dogapi'
+    require 'dogeapi'
 
     api_key = "abcdef123456"
 
     # submitting events doesn't require an application_key, so we don't bother setting it
-    dog = Dogapi::Client.new(api_key)
+    dog = Dogeapi::Client.new(api_key)
 
-    dog.emit_event(Dogapi::Event.new('Testing done, FTW'), :host => "my_host")
+    dog.emit_event(Dogeapi::Event.new('Testing done, FTW'), :host => "my_host")
 
 
 == Tag a host in Datadog
 
 
     require 'rubygems'
-    require 'dogapi'
+    require 'dogeapi'
 
     api_key = "abcdef123456"
     application_key = "fedcba654321"
 
-    dog = Dogapi::Client.new(api_key, application_key)
+    dog = Dogeapi::Client.new(api_key, application_key)
 
     dog.add_tags("my_host", ["tagA", "tagB"])
 
@@ -84,12 +84,12 @@ Its value is 50. Here is how you submit the value to Datadog.
 
 
     require 'rubygems'
-    require 'dogapi'
+    require 'dogeapi'
 
     api_key = "abcdef123456"
 
     # submitting metrics doesn't require an application_key, so we don't bother setting it
-    dog = Dogapi::Client.new(api_key)
+    dog = Dogeapi::Client.new(api_key)
 
     dog.emit_point('some.metric.name', 50.0, :host => "my_host", :device => "my_device")
 
@@ -100,7 +100,7 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
 
 
     require 'rubygems'
-    require 'dogapi'
+    require 'dogeapi'
 
     # Actual sampling takes place
     t1 = Time.now
@@ -116,6 +116,6 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
 
     api_key = "abcdef123456"
 
-    dog = Dogapi::Client.new(api_key)
+    dog = Dogeapi::Client.new(api_key)
 
     dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device")

@@ -1,4 +1,4 @@
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 require 'test_base.rb'
 
@@ -6,7 +6,7 @@ class TestAlerts < Test::Unit::TestCase
   include TestBase
 
   def test_alerts
-    dog = Dogapi::Client.new(@api_key, @app_key)
+    dog = Dogeapi::Client.new(@api_key, @app_key)
 
     query = 'avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 100'
 

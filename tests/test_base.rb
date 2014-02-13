@@ -1,5 +1,5 @@
 require 'test/unit'
-require 'dogapi'
+require 'dogeapi'
 require 'time'
 
 module TestBase

@@ -1,9 +1,9 @@
-require 'dogapi'
+require 'dogeapi'
 
-module Dogapi
+module Dogeapi
   class V1 # for namespacing
 
-    class AlertService < Dogapi::APIService
+    class AlertService < Dogeapi::APIService
 
       API_VERSION = "v1"
 

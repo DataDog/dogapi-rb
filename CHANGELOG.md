@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 1.9.2 / 2014-02-13
+* Fully support for capistrano v3 ([#43](https://github.com/DataDog/dogapi-rb/pull/43))
+* Strip control characters from capistrano messages ([#36](https://github.com/DataDog/dogapi-rb/issues/36))
+* Tag capistrano events by stage (thanks [@arielo][] [#25](https://github.com/DataDog/dogapi-rb/pull/25))
+
 # 1.9.1 / 2014-01-06
 * Log a warning instead of crashing when trying to integration with capistrano v3
 

@@ -80,7 +80,9 @@ module Capistrano
           type  = "deploy"
           alert_type = "success"
           source_type = "capistrano"
-          message = "@@@" + "\n" + (@logging_output[name] || []).join('') + "@@@"
+          message_content = (@logging_output[name] || []).join('')
+          message = if !message_content.empty? then
+            "@@@\n#{message_content}@@@" else "" end
 
           Dogapi::Event.new(message,
             :msg_title        => title,

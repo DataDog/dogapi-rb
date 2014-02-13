@@ -32,7 +32,7 @@ module Capistrano
         if roles.is_a? Proc
           roles = roles.call
         end
-        reporter.record_task(task_name, timing.real, roles)
+        reporter.record_task(task_name, timing.real, roles, task.namespace.variables[:stage])
 
         # Return the original result
         result

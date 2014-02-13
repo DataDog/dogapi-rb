@@ -14,7 +14,8 @@ module Rake
       timing = Benchmark.measure(task_name) do
         result = old_invoke(*args)
       end
-      reporter.record_task(task_name, timing.real, roles)
+      reporter.record_task(task_name, timing.real, roles,
+                           Capistrano::Configuration.env.fetch(:stage))
       result
     end
   end

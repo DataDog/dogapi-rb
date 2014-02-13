@@ -49,11 +49,12 @@ module Capistrano
         @logging_output = {}
       end
 
-      def record_task(task_name, timing, roles)
+      def record_task(task_name, timing, roles, stage=nil)
         @tasks << {
           :name   => task_name,
           :timing => timing,
-          :roles  => roles
+          :roles  => roles,
+          :stage  => stage
         }
       end
 
@@ -76,6 +77,9 @@ module Capistrano
           name  = task[:name]
           roles = Array(task[:roles]).map(&:to_s).sort
           tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t })
+          if !task[:stage].nil? and !task[:stage].empty? then
+            tags << "#stage:#{task[:stage]}"
+          end
           title = "%s@%s ran %s on %s with capistrano in %.2f secs" % [user, hostname, name, roles.join(', '), task[:timing]]
           type  = "deploy"
           alert_type = "success"

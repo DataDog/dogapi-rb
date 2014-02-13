@@ -111,5 +111,5 @@ when :v2
 when :v3
   require 'capistrano/datadog/v3'
 else
-  puts "Unknown version: {Capistrano::Datadog::cap_version.inspect}"
+  puts "Unknown version: #{Capistrano::Datadog::cap_version.inspect}"
 end

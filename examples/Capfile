@@ -1,0 +1,19 @@
+require 'capistrano/setup'
+require 'capistrano/datadog'
+
+set :datadog_api_key, 'my_api_key'
+set :stage, :test
+# set :format, :pretty
+# set :log_level, :info
+# set :pty, true
+
+server "host0", roles: ["thing"]
+server "host1", roles: ["other_thing"]
+
+desc "Hello world"
+task :hello do
+  on roles(:all) do |host|
+    info capture('echo "$(date): Hello from $(whoami)@$(hostname) !"')
+  end
+end
+

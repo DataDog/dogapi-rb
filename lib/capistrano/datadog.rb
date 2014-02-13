@@ -1,55 +1,42 @@
-require "benchmark"
 require "etc"
 require "digest/md5"
-require "socket"
-require "time"
 require "timeout"
-require "delegate"
 
 require "dogapi"
-
-# Monkeypatch capistrano to collect data about the tasks that it's running
-module Capistrano
-  class Configuration
-    module Execution
-      # Attempts to locate the task at the given fully-qualified path, and
-      # execute it. If no such task exists, a Capistrano::NoSuchTaskError
-      # will be raised.
-      # Also, capture the time the task took to execute, and the logs it
-      # outputted for submission to Datadog
-      def find_and_execute_task(path, hooks = {})
-        task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
-        result = nil
-        reporter = Capistrano::Datadog.reporter
-        timing = Benchmark.measure(task.fully_qualified_name) do
-          # Set the current task so that the logger knows which task to
-          # associate the logs with
-          reporter.current_task = task.fully_qualified_name
-          trigger(hooks[:before], task) if hooks[:before]
-          result = execute_task(task)
-          trigger(hooks[:after], task) if hooks[:after]
-          reporter.current_task = nil
-        end
-        # Collect the timing in a list for later reporting
-        reporter.record_task task, timing
-        result
-      end
-    end
-  end
-
-  class Logger
-    # Make the device attribute writeable so we can swap it out
-    # with something that captures logging out by task
-    attr_accessor   :device
-  end
-end
-
 
 module Capistrano
   module Datadog
     # Singleton method for Reporter
     def self.reporter()
       @reporter || @reporter = Reporter.new
+    end
+
+    def self.cap_version()
+      if @cap_version.nil? then
+        if Configuration.respond_to? :instance then
+          @cap_version = :v2
+        else
+          @cap_version = :v3
+        end
+      end
+      @cap_version
+    end
+
+    def self.submit(api_key)
+      begin
+        if api_key
+          dog = Dogapi::Client.new(api_key)
+          reporter.report.each do |event|
+            dog.emit_event event
+          end
+        else
+          puts "No api key set, not submitting to Datadog"
+        end
+      rescue Timeout::Error => e
+        puts "Could not submit to Datadog, request timed out."
+      rescue => e
+        puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
+      end
     end
 
     # Collects info about the tasks that ran in order to submit to Datadog
@@ -62,15 +49,12 @@ module Capistrano
         @logging_output = {}
       end
 
-      def record_task(task, timing)
-        roles = task.options[:roles]
-        if roles.is_a? Proc
-          roles = roles.call
-        end
+      def record_task(task_name, timing, roles, stage=nil)
         @tasks << {
-          :name   => task.fully_qualified_name,
-          :timing => timing.real,
-          :roles  => roles
+          :name   => task_name,
+          :timing => timing,
+          :roles  => roles,
+          :stage  => stage
         }
       end
 
@@ -93,11 +77,18 @@ module Capistrano
           name  = task[:name]
           roles = Array(task[:roles]).map(&:to_s).sort
           tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t })
+          if !task[:stage].nil? and !task[:stage].empty? then
+            tags << "#stage:#{task[:stage]}"
+          end
           title = "%s@%s ran %s on %s with capistrano in %.2f secs" % [user, hostname, name, roles.join(', '), task[:timing]]
           type  = "deploy"
           alert_type = "success"
           source_type = "capistrano"
-          message = "@@@" + "\n" + (@logging_output[name] || []).join('') + "@@@"
+          message_content = (@logging_output[name] || []).join('')
+          message = if !message_content.empty? then
+            # Strip out color control characters
+            message_content = message_content.gsub(/\e\[(\d+)m/, '')
+            "@@@\n#{message_content}@@@" else "" end
 
           Dogapi::Event.new(message,
             :msg_title        => title,
@@ -111,46 +102,14 @@ module Capistrano
       end
     end
 
-    class LogCapture < SimpleDelegator
-      def puts(message)
-        Capistrano::Datadog::reporter.record_log message
-        __getobj__.puts message
-      end
-    end
   end
+end
 
-  if Configuration.respond_to? :instance then
-    # Capistrano v2
-    Configuration.instance(:must_exist).load do
-      # Wrap the existing logging target with the Datadog capture class
-      logger.device = Datadog::LogCapture.new logger.device
-
-      # Trigger the Datadog submission once all the tasks have run
-      on :exit, "datadog:submit"
-      namespace :datadog do
-        desc "Submit the tasks that have run to Datadog as events"
-        task :submit do |ns|
-          begin
-            api_key = variables[:datadog_api_key]
-            if api_key
-              dog = Dogapi::Client.new(api_key)
-              Datadog::reporter.report.each do |event|
-                dog.emit_event event
-              end
-            else
-              puts "No api key set, not submitting to Datadog"
-            end
-          rescue Timeout::Error => e
-            puts "Could not submit to Datadog, request timed out."
-          rescue => e
-            puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
-          end
-        end
-      end
-    end
-  else
-    # No support yet for Capistrano v3
-    puts "No Datadog events will be sent since Datadog currently only supports Capistrano v2. For more info, see https://github.com/DataDog/dogapi-rb/issues/40."
-  end
-
+case Capistrano::Datadog::cap_version
+when :v2
+  require 'capistrano/datadog/v2'
+when :v3
+  require 'capistrano/datadog/v3'
+else
+  puts "Unknown version: #{Capistrano::Datadog::cap_version.inspect}"
 end

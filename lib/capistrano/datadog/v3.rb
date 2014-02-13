@@ -15,7 +15,7 @@ module Rake
         result = old_invoke(*args)
       end
       reporter.record_task(task_name, timing.real, roles,
-                           Capistrano::Configuration.env.fetch(:stage))
+        Capistrano::Configuration.env.fetch(:stage))
       result
     end
   end
@@ -25,12 +25,12 @@ module Capistrano
   module Datadog
     class CaptureIO
       def initialize(wrapped)
-         @wrapped = wrapped
+        @wrapped = wrapped
       end
 
       def write(*args)
         @wrapped.write(*args)
-        args.each {|arg| Capistrano::Datadog.reporter.record_log(arg) }
+        args.each { |arg| Capistrano::Datadog.reporter.record_log(arg) }
       end
       alias :<< :write
 

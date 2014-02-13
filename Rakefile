@@ -44,7 +44,7 @@ RDoc::Task.new do |rd|
   rd.rdoc_files.include('README.rdoc', 'lib/**/*.rb', 'CHANGELOG.md')
   rd.options << '--line-numbers' << '--inline-source'
   rd.rdoc_dir = 'doc'
-  rd.title = 'DogAPI -- DataDog Client'
+  rd.title = 'DogAPI -- DataDoge Client'
 end
 
 RSpec::Core::RakeTask.new(:spec)

@@ -1,13 +1,13 @@
 require 'rubygems'
-require 'dogapi'
+require 'dogeapi'
 
 # Create a simple client
 # The host is optional here, it's a shortcut to tie event and metrics to a given host
 #
 # You typically want to do:
-#   Dogapi::Client.new(your_actual_api_key_as_a_string, ...)
+#   Dogeapi::Client.new(your_actual_api_key_as_a_string, ...)
 # We are using ENV to let you experiment via an environment variable.
-dog = Dogapi::Client.new(ENV['DATADOG_KEY'])
+dog = Dogeapi::Client.new(ENV['DATADOG_KEY'])
 
 # Emit points one by one, timestamp is omitted and is the time this call is made.
 dog.emit_point('test.api.test_metric', 4.0)

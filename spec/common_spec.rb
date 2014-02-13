@@ -5,7 +5,7 @@ describe "Common" do
   context "Scope" do
 
     it "validates the Scope class" do
-      obj = Dogapi::Scope.new("somehost", "somedevice")
+      obj = Dogeapi::Scope.new("somehost", "somedevice")
 
       expect(obj.host).to eq "somehost"
       expect(obj.device).to eq "somedevice"

@@ -5,7 +5,7 @@ describe "Alerts", :vcr => true do
   before(:all) do
     @api_key = ENV["DATADOG_API_KEY"]
     @app_key = ENV["DATADOG_APP_KEY"]
-    @dog = Dogapi::Client.new(@api_key, @app_key)
+    @dog = Dogeapi::Client.new(@api_key, @app_key)
     @query = 'avg(last_10m):avg:test.metric.metric{host:test.metric.host} > 5'
   end
 

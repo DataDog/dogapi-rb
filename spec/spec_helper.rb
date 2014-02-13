@@ -2,7 +2,7 @@ require 'rspec'
 require 'vcr'
 
 # include our code and methods
-require 'dogapi'
+require 'dogeapi'
 
 # Load any custom matchers
 Dir[File.join(File.dirname(__FILE__), "/support/**/*.rb")].each { |f| require f }

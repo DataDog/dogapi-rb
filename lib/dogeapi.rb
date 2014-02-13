@@ -1,0 +1,5 @@
+require 'dogeapi/common'
+require 'dogeapi/facade'
+require 'dogeapi/event'
+require 'dogeapi/metric'
+require 'dogeapi/version'

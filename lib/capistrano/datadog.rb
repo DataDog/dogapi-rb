@@ -2,7 +2,7 @@ require "etc"
 require "digest/md5"
 require "timeout"
 
-require "dogapi"
+require "dogeapi"
 
 module Capistrano
   module Datadog
@@ -25,7 +25,7 @@ module Capistrano
     def self.submit(api_key)
       begin
         if api_key
-          dog = Dogapi::Client.new(api_key)
+          dog = Dogeapi::Client.new(api_key)
           reporter.report.each do |event|
             dog.emit_event event
           end
@@ -90,7 +90,7 @@ module Capistrano
             message_content = message_content.gsub(/\e\[(\d+)m/, '')
             "@@@\n#{message_content}@@@" else "" end
 
-          Dogapi::Event.new(message,
+          Dogeapi::Event.new(message,
             :msg_title        => title,
             :event_type       => type,
             :event_object     => aggregation_key,

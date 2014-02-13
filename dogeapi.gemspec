@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dogapi/version'
+require 'dogeapi/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = 'dogapi'
-  spec.version       = Dogapi::VERSION
+  spec.name          = 'dogeapi'
+  spec.version       = Dogeapi::VERSION
   spec.authors       = ['Datadog, Inc.']
   spec.email         = ['packages@datadoghq.com']
   spec.description   = 'Ruby bindings for Datadog\'s API'

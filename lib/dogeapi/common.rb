@@ -7,7 +7,7 @@ require 'uri'
 require 'rubygems'
 require 'json'
 
-module Dogapi
+module Dogeapi
 
   # Metadata class to hold the scope of an API call
   class Scope
@@ -21,14 +21,14 @@ module Dogapi
   # <b>DEPRECATED:</b> Going forward, use the newer APIService.
   class Service
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
-    def initialize(api_key, api_host=Dogapi.find_datadog_host)
+    def initialize(api_key, api_host=Dogeapi.find_datadog_host)
       @api_key = api_key
       @host = api_host
     end
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def connect
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogeapi::Service has been deprecated in favor of the newer V1 services"
       uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
@@ -45,7 +45,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def request(method, url, params)
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn "[DEPRECATION] Dogeapi::Service has been deprecated in favor of the newer V1 services"
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
@@ -71,12 +71,12 @@ module Dogapi
     end
   end
 
-  # Superclass that deals with the details of communicating with the DataDog API
+  # Superclass that deals with the details of communicating with the DataDoge API
   class APIService
     def initialize(api_key, application_key, silent=true)
       @api_key = api_key
       @application_key = application_key
-      @api_host = Dogapi.find_datadog_host()
+      @api_host = Dogeapi.find_datadog_host()
       @silent = silent
     end
 
@@ -145,7 +145,7 @@ module Dogapi
     end
   end
 
-  def Dogapi.find_datadog_host
+  def Dogeapi.find_datadog_host
     # allow env-based overriding, useful for tests
     ENV["DATADOG_HOST"] || "https://app.datadoghq.com"
   end
@@ -153,7 +153,7 @@ module Dogapi
   # Memoize the hostname as a module variable
   @@hostname = nil
 
-  def Dogapi.find_localhost
+  def Dogeapi.find_localhost
     begin
       # prefer hostname -f over Socket.gethostname
       @@hostname ||= %x[hostname -f].strip

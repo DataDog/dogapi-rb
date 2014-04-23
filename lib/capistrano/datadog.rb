@@ -49,12 +49,13 @@ module Capistrano
         @logging_output = {}
       end
 
-      def record_task(task_name, timing, roles, stage=nil)
+      def record_task(task_name, timing, roles, stage=nil, application_name=nil)
         @tasks << {
           :name   => task_name,
           :timing => timing,
           :roles  => roles,
-          :stage  => stage
+          :stage  => stage,
+          :application => application_name
         }
       end
 
@@ -80,7 +81,11 @@ module Capistrano
           if !task[:stage].nil? and !task[:stage].empty? then
             tags << "#stage:#{task[:stage]}"
           end
-          title = "%s@%s ran %s on %s with capistrano in %.2f secs" % [user, hostname, name, roles.join(', '), task[:timing]]
+          application = ''
+          if !task[:application].nil? and !task[:application].empty? then
+            application = ' for ' + task[:application]
+          end
+          title = "%s@%s ran %s%s on %s with capistrano in %.2f secs" % [user, hostname, name, application, roles.join(', '), task[:timing]]
           type  = "deploy"
           alert_type = "success"
           source_type = "capistrano"

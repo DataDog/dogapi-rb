@@ -1,67 +1,119 @@
---- 
-http_interactions: 
-- request: 
-    method: post
-    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
-    body: 
-      string: "{\"parent\":null,\"msg_title\":\"title\",\"event_type\":null,\"msg_text\":\"test message\",\"host\":\"dogbox\",\"date_happened\":1377812695,\"source_type_name\":null,\"device\":null,\"aggregation_key\":\"\",\"tags\":[],\"title\":\"title\",\"alert_type\":null,\"text\":\"test message\",\"priority\":\"low\"}"
-    headers: 
-      Content-Type: 
-      - application/json
-      Accept: 
-      - "*/*"
-  response: 
-    status: 
-      code: 202
-      message: Accepted
-    headers: 
-      Date: 
-      - Thu, 29 Aug 2013 21:44:56 GMT
-      Server: 
-      - dogdispatcher/4.7.0
-      Content-Length: 
-      - "267"
-      Content-Type: 
-      - text/json; charset=UTF-8
-      Connection: 
-      - keep-alive
-    body: 
-      string: "{\"status\": \"ok\", \"event\": {\"priority\": \"low\", \"date_happened\": 1377812695, \"handle\": null, \"title\": \"title\", \"url\": \"https://app.datadoghq.com/event/jump_to?event_id=1905050031133446537\", \"text\": null, \"tags\": [], \"related_event_id\": null, \"id\": 1905050031133446537}}"
-    http_version: 
-  recorded_at: Thu, 29 Aug 2013 21:44:56 GMT
-- request: 
+---
+http_interactions:
+- request:
     method: get
     uri: https://app.datadoghq.com/api/v1/events/1905050031133446537?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body: 
-      string: ""
-    headers: 
-      Accept: 
-      - "*/*"
-  response: 
-    status: 
+    body:
+      encoding: UTF-8
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+  response:
+    status:
       code: 200
       message: OK
-    headers: 
-      Date: 
+    headers:
+      Date:
       - Thu, 29 Aug 2013 21:54:11 GMT
-      Set-Cookie: 
+      Set-Cookie:
       - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
-      Server: 
+      Server:
       - gunicorn/0.17.4
-      Content-Length: 
-      - "322"
-      Content-Type: 
+      Content-Length:
+      - '322'
+      Content-Type:
       - application/json
-      Pragma: 
+      Pragma:
       - no-cache
-      Connection: 
+      Connection:
       - keep-alive
-      X-Dd-Version: 
+      X-Dd-Version:
       - 31.160-300-bedcb85
-      Cache-Control: 
+      Cache-Control:
       - no-cache
-    body: 
-      string: "{\"event\": {\"date_happened\": 1377812695, \"alert_type\": \"info\", \"resource\": \"/api/v1/events/1905050031133446537\", \"title\": \"title\", \"url\": \"/event/jump_to?event_id=1905050031133446537\", \"text\": \"test message\", \"tags\": [], \"id\": 1905050031133446537, \"priority\": \"low\", \"host\": \"dogbox\", \"device_name\": null, \"payload\": \"{}\"}}"
+    body:
+      encoding: UTF-8
+      string: ! '{"event": {"date_happened": 1377812695, "alert_type": "info", "resource":
+        "/api/v1/events/1905050031133446537", "title": "title", "url": "/event/jump_to?event_id=1905050031133446537",
+        "text": "test message", "tags": [], "id": 1905050031133446537, "priority":
+        "low", "host": "dogbox", "device_name": null, "payload": "{}"}}'
     http_version: 
   recorded_at: Thu, 29 Aug 2013 21:54:11 GMT
-recorded_with: VCR 2.5.0
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body:
+      encoding: UTF-8
+      string: ! '{"msg_text":"test message","date_happened":1399572520,"msg_title":"title","priority":"low","parent":null,"tags":[],"aggregation_key":"","alert_type":null,"event_type":null,"source_type_name":null,"title":"title","text":"test
+        message","host":"dogbox-carlo","device":null}'
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Content-Type:
+      - text/json; charset=UTF-8
+      Date:
+      - Thu, 08 May 2014 18:13:04 GMT
+      Server:
+      - dogdispatcher/4.12.1
+      Content-Length:
+      - '277'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"status": "ok", "event": {"priority": "low", "date_happened": 1399572520,
+        "handle": null, "title": "title", "url": "https://app.datadoghq.com/event/jump_to?event_id=2270123722067656874",
+        "text": "test message", "tags": [], "related_event_id": null, "id": 2270123722067656874}}'
+    http_version: 
+  recorded_at: Thu, 08 May 2014 18:08:41 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/events/2270123722067656874?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - ! '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 08 May 2014 18:13:04 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/0.17.4
+      Set-Cookie:
+      - user={"org":{"id":1499,"time_zone":null},"_type":"User","id":3658,"time_zone":null};
+        Path=/
+      X-Dd-Version:
+      - 31.1104.1337
+      Content-Length:
+      - '49'
+      Connection:
+      - keep-alive
+    body:
+      encoding: US-ASCII
+      string: ! '{"errors": ["No event matches that comment_id."]}'
+    http_version: 
+  recorded_at: Thu, 08 May 2014 18:08:41 GMT
+recorded_with: VCR 2.9.0

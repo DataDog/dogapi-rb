@@ -49,7 +49,8 @@ class TestDashes < Test::Unit::TestCase
       },
       "title" => "Sum Memory Free"
     }]
-    tpl_vars = ["foo", "bar"]
+    tpl_vars = [{"default" => nil, "prefix" => nil, "name" => "foo"},
+                {"default" => nil, "prefix" => nil, "name" => "bar"}]
 
     status, dash_response = dog.update_dashboard(dash_id, title, description, graphs, tpl_vars)
     assert_equal "200", status, "Updated failed, response: #{dash_response}"

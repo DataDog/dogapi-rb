@@ -11,7 +11,7 @@ module Dogapi
   class Client
 
     # Create a new Client optionally specifying a default host and device
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil)
 
       if api_key
         @api_key = api_key
@@ -27,16 +27,17 @@ module Dogapi
 
       @device = device
 
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent)
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent)
+      # FIXME: refactor to avoid all this code duplication
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end

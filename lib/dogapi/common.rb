@@ -73,11 +73,12 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
-    def initialize(api_key, application_key, silent=true)
+    def initialize(api_key, application_key, silent=true, timeout=nil)
       @api_key = api_key
       @application_key = application_key
       @api_host = Dogapi.find_datadog_host()
       @silent = silent
+      @timeout = timeout || 5
     end
 
     # Manages the HTTP connection
@@ -92,7 +93,7 @@ module Dogapi
         session.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       session.start do |conn|
-        conn.read_timeout = 5
+        conn.read_timeout = @timeout
         yield(conn)
       end
     end

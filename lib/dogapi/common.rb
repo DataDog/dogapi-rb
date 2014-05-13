@@ -33,10 +33,6 @@ module Dogapi
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
         session.use_ssl = true
-        # FIXME - turn off SSL verification for now until we can spend
-        # some time figuring out how to find certs across platforms.
-        # - matt 10/06/2011
-        session.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       session.start do |conn|
         yield(conn)
@@ -87,10 +83,6 @@ module Dogapi
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
         session.use_ssl = true
-        # FIXME - turn off SSL verification for now until we can spend
-        # some time figuring out how to find certs across platforms.
-        # - matt 10/06/2011
-        session.verify_mode = OpenSSL::SSL::VERIFY_NONE
       end
       session.start do |conn|
         conn.read_timeout = @timeout

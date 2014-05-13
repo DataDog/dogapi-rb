@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 1.10.0 / 2014-05-13
+* Re-enable SSL verification ([#37](https://github.com/DataDog/dogapi-rb/issues/37))
+* Make http timeout configurable ([#29](https://github.com/DataDog/dogapi-rb/issues/29))
+* Report application name when deploy with Capistrano (thanks [@ArjenSchwarz][] [#46](https://github.com/DataDog/dogapi-rb/pull/46))
+
 # 1.9.2 / 2014-02-13
 * Fully support for capistrano v3 ([#43](https://github.com/DataDog/dogapi-rb/pull/43))
 * Strip control characters from capistrano messages ([#36](https://github.com/DataDog/dogapi-rb/issues/36))

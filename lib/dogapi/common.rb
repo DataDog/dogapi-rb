@@ -83,13 +83,11 @@ module Dogapi
 
       # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
       if RUBY_VERSION < "2.0.0"
-          proxy = ENV["HTTPS_PROXY"] || ENV["https_proxy"] || \
-                  ENV["HTTP_PROXY"] || ENV["http_proxy"]
-          if proxy
-              proxy_uri = URI.parse(proxy)
-              connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, \
-                                            proxy_uri.user, proxy_uri.password)
-          end
+        proxy = ENV["HTTPS_PROXY"] || ENV["https_proxy"] || ENV["HTTP_PROXY"] || ENV["http_proxy"]
+        if proxy
+          proxy_uri = URI.parse(proxy)
+          connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
+        end
       end
 
       uri = URI.parse(@api_host)

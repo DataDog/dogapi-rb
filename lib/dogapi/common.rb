@@ -79,11 +79,22 @@ module Dogapi
 
     # Manages the HTTP connection
     def connect
-      uri = URI.parse(@api_host)
-      session = Net::HTTP.new(uri.host, uri.port)
-      if 'https' == uri.scheme
-        session.use_ssl = true
+      connection = Net::HTTP
+
+      # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
+      if RUBY_VERSION < "2.0.0"
+          proxy = ENV["HTTPS_PROXY"] || ENV["https_proxy"] || \
+                  ENV["HTTP_PROXY"] || ENV["http_proxy"]
+          if proxy
+              proxy_uri = URI.parse(proxy)
+              connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, \
+                                            proxy_uri.user, proxy_uri.password)
+          end
       end
+
+      uri = URI.parse(@api_host)
+      session = connection.new(uri.host, uri.port)
+      session.use_ssl = uri.scheme == 'https'
       session.start do |conn|
         conn.read_timeout = @timeout
         yield(conn)

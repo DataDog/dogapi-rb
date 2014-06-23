@@ -8,36 +8,64 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      # Records an Event with no duration
-      def submit(metric, points, scope, options = {})
+      def upload(metrics)
         begin
           params = {
             :api_key => @api_key
           }
+          body = {
+            :series => metrics
+          }
+          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
+      end
+
+      def submit_to_api(metric, points, scope, options = {})
+        payload = self.make_metric_payload(metric, points, scope, options)
+        self.upload([payload])
+      end
+
+      def submit_to_buffer(metric, points, scope, options = {})
+        payload = self.make_metric_payload(metric, points, scope, options)
+        buffer << payload
+      end
+
+      def flush_buffer()
+        self.upload(@buffer)
+        @buffer = nil
+      end
+
+      alias :submit :submit_to_api
+
+      def make_metric_payload(metric, points, scope, options)
+        begin
           typ = options[:type] || "gauge"
 
           if typ != "gauge" && typ != "counter"
             raise ArgumentError, "metric type must be gauge or counter"
           end
 
-          body = {
-            :series => [
-              {
-                :metric => metric,
-                :points => points,
-                :type => typ,
-                :host => scope.host,
-                :device => scope.device
-              }
-            ]
+          metric_payload = {
+            :metric => metric,
+            :points => points,
+            :type => typ,
+            :host => scope.host,
+            :device => scope.device
           }
 
           # Add tags if there are any
           if not options[:tags].nil?
-            body[:series][0][:tags] = options[:tags]
+            metric_payload[:tags] = options[:tags]
           end
 
-          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
+          return metric_payload
         rescue Exception => e
           if @silent
             warn e

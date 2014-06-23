@@ -89,6 +89,14 @@ module Dogapi
       @metric_svc.submit(metric, points, scope, options)
     end
 
+    def batch_metrics()
+      @metric_svc.submit =  @metric_svc.submit_to_buffer
+      @metric_svc.buffer = Array.new
+      yield
+      @metric_svc.flush_buffer
+      @metric_svc.submit = @metric_svc.submit_to_api
+    end
+
     #
     # EVENTS
 

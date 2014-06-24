@@ -90,11 +90,10 @@ module Dogapi
     end
 
     def batch_metrics()
-      @metric_svc.submit =  @metric_svc.submit_to_buffer
-      @metric_svc.buffer = Array.new
+      @metric_svc.switch_to_batched
       yield
       @metric_svc.flush_buffer
-      @metric_svc.submit = @metric_svc.submit_to_api
+      @metric_svc.switch_to_single
     end
 
     #

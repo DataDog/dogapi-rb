@@ -34,7 +34,7 @@ module Dogapi
 
       def submit_to_buffer(metric, points, scope, options = {})
         payload = self.make_metric_payload(metric, points, scope, options)
-        buffer << payload
+        @buffer << payload
       end
 
       def flush_buffer()
@@ -43,6 +43,16 @@ module Dogapi
       end
 
       alias :submit :submit_to_api
+
+      def switch_to_batched()
+        alias :submit :submit_to_buffer
+        @buffer = Array.new
+      end
+
+      def switch_to_single()
+        @buffer = nil
+        alias :submit :submit_to_api
+      end
 
       def make_metric_payload(metric, points, scope, options)
         begin

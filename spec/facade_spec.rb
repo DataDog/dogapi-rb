@@ -13,33 +13,57 @@ describe "Facade", :vcr => true do
 
     before(:each) do
       @dogmock = Dogapi::Client.new(@api_key, @app_key)
-      @metric_svc = double
-      @dogmock.instance_variable_set("@metric_svc", @metric_svc)
+      @service = @dogmock.instance_variable_get(:@metric_svc)
+      @service.instance_variable_set(:@uploaded, Array.new)
+      def @service.upload payload
+        @uploaded << payload
+      end
     end
 
     it "emit_point passes data" do
-      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
-        expect(metric).to eq "metric.name"
-        expect(points[0][1]).to eq 0
-        expect(scope.host).to eq "myhost"
-      end
       @dogmock.emit_point("metric.name", 0, :host => "myhost")
+
+      uploaded =  @service.instance_variable_get(:@uploaded)
+      expect(uploaded.length).to eq 1
+      series = uploaded.first
+      expect(series.class).to eq Array
+      expect(series[0][:metric]).to eq "metric.name"
+      expect(series[0][:points][0][1]).to eq 0
+      expect(series[0][:host]).to eq "myhost"
     end
 
     it "emit_point uses localhost default" do
-      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
-        expect(scope.host).to eq Dogapi.find_localhost
-      end
       @dogmock.emit_point("metric.name", 0)
+
+      uploaded =  @service.instance_variable_get(:@uploaded)
+      series = uploaded.first
+      expect(series[0][:host]).to eq Dogapi.find_localhost
     end
 
     it "emit_point can pass nil host" do
-      expect(@metric_svc).to receive(:submit) do |metric, points, scope, options|
-        expect(scope.host).to be_nil
-      end
       @dogmock.emit_point("metric.name", 0, :host => nil)
+
+      uploaded =  @service.instance_variable_get(:@uploaded)
+      series = uploaded.first
+      expect(series[0][:host]).to be_nil
     end
 
+    it "emit_points can be batched" do
+      @dogmock.batch_metrics do
+        @dogmock.emit_point("metric.name", 1, :type => 'counter')
+        @dogmock.emit_point("othermetric.name", 2, :type => 'counter')
+      end
+      uploaded =  @service.instance_variable_get(:@uploaded)
+      expect(uploaded.length).to eq 1
+      series = uploaded.first
+      expect(series.class).to eq Array
+      expect(series[0][:metric]).to eq 'metric.name'
+      expect(series[0][:points][0][1]).to eq 1
+      expect(series[0][:type]).to eq 'counter'
+      expect(series[1][:metric]).to eq 'othermetric.name'
+      expect(series[1][:points][0][1]).to eq 2
+      expect(series[1][:type]).to eq 'counter'
+    end
   end
 
   context "Events" do

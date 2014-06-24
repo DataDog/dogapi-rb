@@ -91,9 +91,12 @@ module Dogapi
 
     def batch_metrics()
       @metric_svc.switch_to_batched
-      yield
-      @metric_svc.flush_buffer
-      @metric_svc.switch_to_single
+      begin
+        yield
+        @metric_svc.flush_buffer
+      ensure
+        @metric_svc.switch_to_single
+      end
     end
 
     #

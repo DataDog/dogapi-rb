@@ -53,6 +53,7 @@ describe "Facade", :vcr => true do
         @dogmock.emit_point("metric.name", 1, :type => 'counter')
         @dogmock.emit_point("othermetric.name", 2, :type => 'counter')
       end
+      # Verify that we uploaded what we expected
       uploaded =  @service.instance_variable_get(:@uploaded)
       expect(uploaded.length).to eq 1
       series = uploaded.first
@@ -63,7 +64,24 @@ describe "Facade", :vcr => true do
       expect(series[1][:metric]).to eq 'othermetric.name'
       expect(series[1][:points][0][1]).to eq 2
       expect(series[1][:type]).to eq 'counter'
+
+      # Verify that the buffer was correclty emptied
+      buffer = @service.instance_variable_get(:@buffer)
+      expect(buffer).to be nil
     end
+
+    it "flushes the buffer even if an exception is raised" do
+      begin
+        @dogmock.batch_metrics do
+          @dogmock.emit_point("metric.name", 1, :type => 'counter')
+          raise "Oh no, something went wrong"
+        end
+      rescue
+      end
+      buffer = @service.instance_variable_get(:@buffer)
+      expect(buffer).to be nil
+    end
+
   end
 
   context "Events" do

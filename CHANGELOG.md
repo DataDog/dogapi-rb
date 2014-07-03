@@ -1,5 +1,8 @@
 Changes
 =======
+# 1.11.0 / 2014-07-03
+* Allow to send several metrics in the same http request
+* Add support for http proxy defined by the environment variables
 
 # 1.10.0 / 2014-05-13
 * Re-enable SSL verification ([#37](https://github.com/DataDog/dogapi-rb/issues/37))

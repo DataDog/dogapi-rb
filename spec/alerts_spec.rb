@@ -17,8 +17,8 @@ describe "Alerts", :vcr => true do
       @dog.delete_alert(@new_alert[1]['id'])
     end
 
-    it "returns HTTP code 201" do
-      expect(@new_alert[0]).to eq '201'
+    it "returns HTTP code 200" do
+      expect(@new_alert[0]).to eq '200'
     end
 
     it "returns a valid event ID" do

@@ -5,9 +5,9 @@ module Dogapi
 
     class MonitorService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
-      def monitor(type, query, options={})
+      def monitor(type, query, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -42,7 +42,7 @@ module Dogapi
         end
       end
 
-      def get_monitor(monitor_id, options={})
+      def get_monitor(monitor_id, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -76,7 +76,7 @@ module Dogapi
         end
       end
 
-      def get_all_monitors(options={})
+      def get_all_monitors(options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -123,7 +123,7 @@ module Dogapi
         end
       end
 
-      def mute_monitor(monitor_id, options={})
+      def mute_monitor(monitor_id, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -136,7 +136,7 @@ module Dogapi
         end
       end
 
-      def unmute_monitor(monitor_id, options={})
+      def unmute_monitor(monitor_id, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -152,7 +152,7 @@ module Dogapi
       #
       # DOWNTIMES
 
-      def schedule_downtime(scope, start, options={})
+      def schedule_downtime(scope, start, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -196,7 +196,7 @@ module Dogapi
         end
       end
 
-      def get_all_downtimes(options={})
+      def get_all_downtimes(options = {})
         begin
           params = {
             :api_key => @api_key,

@@ -322,15 +322,15 @@ module Dogapi
     # MONITORS
     #
 
-    def monitor(type, query, options={})
+    def monitor(type, query, options = {})
       @monitor_svc.monitor(type, query, options)
     end
 
-    def update_monitor(monitor_id, query, options={})
+    def update_monitor(monitor_id, query, options = {})
       @monitor_svc.update_monitor(monitor_id, query, options)
     end
 
-    def get_monitor(monitor_id, options={})
+    def get_monitor(monitor_id, options = {})
       @monitor_svc.get_monitor(monitor_id, options)
     end
 
@@ -338,7 +338,7 @@ module Dogapi
       @monitor_svc.delete_monitor(monitor_id)
     end
 
-    def get_all_monitors(options={})
+    def get_all_monitors(options = {})
       @monitor_svc.get_all_monitors(options)
     end
 
@@ -350,11 +350,11 @@ module Dogapi
       @monitor_svc.unmute_monitors()
     end
 
-    def mute_monitor(monitor_id, options={})
+    def mute_monitor(monitor_id, options = {})
       @monitor_svc.mute_monitor(monitor_id, options)
     end
 
-    def unmute_monitor(monitor_id, options={})
+    def unmute_monitor(monitor_id, options = {})
       @monitor_svc.unmute_monitor(monitor_id, options)
     end
 
@@ -362,7 +362,7 @@ module Dogapi
     # MONITOR DOWNTIME
     #
 
-    def schedule_downtime(scope, start, options={})
+    def schedule_downtime(scope, start, options = {})
       @monitor_svc.schedule_downtime(scope, start, options)
     end
 
@@ -374,7 +374,7 @@ module Dogapi
       @monitor_svc.cancel_downtime(downtime_id)
     end
 
-    def get_all_downtimes(options={})
+    def get_all_downtimes(options = {})
       @monitor_svc.get_all_downtimes(options)
     end
 

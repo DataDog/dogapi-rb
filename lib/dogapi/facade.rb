@@ -38,6 +38,7 @@ module Dogapi
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout)
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
+      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout)
 
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
@@ -315,6 +316,66 @@ module Dogapi
 
     def share_screenboard(board_id)
       @screenboard_svc.share_screenboard(board_id)
+    end
+
+    #
+    # MONITORS
+    #
+
+    def monitor(type, query, options={})
+      @monitor_svc.monitor(type, query, options)
+    end
+
+    def update_monitor(monitor_id, query, options={})
+      @monitor_svc.update_monitor(monitor_id, query, options)
+    end
+
+    def get_monitor(monitor_id, options={})
+      @monitor_svc.get_monitor(monitor_id, options)
+    end
+
+    def delete_monitor(monitor_id)
+      @monitor_svc.delete_monitor(monitor_id)
+    end
+
+    def get_all_monitors(options={})
+      @monitor_svc.get_all_monitors(options)
+    end
+
+    def mute_monitors()
+      @monitor_svc.mute_monitors()
+    end
+
+    def unmute_monitors()
+      @monitor_svc.unmute_monitors()
+    end
+
+    def mute_monitor(monitor_id, options={})
+      @monitor_svc.mute_monitor(monitor_id, options)
+    end
+
+    def unmute_monitor(monitor_id, options={})
+      @monitor_svc.unmute_monitor(monitor_id, options)
+    end
+
+    #
+    # MONITOR DOWNTIME
+    #
+
+    def schedule_downtime(scope, start, options={})
+      @monitor_svc.schedule_downtime(scope, start, options)
+    end
+
+    def get_downtime(downtime_id)
+      @monitor_svc.get_downtime(downtime_id)
+    end
+
+    def cancel_downtime(downtime_id)
+      @monitor_svc.cancel_downtime(downtime_id)
+    end
+
+    def get_all_downtimes(options={})
+      @monitor_svc.get_all_downtimes(options)
     end
 
     private

@@ -63,6 +63,8 @@ module Dogapi
   class EventService < Dogapi::Service
 
     API_VERSION = "1.0.0"
+    MAX_BODY_LENGTH = 4000
+    MAX_TITLE_LENGTH = 100
 
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
@@ -82,8 +84,8 @@ module Dogapi
         :alert_type => event.alert_type,
         :event_type => event.event_type,
         :event_object => event.event_object,
-        :msg_title => event.msg_title,
-        :msg_text => event.msg_text,
+        :msg_title => event.msg_title[0..MAX_TITLE_LENGTH - 1],
+        :msg_text => event.msg_text[0..MAX_BODY_LENGTH - 1],
         :json_payload => event.json_payload,
       }
 

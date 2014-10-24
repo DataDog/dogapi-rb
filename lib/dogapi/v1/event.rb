@@ -7,6 +7,8 @@ module Dogapi
     class EventService < Dogapi::APIService
 
       API_VERSION = "v1"
+      MAX_BODY_LENGTH = 4000
+      MAX_TITLE_LENGTH = 100
 
       # Records an Event with no duration
       def post(event, scope=nil)
@@ -17,8 +19,8 @@ module Dogapi
           }
 
           body = event.to_hash.merge({
-            :title => event.msg_title,
-            :text => event.msg_text,
+            :title => event.msg_title[0..MAX_TITLE_LENGTH - 1],
+            :text => event.msg_text[0..MAX_BODY_LENGTH - 1],
             :date_happened => event.date_happened.to_i,
             :host => scope.host,
             :device => scope.device,

@@ -25,4 +25,31 @@ class TestSnapshot < Test::Unit::TestCase
     assert result["metric_query"] = metric_query
     assert result["event_query"] = event_query
   end
+
+  def test_snapshot_from_def
+    dog = Dogapi::Client.new(@api_key, @app_key)
+
+    graph_def = "{
+      \"requests\": [
+        {
+          \"q\": \"system.load.1{availability-zone:us-east-1a} by {env}\",
+          \"type\": \"area\"
+        },
+        {
+          \"q\": \"system.load.5{*}\"
+        }
+      ],
+      \"viz\": \"timeseries\",
+      \"events\": [
+        {
+          \"q\": \"alert\"
+        }
+      ]
+    }"
+    end_ts = Time.now().to_i
+    start_ts = end_ts - 60 * 60 # go back 1 hour
+
+    status, result = dog.graph_snapshot_from_def(graph_def, start_ts, end_ts)
+    assert_equal status, "200", "invalid HTTP response: #{status}"
+  end
 end

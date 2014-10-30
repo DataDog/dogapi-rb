@@ -295,6 +295,10 @@ module Dogapi
       @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
     end
 
+    def graph_snapshot_from_def(graph_def, start_ts, end_ts)
+      @snapshot_svc.snapshot_from_def(graph_def, start_ts, end_ts)
+    end
+
     #
     # SCREENBOARD
     #

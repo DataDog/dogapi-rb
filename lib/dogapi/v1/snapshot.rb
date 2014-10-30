@@ -1,3 +1,4 @@
+require 'uri'
 require 'dogapi'
 
 module Dogapi
@@ -19,6 +20,37 @@ module Dogapi
           }
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/snapshot", params, nil, false)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
+      def snapshot_from_def(graph_def, start_ts, end_ts)
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key,
+            :graph_def => graph_def,
+            :start => start_ts,
+            :end => end_ts
+          }
+
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/snapshot", params, nil, false)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
+      def snapshot_status(snapshot_url)
+        begin
+          snap_path = URI.parse(snapshot_url).path
+          snap_path = snap_path.split('/snapshot/view/')[1].split('.png')[0]
+          url = "/api/#{API_VERSION}/graph/snapshot_status/#{snap_path}"
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+          request(Net::HTTP::Get, url, params, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end

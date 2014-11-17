@@ -1,5 +1,9 @@
 Changes
 =======
+# 1.12.0 / 2014-11-17
+* Add support for the Monitor API [#51](https://github.com/DataDog/dogapi-rb/pull/51)
+* Truncate event title and text before submission [#53](https://github.com/DataDog/dogapi-rb/pull/53)
+
 # 1.11.0 / 2014-07-03
 * Allow to send several metrics in the same http request
 * Add support for http proxy defined by the environment variables

@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
   response:
     status:
       code: 200
@@ -34,7 +34,7 @@ http_interactions:
       - 31.160-300-bedcb85
     body:
       encoding: UTF-8
-      string: ! '{"event": {"date_happened": 1377812901, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1377812901, "alert_type": "info", "resource":
         "/api/v1/events/1905053479102714219", "title": "Testing Aggregation (first)",
         "url": "/event/jump_to?event_id=1905053479102714219", "text": "Testing Aggregation
         (first)", "tags": [], "id": 1905053479102714219, "priority": "normal", "host":
@@ -49,7 +49,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
   response:
     status:
       code: 200
@@ -75,7 +75,7 @@ http_interactions:
       - 31.160-300-bedcb85
     body:
       encoding: UTF-8
-      string: ! '{"event": {"date_happened": 1377812901, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1377812901, "alert_type": "info", "resource":
         "/api/v1/events/1905053488548344157", "title": "Testing Aggregation (second)",
         "url": "/event/jump_to?event_id=1905053488548344157", "text": "Testing Aggregation
         (second)", "tags": [], "id": 1905053488548344157, "priority": "normal", "host":
@@ -90,7 +90,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -119,83 +119,9 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"errors": ["No event matches that comment_id."]}'
+      string: '{"errors": ["No event matches that comment_id."]}'
     http_version: 
   recorded_at: Thu, 08 May 2014 18:08:43 GMT
-- request:
-    method: post
-    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
-    body:
-      encoding: UTF-8
-      string: ! '{"msg_text":"Testing Aggregation (first)","date_happened":1400010460,"msg_title":"","priority":"normal","parent":null,"tags":[],"aggregation_key":"1400010460","alert_type":null,"event_type":null,"source_type_name":null,"title":"","text":"Testing
-        Aggregation (first)","host":"dogbox-carlo","device":null}'
-    headers:
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 202
-      message: Accepted
-    headers:
-      Content-Type:
-      - text/json; charset=UTF-8
-      Date:
-      - Tue, 13 May 2014 19:47:41 GMT
-      Server:
-      - dogdispatcher/4.12.1
-      Content-Length:
-      - '290'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: ! '{"status": "ok", "event": {"priority": "normal", "date_happened":
-        1400010460, "handle": null, "title": "", "url": "https://app.datadoghq.com/event/jump_to?event_id=2277466729825682387",
-        "text": "Testing Aggregation (first)", "tags": [], "related_event_id": null,
-        "id": 2277466729825682387}}'
-    http_version: 
-  recorded_at: Tue, 13 May 2014 19:47:41 GMT
-- request:
-    method: post
-    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
-    body:
-      encoding: UTF-8
-      string: ! '{"msg_text":"Testing Aggregation (second)","date_happened":1400010461,"msg_title":"","priority":"normal","parent":null,"tags":[],"aggregation_key":"1400010460","alert_type":null,"event_type":null,"source_type_name":null,"title":"","text":"Testing
-        Aggregation (second)","host":"dogbox-carlo","device":null}'
-    headers:
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 202
-      message: Accepted
-    headers:
-      Content-Type:
-      - text/json; charset=UTF-8
-      Date:
-      - Tue, 13 May 2014 19:47:41 GMT
-      Server:
-      - dogdispatcher/4.12.1
-      Content-Length:
-      - '291'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: ! '{"status": "ok", "event": {"priority": "normal", "date_happened":
-        1400010461, "handle": null, "title": "", "url": "https://app.datadoghq.com/event/jump_to?event_id=2277466738585989786",
-        "text": "Testing Aggregation (second)", "tags": [], "related_event_id": null,
-        "id": 2277466738585989786}}'
-    http_version: 
-  recorded_at: Tue, 13 May 2014 19:47:41 GMT
 - request:
     method: get
     uri: https://app.datadoghq.com/api/v1/events/2277466729825682387?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
@@ -204,7 +130,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -233,7 +159,7 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"event": {"date_happened": 1400010460, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1400010460, "alert_type": "info", "resource":
         "/api/v1/events/2277466729825682387", "title": "Testing Aggregation (first)",
         "url": "/event/jump_to?event_id=2277466729825682387", "text": "Testing Aggregation
         (first)", "tags": [], "id": 2277466729825682387, "priority": "normal", "host":
@@ -248,7 +174,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -277,11 +203,187 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"event": {"date_happened": 1400010461, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1400010461, "alert_type": "info", "resource":
         "/api/v1/events/2277466738585989786", "title": "Testing Aggregation (second)",
         "url": "/event/jump_to?event_id=2277466738585989786", "text": "Testing Aggregation
         (second)", "tags": [], "id": 2277466738585989786, "priority": "normal", "host":
         "dogbox-carlo", "device_name": null, "payload": "{}"}}'
     http_version: 
   recorded_at: Tue, 13 May 2014 19:47:47 GMT
-recorded_with: VCR 2.9.0
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body:
+      encoding: UTF-8
+      string: '{"msg_text":"Testing Aggregation (first)","date_happened":1416248801,"msg_title":"","priority":"normal","parent":null,"tags":[],"aggregation_key":"1416248801","alert_type":null,"event_type":null,"source_type_name":null,"title":"","text":"Testing
+        Aggregation (first)","host":"Conors-MacBook-Pro-Retina.local","device":null}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Content-Type:
+      - text/json; charset=UTF-8
+      Date:
+      - Mon, 17 Nov 2014 18:26:41 GMT
+      Server:
+      - dogdispatcher/6.0.12
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Content-Length:
+      - '290'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status": "ok", "event": {"priority": "normal", "date_happened": 1416248801,
+        "handle": null, "title": "", "url": "https://app.datadoghq.com/event/jump_to?event_id=2549900876180481330",
+        "text": "Testing Aggregation (first)", "tags": [], "related_event_id": null,
+        "id": 2549900876180481330}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:41 GMT
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body:
+      encoding: UTF-8
+      string: '{"msg_text":"Testing Aggregation (second)","date_happened":1416248801,"msg_title":"","priority":"normal","parent":null,"tags":[],"aggregation_key":"1416248801","alert_type":null,"event_type":null,"source_type_name":null,"title":"","text":"Testing
+        Aggregation (second)","host":"Conors-MacBook-Pro-Retina.local","device":null}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Content-Type:
+      - text/json; charset=UTF-8
+      Date:
+      - Mon, 17 Nov 2014 18:26:42 GMT
+      Server:
+      - dogdispatcher/6.0.12
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Content-Length:
+      - '291'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status": "ok", "event": {"priority": "normal", "date_happened": 1416248801,
+        "handle": null, "title": "", "url": "https://app.datadoghq.com/event/jump_to?event_id=2549900881932518535",
+        "text": "Testing Aggregation (second)", "tags": [], "related_event_id": null,
+        "id": 2549900881932518535}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:42 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/events/2549900876180481330?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 17 Nov 2014 18:26:50 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/19.1.0
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Vary:
+      - Accept-Encoding
+      X-Dd-Version:
+      - 31.1883.245-0
+      Content-Length:
+      - '257'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"event": {"date_happened": 1416248801, "alert_type": "info", "resource":
+        "/api/v1/events/2549900876180481330", "title": "Testing Aggregation (first)",
+        "url": "/event/jump_to?event_id=2549900876180481330", "text": "Testing Aggregation
+        (first)", "tags": [], "id": 2549900876180481330, "priority": "normal", "host":
+        "Conors-MacBook-Pro-Retina.local", "device_name": null, "payload": "{}"}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:50 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/events/2549900881932518535?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 17 Nov 2014 18:26:50 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/19.1.0
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Vary:
+      - Accept-Encoding
+      X-Dd-Version:
+      - 31.1883.245-0
+      Content-Length:
+      - '256'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"event": {"date_happened": 1416248801, "alert_type": "info", "resource":
+        "/api/v1/events/2549900881932518535", "title": "Testing Aggregation (second)",
+        "url": "/event/jump_to?event_id=2549900881932518535", "text": "Testing Aggregation
+        (second)", "tags": [], "id": 2549900881932518535, "priority": "normal", "host":
+        "Conors-MacBook-Pro-Retina.local", "device_name": null, "payload": "{}"}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:50 GMT
+recorded_with: VCR 2.9.3

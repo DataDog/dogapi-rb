@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
   response:
     status:
       code: 200
@@ -34,7 +34,7 @@ http_interactions:
       - Thu, 29 Aug 2013 21:35:47 GMT
     body:
       encoding: UTF-8
-      string: ! '{"event": {"date_happened": 1377812141, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1377812141, "alert_type": "info", "resource":
         "/api/v1/events/1905040728720298327", "title": "dogapi-rb end test title 1377812141",
         "url": "/event/jump_to?event_id=1905040728720298327", "text": "test message",
         "tags": ["test-run:1"], "id": 1905040728720298327, "priority": "normal", "host":
@@ -49,7 +49,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -78,48 +78,9 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"errors": ["No event matches that comment_id."]}'
+      string: '{"errors": ["No event matches that comment_id."]}'
     http_version: 
   recorded_at: Thu, 08 May 2014 18:08:42 GMT
-- request:
-    method: post
-    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
-    body:
-      encoding: UTF-8
-      string: ! '{"msg_text":"test message","date_happened":1400010475,"msg_title":"dogapi-rb
-        end test title 1400010475","priority":"normal","parent":null,"tags":["test-run:carlo"],"aggregation_key":"","alert_type":null,"event_type":null,"source_type_name":null,"title":"dogapi-rb
-        end test title 1400010475","text":"test message","host":"dogbox-carlo","device":null}'
-    headers:
-      Accept:
-      - ! '*/*'
-      User-Agent:
-      - Ruby
-      Content-Type:
-      - application/json
-  response:
-    status:
-      code: 202
-      message: Accepted
-    headers:
-      Content-Type:
-      - text/json; charset=UTF-8
-      Date:
-      - Tue, 13 May 2014 19:47:56 GMT
-      Server:
-      - dogdispatcher/4.12.1
-      Content-Length:
-      - '326'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: ! '{"status": "ok", "event": {"priority": "normal", "date_happened":
-        1400010475, "handle": null, "title": "dogapi-rb end test title 1400010475",
-        "url": "https://app.datadoghq.com/event/jump_to?event_id=2277466975478186943",
-        "text": "test message", "tags": ["test-run:carlo"], "related_event_id": null,
-        "id": 2277466975478186943}}'
-    http_version: 
-  recorded_at: Tue, 13 May 2014 19:47:56 GMT
 - request:
     method: get
     uri: https://app.datadoghq.com/api/v1/events/2277466975478186943?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
@@ -128,7 +89,7 @@ http_interactions:
       string: ''
     headers:
       Accept:
-      - ! '*/*'
+      - '*/*'
       User-Agent:
       - Ruby
   response:
@@ -157,11 +118,100 @@ http_interactions:
       - keep-alive
     body:
       encoding: US-ASCII
-      string: ! '{"event": {"date_happened": 1400010475, "alert_type": "info", "resource":
+      string: '{"event": {"date_happened": 1400010475, "alert_type": "info", "resource":
         "/api/v1/events/2277466975478186943", "title": "dogapi-rb end test title 1400010475",
         "url": "/event/jump_to?event_id=2277466975478186943", "text": "test message",
         "tags": ["test-run:carlo"], "id": 2277466975478186943, "priority": "normal",
         "host": "dogbox-carlo", "device_name": null, "payload": "{}"}}'
     http_version: 
   recorded_at: Tue, 13 May 2014 19:48:01 GMT
-recorded_with: VCR 2.9.0
+- request:
+    method: post
+    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    body:
+      encoding: UTF-8
+      string: '{"msg_text":"test message","date_happened":1416248793,"msg_title":"dogapi-rb
+        end test title 1416248793","priority":"normal","parent":null,"tags":["test-run:1"],"aggregation_key":"","alert_type":null,"event_type":null,"source_type_name":null,"title":"dogapi-rb
+        end test title 1416248793","text":"test message","host":"Conors-MacBook-Pro-Retina.local","device":null}'
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+      Content-Type:
+      - application/json
+  response:
+    status:
+      code: 202
+      message: Accepted
+    headers:
+      Content-Type:
+      - text/json; charset=UTF-8
+      Date:
+      - Mon, 17 Nov 2014 18:26:33 GMT
+      Server:
+      - dogdispatcher/6.0.12
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Content-Length:
+      - '322'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"status": "ok", "event": {"priority": "normal", "date_happened": 1416248793,
+        "handle": null, "title": "dogapi-rb end test title 1416248793", "url": "https://app.datadoghq.com/event/jump_to?event_id=2549900732480976038",
+        "text": "test message", "tags": ["test-run:1"], "related_event_id": null,
+        "id": 2549900732480976038}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:33 GMT
+- request:
+    method: get
+    uri: https://app.datadoghq.com/api/v1/events/2549900732480976038?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - '*/*'
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Cache-Control:
+      - no-cache
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 17 Nov 2014 18:26:41 GMT
+      Pragma:
+      - no-cache
+      Server:
+      - gunicorn/19.1.0
+      Strict-Transport-Security:
+      - max-age=15724800;
+      Vary:
+      - Accept-Encoding
+      X-Dd-Version:
+      - 31.1883.245-0
+      Content-Length:
+      - '263'
+      Connection:
+      - keep-alive
+    body:
+      encoding: UTF-8
+      string: '{"event": {"date_happened": 1416248793, "alert_type": "info", "resource":
+        "/api/v1/events/2549900732480976038", "title": "dogapi-rb end test title 1416248793",
+        "url": "/event/jump_to?event_id=2549900732480976038", "text": "test message",
+        "tags": ["test-run:1"], "id": 2549900732480976038, "priority": "normal", "host":
+        "Conors-MacBook-Pro-Retina.local", "device_name": null, "payload": "{}"}}'
+    http_version: 
+  recorded_at: Mon, 17 Nov 2014 18:26:41 GMT
+recorded_with: VCR 2.9.3

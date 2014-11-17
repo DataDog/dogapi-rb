@@ -103,7 +103,7 @@ describe "Facade", :vcr => true do
 
       code, resp = @dog.emit_event(event)
       now_event_id = resp["event"]["id"]
-      sleep 5
+      sleep 8
       code, resp = @dog.get_event(now_event_id)
       expect(resp['event']).not_to be_nil
       expect(resp['event']['text']).to eq(now_message)
@@ -113,7 +113,7 @@ describe "Facade", :vcr => true do
       event = Dogapi::Event.new('test message', :msg_title => 'title', :date_happened => Time.now(), :priority => "low")
       code, resp = @dog.emit_event(event)
       low_event_id = resp["event"]["id"]
-      sleep 5
+      sleep 8
       code, resp = @dog.get_event(low_event_id)
       expect(resp['event']).not_to be_nil
       low_event = resp['event']
@@ -126,7 +126,7 @@ describe "Facade", :vcr => true do
       first = resp["event"]["id"]
       code, resp = @dog.emit_event(Dogapi::Event.new("Testing Aggregation (second)", :aggregation_key => now.to_i))
       second = resp["event"]["id"]
-      sleep 5
+      sleep 8
       code, resp = @dog.get_event(first)
       expect(resp["event"]).not_to be_nil
       code, resp = @dog.get_event(second)

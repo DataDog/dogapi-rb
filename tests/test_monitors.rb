@@ -51,7 +51,7 @@ class TestAlerts < Test::Unit::TestCase
     dog.delete_monitor(monitor_id2)
   end
 
-  def test_service_checks
+  def test_checks
     dog = Dogapi::Client.new(@api_key, @app_key)
 
     query = '"ntp.in_sync".over("role:herc").last(3).count_by_status()'
@@ -129,5 +129,10 @@ class TestAlerts < Test::Unit::TestCase
     dog.cancel_downtime(downtime_id)
   end
 
+  def test_service_checks
+    dog = Dogapi::Client.new(@api_key, @app_key)
+    status, response = dog.service_check('app.ok', 'app1', 1)
+    assert_equal status.to_i, 202
+  end
 
 end

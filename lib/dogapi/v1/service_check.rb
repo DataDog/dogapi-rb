@@ -3,7 +3,7 @@ require 'dogapi'
 module Dogapi
   class V1
 
-    class ServiceCheckService < Dogapi::APIServer
+    class ServiceCheckService < Dogapi::APIService
 
       API_VERSION = 'v1'
 
@@ -16,14 +16,12 @@ module Dogapi
 
           body = {
             'check' => check,
-            'host' => host,
+            'host_name' => host,
             'status' => status
           }.merge options
 
-          request(Net::HTTP::Put, "/api/#{API_VERSION}/check_run/" params, body, true)
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/check_run", params, body, true)
         rescue Exception => e
-          suppress_error_if_silent e
-        end
           suppress_error_if_silent e
         end
       end

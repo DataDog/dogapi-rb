@@ -39,7 +39,7 @@ module Dogapi
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout)
-
+      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
@@ -376,6 +376,14 @@ module Dogapi
 
     def get_all_downtimes(options = {})
       @monitor_svc.get_all_downtimes(options)
+    end
+
+    #
+    # SERVICE CHECKS
+    #
+
+    def service_check(check, host, status, options = {})
+      @service_check_svc.service_check(check, host, status, options)
     end
 
     private

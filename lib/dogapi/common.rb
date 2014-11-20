@@ -92,6 +92,7 @@ module Dogapi
 
       uri = URI.parse(@api_host)
       session = connection.new(uri.host, uri.port)
+      session.open_timeout = @timeout
       session.use_ssl = uri.scheme == 'https'
       session.start do |conn|
         conn.read_timeout = @timeout

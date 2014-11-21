@@ -13,7 +13,7 @@ class TestAlerts < Test::Unit::TestCase
     alert_id = dog.alert(query)[1]['id']
     status, alert = dog.get_alert(alert_id)
     assert_equal alert['query'], query, alert['query']
-    assert_equal alert['silenced'], {}, alert['silenced']
+    assert_equal alert['silenced'], false, alert['silenced']
 
     dog.update_alert(alert_id, query, :silenced => true)
     status, alert = dog.get_alert(alert_id)

@@ -52,10 +52,7 @@ module Dogapi
           # :group_states is an optional list of statuses to filter returned
           # groups. If no value is given then no group states will be returned.
           # Possible values are: "all", "ok", "warn", "alert", "no data".
-          if options[:group_states]
-            params[:group_states] = options[:group_states].join(',')
-            options.delete :group_states
-          end
+          params[:group_states] = options[:group_states].join(',') if options[:group_states]
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", params, nil, false)
         rescue Exception => e
@@ -87,14 +84,16 @@ module Dogapi
           # groups. If no value is given then no group states will be returned.
           # Possible values are: "all", "ok", "warn", "alert", "no data".
           if options[:group_states]
-            params[:group_states] = options[:group_states].join(',')
+            params[:group_states] = options[:group_states]
+            params[:group_states] = params[:group_states].join(',') if params[:group_states].respond_to?(:join)
           end
 
           # :tags is an optional list of scope tags to filter the list of monitors
           # returned. If no value is given, then all monitors, regardless of
           # scope, will be returned.
           if options[:tags]
-            params[:tags] = options[:tags].join(',')
+            params[:tags] = options[:tags]
+            params[:tags] = params[:tags].join(',') if params[:tags].respond_to?(:join)
           end
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", params, nil, false)

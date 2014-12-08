@@ -88,7 +88,13 @@ module Dogapi
           # Possible values are: "all", "ok", "warn", "alert", "no data".
           if options[:group_states]
             params[:group_states] = options[:group_states].join(',')
-            options.delete :group_states
+          end
+
+          # :tags is an optional list of scope tags to filter the list of monitors
+          # returned. If no value is given, then all monitors, regardless of
+          # scope, will be returned.
+          if options[:tags]
+            params[:tags] = options[:tags].join(',')
           end
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", params, nil, false)

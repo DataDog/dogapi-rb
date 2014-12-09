@@ -1,7 +1,6 @@
 require 'dogapi'
 require 'time'
 require 'test_base.rb'
-require 'pry'
 
 class TestAlerts < Test::Unit::TestCase
   include TestBase

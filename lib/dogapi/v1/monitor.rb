@@ -170,7 +170,7 @@ module Dogapi
         end
       end
 
-      def update_downtime(downtime_id, options={})
+      def update_downtime(downtime_id, options = {})
         begin
           params = {
             :api_key => @api_key,

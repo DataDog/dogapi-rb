@@ -1,6 +1,7 @@
 require 'dogapi'
 require 'time'
 require 'test_base.rb'
+require 'pry'
 
 class TestAlerts < Test::Unit::TestCase
   include TestBase
@@ -120,11 +121,21 @@ class TestAlerts < Test::Unit::TestCase
     dog = Dogapi::Client.new(@api_key, @app_key)
     start_ts = Time.now.to_i
     end_ts = start_ts + 1000
-    downtime_id = dog.schedule_downtime('env:staging', start_ts, :end => end_ts)[1]['id']
+    downtime_id = dog.schedule_downtime('env:staging', start_ts, :end => end_ts,
+                                        :message=>'Message!')[1]['id']
     status, dt = dog.get_downtime(downtime_id)
     assert_equal dt['start'], start_ts, dt['start']
     assert_equal dt['end'], end_ts, dt['end']
     assert_equal dt['scope'], ['env:staging'], dt['scope']
+    assert_equal dt['message'], 'Message!', dt['messsage']
+
+    dog.update_downtime(downtime_id, :start => start_ts + 1, :end => end_ts + 1,
+                        :scope => 'env:prod', :message => 'New Message!')
+    status, dt = dog.get_downtime(downtime_id)
+    assert_equal dt['start'], start_ts + 1, dt['start']
+    assert_equal dt['end'], end_ts + 1, dt['end']
+    assert_equal dt['scope'], ['env:prod'], dt['scope']
+    assert_equal dt['message'], 'New Message!', dt['messsage']
 
     dog.cancel_downtime(downtime_id)
   end

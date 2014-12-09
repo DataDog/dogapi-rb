@@ -52,8 +52,8 @@ class TestAlerts < Test::Unit::TestCase
     status, monitors = dog.get_all_monitors(:tags => ['host:host1'])
     monitor3 = monitors.map{|m| m if m['id'] == monitor_id3}.compact[0]
     assert_equal monitor3['query'], query3, monitor3['query']
-    assert_equal [], monitors.map{|m| m if m['id'] == monitor_id1}.compact[0]
-    assert_equal [], monitors.map{|m| m if m['id'] == monitor_id2}.compact[0]
+    assert_equal nil, monitors.map{|m| m if m['id'] == monitor_id1}.compact[0]
+    assert_equal nil, monitors.map{|m| m if m['id'] == monitor_id2}.compact[0]
 
     dog.delete_monitor(monitor_id1)
     dog.delete_monitor(monitor_id2)

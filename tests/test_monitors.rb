@@ -38,17 +38,26 @@ class TestAlerts < Test::Unit::TestCase
 
     query1 = "avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 100"
     query2 = "avg(last_1h):sum:system.net.bytes_rcvd{host:host0} > 200"
+    query3 = "avg(last_1h):sum:system.net.bytes_rcvd{host:host1} > 200"
 
     monitor_id1 = dog.monitor('metric alert', query1)[1]['id']
     monitor_id2 = dog.monitor('metric alert', query2)[1]['id']
+    monitor_id3 = dog.monitor('metric alert', query3)[1]['id']
     status, monitors = dog.get_all_monitors(:group_states => ['alert', 'warn'])
     monitor1 = monitors.map{|m| m if m['id'] == monitor_id1}.compact[0]
     monitor2 = monitors.map{|m| m if m['id'] == monitor_id2}.compact[0]
     assert_equal monitor1['query'], query1, monitor1['query']
     assert_equal monitor2['query'], query2, monitor2['query']
 
+    status, monitors = dog.get_all_monitors(:tags => ['host:host1'])
+    monitor3 = monitors.map{|m| m if m['id'] == monitor_id3}.compact[0]
+    assert_equal monitor3['query'], query3, monitor3['query']
+    assert_equal nil, monitors.map{|m| m if m['id'] == monitor_id1}.compact[0]
+    assert_equal nil, monitors.map{|m| m if m['id'] == monitor_id2}.compact[0]
+
     dog.delete_monitor(monitor_id1)
     dog.delete_monitor(monitor_id2)
+    dog.delete_monitor(monitor_id3)
   end
 
   def test_checks

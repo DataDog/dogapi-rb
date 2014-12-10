@@ -170,6 +170,19 @@ module Dogapi
         end
       end
 
+      def update_downtime(downtime_id, options = {})
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", params, options, true)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
       def get_downtime(downtime_id)
         begin
           params = {

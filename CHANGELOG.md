@@ -1,5 +1,9 @@
 Changes
 =======
+# 1.13.0 / 2014-12-10
+* Add tag filter to get_all_monitors [#58](https://github.com/DataDog/dogapi-rb/pull/58)
+* Add update downtime method [#59](https://github.com/DataDog/dogapi-rb/pull/59)
+
 # 1.12.0 / 2014-11-17
 * Add support for the Monitor API [#51](https://github.com/DataDog/dogapi-rb/pull/51)
 * Truncate event title and text before submission [#53](https://github.com/DataDog/dogapi-rb/pull/53)

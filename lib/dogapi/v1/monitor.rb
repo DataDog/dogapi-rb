@@ -157,7 +157,7 @@ module Dogapi
       #
       # DOWNTIMES
 
-      def schedule_downtime(scope, start, options = {})
+      def schedule_downtime(scope, options = {})
         begin
           params = {
             :api_key => @api_key,
@@ -165,8 +165,7 @@ module Dogapi
           }
 
           body = {
-            'scope' => scope,
-            'start' => start
+            'scope' => scope
           }.merge options
 
           request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime", params, body, true)

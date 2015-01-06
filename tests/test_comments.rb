@@ -18,6 +18,8 @@ class TestComments < Test::Unit::TestCase
     comment = comment_response["comment"]
     assert_equal "200", status, "Comment did not succeed, response: #{comment_response}"
 
+    sleep 1
+
     # Reply to a comment.
     status, reply_response = dog.comment('replying!', :related_event_id => comment["id"])
     reply = reply_response["comment"]

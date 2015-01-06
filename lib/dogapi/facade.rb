@@ -362,8 +362,8 @@ module Dogapi
     # MONITOR DOWNTIME
     #
 
-    def schedule_downtime(scope, start, options = {})
-      @monitor_svc.schedule_downtime(scope, start, options)
+    def schedule_downtime(scope, options = {})
+      @monitor_svc.schedule_downtime(scope, options)
     end
 
     def update_downtime(downtime_id, options = {})

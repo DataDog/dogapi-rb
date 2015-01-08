@@ -310,6 +310,10 @@ module Dogapi
       @screenboard_svc.get_screenboard(board_id)
     end
 
+    def get_all_screenboards()
+      @screenboard_svc.get_all_screenboards()
+    end
+
     def delete_screenboard(board_id)
       @screenboard_svc.delete_screenboard(board_id)
     end

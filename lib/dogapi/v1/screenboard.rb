@@ -52,6 +52,19 @@ module Dogapi
         end
       end
 
+      def get_all_screenboards()
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/screen", params, nil, false)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
       def delete_screenboard(board_id)
         begin
           params = {
@@ -64,7 +77,6 @@ module Dogapi
           suppress_error_if_silent e
         end
       end
-
 
       def share_screenboard(board_id)
         begin

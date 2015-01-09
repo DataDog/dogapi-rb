@@ -1,5 +1,9 @@
 Changes
 =======
+# 1.14.0 / 2015-01-09
+* Add get_all_screenboards [#61](https://github.com/DataDog/dogapi-rb/pull/61)
+* Remove required start argument from schedule_downtime [#60](https://github.com/DataDog/dogapi-rb/pull/60)
+
 # 1.13.0 / 2014-12-10
 * Add tag filter to get_all_monitors [#58](https://github.com/DataDog/dogapi-rb/pull/58)
 * Add update downtime method [#59](https://github.com/DataDog/dogapi-rb/pull/59)

@@ -58,6 +58,9 @@ class TestScreenboard < Test::Unit::TestCase
     assert_equal status, "200", "invalid HTTP response => #{status}"
     assert result["widgets"] == board["widgets"]
 
+    status, result = dog.get_all_screenboards()
+    assert_equal status, "200", "invalid HTTP response => #{status}"
+
     status, result = dog.update_screenboard(result["id"], updated_board)
     assert_equal status, "200", "invalid HTTP response => #{status}"
     assert result["widgets"] == updated_board["widgets"]

@@ -129,8 +129,8 @@ class TestAlerts < Test::Unit::TestCase
     dog = Dogapi::Client.new(@api_key, @app_key)
     start_ts = Time.now.to_i
     end_ts = start_ts + 1000
-    downtime_id = dog.schedule_downtime('env:staging', start_ts, :end => end_ts,
-                                        :message=>'Message!')[1]['id']
+    downtime_id = dog.schedule_downtime('env:staging', :start => start_ts,
+                                        :end => end_ts, :message=>'Message!')[1]['id']
     status, dt = dog.get_downtime(downtime_id)
     assert_equal dt['start'], start_ts, dt['start']
     assert_equal dt['end'], end_ts, dt['end']

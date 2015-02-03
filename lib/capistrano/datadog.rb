@@ -92,7 +92,7 @@ module Capistrano
           message_content = (@logging_output[name] || []).join('')
           message = if !message_content.empty? then
             # Strip out color control characters
-            message_content = message_content.gsub(/\e\[(\d+)m/, '')
+            message_content = sanitize_encoding(message_content).gsub(/\e\[(\d+)m/, '')
             "@@@\n#{message_content}@@@" else "" end
 
           Dogapi::Event.new(message,
@@ -104,6 +104,11 @@ module Capistrano
             :tags             => tags
           )
         end
+      end
+
+      def sanitize_encoding(string)
+        return string unless defined?(::Encoding) && string.encoding == Encoding::BINARY
+        string.encode(Encoding::UTF_8, Encoding::BINARY, invalid: :replace, undef: :replace, replace: '')
       end
     end
 

@@ -1,5 +1,9 @@
 Changes
 =======
+# 1.15.0 / 2015-02-03
+* Encode capistrano output messages to UTF-8 before manipulating them. (thanks [@byroot][] [#52](https://github.com/DataDog/dogapi-rb/pull/52))
+* Add open_timeout to avoid stuck HTTP calls (thanks [@Kaixiang][] [#55](https://github.com/DataDog/dogapi-rb/pull/55))
+
 # 1.14.0 / 2015-01-09
 * Add get_all_screenboards [#61](https://github.com/DataDog/dogapi-rb/pull/61)
 * Remove required start argument from schedule_downtime [#60](https://github.com/DataDog/dogapi-rb/pull/60)
@@ -99,3 +103,5 @@ Changes
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
 [@treeder]: https://github.com/treeder
+[@Kaixiang]: https://github.com/Kaixiang
+[@byroot]: https://github.com/byroot

@@ -35,6 +35,7 @@ module Dogapi
       def submit_to_buffer(metric, points, scope, options = {})
         payload = self.make_metric_payload(metric, points, scope, options)
         @buffer << payload
+        return 200, {}
       end
 
       def flush_buffer()

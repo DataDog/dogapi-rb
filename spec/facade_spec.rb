@@ -17,6 +17,7 @@ describe "Facade", :vcr => true do
       @service.instance_variable_set(:@uploaded, Array.new)
       def @service.upload payload
         @uploaded << payload
+        return 200, {}
       end
     end
 
@@ -49,10 +50,11 @@ describe "Facade", :vcr => true do
     end
 
     it "emit_points can be batched" do
-      @dogmock.batch_metrics do
+      code, resp = @dogmock.batch_metrics do
         @dogmock.emit_point("metric.name", 1, :type => 'counter')
         @dogmock.emit_point("othermetric.name", 2, :type => 'counter')
       end
+      expect(code).to eq 200
       # Verify that we uploaded what we expected
       uploaded =  @service.instance_variable_get(:@uploaded)
       expect(uploaded.length).to eq 1

@@ -38,8 +38,9 @@ module Dogapi
       end
 
       def flush_buffer()
-        self.upload(@buffer)
+        payload = @buffer
         @buffer = nil
+        self.upload(payload)
       end
 
       alias :submit :submit_to_api

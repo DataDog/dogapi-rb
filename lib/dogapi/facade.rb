@@ -94,7 +94,7 @@ module Dogapi
       @metric_svc.switch_to_batched
       begin
         yield
-        @metric_svc.flush_buffer
+        @metric_svc.flush_buffer # flush_buffer should returns the response from last API call
       ensure
         @metric_svc.switch_to_single
       end

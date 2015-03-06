@@ -35,11 +35,13 @@ module Dogapi
       def submit_to_buffer(metric, points, scope, options = {})
         payload = self.make_metric_payload(metric, points, scope, options)
         @buffer << payload
+        return 200, {}
       end
 
       def flush_buffer()
-        self.upload(@buffer)
+        payload = @buffer
         @buffer = nil
+        self.upload(payload)
       end
 
       alias :submit :submit_to_api

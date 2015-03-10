@@ -5,7 +5,7 @@ require 'socket'
 require 'uri'
 
 require 'rubygems'
-require 'json'
+require 'multi_json'
 
 module Dogapi
 
@@ -52,7 +52,7 @@ module Dogapi
         req.set_form_data params
         resp = conn.request(req)
         begin
-          resp_obj = JSON.parse(resp.body)
+          resp_obj = MultiJson.load(resp.body)
         rescue
           raise 'Invalid JSON Response: ' + resp.body
         end
@@ -128,7 +128,7 @@ module Dogapi
 
         if send_json
           req.content_type = 'application/json'
-          req.body = JSON.generate(body)
+          req.body = MultiJson.dump(body)
         end
 
         resp = conn.request(req)
@@ -136,7 +136,7 @@ module Dogapi
 
         if resp.code != 204 and resp.body != '' and resp.body != 'null' and resp.body != nil
           begin
-            resp_obj = JSON.parse(resp.body)
+            resp_obj = MultiJson.load(resp.body)
           rescue
             raise 'Invalid JSON Response: ' + resp.body
           end

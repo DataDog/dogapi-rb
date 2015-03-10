@@ -24,7 +24,7 @@ Gem::Specification.new do |spec|
                     '--main' << 'README.rdoc' <<
                     '--line-numbers' << '--inline-source'
 
-  spec.add_dependency 'json', '>= 1.5.1'
+  spec.add_dependency 'multi_json'
 
   spec.add_development_dependency 'bundler', '~> 1.3'
   spec.add_development_dependency 'rake', '~> 10'

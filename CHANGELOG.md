@@ -1,5 +1,8 @@
 Changes
 =======
+# 1.17.0 / 2015-03-26
+* Use MultiJSON for JSON handling. (thanks [@winebarrel][] [#64][])
+
 # 1.16.0 / 2015-03-06
 * Return response from API when metrics are sent as a batch. (thanks [@yyuu][] [#62](https://github.com/DataDog/dogapi-rb/pull/62))
 
@@ -118,10 +121,12 @@ Changes
 [#60]: https://github.com/DataDog/dogapi-rb/issues/60
 [#61]: https://github.com/DataDog/dogapi-rb/issues/61
 [#62]: https://github.com/DataDog/dogapi-rb/issues/62
+[#64]: https://github.com/DataDog/dogapi-rb/issues/64
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
 [@byroot]: https://github.com/byroot
 [@treeder]: https://github.com/treeder
+[@winebarrel]: https://github.com/winebarrel
 [@yyuu]: https://github.com/yyuu

@@ -387,6 +387,18 @@ module Dogapi
     end
 
     #
+    # HOST MUTING
+    #
+
+    def mute_host(hostname, options = {})
+      @monitor_svc.mute_host(hostname, options)
+    end
+
+    def unmute_host(hostname)
+      @monitor_svc.unmute_host(hostname)
+    end
+
+    #
     # SERVICE CHECKS
     #
 

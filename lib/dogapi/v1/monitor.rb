@@ -231,6 +231,33 @@ module Dogapi
         end
       end
 
+      #
+      # HOST MUTING
+
+      def mute_host(hostname, options = {})
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/mute", params, options, true)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+      def unmute_host(hostname)
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", params, nil, true)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
     end
 
   end

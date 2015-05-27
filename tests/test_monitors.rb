@@ -148,6 +148,40 @@ class TestAlerts < Test::Unit::TestCase
     dog.cancel_downtime(downtime_id)
   end
 
+  def test_host_muting
+    dog = Dogapi::Client.new(@api_key, @app_key)
+    hostname = 'test.host'
+
+    # Reset test
+    dog.unmute_host(hostname)
+
+    message = "Muting this host for a test."
+    end_ts = Time.now.to_i + 60 * 60
+
+    res_code, res = dog.mute_host(hostname, :end => end_ts, :message => message)
+    assert_equal res_code, "200", res_code
+    assert_equal res["action"], "Muted", res["action"]
+    assert_equal res["hostname"], hostname, res["hostname"]
+    assert_equal res["message"], message, res["message"]
+    assert_equal res["end"], end_ts, res["end"]
+
+    # muting the same host multiple times should fail unless override is true
+    end_ts2 = end_ts + 60 * 15
+    res_code, res = dog.mute_host(hostname, :end => end_ts2)
+    assert_equal res_code, "400", res_code
+
+    res_code, res = dog.mute_host(hostname, :end => end_ts2, :override => true)
+    assert_equal res_code, "200", res_code
+    assert_equal res["action"], "Muted", res["action"]
+    assert_equal res["hostname"], hostname, res["hostname"]
+    assert_equal res["end"], end_ts2, res["end"]
+
+    res_code, res = dog.unmute_host(hostname)
+    assert_equal res_code, "200", res_code
+    assert_equal res["action"], "Unmuted", res["action"]
+    assert_equal res["hostname"], hostname, res["hostname"]
+  end
+
   def test_service_checks
     dog = Dogapi::Client.new(@api_key, @app_key)
     status, response = dog.service_check('app.ok', 'app1', 1)

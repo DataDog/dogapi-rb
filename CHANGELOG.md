@@ -1,5 +1,9 @@
 Changes
 =======
+
+# 1.18.0 / 2015-06-01
+* Add support for host muting.
+
 # 1.17.0 / 2015-03-26
 * Use MultiJSON for JSON handling. (thanks [@winebarrel][] [#64][])
 

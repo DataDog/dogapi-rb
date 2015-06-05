@@ -322,6 +322,10 @@ module Dogapi
       @screenboard_svc.share_screenboard(board_id)
     end
 
+    def revoke_screenboard(board_id)
+      @screenboard_svc.revoke_screenboard(board_id)
+    end
+
     #
     # MONITORS
     #

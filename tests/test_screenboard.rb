@@ -1,6 +1,7 @@
 require 'dogapi'
 require 'time'
 require 'test_base.rb'
+require 'open-uri'
 
 class TestScreenboard < Test::Unit::TestCase
   include TestBase
@@ -65,6 +66,18 @@ class TestScreenboard < Test::Unit::TestCase
     status, share_result = dog.share_screenboard(result["id"])
     assert_equal status, "200", "invalid HTTP response => #{status}"
     assert share_result["board_id"] == result["id"]
+
+    open(share_result["public_url"]) do |f|
+      assert_equal f.status.first, "200", "invalid HTTP response => #{status}"
+    end
+
+    status, revoke_result = dog.revoke_screenboard(result["id"])
+    assert_equal status, "200", "invalid HTTP response => #{status}"
+
+    ex = assert_raise OpenURI::HTTPError do
+      open(share_result["public_url"])
+    end
+    assert_equal ex.message, "404 Not Found"
 
     status, del_result = dog.delete_screenboard(result["id"])
     assert_equal status, "200", "invalid HTTP response => #{status}"

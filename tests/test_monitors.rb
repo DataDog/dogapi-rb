@@ -150,7 +150,8 @@ class TestAlerts < Test::Unit::TestCase
 
   def test_host_muting
     dog = Dogapi::Client.new(@api_key, @app_key)
-    hostname = 'test.host'
+
+    hostname = 'test.host%d' % rand(10000)
 
     # Reset test
     dog.unmute_host(hostname)

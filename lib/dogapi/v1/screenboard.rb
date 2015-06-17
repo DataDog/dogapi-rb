@@ -91,6 +91,19 @@ module Dogapi
         end
       end
 
+      def revoke_screenboard(board_id)
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Delete, "/api/#{API_VERSION}/screen/share/#{board_id}", params, nil, false)
+        rescue Exception => e
+          suppress_error_if_silent e
+        end
+      end
+
     end
 
   end

@@ -1,113 +1,116 @@
 Changes
 =======
 
+# 1.19.0 / 2015-06-22
+* [FEATURE] Revoke a shared a Screenboard. See [#69][]
+
 # 1.18.0 / 2015-06-01
-* Add support for host muting.
+* [FEATURE] Add support for host muting.
 
 # 1.17.0 / 2015-03-26
-* Use MultiJSON for JSON handling. (thanks [@winebarrel][] [#64][])
+* [IMPROVEMENT] Use MultiJSON for JSON handling. (thanks [@winebarrel][] [#64][])
 
 # 1.16.0 / 2015-03-06
-* Return response from API when metrics are sent as a batch. (thanks [@yyuu][] [#62](https://github.com/DataDog/dogapi-rb/pull/62))
+* [IMPROVEMENT] Return response from API when metrics are sent as a batch. (thanks [@yyuu][] [#62](https://github.com/DataDog/dogapi-rb/pull/62))
 
 # 1.15.0 / 2015-02-03
-* Encode capistrano output messages to UTF-8 before manipulating them. (thanks [@byroot][] [#52](https://github.com/DataDog/dogapi-rb/pull/52))
-* Add open_timeout to avoid stuck HTTP calls (thanks [@Kaixiang][] [#55](https://github.com/DataDog/dogapi-rb/pull/55))
+* [BUGFIX] Add open_timeout to avoid stuck HTTP calls (thanks [@Kaixiang][] [#55](https://github.com/DataDog/dogapi-rb/pull/55))
+* [BUGFIX] Encode capistrano output messages to UTF-8 before manipulating them. (thanks [@byroot][] [#52](https://github.com/DataDog/dogapi-rb/pull/52))
 
 # 1.14.0 / 2015-01-09
-* Add get_all_screenboards [#61](https://github.com/DataDog/dogapi-rb/pull/61)
-* Remove required start argument from schedule_downtime [#60](https://github.com/DataDog/dogapi-rb/pull/60)
+* [FEATURE] Add get_all_screenboards [#61](https://github.com/DataDog/dogapi-rb/pull/61)
+* [IMPROVEMENT] Remove required start argument from schedule_downtime [#60](https://github.com/DataDog/dogapi-rb/pull/60)
 
 # 1.13.0 / 2014-12-10
-* Add tag filter to get_all_monitors [#58](https://github.com/DataDog/dogapi-rb/pull/58)
-* Add update downtime method [#59](https://github.com/DataDog/dogapi-rb/pull/59)
+* [FEATURE] Add tag filter to get_all_monitors [#58](https://github.com/DataDog/dogapi-rb/pull/58)
+* [FEATURE] Add update downtime method [#59](https://github.com/DataDog/dogapi-rb/pull/59)
 
 # 1.12.0 / 2014-11-17
-* Add support for the Monitor API [#51](https://github.com/DataDog/dogapi-rb/pull/51)
-* Truncate event title and text before submission [#53](https://github.com/DataDog/dogapi-rb/pull/53)
+* [FEATURE] Add support for the Monitor API [#51](https://github.com/DataDog/dogapi-rb/pull/51)
+* [IMPROVEMENT] Truncate event title and text before submission [#53](https://github.com/DataDog/dogapi-rb/pull/53)
 
 # 1.11.0 / 2014-07-03
-* Allow to send several metrics in the same http request
-* Add support for http proxy defined by the environment variables
+* [IMPROVEMENT] Add support for HTTP proxy defined by the environment variables
+* [IMPROVEMENT] Allow to send several metrics in the same HTTP request
 
 # 1.10.0 / 2014-05-13
-* Re-enable SSL verification ([#37](https://github.com/DataDog/dogapi-rb/issues/37))
-* Make http timeout configurable ([#29](https://github.com/DataDog/dogapi-rb/issues/29))
-* Report application name when deploy with Capistrano (thanks [@ArjenSchwarz][] [#46](https://github.com/DataDog/dogapi-rb/pull/46))
+* [IMPROVEMENT] Make HTTP timeout configurable ([#29](https://github.com/DataDog/dogapi-rb/issues/29))
+* [IMPROVEMENT] Re-enable SSL verification ([#37](https://github.com/DataDog/dogapi-rb/issues/37))
+* [IMPROVEMENT] Report application name when deploy with Capistrano (thanks [@ArjenSchwarz][] [#46](https://github.com/DataDog/dogapi-rb/pull/46))
 
 # 1.9.2 / 2014-02-13
-* Fully support for capistrano v3 ([#43](https://github.com/DataDog/dogapi-rb/pull/43))
-* Strip control characters from capistrano messages ([#36](https://github.com/DataDog/dogapi-rb/issues/36))
-* Tag capistrano events by stage (thanks [@arielo][] [#25](https://github.com/DataDog/dogapi-rb/pull/25))
+* [IMPROVEMENT] Fully support for capistrano v3 ([#43](https://github.com/DataDog/dogapi-rb/pull/43))
+* [IMPROVEMENT] Strip control characters from capistrano messages ([#36](https://github.com/DataDog/dogapi-rb/issues/36))
+* [IMPROVEMENT] Tag capistrano events by stage (thanks [@arielo][] [#25](https://github.com/DataDog/dogapi-rb/pull/25))
 
 # 1.9.1 / 2014-01-06
-* Log a warning instead of crashing when trying to integration with capistrano v3
+* [IMPROVEMENT] Log a warning instead of crashing when trying to integration with capistrano v3
 
 # 1.9.0 / 2013-09-06
-* When emitting a metric without an explicit host, default to local hostname.
+* [IMPROVEMENT] When emitting a metric without an explicit host, default to local hostname.
 
 # 1.8.1 / 2013-08-22
-* Update Dash API to support template variables.
+* [FEATURE] Update Dash API to support template variables.
 
 # 1.8.0 / 2013-07-16
-* Add an API for interacting with Screenboards
+* [FEATURE] Add an API for interacting with Screenboards
 
 # 1.7.1 / 2013-06-23
-* Add an API for inviting users
-* Add an API for taking graph snapshots
-* Fix bug in capistrano integration with logging of nil (thanks [@arielo][])
+* [BUGFIX] Fix bug in capistrano integration with logging of nil (thanks [@arielo][])
+* [FEATURE] Add an API for inviting users
+* [FEATURE] Add an API for taking graph snapshots
 
 # 1.7.0
 * Not released.
 
 # 1.6.0 / 2013-02-19
-* Support for setting `source` type when submitting host tags
+* [FEATURE] Support for setting `source` type when submitting host tags
 
 # 1.5.2 / 2013-02-13
-* Fix a bug in hashing the Event object when the instance variables are symbols.
+* [BUGFIX] Fix a bug in hashing the Event object when the instance variables are symbols.
 
 # 1.5.0 / 2012-11-06
-* Alerting API
+* [FEATURE] Alerting API
 
 # 1.4.3
-* Fix bug with capistrano integration for capistrano 2.13.5 (thanks [@ansel1][])
+* [BUGFIX] Fix bug with capistrano integration for capistrano 2.13.5 (thanks [@ansel1][])
 
 # 1.4.2
-* Added missing dashboards endpoint.
+* [BUGFIX] Added missing dashboards endpoint.
 
 # 1.4.1
-* Fixed searching for events with tags.
+* [BUGFIX] Fixed searching for events with tags.
 
 # 1.4.0
-* Added support for the dashboard, search and comment API endpoints.
+* [FEATURE] Added support for the dashboard, search and comment API endpoints.
 
 # 1.3.6
-* Small fix for capistrano integration
+* [BUGFIX] Small fix for capistrano integration
 
 # 1.3.4
-* Various bug fixes (event.to_hash, md5 import, capistrano lambda roles)
+* [BUGFIX] Various bug fixes (event.to_hash, md5 import, capistrano lambda roles)
 
 # 1.3.3
-* Bug fix for submitting counters
+* [BUGFIX] Bug fix for submitting counters
 
 # 1.3.2
-* Support an aggregation key to aggregate events together
+* [IMPROVEMENT] Support an aggregation key to aggregate events together
 
 # 1.3.1
-* Metrics can be counters, rather than just gauges (thanks to [@treeder][])
-* Metrics can be tagged.
+* [FEATURE] Metrics can be counters, rather than just gauges (thanks to [@treeder][])
+* [FEATURE] Metrics can be tagged.
 
 # 1.3.0
-* Capistrano integration. See https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano
+* [FEATURE] Capistrano integration. See https://github.com/DataDog/dogapi-rb/tree/master/lib/capistrano
 
 # 1.2.x
-* You can now manage host tags
-* You can now get event details and query the stream in addition to posting events
-* Functionality relating to events with a duration has been deprecated
-* The underlying clients have been updated to use Datadog's new public HTTP API[https://github.com/DataDog/dogapi/wiki]
+* [FEATURE] You can now manage host tags
+* [IMPROVEMENT] Functionality relating to events with a duration has been deprecated
+* [IMPROVEMENT] The underlying clients have been updated to use Datadog's new public HTTP API[https://github.com/DataDog/dogapi/wiki]
+* [IMPROVEMENT] You can now get event details and query the stream in addition to posting events
 
 # 1.1.x
-* You do not need to use environment variables anymore to use the client.
+* [IMPROVEMENT] You do not need to use environment variables anymore to use the client.
 
 <!--- The following link definition list is generated by PimpMyChangelog --->
 [#25]: https://github.com/DataDog/dogapi-rb/issues/25
@@ -126,6 +129,7 @@ Changes
 [#61]: https://github.com/DataDog/dogapi-rb/issues/61
 [#62]: https://github.com/DataDog/dogapi-rb/issues/62
 [#64]: https://github.com/DataDog/dogapi-rb/issues/64
+[#69]: https://github.com/DataDog/dogapi-rb/issues/69
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1

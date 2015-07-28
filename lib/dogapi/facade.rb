@@ -303,12 +303,12 @@ module Dogapi
       @embed_svc.get_all_embeds()
     end
 
-    def get_embed(embed_id, size="medium", legend="no", template_vars= {})
-      @embed_svc.get_embed(embed_id, size, legend, template_vars)
+    def get_embed(embed_id, description= {})
+      @embed_svc.get_embed(embed_id, description)
     end
 
-    def create_embed(graph_json, timeframe="1_hour", size="medium", legend="no", title="Embed created through API")
-      @embed_svc.create_embed(graph_json, timeframe, size, legend, title)
+    def create_embed(graph_json, description= {})
+      @embed_svc.create_embed(graph_json, description)
     end
 
     def enable_embed(embed_id)

@@ -40,7 +40,13 @@ class TestEmbed < Test::Unit::TestCase
     size = "medium"
     legend = "no"
     title = "Sick Title!"
-    status, result = dog.create_embed(graph_json, timeframe, size, legend, title)
+    description = {
+      :timeframe => timeframe,
+      :size => size,
+      :legend => legend,
+      :title => title
+    }
+    status, result = dog.create_embed(graph_json, description)
     # Sanity check results
     assert result["graph_title"] == title
     assert_equal status, "200", "invalid HTTP response => #{status}"
@@ -71,7 +77,13 @@ class TestEmbed < Test::Unit::TestCase
     size = "medium"
     legend = "no"
     title = "Sick Title!"
-    status, create_result = dog.create_embed(graph_json, timeframe, size, legend, title)
+    description = {
+      :timeframe => timeframe,
+      :size => size,
+      :legend => legend,
+      :title => title
+    }
+    status, create_result = dog.create_embed(graph_json, description)
     # Sanity check results
     assert_equal status, "200", "invalid HTTP response => #{status}"
     embed_id = create_result["embed_id"]
@@ -110,7 +122,13 @@ class TestEmbed < Test::Unit::TestCase
     size = "medium"
     legend = "no"
     title = "Sick Title!"
-    status, create_result = dog.create_embed(graph_json, timeframe, size, legend, title)
+    description = {
+      :timeframe => timeframe,
+      :size => size,
+      :legend => legend,
+      :title => title
+    }
+    status, create_result = dog.create_embed(graph_json, description)
     # Sanity check results
     assert_equal status, "200", "invalid HTTP response => #{status}"
     embed_id = create_result["embed_id"]
@@ -144,7 +162,13 @@ class TestEmbed < Test::Unit::TestCase
     size = "medium"
     legend = "no"
     title = "Sick Title!"
-    status, create_result = dog.create_embed(graph_json, timeframe, size, legend, title)
+    description = {
+      :timeframe => timeframe,
+      :size => size,
+      :legend => legend,
+      :title => title
+    }
+    status, create_result = dog.create_embed(graph_json, description)
     # Sanity check results
     assert_equal status, "200", "invalid HTTP response => #{status}"
     embed_id = create_result["embed_id"]

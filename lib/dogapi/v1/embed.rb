@@ -29,17 +29,15 @@ module Dogapi
       # :embed_id       => String: embed token for a specific embed
       # :size           => String: "small", "medium"(defualt), "large", or "xlarge". 
       # :legend         => String: "yes" or "no"(default)
-      # :template_vars  => Dictionary: variable name => variable value (any number of template vars)
-      def get_embed(embed_id, size="medium", legend="no", template_vars= {})
+      # :template_vars  => String: variable name => variable value (any number of template vars)
+      def get_embed(embed_id, description= {})
         begin
-          # Initialize parameters and merge with template_vars
+          # Initialize parameters and merge with description
           params = {
             :api_key => @api_key,
             :application_key => @application_key,
-            :size => size,
-            :legend => legend
           }
-          params = params.merge(template_vars)
+          params = params.merge(description)
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", params, nil, false)
         rescue Exception => e
@@ -54,7 +52,7 @@ module Dogapi
       # :size        => String: representing the size of the graph. Default is "medium".
       # :legend      => String: flag representing whether a legend is displayed. Default is "no".
       # :title       => String: represents title of the graph. Default is "Embed created through API."
-      def create_embed(graph_json, timeframe="1_hour", size="medium", legend="no", title="Embed created through API")
+      def create_embed(graph_json, description= {})
         begin
           params = {
             :api_key => @api_key,
@@ -63,11 +61,8 @@ module Dogapi
 
           body = {
             :graph_json => graph_json,
-            :timeframe => timeframe,
-            :size => size,
-            :legend => legend,
-            :title => title
           }
+          body = body.merge(description)
 
           request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", params, body, true)
         rescue Exception => e

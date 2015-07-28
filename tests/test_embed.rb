@@ -90,7 +90,12 @@ class TestEmbed < Test::Unit::TestCase
     # Get the embed using that embed id
     status, embed_without_var = dog.get_embed(embed_id)
     assert_equal status, "200", "invalid HTTP response => #{status}"
-    status, embed_with_var = dog.get_embed(embed_id, "medium", "no", {"var" => "val"})
+    get_embed_description = {
+      :size => size,
+      :legend => legend,
+      :var => "val"
+    }
+    status, embed_with_var = dog.get_embed(embed_id, get_embed_description)
     assert_equal status, "200", "invalid HTTP response => #{status}"
     # Verify that the get requests are good
     assert embed_without_var["html"] == create_result["html"]

@@ -36,8 +36,7 @@ module Dogapi
           params = {
             :api_key => @api_key,
             :application_key => @application_key,
-          }
-          params = params.merge(description)
+          }.merge(description)
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", params, nil, false)
         rescue Exception => e
@@ -61,8 +60,7 @@ module Dogapi
 
           body = {
             :graph_json => graph_json,
-          }
-          body = body.merge(description)
+          }.merge(description)
 
           request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", params, body, true)
         rescue Exception => e

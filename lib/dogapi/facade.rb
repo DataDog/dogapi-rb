@@ -37,6 +37,7 @@ module Dogapi
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout)
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout)
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
+      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout)
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout)
@@ -293,6 +294,29 @@ module Dogapi
     # Graph snapshot
     def graph_snapshot(metric_query, start_ts, end_ts, event_query = nil)
       @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)
+    end
+
+    #
+    # EMBEDS
+    #
+    def get_all_embeds()
+      @embed_svc.get_all_embeds()
+    end
+
+    def get_embed(embed_id, description= {})
+      @embed_svc.get_embed(embed_id, description)
+    end
+
+    def create_embed(graph_json, description= {})
+      @embed_svc.create_embed(graph_json, description)
+    end
+
+    def enable_embed(embed_id)
+      @embed_svc.enable_embed(embed_id)
+    end
+
+    def revoke_embed(embed_id)
+      @embed_svc.revoke_embed(embed_id)
     end
 
     #

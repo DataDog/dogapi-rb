@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.20.0 / Unreleased
+# 1.20.0 / 2015-07-29
 * [FEATURE] Embeddable graphs API. See [#73][]
 
 # 1.19.0 / 2015-06-22

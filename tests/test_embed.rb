@@ -50,6 +50,9 @@ class TestEmbed < Test::Unit::TestCase
     # Sanity check results
     assert result["graph_title"] == title
     assert_equal status, "200", "invalid HTTP response => #{status}"
+    assert result["html"].include? "legend=false"
+    assert result["html"].include? "height=300"
+    assert result["html"].include? "width=600"
   end
   
   def test_get_embed
@@ -86,6 +89,9 @@ class TestEmbed < Test::Unit::TestCase
     status, create_result = dog.create_embed(graph_json, description)
     # Sanity check results
     assert_equal status, "200", "invalid HTTP response => #{status}"
+    assert create_result["html"].include? "legend=false"
+    assert create_result["html"].include? "height=300"
+    assert create_result["html"].include? "width=600"
     embed_id = create_result["embed_id"]
     # Get the embed using that embed id
     status, embed_without_var = dog.get_embed(embed_id)
@@ -100,6 +106,10 @@ class TestEmbed < Test::Unit::TestCase
     # Verify that the get requests are good
     assert embed_without_var["html"] == create_result["html"]
     assert embed_with_var["html"] != embed_without_var["html"]
+    assert embed_with_var["html"].include? "legend=false"
+    assert embed_with_var["html"].include? "height=300"
+    assert embed_with_var["html"].include? "width=600"
+    assert embed_with_var["html"].include? "var=val"
   end
 
   def test_enable_embed

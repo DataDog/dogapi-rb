@@ -1,5 +1,6 @@
 require "benchmark"
 require "sshkit/formatters/pretty"
+require "sshkit/formatters/simple_text"
 
 # Capistrano v3 uses Rake's DSL instead of its own
 
@@ -44,6 +45,12 @@ end
 module SSHKit
   module Formatter
     class Pretty
+      def initialize(oio)
+        super(Capistrano::Datadog::CaptureIO.new(oio))
+      end
+    end
+
+    class SimpleText
       def initialize(oio)
         super(Capistrano::Datadog::CaptureIO.new(oio))
       end

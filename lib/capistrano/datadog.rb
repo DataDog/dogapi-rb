@@ -87,7 +87,7 @@ module Capistrano
           end
           title = "%s@%s ran %s%s on %s with capistrano in %.2f secs" % [user, hostname, name, application, roles.join(', '), task[:timing]]
           type  = "deploy"
-          alert_type = "success"
+          alert_type = "error"
           source_type = "capistrano"
           message_content = (@logging_output[name] || []).join('')
           message = if !message_content.empty? then

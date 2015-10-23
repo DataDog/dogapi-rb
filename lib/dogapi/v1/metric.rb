@@ -44,16 +44,20 @@ module Dogapi
         self.upload(payload)
       end
 
-      alias :submit :submit_to_api
+      def submit(*args)
+        if @buffer
+          submit_to_buffer(*args)
+        else
+          submit_to_api(*args)
+        end
+      end
 
       def switch_to_batched()
-        alias :submit :submit_to_buffer
         @buffer = Array.new
       end
 
       def switch_to_single()
         @buffer = nil
-        alias :submit :submit_to_api
       end
 
       def make_metric_payload(metric, points, scope, options)

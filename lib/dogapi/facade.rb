@@ -291,6 +291,26 @@ module Dogapi
       @user_svc.invite(emails, options)
     end
 
+    def create_user(description = {})
+      @user_svc.create_user(description)
+    end
+
+    def get_all_users()
+      @user_svc.get_all_users()
+    end
+
+    def get_user(handle)
+      @user_svc.get_user(handle)
+    end
+
+    def update_user(handle, description = {})
+      @user_svc.update_user(handle, description)
+    end
+
+    def disable_user(handle)
+      @user_svc.disable_user(handle)
+    end
+
     # Graph snapshot
     def graph_snapshot(metric_query, start_ts, end_ts, event_query = nil)
       @snapshot_svc.snapshot(metric_query, start_ts, end_ts, event_query)

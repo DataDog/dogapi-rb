@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.21.0 / Unreleased
+# 1.21.0 / 2015-10-30
 * [FEATURE] User CRUD API. See [#82][]
 * [IMPROVEMENT] Support capistrano SimpleTextFormatter (thanks [@rmoriz][] [#81][])
 

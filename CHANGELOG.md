@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 1.21.0 / Unreleased
+* [FEATURE] User CRUD API. See [#82][]
+* [IMPROVEMENT] Support capistrano SimpleTextFormatter (thanks [@rmoriz][] [#81][])
+
 # 1.20.0 / 2015-07-29
 * [FEATURE] Embeddable graphs API. See [#73][]
 
@@ -134,6 +138,9 @@ Changes
 [#64]: https://github.com/DataDog/dogapi-rb/issues/64
 [#69]: https://github.com/DataDog/dogapi-rb/issues/69
 [#73]: https://github.com/DataDog/dogapi-rb/issues/73
+[#81]: https://github.com/DataDog/dogapi-rb/issues/81
+[#82]: https://github.com/DataDog/dogapi-rb/issues/82
+
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1
@@ -142,3 +149,4 @@ Changes
 [@treeder]: https://github.com/treeder
 [@winebarrel]: https://github.com/winebarrel
 [@yyuu]: https://github.com/yyuu
+[@rmoriz]: https://github.com/rmoriz

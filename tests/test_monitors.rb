@@ -107,7 +107,7 @@ class TestAlerts < Test::Unit::TestCase
 
     # We shouldn't be able to mute a simple alert on a scope.
     status, _ = dog.mute_monitor(monitor_id, :scope => 'env:staging')
-    assert_equal status.to_i, 403, status.to_i
+    assert_equal status.to_i, 400, status.to_i
 
     query2 = 'avg(last_1h):sum:system.net.bytes_rcvd{*} by {host} > 100'
     monitor_id = dog.monitor('metric alert', query2)[1]['id']

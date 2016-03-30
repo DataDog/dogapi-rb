@@ -18,7 +18,6 @@ module Dogapi
               to: to.to_i,
               query: query
           }
-          puts([Net::HTTP::Get, '/api/' + API_VERSION + '/query', params])
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
         rescue Exception => e
           if @silent
@@ -33,10 +32,10 @@ module Dogapi
       def upload(metrics)
         begin
           params = {
-              :api_key => @api_key
+            :api_key => @api_key
           }
           body = {
-              :series => metrics
+            :series => metrics
           }
           request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
         rescue Exception => e
@@ -91,11 +90,11 @@ module Dogapi
           end
 
           metric_payload = {
-              :metric => metric,
-              :points => points,
-              :type => typ,
-              :host => scope.host,
-              :device => scope.device
+            :metric => metric,
+            :points => points,
+            :type => typ,
+            :host => scope.host,
+            :device => scope.device
           }
 
           # Add tags if there are any

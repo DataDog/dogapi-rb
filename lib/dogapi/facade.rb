@@ -91,6 +91,16 @@ module Dogapi
       @metric_svc.submit(metric, points, scope, options)
     end
 
+    # Get a set of points by query between from and to
+    #
+    # +from+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
+    # +to+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
+    # +query+ The query string <tt>[String]</tt>
+    #
+    def get_points(from, to, query)
+      @metric_svc.get(from, to, query)
+    end
+
     def batch_metrics()
       @metric_svc.switch_to_batched
       begin

@@ -2,7 +2,7 @@ require 'dogapi'
 require 'time'
 require 'test_base.rb'
 
-class TestComments < Test::Unit::TestCase
+class TestComments < Minitest::Test
   include TestBase
 
 

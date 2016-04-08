@@ -10,10 +10,9 @@ ENV["DATADOG_APP_KEY"] ||= '87ce4a24b5553d2e482ea8a8500e71b8ad4554ff'
 default_tests = [:spec, :test]
 
 case RbConfig::CONFIG['ruby_version']
-when '1.8'
-  # do nothing
+when -> (version) { version.start_with?("2.3") }
+  # Not compatible with Ruby 2.3.x
 else
-  # Since Tailor uses methods that don't exist in Ruby 1.8.7
   require 'tailor/rake_task'
   default_tests.unshift(:tailor)
 

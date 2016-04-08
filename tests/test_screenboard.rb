@@ -3,7 +3,7 @@ require 'time'
 require 'test_base.rb'
 require 'open-uri'
 
-class TestScreenboard < Test::Unit::TestCase
+class TestScreenboard < Minitest::Test
   include TestBase
 
   def test_screenboard
@@ -74,7 +74,7 @@ class TestScreenboard < Test::Unit::TestCase
     status, revoke_result = dog.revoke_screenboard(result["id"])
     assert_equal status, "200", "invalid HTTP response => #{status}"
 
-    ex = assert_raise OpenURI::HTTPError do
+    ex = assert_raises OpenURI::HTTPError do
       open(share_result["public_url"])
     end
     assert_equal ex.message, "404 Not Found"

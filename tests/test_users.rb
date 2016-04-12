@@ -2,7 +2,7 @@ require 'dogapi'
 require 'time'
 require 'test_base.rb'
 
-class TestUsers < Test::Unit::TestCase
+class TestUsers < Minitest::Test
   include TestBase
 
   def test_users

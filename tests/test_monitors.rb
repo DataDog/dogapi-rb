@@ -2,7 +2,7 @@ require 'dogapi'
 require 'time'
 require 'test_base.rb'
 
-class TestAlerts < Test::Unit::TestCase
+class TestAlerts < Minitest::Test
   include TestBase
 
   def test_metric_alerts

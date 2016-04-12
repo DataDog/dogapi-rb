@@ -2,7 +2,7 @@ require 'dogapi'
 require 'time'
 require 'test_base.rb'
 
-class TestEmbed < Test::Unit::TestCase
+class TestEmbed < Minitest::Test
   include TestBase
 
   def test_get_all_embeds
@@ -54,7 +54,7 @@ class TestEmbed < Test::Unit::TestCase
     assert result["html"].include? "height=300"
     assert result["html"].include? "width=600"
   end
-  
+
   def test_get_embed
     dog = Dogapi::Client.new(@api_key, @app_key)
     # Create an Embed to get a valid embed_id

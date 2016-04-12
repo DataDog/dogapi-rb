@@ -1,140 +1,17 @@
 ---
 http_interactions:
 - request:
-    method: get
-    uri: https://app.datadoghq.com/api/v1/events/1905050031133446537?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: UTF-8
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Date:
-      - Thu, 29 Aug 2013 21:54:11 GMT
-      Set-Cookie:
-      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
-      Server:
-      - gunicorn/0.17.4
-      Content-Length:
-      - '322'
-      Content-Type:
-      - application/json
-      Pragma:
-      - no-cache
-      Connection:
-      - keep-alive
-      X-Dd-Version:
-      - 31.160-300-bedcb85
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"event": {"date_happened": 1377812695, "alert_type": "info", "resource":
-        "/api/v1/events/1905050031133446537", "title": "title", "url": "/event/jump_to?event_id=1905050031133446537",
-        "text": "test message", "tags": [], "id": 1905050031133446537, "priority":
-        "low", "host": "dogbox", "device_name": null, "payload": "{}"}}'
-    http_version: 
-  recorded_at: Thu, 29 Aug 2013 21:54:11 GMT
-- request:
-    method: get
-    uri: https://app.datadoghq.com/api/v1/events/2270123722067656874?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 404
-      message: Not Found
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 08 May 2014 18:13:04 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - gunicorn/0.17.4
-      Set-Cookie:
-      - user={"org":{"id":1499,"time_zone":null},"_type":"User","id":3658,"time_zone":null};
-        Path=/
-      X-Dd-Version:
-      - 31.1104.1337
-      Content-Length:
-      - '49'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: '{"errors": ["No event matches that comment_id."]}'
-    http_version: 
-  recorded_at: Thu, 08 May 2014 18:08:41 GMT
-- request:
-    method: get
-    uri: https://app.datadoghq.com/api/v1/events/2277466877264261870?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 13 May 2014 19:47:55 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - gunicorn/0.17.4
-      Set-Cookie:
-      - user={"org":{"id":1499,"time_zone":null},"_type":"User","id":3658,"time_zone":null};
-        Path=/
-      X-Dd-Version:
-      - 31.1129.1362-0
-      Content-Length:
-      - '328'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: '{"event": {"date_happened": 1400010467, "alert_type": "info", "resource":
-        "/api/v1/events/2277466877264261870", "title": "title", "url": "/event/jump_to?event_id=2277466877264261870",
-        "text": "test message", "tags": [], "id": 2277466877264261870, "priority":
-        "low", "host": "dogbox-carlo", "device_name": null, "payload": "{}"}}'
-    http_version: 
-  recorded_at: Tue, 13 May 2014 19:47:55 GMT
-- request:
     method: post
-    uri: https://app.datadoghq.com/api/v1/events?api_key=9775a026f1ca7d1c6c5af9d94d9595a4
+    uri: https://app.datadoghq.com/api/v1/events?api_key=<DATADOG_API_KEY>
     body:
       encoding: UTF-8
-      string: '{"msg_text":"test message","date_happened":1416248784,"msg_title":"title","priority":"low","parent":null,"tags":[],"aggregation_key":"","alert_type":null,"event_type":null,"source_type_name":null,"title":"title","text":"test
-        message","host":"Conors-MacBook-Pro-Retina.local","device":null}'
+      string: '{"msg_text":"test message","date_happened":1460397393,"msg_title":"title","priority":"low","parent":null,"tags":[],"aggregation_key":"","alert_type":null,"event_type":null,"source_type_name":null,"title":"title","text":"test
+        message","host":"dogbox-yannmahe","device":null}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Ruby
       Content-Type:
@@ -145,27 +22,28 @@ http_interactions:
       message: Accepted
     headers:
       Content-Type:
-      - text/json; charset=UTF-8
+      - text/plain; charset=utf-8
       Date:
-      - Mon, 17 Nov 2014 18:26:24 GMT
-      Server:
-      - dogdispatcher/6.0.12
+      - Mon, 11 Apr 2016 17:56:33 GMT
+      Dd-Pool:
+      - propjoe
       Strict-Transport-Security:
       - max-age=15724800;
+      X-Content-Type-Options:
+      - nosniff
       Content-Length:
-      - '277'
+      - '247'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"status": "ok", "event": {"priority": "low", "date_happened": 1416248784,
-        "handle": null, "title": "title", "url": "https://app.datadoghq.com/event/jump_to?event_id=2549900588599571577",
-        "text": "test message", "tags": [], "related_event_id": null, "id": 2549900588599571577}}'
+      string: '{"status":"ok","event":{"id":491273867291425124,"title":"title","text":"test
+        message","date_happened":1460397393,"handle":null,"priority":"low","related_event_id":null,"tags":[],"url":"https://app.datadoghq.com/event/event?id=491273867291425124"}}'
     http_version: 
-  recorded_at: Mon, 17 Nov 2014 18:26:24 GMT
+  recorded_at: Mon, 11 Apr 2016 17:56:33 GMT
 - request:
     method: get
-    uri: https://app.datadoghq.com/api/v1/events/2549900588599571577?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    uri: https://app.datadoghq.com/api/v1/events/491273867291425124?api_key=<DATADOG_API_KEY>&application_key=<DATADOG_APP_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -173,7 +51,7 @@ http_interactions:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Ruby
   response:
@@ -186,28 +64,35 @@ http_interactions:
       Content-Type:
       - application/json
       Date:
-      - Mon, 17 Nov 2014 18:26:33 GMT
+      - Mon, 11 Apr 2016 17:56:41 GMT
+      Dd-Pool:
+      - dogweb_sameorig
       Pragma:
       - no-cache
-      Server:
-      - gunicorn/19.1.0
+      Set-Cookie:
+      - DD-PSHARD=0; expires="Mon, 18-Apr-2016 17:56:41 GMT"; Max-Age=604800; Path=/
       Strict-Transport-Security:
       - max-age=15724800;
       Vary:
       - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Dd-Debug:
+      - 74ZP/FagkgUH/fXz7TfrZdZNnEK/HFHV0fuIAe/vcZE=
       X-Dd-Version:
-      - 31.1883.245-0
+      - '33.3404'
+      X-Frame-Options:
+      - SAMEORIGIN
       Content-Length:
-      - '243'
+      - '213'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"event": {"date_happened": 1416248784, "alert_type": "info", "resource":
-        "/api/v1/events/2549900588599571577", "title": "title", "url": "/event/jump_to?event_id=2549900588599571577",
-        "text": "test message", "tags": [], "id": 2549900588599571577, "priority":
-        "low", "host": "Conors-MacBook-Pro-Retina.local", "device_name": null, "payload":
-        "{}"}}'
+      string: '{"event": {"date_happened": 1460397393, "alert_type": "info", "resource":
+        "/api/v1/events/491273867291425124", "title": "title", "url": "/event/event?event_id=491273867291425124",
+        "text": "test message", "tags": [], "device_name": null, "priority": "low",
+        "host": "dogbox-yannmahe", "id": 491273867291425124}}'
     http_version: 
-  recorded_at: Mon, 17 Nov 2014 18:26:33 GMT
+  recorded_at: Mon, 11 Apr 2016 17:56:41 GMT
 recorded_with: VCR 2.9.3

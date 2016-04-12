@@ -2,7 +2,7 @@ require 'dogapi'
 require 'time'
 require 'test_base.rb'
 
-class TestClient < Test::Unit::TestCase
+class TestClient < Minitest::Test
   include TestBase
 
   def test_find_localhost

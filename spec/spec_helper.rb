@@ -23,6 +23,8 @@ end
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/support/cassettes'
   c.configure_rspec_metadata!
-  c.default_cassette_options = { :record => :new_episodes, :re_record_interval => 2592000 } # 30 days, in seconds
+  c.default_cassette_options = { :record => :new_episodes, :re_record_interval => 7776000 } # 90 days, in seconds
   c.hook_into :webmock
+  c.filter_sensitive_data('<DATADOG_API_KEY>') { ENV["DATADOG_API_KEY"] }
+  c.filter_sensitive_data('<DATADOG_APP_KEY>') { ENV["DATADOG_APP_KEY"] }
 end

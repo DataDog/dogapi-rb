@@ -1,138 +1,8 @@
 ---
 http_interactions:
 - request:
-    method: delete
-    uri: https://app.datadoghq.com/api/v1/alert/37497?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 27 Aug 2013 16:13:42 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - gunicorn/0.17.4
-      Set-Cookie:
-      - user={"org":{"id":1499},"_type":"User","id":3658}; Path=/
-      X-Dd-Version:
-      - 31.153-293-3859d5c
-      Content-Length:
-      - '315'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: '{"notify_no_data": false, "event_object": "6bc5a22ffc9d267c3cd6eb3ad79623e0",
-        "state": "OK", "name": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "silenced": false, "query": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "message": null, "creator": 3658, "timeout_h": null}'
-    http_version: 
-  recorded_at: Tue, 27 Aug 2013 16:13:42 GMT
-- request:
-    method: delete
-    uri: https://app.datadoghq.com/api/v1/alert/54314?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - application/json
-      Date:
-      - Thu, 08 May 2014 18:12:57 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - gunicorn/0.17.4
-      Set-Cookie:
-      - user={"org":{"id":1499,"time_zone":null},"_type":"User","id":3658,"time_zone":null};
-        Path=/
-      X-Dd-Version:
-      - 31.1102.1335-0
-      Content-Length:
-      - '344'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: '{"event_object": "6bc5a22ffc9d267c3cd6eb3ad79623e0", "timeout_h": null,
-        "silenced": false, "query": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "message": null, "name": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "silenced_timeout_ts": null, "creator": 3658, "notify_no_data": false,
-        "state": "OK"}'
-    http_version: 
-  recorded_at: Thu, 08 May 2014 18:08:34 GMT
-- request:
-    method: delete
-    uri: https://app.datadoghq.com/api/v1/alert/57370?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
-    body:
-      encoding: US-ASCII
-      string: ''
-    headers:
-      Accept:
-      - '*/*'
-      User-Agent:
-      - Ruby
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Cache-Control:
-      - no-cache
-      Content-Type:
-      - application/json
-      Date:
-      - Tue, 13 May 2014 19:48:03 GMT
-      Pragma:
-      - no-cache
-      Server:
-      - gunicorn/0.17.4
-      Set-Cookie:
-      - user={"org":{"id":1499,"time_zone":null},"_type":"User","id":3658,"time_zone":null};
-        Path=/
-      X-Dd-Version:
-      - 31.1129.1362-0
-      Content-Length:
-      - '366'
-      Connection:
-      - keep-alive
-    body:
-      encoding: US-ASCII
-      string: '{"event_object": "6bc5a22ffc9d267c3cd6eb3ad79623e0", "notify_audit":
-        true, "timeout_h": null, "silenced": false, "query": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "message": null, "name": "avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5", "silenced_timeout_ts": null, "creator": 3658, "notify_no_data": false,
-        "state": "OK"}'
-    http_version: 
-  recorded_at: Tue, 13 May 2014 19:48:03 GMT
-- request:
     method: post
-    uri: https://app.datadoghq.com/api/v1/alert?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    uri: https://app.datadoghq.com/api/v1/alert?api_key=<DATADOG_API_KEY>&application_key=<DATADOG_APP_KEY>
     body:
       encoding: UTF-8
       string: '{"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
@@ -141,7 +11,7 @@ http_interactions:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Ruby
       Content-Type:
@@ -156,32 +26,40 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 17 Nov 2014 18:26:22 GMT
+      - Mon, 11 Apr 2016 17:56:52 GMT
+      Dd-Pool:
+      - dogweb_sameorig
       Pragma:
       - no-cache
-      Server:
-      - gunicorn/19.1.0
+      Set-Cookie:
+      - DD-PSHARD=0; expires="Mon, 18-Apr-2016 17:56:52 GMT"; Max-Age=604800; Path=/
       Strict-Transport-Security:
       - max-age=15724800;
       Vary:
       - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Dd-Debug:
+      - omuZE5ldmS3gykYWzeRNmM1P8lUKatqFhRFlclaYIlg=
       X-Dd-Version:
-      - 31.1883.245-0
+      - '33.3404'
+      X-Frame-Options:
+      - SAMEORIGIN
       Content-Length:
-      - '288'
+      - '297'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"event_object":"d709ad144fa2ddcc5daa4f866747a991","notify_audit":true,"timeout_h":null,"silenced":{},"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
-        > 5","message":"","id":103960,"name":"**test.metric.metric** over **host:test.metric.host**
-        was **> 5** on average during the **last 10m**.","no_data_timeframe":false,"creator":3658,"notify_no_data":false,"renotify_interval":null,"state":"No
-        Data","escalation_message":""}'
+      string: '{"event_object":"8ee60aa761d2c9f71a2c1ba4979a0363","notify_audit":true,"timeout_h":null,"silenced":false,"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
+        > 5","message":"","id":552994,"name":"**test.metric.metric** over **host:test.metric.host**
+        was **> 5.0** on average during the **last 10m**.","no_data_timeframe":false,"creator":2575,"notify_no_data":false,"renotify_interval":null,"state":"No
+        Data","escalation_message":"","silenced_timeout_ts":null}'
     http_version: 
-  recorded_at: Mon, 17 Nov 2014 18:26:22 GMT
+  recorded_at: Mon, 11 Apr 2016 17:56:52 GMT
 - request:
     method: delete
-    uri: https://app.datadoghq.com/api/v1/alert/103960?api_key=9775a026f1ca7d1c6c5af9d94d9595a4&application_key=87ce4a24b5553d2e482ea8a8500e71b8ad4554ff
+    uri: https://app.datadoghq.com/api/v1/alert/552994?api_key=<DATADOG_API_KEY>&application_key=<DATADOG_APP_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -189,7 +67,7 @@ http_interactions:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
-      - '*/*'
+      - "*/*"
       User-Agent:
       - Ruby
   response:
@@ -202,27 +80,35 @@ http_interactions:
       Content-Type:
       - application/json; charset=utf-8
       Date:
-      - Mon, 17 Nov 2014 18:26:22 GMT
+      - Mon, 11 Apr 2016 17:56:53 GMT
+      Dd-Pool:
+      - dogweb_sameorig
       Pragma:
       - no-cache
-      Server:
-      - gunicorn/19.1.0
+      Set-Cookie:
+      - DD-PSHARD=0; expires="Mon, 18-Apr-2016 17:56:52 GMT"; Max-Age=604800; Path=/
       Strict-Transport-Security:
       - max-age=15724800;
       Vary:
       - Accept-Encoding
+      X-Content-Type-Options:
+      - nosniff
+      X-Dd-Debug:
+      - Bj/SqNU1vbZGxNGffIRtmaWe7MKGSPoKHC3+ZhLAjqk=
       X-Dd-Version:
-      - 31.1883.245-0
+      - '33.3404'
+      X-Frame-Options:
+      - SAMEORIGIN
       Content-Length:
-      - '279'
+      - '288'
       Connection:
       - keep-alive
     body:
       encoding: UTF-8
-      string: '{"event_object":"d709ad144fa2ddcc5daa4f866747a991","notify_audit":true,"timeout_h":null,"silenced":{},"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
+      string: '{"event_object":"8ee60aa761d2c9f71a2c1ba4979a0363","notify_audit":true,"timeout_h":null,"silenced":false,"query":"avg(last_10m):avg:test.metric.metric{host:test.metric.host}
         > 5","message":"","name":"**test.metric.metric** over **host:test.metric.host**
-        was **> 5** on average during the **last 10m**.","no_data_timeframe":false,"creator":3658,"notify_no_data":false,"renotify_interval":null,"state":"No
-        Data","escalation_message":""}'
+        was **> 5.0** on average during the **last 10m**.","no_data_timeframe":false,"creator":2575,"notify_no_data":false,"renotify_interval":null,"state":"No
+        Data","escalation_message":"","silenced_timeout_ts":null}'
     http_version: 
-  recorded_at: Mon, 17 Nov 2014 18:26:22 GMT
+  recorded_at: Mon, 11 Apr 2016 17:56:53 GMT
 recorded_with: VCR 2.9.3

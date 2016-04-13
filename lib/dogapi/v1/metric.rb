@@ -8,6 +8,27 @@ module Dogapi
 
       API_VERSION = "v1"
 
+      def get(from, to, query)
+        begin
+          params = {
+              :api_key => @api_key,
+              :application_key => @application_key,
+
+              from: from.to_i,
+              to: to.to_i,
+              query: query
+          }
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
+      end
+
       def upload(metrics)
         begin
           params = {

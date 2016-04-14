@@ -97,8 +97,8 @@ module Dogapi
     # +to+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
     # +query+ The query string <tt>[String]</tt>
     #
-    def get_points(from, to, query)
-      @metric_svc.get(from, to, query)
+    def get_points(query, from, to)
+      @metric_svc.get(query, from, to)
     end
 
     def batch_metrics()

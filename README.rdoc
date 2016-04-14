@@ -137,7 +137,7 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
 
     query = 'sum:metric.count{*}.as_count()'
 
-    dog.get_points(from, to, query)
+    dog.get_points(query, from, to)
 
 
 

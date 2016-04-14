@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.22.0 / Unreleased
+# 1.22.0 / 2016-04-14
 * [FEATURE] Metric query API. See [#88][], [#90][] (thanks [@blakehilscher][])
 
 # 1.21.0 / 2015-10-30

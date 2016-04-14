@@ -119,3 +119,25 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
     dog = Dogapi::Client.new(api_key)
 
     dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device")
+
+
+== Get points from a Datadog metric
+
+    require 'rubygems'
+    require 'dogapi'
+
+    api_key = "abcd123"
+    application_key = "brec1252"
+
+    dog = Dogapi::Client.new(api_key, application_key)
+
+    # get points from the last hour
+    from = Time.now - 3600
+    to = Time.now
+
+    query = 'sum:metric.count{*}.as_count()'
+
+    dog.get_points(from, to, query)
+
+
+

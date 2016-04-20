@@ -14,9 +14,9 @@ module Dogapi
             :api_key => @api_key,
             :application_key => @application_key,
 
-            from: from.to_i,
-            to: to.to_i,
-            query: query
+            :from => from.to_i,
+            :to => to.to_i,
+            :query => query
           }
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
         rescue Exception => e

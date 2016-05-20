@@ -30,7 +30,12 @@ module Capistrano
       end
 
       def write(*args)
-        @wrapped.write(*args)
+        # Check if Capistrano version >= 3.5.0
+        if Gem::Version.new(VERSION) >= Gem::Version.new('3.5.0')
+          @wrapped << args
+        else
+          @wrapped.write(*args)
+        end
         args.each { |arg| Capistrano::Datadog.reporter.record_log(arg) }
       end
       alias :<< :write

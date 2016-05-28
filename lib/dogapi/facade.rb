@@ -9,6 +9,7 @@ module Dogapi
   #
   # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client
+    class InvalidTagsError < StandardError; end
 
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
@@ -53,7 +54,8 @@ module Dogapi
     #
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
-    def emit_point(metric, value, options= {})
+    def emit_point(metric, value, options = {})
+      validate_tags(options[:tags])
       defaults = { :timestamp => Time.now }
       options = defaults.merge(options)
 
@@ -75,7 +77,8 @@ module Dogapi
     #
     # options[:type] = "counter" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
-    def emit_points(metric, points, options= {})
+    def emit_points(metric, points, options = {})
+      validate_tags(options[:tags])
       scope = override_scope options
 
       points.each do |p|
@@ -145,7 +148,8 @@ module Dogapi
     #   :priority   => "normal" or "low"
     #   :sources    => String, see https://github.com/DataDog/dogapi/wiki/Event for a current list of sources
     #   :tags       => Array of Strings
-    def stream(start, stop, options= {})
+    def stream(start, stop, options = {})
+      validate_tags(options[:tags])
       @event_svc.stream(start, stop, options)
     end
 
@@ -190,7 +194,6 @@ module Dogapi
       @search_svc.search query
     end
 
-
     #
     # TAGS
     #
@@ -212,7 +215,8 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def add_tags(host_id, tags, source=nil)
+    def add_tags(host_id, tags, source = nil)
+      validate_tags(tags)
       @tag_svc.add(host_id, tags, source)
     end
 
@@ -221,7 +225,8 @@ module Dogapi
     # +host_id+ can be the host's numeric id or string name
     #
     # +tags+ is and Array of Strings
-    def update_tags(host_id, tags, source=nil)
+    def update_tags(host_id, tags, source = nil)
+      validate_tags(tags)
       @tag_svc.update(host_id, tags, source)
     end
 
@@ -473,6 +478,11 @@ module Dogapi
       defaults = { :host => @host, :device => @device }
       options = defaults.merge(options)
       Scope.new(options[:host], options[:device])
+    end
+
+    def validate_tags(tags)
+      return if tags.nil? || (tags.is_a?(Array) && tags.all? { |tag| tag.is_a?(String) })
+      raise(InvalidTagsError, "The tags param only accepts an array of strings, was given: #{tags}")
     end
   end
 end

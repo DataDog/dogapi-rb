@@ -24,6 +24,26 @@ describe Dogapi::Client do
       expect(series[0][:host]).to eq 'myhost'
     end
 
+    it 'raises an error if tags are not an array of strings' do
+      [:symbol_tag, 'test.tag.1', 1, 1.0, Object.new, {}].each do |invalid_input|
+        expect do
+          @dogmock.emit_point('metric.name', 0, tags: invalid_input)
+        end.to raise_error(Dogapi::Client::InvalidTagsError)
+
+        next if invalid_input.is_a? String
+
+        expect do
+          @dogmock.emit_point('metric.name', 0, tags: [invalid_input])
+        end.to raise_error(Dogapi::Client::InvalidTagsError)
+      end
+    end
+
+    it "doesn't raise an error for an array of strings" do
+      expect do
+        @dogmock.emit_point('metric.name', 0, tags: %w(a b c))
+      end.to_not raise_error(Dogapi::Client::InvalidTagsError)
+    end
+
     it 'uses localhost default' do
       @dogmock.emit_point('metric.name', 0)
 

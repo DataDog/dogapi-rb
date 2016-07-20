@@ -56,6 +56,24 @@ module Dogapi
         end
       end
 
+      def delete(id)
+        begin
+          params = {
+            :api_key => @api_key,
+            :application_key => @application_key
+          }
+
+          request(Net::HTTP::Delete, '/api/' + API_VERSION + '/events/' + id.to_s, params, nil, false)
+        rescue Exception => e
+          if @silent
+            warn e
+            return -1, {}
+          else
+            raise e
+          end
+        end
+      end
+
       def stream(start, stop, options = {})
         begin
           defaults = {

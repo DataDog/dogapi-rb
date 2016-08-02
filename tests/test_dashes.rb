@@ -22,8 +22,9 @@ class TestDashes < Minitest::Test
       },
       "title" => "Average Memory Free"
     }]
+    read_only = false
 
-    status, dash_response = dog.create_dashboard(title, description, graphs)
+    status, dash_response = dog.create_dashboard(title, description, graphs, read_only)
     assert_equal "200", status, "Creation failed, response: #{dash_response}"
 
     dash_id = dash_response["dash"]["id"]
@@ -35,6 +36,7 @@ class TestDashes < Minitest::Test
     assert_equal title, dash["title"]
     assert_equal description, dash["description"]
     assert_equal graphs, dash["graphs"]
+    assert_equal read_only, dash["read_only"]
 
     # Update the dashboard.
     title = "blahfoobar-#{job_number}-#{now}"
@@ -51,8 +53,9 @@ class TestDashes < Minitest::Test
     }]
     tpl_vars = [{"default" => nil, "prefix" => nil, "name" => "foo"},
                 {"default" => nil, "prefix" => nil, "name" => "bar"}]
+    read_only = false
 
-    status, dash_response = dog.update_dashboard(dash_id, title, description, graphs, tpl_vars)
+    status, dash_response = dog.update_dashboard(dash_id, title, description, graphs, tpl_vars, read_only)
     assert_equal "200", status, "Updated failed, response: #{dash_response}"
 
     # Fetch the dashboard and assert all is well.
@@ -63,6 +66,7 @@ class TestDashes < Minitest::Test
     assert_equal description, dash["description"]
     assert_equal graphs, dash["graphs"]
     assert_equal tpl_vars, dash["template_variables"]
+    assert_equal read_only, dash["read_only"]
 
     # Fetch all the dashboards, assert our created one is in the list of all
     status, dash_response = dog.get_dashboards()
@@ -72,6 +76,7 @@ class TestDashes < Minitest::Test
     dash = dashes.find { |d| title == d["title"] }
     assert_equal title, dash["title"]
     assert_equal dash_id.to_s, dash["id"]
+    assert_equal read_only, dash["read_only"]
 
     # Delete the dashboard.
     status, dash_response = dog.delete_dashboard(dash_id)
@@ -80,6 +85,6 @@ class TestDashes < Minitest::Test
     # Fetch the dashboard and assert all it's gone.
     status, dash_response = dog.get_dashboard(dash_id)
     assert_equal "404", status, "Still there failed, response: #{dash_response}"
-
   end
+
 end

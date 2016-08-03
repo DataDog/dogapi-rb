@@ -2,9 +2,11 @@ Changes
 =======
 
 # 1.22.0 / 2016-04-14
+This release breaks compatibility with Ruby 1.8.
 * [FEATURE] Metric query API. See [#88][], [#90][] (thanks [@blakehilscher][])
 
 # 1.21.0 / 2015-10-30
+This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www.ruby-lang.org/en/news/2013/06/30/we-retire-1-8-7/))
 * [FEATURE] User CRUD API. See [#82][]
 * [IMPROVEMENT] Support capistrano SimpleTextFormatter (thanks [@rmoriz][] [#81][])
 

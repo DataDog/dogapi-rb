@@ -5,6 +5,7 @@
 .ruby-version
 .rvm
 Gemfile.lock
+coverage
 doc/
 pkg/
 .idea

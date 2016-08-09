@@ -3,7 +3,7 @@ require 'dogapi'
 module Dogapi
   class V1 # for namespacing
 
-    # 
+    #
     class TagService < Dogapi::APIService
 
       API_VERSION = "v1"
@@ -21,12 +21,7 @@ module Dogapi
 
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -46,12 +41,7 @@ module Dogapi
 
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -72,12 +62,7 @@ module Dogapi
 
           request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -98,12 +83,7 @@ module Dogapi
 
           request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -126,12 +106,7 @@ module Dogapi
 
           request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 

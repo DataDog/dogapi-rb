@@ -13,12 +13,7 @@ module Dogapi
       # Get all embeds for the API user's org
       def get_all_embeds()
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -32,13 +27,7 @@ module Dogapi
       # :template_vars  => String: variable name => variable value (any number of template vars)
       def get_embed(embed_id, description= {})
         begin
-          # Initialize parameters and merge with description
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key,
-          }.merge(description)
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", true, description, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -53,16 +42,11 @@ module Dogapi
       # :title       => String: represents title of the graph. Default is "Embed created through API."
       def create_embed(graph_json, description= {})
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
           body = {
             :graph_json => graph_json,
           }.merge(description)
 
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", params, body, true)
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", true, nil, body, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -73,12 +57,7 @@ module Dogapi
       # :embed_id  => String: embed token for a specific embed
       def enable_embed(embed_id)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/enable", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/enable", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -89,12 +68,7 @@ module Dogapi
       # :embed_id  => String: embed token for a specific embed
       def revoke_embed(embed_id)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/revoke", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/revoke", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end

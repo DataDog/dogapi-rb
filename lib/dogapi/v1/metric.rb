@@ -10,15 +10,12 @@ module Dogapi
 
       def get(query, from, to)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key,
-
+          extra_params = {
             from: from.to_i,
             to: to.to_i,
             query: query
           }
-          request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', true, extra_params, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -26,13 +23,10 @@ module Dogapi
 
       def upload(metrics)
         begin
-          params = {
-            :api_key => @api_key
-          }
           body = {
             :series => metrics
           }
-          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
+          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', false, nil, body, true)
         rescue Exception => e
           suppress_error_if_silent e
         end

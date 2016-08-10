@@ -11,15 +11,12 @@ module Dogapi
       # Gets all tags in your org and the hosts tagged with them
       def get_all(source=nil)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+          extra_params = {}
           if source
             params['source'] = source
           end
 
-          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', params, nil, false)
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', true, extra_params, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -28,18 +25,15 @@ module Dogapi
       # Gets all tags for a given host
       def get(host_id, source=nil, by_source=false)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+          extra_params = {}
           if source
-            params['source'] = source
+            extra_params['source'] = source
           end
           if by_source
-            params['by_source'] = 'true'
+            extra_params['by_source'] = 'true'
           end
 
-          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+          request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -48,19 +42,16 @@ module Dogapi
       # Adds a list of tags to a host
       def add(host_id, tags, source=nil)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+          extra_params = {}
           if source
-            params['source'] = source
+            extra_params['source'] = source
           end
 
           body = {
             :tags => tags
           }
 
-          request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+          request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, body, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -69,19 +60,16 @@ module Dogapi
       # Remove all tags from a host and replace them with a new list
       def update(host_id, tags, source=nil)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+          extra_params = {}
           if source
-            params['source'] = source
+            extra_params['source'] = source
           end
 
           body = {
             :tags => tags
           }
 
-          request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, body, true)
+          request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, body, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -96,15 +84,12 @@ module Dogapi
       # Remove all tags from a host
       def detach(host_id, source=nil)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+          extra_params = {}
           if source
-            params['source'] = source
+            extra_params['source'] = source
           end
 
-          request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, params, nil, false)
+          request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end

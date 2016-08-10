@@ -12,16 +12,11 @@ module Dogapi
       def invite(emails, options = {})
         warn "[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user"
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
           body = {
             'emails' => emails,
           }.merge options
 
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", params, body, true)
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", true, nil, body, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -32,12 +27,7 @@ module Dogapi
       # :description => Hash: user description containing 'handle' and 'name' properties
       def create_user(description = {})
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/user", params, description, true)
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/user", true, nil, description, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -48,26 +38,16 @@ module Dogapi
       # :handle => String: user handle
       def get_user(handle)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
       end
 
       # Retrieve all users
-      def get_all_users()
+      def get_all_users
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user", params, nil, false)
+          request(Net::HTTP::Get, "/api/#{API_VERSION}/user", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -80,12 +60,7 @@ module Dogapi
       # 'is_admin', 'disabled' properties
       def update_user(handle, description = {})
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", params, description, true)
+          request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", true, nil, description, true)
         rescue Exception => e
           suppress_error_if_silent e
         end
@@ -96,12 +71,7 @@ module Dogapi
       # :handle => String: user handle
       def disable_user(handle)
         begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", params, nil, false)
+          request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
         rescue Exception => e
           suppress_error_if_silent e
         end

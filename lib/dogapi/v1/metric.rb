@@ -9,27 +9,19 @@ module Dogapi
       API_VERSION = "v1"
 
       def get(query, from, to)
-        begin
-          extra_params = {
-            from: from.to_i,
-            to: to.to_i,
-            query: query
-          }
-          request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', true, extra_params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        extra_params = {
+          from: from.to_i,
+          to: to.to_i,
+          query: query
+        }
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', true, extra_params, nil, false)
       end
 
       def upload(metrics)
-        begin
-          body = {
-            :series => metrics
-          }
-          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', false, nil, body, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        body = {
+          :series => metrics
+        }
+        request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', false, nil, body, true)
       end
 
       def submit_to_api(metric, points, scope, options = {})

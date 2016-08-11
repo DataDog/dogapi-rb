@@ -101,12 +101,10 @@ module Dogapi
     end
 
     def suppress_error_if_silent(e)
-      if @silent
-        warn e
-        return -1, {}
-      else
-        raise e
-      end
+      raise e unless @silent
+
+      warn e
+      return -1, {}
     end
 
     # Prepares the request and handles the response
@@ -115,18 +113,9 @@ module Dogapi
     #
     # +params+ is a Hash that will be converted to request parameters
     def request(method, url, with_app_key, extra_params, body, send_json)
-      resp_obj = nil
       resp = nil
       connect do |conn|
-        params = {api_key: @api_key}
-        params[:application_key] = @application_key if with_app_key
-        params.merge! extra_params unless extra_params.nil?
-        if params and params.size > 0
-          qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
-          qs = "?" + qs_params.join("&")
-          url = url + qs
-        end
-
+        url += prepare_params(with_app_key, extra_params)
         req = method.new(url)
 
         if send_json
@@ -135,19 +124,30 @@ module Dogapi
         end
 
         resp = conn.request(req)
-        resp_str = resp.body
-
-        if resp.code != 204 and resp.body != '' and resp.body != 'null' and resp.body != nil
-          begin
-            resp_obj = MultiJson.load(resp.body)
-          rescue
-            raise 'Invalid JSON Response: ' + resp.body
-          end
-        else
-          resp_obj = {}
-        end
+        return handle_response(resp)
       end
-      return resp.code, resp_obj
+    rescue Exception => e
+      suppress_error_if_silent e
+    end
+
+    def prepare_params(with_app_key, extra_params)
+      params = { api_key: @api_key }
+      params[:application_key] = @application_key if with_app_key
+      params.merge! extra_params unless extra_params.nil?
+      qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
+      qs = "?" + qs_params.join("&")
+      qs
+    end
+
+    def handle_response(resp)
+      if resp.code == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?
+        return resp.code, {}
+      end
+      begin
+        return resp.code, MultiJson.load(resp.body)
+      rescue
+        raise 'Invalid JSON Response: ' + resp.body
+      end
     end
   end
 

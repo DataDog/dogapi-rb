@@ -11,46 +11,30 @@ module Dogapi
       # the new methods are get_user, create_user, update_user, disable_user
       def invite(emails, options = {})
         warn "[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user"
-        begin
-          body = {
-            'emails' => emails,
-          }.merge options
+        body = {
+          'emails' => emails,
+        }.merge options
 
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", true, nil, body, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", true, nil, body, true)
       end
 
       # Create a user
       #
       # :description => Hash: user description containing 'handle' and 'name' properties
       def create_user(description = {})
-        begin
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/user", true, nil, description, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/user", true, nil, description, true)
       end
 
       # Retrieve user information
       #
       # :handle => String: user handle
       def get_user(handle)
-        begin
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
       end
 
       # Retrieve all users
       def get_all_users
-        begin
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user", true, nil, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user", true, nil, nil, false)
       end
 
       # Update a user
@@ -59,22 +43,14 @@ module Dogapi
       # :description => Hash: user description optionally containing 'name', 'email',
       # 'is_admin', 'disabled' properties
       def update_user(handle, description = {})
-        begin
-          request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", true, nil, description, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", true, nil, description, true)
       end
 
       # Disable a user
       #
       # :handle => String: user handle
       def disable_user(handle)
-        begin
-          request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", true, nil, nil, false)
       end
 
     end

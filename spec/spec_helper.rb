@@ -17,7 +17,7 @@ module SpecDog
 
   let(:api_key) { 'API_KEY' }
   let(:app_key) { 'APP_KEY' }
-  let(:dog) { Dogapi::Client.new(api_key, app_key, 'data.dog') }
+  let(:dog) { Dogapi::Client.new(api_key, app_key, 'data.dog', nil, false) }
   let(:api_url) { "#{DATADOG_HOST}/api/v1" }
   let(:default_query) { { api_key: api_key, application_key: app_key } }
 

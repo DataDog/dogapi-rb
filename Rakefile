@@ -5,10 +5,8 @@ require 'rspec/core/rake_task'
 
 default_tests = [:spec]
 
-case RbConfig::CONFIG['ruby_version']
-when -> (version) { version.start_with?("2.3") }
+if !RbConfig::CONFIG['ruby_version'].start_with?("2.3")
   # Not compatible with Ruby 2.3.x
-else
   require 'tailor/rake_task'
   default_tests.unshift(:tailor)
 
@@ -18,7 +16,6 @@ else
       style.max_code_lines_in_method 40, :level => :warn
     end
   end
-
 end
 
 task :default => default_tests

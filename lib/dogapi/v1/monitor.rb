@@ -253,7 +253,7 @@ module Dogapi
             :application_key => @application_key
           }
 
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", params, nil, true)
+          request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", params, {}, true)
         rescue Exception => e
           suppress_error_if_silent e
         end

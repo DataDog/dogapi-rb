@@ -15,8 +15,9 @@ module Dogapi
             :metric_query => metric_query,
             :start => start_ts,
             :end => end_ts,
-            :event_query => event_query
           }
+
+          params[:event_query] = event_query if event_query
 
           request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/snapshot", params, nil, false)
         rescue Exception => e

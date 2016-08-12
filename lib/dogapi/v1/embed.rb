@@ -4,7 +4,7 @@ module Dogapi
   class V1 # for namespacing
 
     # ================
-    #    EMBED API 
+    #    EMBED API
     # ================
     class EmbedService < Dogapi::APIService
 
@@ -27,7 +27,7 @@ module Dogapi
       # Get a specific embed
       #
       # :embed_id       => String: embed token for a specific embed
-      # :size           => String: "small", "medium"(defualt), "large", or "xlarge". 
+      # :size           => String: "small", "medium"(defualt), "large", or "xlarge".
       # :legend         => String: "yes" or "no"(default)
       # :template_vars  => String: variable name => variable value (any number of template vars)
       def get_embed(embed_id, description= {})

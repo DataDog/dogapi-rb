@@ -3,7 +3,7 @@ require 'rake/testtask'
 require 'rdoc/task'
 require 'rspec/core/rake_task'
 
-default_tests = [:spec, :test]
+default_tests = [:spec]
 
 case RbConfig::CONFIG['ruby_version']
 when -> (version) { version.start_with?("2.3") }
@@ -17,21 +17,11 @@ else
       style.max_line_length 160, :level => :warn
       style.max_code_lines_in_method 40, :level => :warn
     end
-    task.file_set 'spec/**/*.rb', :tests do |style|
-      style.max_line_length 160, :level => :warn
-      style.max_code_lines_in_method 40, :level => :warn
-    end
   end
 
 end
 
 task :default => default_tests
-
-Rake::TestTask.new(:test) do |test|
-  test.libs.push 'lib'
-  test.libs.push 'tests'
-  test.test_files = FileList['tests/test_*.rb']
-end
 
 # Doc stuff
 RDoc::Task.new do |rd|
@@ -42,7 +32,9 @@ RDoc::Task.new do |rd|
   rd.title = 'DogAPI -- DataDog Client'
 end
 
-RSpec::Core::RakeTask.new(:spec)
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = '--color --format documentation'
+end
 
 desc "Find notes in code"
 task :notes do

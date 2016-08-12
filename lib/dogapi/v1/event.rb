@@ -29,12 +29,7 @@ module Dogapi
 
           request(Net::HTTP::Post, '/api/v1/events', params, body, true)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -47,12 +42,7 @@ module Dogapi
 
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -86,12 +76,7 @@ module Dogapi
 
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 

@@ -20,12 +20,7 @@ module Dogapi
           }
           request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -39,12 +34,7 @@ module Dogapi
           }
           request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
 
@@ -104,12 +94,7 @@ module Dogapi
 
           return metric_payload
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
     end

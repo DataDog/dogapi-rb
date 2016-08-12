@@ -16,7 +16,7 @@ module Dogapi
 
         extra_params[:event_query] = event_query if event_query
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/snapshot", true, extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/snapshot", extra_params, nil, false)
       end
 
     end

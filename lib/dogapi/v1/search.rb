@@ -12,7 +12,7 @@ module Dogapi
           :q => query
         }
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/search", true, extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/search", extra_params, nil, false)
       end
 
     end

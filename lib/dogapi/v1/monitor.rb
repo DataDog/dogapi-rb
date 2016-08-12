@@ -13,7 +13,7 @@ module Dogapi
           'query' => query,
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", true, nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", nil, body, true)
       end
 
       def update_monitor(monitor_id, query, options)
@@ -21,7 +21,7 @@ module Dogapi
           'query' => query,
         }.merge options
 
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", true, nil, body, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)
       end
 
       def get_monitor(monitor_id, options = {})
@@ -31,11 +31,11 @@ module Dogapi
         extra_params = {}
         extra_params[:group_states] = options[:group_states].join(',') if options[:group_states]
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", true, extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
       end
 
       def delete_monitor(monitor_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", true, nil, nil, false)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, nil, false)
       end
 
       def get_all_monitors(options = {})
@@ -56,23 +56,23 @@ module Dogapi
           extra_params[:tags] = extra_params[:tags].join(',') if extra_params[:tags].respond_to?(:join)
         end
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", true, extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
       end
 
       def mute_monitors
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/mute_all", true, nil, nil, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/mute_all", nil, nil, false)
       end
 
       def unmute_monitors
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/unmute_all", true, nil, nil, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/unmute_all", nil, nil, false)
       end
 
       def mute_monitor(monitor_id, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/mute", true, nil, options, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/mute", nil, options, true)
       end
 
       def unmute_monitor(monitor_id, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", true, nil, options, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", nil, options, true)
       end
 
       #
@@ -83,19 +83,19 @@ module Dogapi
           'scope' => scope
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime", true, nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime", nil, body, true)
       end
 
       def update_downtime(downtime_id, options = {})
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", true, nil, options, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, options, true)
       end
 
       def get_downtime(downtime_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", true, nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
       end
 
       def cancel_downtime(downtime_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/downtime/#{downtime_id}", true, nil, nil, false)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
       end
 
       def get_all_downtimes(options = {})
@@ -105,18 +105,18 @@ module Dogapi
           options.delete :current_only
         end
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", true, extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", extra_params, nil, false)
       end
 
       #
       # HOST MUTING
 
       def mute_host(hostname, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/mute", true, nil, options, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/mute", nil, options, true)
       end
 
       def unmute_host(hostname)
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", true, nil, {}, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", nil, {}, true)
       end
     end
 

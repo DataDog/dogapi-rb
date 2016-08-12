@@ -14,14 +14,14 @@ module Dogapi
           to: to.to_i,
           query: query
         }
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', true, extra_params, nil, false)
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', extra_params, nil, false)
       end
 
       def upload(metrics)
         body = {
           :series => metrics
         }
-        request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', false, nil, body, true)
+        request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', nil, body, true, false)
       end
 
       def submit_to_api(metric, points, scope, options = {})

@@ -112,7 +112,7 @@ module Dogapi
     # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)
     #
     # +params+ is a Hash that will be converted to request parameters
-    def request(method, url, with_app_key, extra_params, body, send_json)
+    def request(method, url, extra_params, body, send_json, with_app_key=true)
       resp = nil
       connect do |conn|
         url += prepare_params(with_app_key, extra_params)

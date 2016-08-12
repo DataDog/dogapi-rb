@@ -12,7 +12,7 @@ module Dogapi
 
       # Get all embeds for the API user's org
       def get_all_embeds()
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed", true, nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed", nil, nil, false)
       end
 
       # Get a specific embed
@@ -22,7 +22,7 @@ module Dogapi
       # :legend         => String: "yes" or "no"(default)
       # :template_vars  => String: variable name => variable value (any number of template vars)
       def get_embed(embed_id, description= {})
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", true, description, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}", description, nil, false)
       end
 
       # Create an embeddable graph
@@ -37,21 +37,21 @@ module Dogapi
           :graph_json => graph_json,
         }.merge(description)
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", true, nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/graph/embed", nil, body, true)
       end
 
       # Enable a specific embed
       #
       # :embed_id  => String: embed token for a specific embed
       def enable_embed(embed_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/enable", true, nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/enable", nil, nil, false)
       end
 
       # Revoke a specific embed
       #
       # :embed_id  => String: embed token for a specific embed
       def revoke_embed(embed_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/revoke", true, nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/graph/embed/#{embed_id}/revoke", nil, nil, false)
       end
 
     end

@@ -22,11 +22,11 @@ module Dogapi
           :aggregation_key => event.aggregation_key.to_s
         })
 
-        request(Net::HTTP::Post, '/api/v1/events', false, nil, body, true)
+        request(Net::HTTP::Post, '/api/v1/events', nil, body, true, false)
       end
 
       def get(id)
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, true, nil, nil, false)
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, nil, nil, false)
       end
 
       def stream(start, stop, options = {})
@@ -53,7 +53,7 @@ module Dogapi
           extra_params[:tags] = tags.kind_of?(Array) ? tags.join(",") : tags
         end
 
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', true, extra_params, nil, false)
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', extra_params, nil, false)
       end
 
     end

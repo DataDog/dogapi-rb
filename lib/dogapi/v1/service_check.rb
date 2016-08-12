@@ -14,7 +14,7 @@ module Dogapi
           'status' => status
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/check_run", true, nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/check_run", nil, body, true)
       end
 
     end

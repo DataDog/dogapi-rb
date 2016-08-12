@@ -15,7 +15,7 @@ module Dogapi
           extra_params['source'] = source
         end
 
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', true, extra_params, nil, false)
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts', extra_params, nil, false)
       end
 
       # Gets all tags for a given host
@@ -28,7 +28,7 @@ module Dogapi
           extra_params['by_source'] = 'true'
         end
 
-        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, nil, false)
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, extra_params, nil, false)
       end
 
       # Adds a list of tags to a host
@@ -42,7 +42,7 @@ module Dogapi
           :tags => tags
         }
 
-        request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, body, true)
+        request(Net::HTTP::Post, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, extra_params, body, true)
       end
 
       # Remove all tags from a host and replace them with a new list
@@ -56,7 +56,7 @@ module Dogapi
           :tags => tags
         }
 
-        request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, body, true)
+        request(Net::HTTP::Put, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, extra_params, body, true)
       end
 
       # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
@@ -72,7 +72,7 @@ module Dogapi
           extra_params['source'] = source
         end
 
-        request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, true, extra_params, nil, false)
+        request(Net::HTTP::Delete, '/api/' + API_VERSION + '/tags/hosts/' + host_id.to_s, extra_params, nil, false)
       end
 
     end

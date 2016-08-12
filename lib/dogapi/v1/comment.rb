@@ -13,7 +13,7 @@ module Dogapi
           'message' => message,
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/comments", true, nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/comments", nil, body, true)
       end
 
       # Update a comment.
@@ -22,11 +22,11 @@ module Dogapi
           raise "Must update something."
         end
 
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/comments/#{comment_id}", true, nil, options, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/comments/#{comment_id}", nil, options, true)
       end
 
       def delete_comment(comment_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/comments/#{comment_id}", true, nil, nil, false)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/comments/#{comment_id}", nil, nil, false)
       end
 
     end

@@ -96,7 +96,7 @@ module Dogapi
       session.use_ssl = uri.scheme == 'https'
       session.start do |conn|
         conn.read_timeout = @timeout
-        yield(conn)
+        yield(conn, @api_key, @application_key)
       end
     end
 
@@ -114,8 +114,9 @@ module Dogapi
     # +params+ is a Hash that will be converted to request parameters
     def request(method, url, extra_params, body, send_json, with_app_key=true)
       resp = nil
-      connect do |conn|
-        url += prepare_params(with_app_key, extra_params)
+      connect do |conn, api_key, app_key|
+        app_key = nil unless with_app_key
+        url += prepare_params(extra_params, api_key, app_key)
         req = method.new(url)
 
         if send_json
@@ -130,9 +131,9 @@ module Dogapi
       suppress_error_if_silent e
     end
 
-    def prepare_params(with_app_key, extra_params)
-      params = { api_key: @api_key }
-      params[:application_key] = @application_key if with_app_key
+    def prepare_params(extra_params, api_key, app_key)
+      params = { api_key: api_key }
+      params[:application_key] = app_key unless app_key.nil?
       params.merge! extra_params unless extra_params.nil?
       qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
       qs = "?" + qs_params.join("&")

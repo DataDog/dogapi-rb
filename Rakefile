@@ -32,9 +32,7 @@ RDoc::Task.new do |rd|
   rd.title = 'DogAPI -- DataDog Client'
 end
 
-RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = '--color --format documentation'
-end
+RSpec::Core::RakeTask.new(:spec)
 
 desc "Find notes in code"
 task :notes do

@@ -41,15 +41,14 @@ class FakeResponse
 end
 
 describe Dogapi::APIService do
-  let(:dogapi_service_silent) { Dogapi::APIService.new 'API_KEY', 'APP_KEY'}
-  let(:dogapi_service) { Dogapi::APIService.new 'API_KEY', 'APP_KEY', false}
-  let(:std_error) {StandardError.new('test3')}
+  let(:dogapi_service_silent) { Dogapi::APIService.new 'API_KEY', 'APP_KEY' }
+  let(:dogapi_service) { Dogapi::APIService.new 'API_KEY', 'APP_KEY', false }
+  let(:std_error) { StandardError.new('test3') }
 
   describe '#suppress_error_if_silent' do
     context 'when silent' do
       it "doesn't raise an error" do
         dog = dogapi_service_silent
-        error =
         expect { dog.suppress_error_if_silent(std_error) }.not_to raise_error
         expect { dog.suppress_error_if_silent(std_error) }.to output("test3\n").to_stderr
         expect(dog.suppress_error_if_silent(std_error)).to eq([-1, {}])
@@ -68,14 +67,14 @@ describe Dogapi::APIService do
       it 'parses it and return code and parsed body' do
         dog = dogapi_service
         resp = FakeResponse.new 202, '{"test2": "test3"}'
-        expect(dog.handle_response(resp)).to eq([202, {'test2' => 'test3'}])
+        expect(dog.handle_response(resp)).to eq([202, { 'test2' => 'test3' }])
       end
     end
     context 'when receiving a response with invalid json' do
       it 'raises an error' do
         dog = dogapi_service
         resp = FakeResponse.new 202, "{'test2': }"
-        expect { dog.handle_response(resp)}.to raise_error(RuntimeError, "Invalid JSON Response: {'test2': }")
+        expect { dog.handle_response(resp) }.to raise_error(RuntimeError, "Invalid JSON Response: {'test2': }")
       end
     end
     context 'when receiving a bad response' do

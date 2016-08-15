@@ -2,8 +2,9 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rdoc/task'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
-default_tests = [:spec]
+default_tests = [:spec, :rubocop]
 
 case RbConfig::CONFIG['ruby_version']
 when -> (version) { version.start_with?("2.3") }
@@ -33,6 +34,11 @@ RDoc::Task.new do |rd|
 end
 
 RSpec::Core::RakeTask.new(:spec)
+
+RuboCop::RakeTask.new do |task|
+  task.patterns = ['spec']
+end
+
 
 desc "Find notes in code"
 task :notes do

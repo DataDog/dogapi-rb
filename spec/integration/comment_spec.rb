@@ -14,6 +14,7 @@ describe Dogapi::Client do
     it 'queries the api with options' do
       url = api_url + "/comments/#{COMMENT_ID}"
       options = { 'zzz' => 'aaa' }
+      stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(:update_comment, COMMENT_ID, options)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:put, url).with(

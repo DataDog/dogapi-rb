@@ -30,6 +30,7 @@ describe Dogapi::Client do
   describe '#emit_event' do
     it 'queries the api' do
       url = api_url + '/events'
+      stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(:emit_event, EVENT)).to eq ['200', {}]
 
       body = MultiJson.dump(EVENT_OPTIONS)
@@ -50,6 +51,7 @@ describe Dogapi::Client do
   describe '#stream' do
     it 'queries the api with params' do
       url = api_url + '/events'
+      stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(:stream, EVENT_START, EVENT_END, STREAM_PARAMS)).to eq ['200', {}]
 
       params = STREAM_PARAMS.merge(start: EVENT_START, end: EVENT_END)

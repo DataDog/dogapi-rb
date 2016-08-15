@@ -6,6 +6,8 @@ SimpleCov.start do
   add_filter 'spec'
 end
 
+WebMock.disable_net_connect!(allow_localhost: false)
+
 # include our code and methods
 require 'dogapi'
 
@@ -21,11 +23,10 @@ module SpecDog
   let(:api_url) { "#{DATADOG_HOST}/api/v1" }
   let(:default_query) { { api_key: api_key, application_key: app_key } }
 
-  before(:each) { stub_request(:any, /#{DATADOG_HOST}/) }
-
   shared_examples 'an api method' do |command, args, request, endpoint, body|
     it 'queries the api' do
       url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args)).to eq ['200', {}]
 
       body = MultiJson.dump(body) if body
@@ -42,6 +43,7 @@ module SpecDog
     it 'queries the api with options' do
       url = api_url + endpoint
       options = { 'zzz' => 'aaa' }
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, options)).to eq ['200', {}]
 
       body = MultiJson.dump(body ? (body.merge options) : options)
@@ -56,6 +58,7 @@ module SpecDog
   shared_examples 'an api method with params' do |command, args, request, endpoint, params|
     it 'queries the api with params' do
       url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, *params.values)).to eq ['200', {}]
 
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
@@ -71,6 +74,7 @@ module SpecDog
     include_examples 'an api method', command, args, request, endpoint
     it 'queries the api with optional params' do
       url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, opt_params)).to eq ['200', {}]
 
       opt_params.each { |k, v| opt_params[k] = v.join(',') if v.is_a? Array }

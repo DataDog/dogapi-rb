@@ -69,12 +69,13 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
-    def initialize(api_key, application_key, silent=true, timeout=nil)
+    def initialize(api_key, application_key, silent=true, timeout=nil, endpoints=nil)
       @api_key = api_key
       @application_key = application_key
       @api_host = Dogapi.find_datadog_host()
       @silent = silent
       @timeout = timeout || 5
+      @endpoints = endpoints || { @api_host => [[api_key, application_key]] }
     end
 
     # Manages the HTTP connection
@@ -90,14 +91,23 @@ module Dogapi
         end
       end
 
-      uri = URI.parse(@api_host)
-      session = connection.new(uri.host, uri.port)
-      session.open_timeout = @timeout
-      session.use_ssl = uri.scheme == 'https'
-      session.start do |conn|
-        conn.read_timeout = @timeout
-        yield(conn, @api_key, @application_key)
+      results = []
+
+      @endpoints.each do |api_host, keys_couples|
+        keys_couples.each do |keys_couple|
+          api_key, application_key = keys_couple
+          uri = URI.parse(api_host)
+          session = connection.new(uri.host, uri.port)
+          session.open_timeout = @timeout
+          session.use_ssl = uri.scheme == 'https'
+          session.start do |conn|
+            conn.read_timeout = @timeout
+            results << yield(conn, api_key, application_key)
+          end
+        end
       end
+      results = results[0] if results.length == 1
+      results
     end
 
     def suppress_error_if_silent(e)
@@ -116,16 +126,15 @@ module Dogapi
       resp = nil
       connect do |conn, api_key, app_key|
         app_key = nil unless with_app_key
-        url += prepare_params(extra_params, api_key, app_key)
-        req = method.new(url)
+        current_url = url + prepare_params(extra_params, api_key, app_key)
+        req = method.new(current_url)
 
         if send_json
           req.content_type = 'application/json'
           req.body = MultiJson.dump(body)
         end
-
         resp = conn.request(req)
-        return handle_response(resp)
+        next handle_response(resp)
       end
     rescue Exception => e
       suppress_error_if_silent e
@@ -134,7 +143,7 @@ module Dogapi
     def prepare_params(extra_params, api_key, app_key)
       params = { api_key: api_key }
       params[:application_key] = app_key unless app_key.nil?
-      params.merge! extra_params unless extra_params.nil?
+      params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
       qs = "?" + qs_params.join("&")
       qs

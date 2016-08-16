@@ -132,6 +132,13 @@ module Dogapi
       @event_svc.get(id)
     end
 
+    # Delete an event
+    #
+    # +id+ of the event to delete
+    def delete_event(id)
+      @event_svc.delete(id)
+    end
+
     # Get an optionally filtered event stream
     #
     # +start+ is a Time object for when to start the stream

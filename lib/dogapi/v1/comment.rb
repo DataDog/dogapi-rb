@@ -18,10 +18,6 @@ module Dogapi
 
       # Update a comment.
       def update_comment(comment_id, options = {})
-        if options.empty?
-          raise "Must update something."
-        end
-
         request(Net::HTTP::Put, "/api/#{API_VERSION}/comments/#{comment_id}", nil, options, true)
       end
 

@@ -125,27 +125,30 @@ module Dogapi
     def request(method, url, extra_params, body, send_json, with_app_key=true)
       resp = nil
       connect do |conn, api_key, app_key|
-        app_key = nil unless with_app_key
-        current_url = url + prepare_params(extra_params, api_key, app_key)
-        req = method.new(current_url)
+        begin
+          app_key = nil unless with_app_key
+          current_url = url + prepare_params(extra_params, api_key, app_key)
+          req = method.new(current_url)
 
-        if send_json
-          req.content_type = 'application/json'
-          req.body = MultiJson.dump(body)
+          if send_json
+            req.content_type = 'application/json'
+            req.body = MultiJson.dump(body)
+          end
+
+          resp = conn.request(req)
+          next handle_response(resp)
+        rescue Exception => e
+          next suppress_error_if_silent e
         end
-        resp = conn.request(req)
-        next handle_response(resp)
       end
-    rescue Exception => e
-      suppress_error_if_silent e
     end
 
     def prepare_params(extra_params, api_key, app_key)
       params = { api_key: api_key }
       params[:application_key] = app_key unless app_key.nil?
       params = extra_params.merge params unless extra_params.nil?
-      qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
-      qs = "?" + qs_params.join("&")
+      qs_params = params.map { |k, v| k.to_s + '=' + v.to_s }
+      qs = '?' + qs_params.join('&')
       qs
     end
 
@@ -177,5 +180,4 @@ module Dogapi
       raise "Cannot determine local hostname via hostname -f"
     end
   end
-
 end

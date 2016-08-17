@@ -4,9 +4,9 @@ describe Dogapi::Client do
   MONITOR_ID = 42
   MONITOR_TYPE = 'custom type'.freeze
   MONITOR_QUERY = 'avg(last_10m):avg:test.metric.metric{host:test.metric.host} > 5'.freeze
-  DOWNTIME_SCOPE = 'host:vagrant-ubuntu-trusty-64'
-  DOWNTIME_ID = 424242424242
-  MUTE_HOSTNAME = 'vagrant-ubuntu-trusty-32'
+  DOWNTIME_SCOPE = 'host:vagrant-ubuntu-trusty-64'.freeze
+  DOWNTIME_ID = 424_242_424_242
+  MUTE_HOSTNAME = 'vagrant-ubuntu-trusty-32'.freeze
 
   describe '#monitor' do
     it_behaves_like 'an api method with options',

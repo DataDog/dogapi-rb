@@ -38,6 +38,7 @@ describe Dogapi::Client do
   describe '#emit_point' do
     it 'queries the api' do
       url = api_url + '/series'
+      stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       points = Marshal.load(Marshal.dump(POINTS[0]))
       expect(dog.send(:emit_points, METRIC, [points])).to eq ['200', {}]
 
@@ -55,6 +56,7 @@ describe Dogapi::Client do
   describe '#emit_points' do
     it 'queries the api' do
       url = api_url + '/series'
+      stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       points = Marshal.load(Marshal.dump(POINTS))
       expect(dog.send(:emit_points, METRIC, points)).to eq ['200', {}]
 
@@ -75,13 +77,14 @@ describe Dogapi::Client do
 
   describe '#batch_metrics' do
     it 'queries the api' do
+      url = api_url + '/series'
+      stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       points = Marshal.load(Marshal.dump(POINTS))
       dog.batch_metrics do
         dog.emit_points(METRIC, points[0, 1].clone)
         dog.emit_points(METRIC, points[1, 1].clone)
       end
 
-      url = api_url + '/series'
       body = MultiJson.dump(BATCH_BODY)
 
       expect(WebMock).to have_requested(:post, url).with(

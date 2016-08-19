@@ -5,7 +5,7 @@ module Dogapi
 
     class ScreenboardService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def create_screenboard(description)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/screen", nil, description, true)

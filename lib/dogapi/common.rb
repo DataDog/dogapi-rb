@@ -28,7 +28,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def connect
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services'
       uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
@@ -41,7 +41,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def request(method, url, params)
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services'
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
@@ -83,8 +83,8 @@ module Dogapi
       connection = Net::HTTP
 
       # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
-      if RUBY_VERSION < "2.0.0"
-        proxy = ENV["HTTPS_PROXY"] || ENV["https_proxy"] || ENV["HTTP_PROXY"] || ENV["http_proxy"]
+      if RUBY_VERSION < '2.0.0'
+        proxy = ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
         if proxy
           proxy_uri = URI.parse(proxy)
           connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
@@ -166,7 +166,7 @@ module Dogapi
 
   def Dogapi.find_datadog_host
     # allow env-based overriding, useful for tests
-    ENV["DATADOG_HOST"] || "https://app.datadoghq.com"
+    ENV['DATADOG_HOST'] || 'https://app.datadoghq.com'
   end
 
   # Memoize the hostname as a module variable
@@ -177,7 +177,7 @@ module Dogapi
       # prefer hostname -f over Socket.gethostname
       @@hostname ||= %x[hostname -f].strip
     rescue
-      raise "Cannot determine local hostname via hostname -f"
+      raise 'Cannot determine local hostname via hostname -f'
     end
   end
 end

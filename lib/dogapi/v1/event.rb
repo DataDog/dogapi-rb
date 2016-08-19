@@ -6,7 +6,7 @@ module Dogapi
     # Event-specific client affording more granular control than the simple Dogapi::Client
     class EventService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
       MAX_BODY_LENGTH = 4000
       MAX_TITLE_LENGTH = 100
 
@@ -29,7 +29,7 @@ module Dogapi
         request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, nil, nil, false)
       end
 
-      def stream(start, stop, options = {})
+      def stream(start, stop, options= {})
         defaults = {
           :priority => nil,
           :sources => nil,
@@ -50,7 +50,7 @@ module Dogapi
         end
         if options[:tags]
           tags = options[:tags]
-          extra_params[:tags] = tags.kind_of?(Array) ? tags.join(",") : tags
+          extra_params[:tags] = tags.kind_of?(Array) ? tags.join(',') : tags
         end
 
         request(Net::HTTP::Get, '/api/' + API_VERSION + '/events', extra_params, nil, false)

@@ -5,7 +5,7 @@ module Dogapi
 
     class CommentService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       # Submit a comment.
       def comment(message, options = {})

@@ -26,7 +26,7 @@ module Dogapi
   #  :event_type    => String
   #  :source_type_name => String
   #  :aggregation_key => String
-    def initialize(msg_text, options = {})
+    def initialize(msg_text, options= {})
       defaults = {
         :date_happened => Time.now.to_i,
         :msg_title => '',
@@ -62,14 +62,14 @@ module Dogapi
   # removed in an upcoming release.
   class EventService < Dogapi::Service
 
-    API_VERSION = "1.0.0"
+    API_VERSION = '1.0.0'
     MAX_BODY_LENGTH = 4000
     MAX_TITLE_LENGTH = 100
 
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def submit(api_key, event, scope=nil, source_type=nil)
-      warn "[DEPRECATION] Dogapi::EventService.submit() has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::EventService.submit() has been deprecated in favor of the newer V1 services'
       scope = scope || Dogapi::Scope.new()
       params = {
         :api_key => api_key,
@@ -99,7 +99,7 @@ module Dogapi
     # <b>DEPRECATED:</b> Going forward, use the V1 services. This legacy service will be
     # removed in an upcoming release.
     def start(api_key, event, scope, source_type=nil)
-      warn "[DEPRECATION] Dogapi::EventService.start() has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::EventService.start() has been deprecated in favor of the newer V1 services'
       response = submit api_key, event, scope, source_type
       success = nil
 

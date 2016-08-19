@@ -5,7 +5,7 @@ module Dogapi
 
     class SnapshotService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def snapshot(metric_query, start_ts, end_ts, event_query=nil)
         extra_params = {

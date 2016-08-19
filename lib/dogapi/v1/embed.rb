@@ -8,7 +8,7 @@ module Dogapi
     # ================
     class EmbedService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       # Get all embeds for the API user's org
       def get_all_embeds()

@@ -5,12 +5,12 @@ module Dogapi
 
     class UserService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       # <b>DEPRECATED:</b> Going forward, we're using a new and more restful API,
       # the new methods are get_user, create_user, update_user, disable_user
-      def invite(emails, options = {})
-        warn "[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user"
+      def invite(emails, options= {})
+        warn '[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user'
         body = {
           'emails' => emails,
         }.merge options
@@ -21,7 +21,7 @@ module Dogapi
       # Create a user
       #
       # :description => Hash: user description containing 'handle' and 'name' properties
-      def create_user(description = {})
+      def create_user(description= {})
         request(Net::HTTP::Post, "/api/#{API_VERSION}/user", nil, description, true)
       end
 
@@ -42,7 +42,7 @@ module Dogapi
       # :handle => String: user handle
       # :description => Hash: user description optionally containing 'name', 'email',
       # 'is_admin', 'disabled' properties
-      def update_user(handle, description = {})
+      def update_user(handle, description= {})
         request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", nil, description, true)
       end
 

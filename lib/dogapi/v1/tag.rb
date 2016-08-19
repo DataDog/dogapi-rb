@@ -6,7 +6,7 @@ module Dogapi
     #
     class TagService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       # Gets all tags in your org and the hosts tagged with them
       def get_all(source=nil)
@@ -61,7 +61,7 @@ module Dogapi
 
       # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
       def detatch(host_id)
-        warn "[DEPRECATION] Dogapi::V1::TagService.detatch() is deprecated. Use `detach` instead."
+        warn '[DEPRECATION] Dogapi::V1::TagService.detatch() is deprecated. Use `detach` instead.'
         detach(host_id)
       end
 

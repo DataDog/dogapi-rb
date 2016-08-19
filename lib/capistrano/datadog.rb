@@ -1,8 +1,8 @@
-require "etc"
-require "digest/md5"
-require "timeout"
+require 'etc'
+require 'digest/md5'
+require 'timeout'
 
-require "dogapi"
+require 'dogapi'
 
 module Capistrano
   module Datadog
@@ -30,10 +30,10 @@ module Capistrano
             dog.emit_event event
           end
         else
-          puts "No api key set, not submitting to Datadog"
+          puts 'No api key set, not submitting to Datadog'
         end
       rescue Timeout::Error => e
-        puts "Could not submit to Datadog, request timed out."
+        puts 'Could not submit to Datadog, request timed out.'
       rescue => e
         puts "Could not submit to Datadog: #{e.inspect}\n#{e.backtrace.join("\n")}"
       end
@@ -77,7 +77,7 @@ module Capistrano
         @tasks.map do |task|
           name  = task[:name]
           roles = Array(task[:roles]).map(&:to_s).sort
-          tags  = ["#capistrano"] + (roles.map { |t| '#role:' + t })
+          tags  = ['#capistrano'] + (roles.map { |t| '#role:' + t })
           if !task[:stage].nil? and !task[:stage].empty? then
             tags << "#stage:#{task[:stage]}"
           end
@@ -85,15 +85,15 @@ module Capistrano
           if !task[:application].nil? and !task[:application].empty? then
             application = ' for ' + task[:application]
           end
-          title = "%s@%s ran %s%s on %s with capistrano in %.2f secs" % [user, hostname, name, application, roles.join(', '), task[:timing]]
-          type  = "deploy"
-          alert_type = "success"
-          source_type = "capistrano"
+          title = '%s@%s ran %s%s on %s with capistrano in %.2f secs' % [user, hostname, name, application, roles.join(', '), task[:timing]]
+          type  = 'deploy'
+          alert_type = 'success'
+          source_type = 'capistrano'
           message_content = (@logging_output[name] || []).join('')
           message = if !message_content.empty? then
             # Strip out color control characters
             message_content = sanitize_encoding(message_content).gsub(/\e\[(\d+)m/, '')
-            "@@@\n#{message_content}@@@" else "" end
+            "@@@\n#{message_content}@@@" else '' end
 
           Dogapi::Event.new(message,
             :msg_title        => title,

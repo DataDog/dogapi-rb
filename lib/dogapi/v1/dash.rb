@@ -5,7 +5,7 @@ module Dogapi
 
     class DashService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def create_dashboard(title, description, graphs, template_variables = nil)
         body = {

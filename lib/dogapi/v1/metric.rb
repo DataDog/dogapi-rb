@@ -6,7 +6,7 @@ module Dogapi
     # Event-specific client affording more granular control than the simple Dogapi::Client
     class MetricService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def get(query, from, to)
         extra_params = {
@@ -24,12 +24,12 @@ module Dogapi
         request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', nil, body, true, false)
       end
 
-      def submit_to_api(metric, points, scope, options = {})
+      def submit_to_api(metric, points, scope, options= {})
         payload = self.make_metric_payload(metric, points, scope, options)
         self.upload([payload])
       end
 
-      def submit_to_buffer(metric, points, scope, options = {})
+      def submit_to_buffer(metric, points, scope, options= {})
         payload = self.make_metric_payload(metric, points, scope, options)
         @buffer << payload
         return 200, {}
@@ -59,10 +59,10 @@ module Dogapi
 
       def make_metric_payload(metric, points, scope, options)
         begin
-          typ = options[:type] || "gauge"
+          typ = options[:type] || 'gauge'
 
-          if typ != "gauge" && typ != "counter"
-            raise ArgumentError, "metric type must be gauge or counter"
+          if typ != 'gauge' && typ != 'counter'
+            raise ArgumentError, 'metric type must be gauge or counter'
           end
 
           metric_payload = {

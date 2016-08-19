@@ -7,85 +7,38 @@ module Dogapi
 
       API_VERSION = "v1"
 
-      def create_dashboard(title, description, graphs, template_variables = nil, read_only = false)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+      def create_dashboard(title, description, graphs, template_variables = nil, read_only = fasle)
+        body = {
+          :title => title,
+          :description => description,
+          :graphs => graphs,
+          :template_variables => (template_variables or [])
+        }
 
-          body = {
-            :title => title,
-            :description => description,
-            :graphs => graphs,
-            :template_variables => (template_variables or []),
-            :read_only => read_only,
-          }
-
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/dash", params, body, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/dash", nil, body, true)
       end
 
-      def update_dashboard(dash_id, title, description, graphs, template_variables = nil, read_only = false)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+      def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
+        body = {
+          :title => title,
+          :description => description,
+          :graphs => graphs,
+          :template_variables => (template_variables or [])
+        }
 
-          body = {
-            :title => title,
-            :description => description,
-            :graphs => graphs,
-            :template_variables => (template_variables or []),
-            :read_only => read_only,
-          }
-
-          request(Net::HTTP::Put, "/api/#{API_VERSION}/dash/#{dash_id}", params, body, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/dash/#{dash_id}", nil, body, true)
       end
 
       def get_dashboard(dash_id)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/dash/#{dash_id}", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/dash/#{dash_id}", nil, nil, false)
       end
 
       def get_dashboards
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/dash", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/dash", nil, nil, false)
       end
 
       def delete_dashboard(dash_id)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Delete, "/api/#{API_VERSION}/dash/#{dash_id}", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/dash/#{dash_id}", nil, nil, false)
       end
 
     end

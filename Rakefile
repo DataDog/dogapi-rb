@@ -2,13 +2,12 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rdoc/task'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
-default_tests = [:spec, :test]
+default_tests = [:spec, :rubocop]
 
-case RbConfig::CONFIG['ruby_version']
-when -> (version) { version.start_with?("2.3") }
+if !RbConfig::CONFIG['ruby_version'].start_with?("2.3")
   # Not compatible with Ruby 2.3.x
-else
   require 'tailor/rake_task'
   default_tests.unshift(:tailor)
 
@@ -17,21 +16,10 @@ else
       style.max_line_length 160, :level => :warn
       style.max_code_lines_in_method 40, :level => :warn
     end
-    task.file_set 'spec/**/*.rb', :tests do |style|
-      style.max_line_length 160, :level => :warn
-      style.max_code_lines_in_method 40, :level => :warn
-    end
   end
-
 end
 
 task :default => default_tests
-
-Rake::TestTask.new(:test) do |test|
-  test.libs.push 'lib'
-  test.libs.push 'tests'
-  test.test_files = FileList['tests/test_*.rb']
-end
 
 # Doc stuff
 RDoc::Task.new do |rd|
@@ -43,6 +31,11 @@ RDoc::Task.new do |rd|
 end
 
 RSpec::Core::RakeTask.new(:spec)
+
+RuboCop::RakeTask.new do |task|
+  task.patterns = ['spec']
+end
+
 
 desc "Find notes in code"
 task :notes do

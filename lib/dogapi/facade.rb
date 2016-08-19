@@ -11,7 +11,12 @@ module Dogapi
   class Client
 
     # Create a new Client optionally specifying a default host and device
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil)
+    # extra_endpoints can be an array or a hash
+    # Array to use the same Datadog API endpoint:
+    #       [[api_key1, application_key1], [api_key2, application_key2]]
+    # Hash to be able to specify different endpoints:
+    #       {'https://app.example.com' => [[api_key1, application_key1], [api_key2, application_key2]]}
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, extra_endpoints=nil)
 
       if api_key
         @api_key = api_key
@@ -20,27 +25,26 @@ module Dogapi
       end
 
       @application_key = application_key
-
       @datadog_host = Dogapi.find_datadog_host()
-
       @host = host ||= Dogapi.find_localhost()
-
       @device = device
 
+      @endpoints = format_endpoints(api_key, application_key, @datadog_host, extra_endpoints)
+
       # FIXME: refactor to avoid all this code duplication
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout)
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
-      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
-      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout)
-      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout)
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @endpoints)
+      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @endpoints)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
@@ -470,6 +474,27 @@ module Dogapi
       defaults = { :host => @host, :device => @device }
       options = defaults.merge(options)
       Scope.new(options[:host], options[:device])
+    end
+
+    def format_endpoints(api_key, app_key, datadog_host, extra_endpoints)
+      endpoints = Hash.new []
+      endpoints[datadog_host] = [[api_key, app_key]]
+      if extra_endpoints.nil?
+        return endpoints
+      end
+
+      if extra_endpoints.is_a?(Array)
+        extra_endpoints.each do |keys|
+          endpoints[datadog_host] += [keys]
+        end
+      elsif extra_endpoints.is_a?(Hash)
+        extra_endpoints.each do |host, keys|
+          endpoints[host] += keys
+        end
+      else
+        raise "extra_endpoints has to be an Array or a Hash: #{extra_endpoints}"
+      end
+      endpoints
     end
   end
 end

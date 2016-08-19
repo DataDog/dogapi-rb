@@ -5,7 +5,7 @@ module Dogapi
 
     class SearchService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def search(query)
         extra_params = {

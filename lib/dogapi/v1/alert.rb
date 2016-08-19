@@ -5,7 +5,7 @@ module Dogapi
 
     class AlertService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def alert(query, options = {})
         body = {

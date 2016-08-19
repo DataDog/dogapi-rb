@@ -1,6 +1,6 @@
-require "benchmark"
-require "sshkit/formatters/pretty"
-require "sshkit/formatters/simple_text"
+require 'benchmark'
+require 'sshkit/formatters/pretty'
+require 'sshkit/formatters/simple_text'
 
 # Capistrano v3 uses Rake's DSL instead of its own
 

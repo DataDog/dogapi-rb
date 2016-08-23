@@ -49,6 +49,12 @@ describe Dogapi::Client do
                     :get, "/events/#{EVENT_ID}"
   end
 
+  describe '#delete_event' do
+    it_behaves_like 'an api method',
+                    :delete_event, [EVENT_ID],
+                    :delete, "/events/#{EVENT_ID}"
+  end
+
   describe '#stream' do
     it 'queries the api with params' do
       url = api_url + '/events'

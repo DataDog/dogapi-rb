@@ -29,6 +29,10 @@ module Dogapi
         request(Net::HTTP::Get, '/api/' + API_VERSION + '/events/' + id.to_s, nil, nil, false)
       end
 
+      def delete(id)
+        request(Net::HTTP::Delete, '/api/' + API_VERSION + '/events/' + id.to_s, nil, nil, false)
+      end
+
       def stream(start, stop, options= {})
         defaults = {
           :priority => nil,

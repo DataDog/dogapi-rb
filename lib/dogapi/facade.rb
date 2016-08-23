@@ -10,7 +10,7 @@ module Dogapi
   # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client
 
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
       if api_key
         @api_key = api_key
@@ -19,24 +19,24 @@ module Dogapi
       end
 
       @application_key = application_key
-      @datadog_host = Dogapi.find_datadog_host()
-      @host = host ||= Dogapi.find_localhost()
+      @datadog_host = endpoint || Dogapi.find_datadog_host()
+      @host = host || Dogapi.find_localhost()
       @device = device
 
       # FIXME: refactor to avoid all this code duplication
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout)
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout)
-      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout)
-      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout)
-      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout)
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 

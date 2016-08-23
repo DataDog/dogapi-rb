@@ -28,6 +28,15 @@ describe 'Common' do
 
       ENV['http_proxy'] = nil
     end
+
+    it 'respects the endpoint configuration' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      service.connect do |conn|
+        expect(conn.address).to eq 'app.example.com'
+        expect(conn.port).to eq 443
+      end
+    end
   end
 end
 

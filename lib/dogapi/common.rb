@@ -91,23 +91,14 @@ module Dogapi
         end
       end
 
-      results = []
-
-      @endpoints.each do |api_host, keys_couples|
-        keys_couples.each do |keys_couple|
-          api_key, application_key = keys_couple
-          uri = URI.parse(api_host)
-          session = connection.new(uri.host, uri.port)
-          session.open_timeout = @timeout
-          session.use_ssl = uri.scheme == 'https'
-          session.start do |conn|
-            conn.read_timeout = @timeout
-            results << yield(conn, api_key, application_key)
-          end
-        end
+      uri = URI.parse(@api_host)
+      session = connection.new(uri.host, uri.port)
+      session.open_timeout = @timeout
+      session.use_ssl = uri.scheme == 'https'
+      session.start do |conn|
+        conn.read_timeout = @timeout
+        yield conn
       end
-      results = results[0] if results.length == 1
-      results
     end
 
     def suppress_error_if_silent(e)
@@ -124,10 +115,9 @@ module Dogapi
     # +params+ is a Hash that will be converted to request parameters
     def request(method, url, extra_params, body, send_json, with_app_key=true)
       resp = nil
-      connect do |conn, api_key, app_key|
+      connect do |conn|
         begin
-          app_key = nil unless with_app_key
-          current_url = url + prepare_params(extra_params, api_key, app_key)
+          current_url = url + prepare_params(extra_params, with_app_key)
           req = method.new(current_url)
 
           if send_json
@@ -136,16 +126,16 @@ module Dogapi
           end
 
           resp = conn.request(req)
-          next handle_response(resp)
+          return handle_response(resp)
         rescue Exception => e
-          next suppress_error_if_silent e
+          suppress_error_if_silent e
         end
       end
     end
 
-    def prepare_params(extra_params, api_key, app_key)
-      params = { api_key: api_key }
-      params[:application_key] = app_key unless app_key.nil?
+    def prepare_params(extra_params, with_app_key)
+      params = { api_key: @api_key }
+      params[:application_key] = @application_key if with_app_key
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| k.to_s + '=' + v.to_s }
       qs = '?' + qs_params.join('&')

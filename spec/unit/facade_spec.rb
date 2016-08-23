@@ -76,42 +76,4 @@ describe Dogapi::Client do
       expect(buffer).to be nil
     end
   end
-
-  describe '#format_endpoints' do
-    context 'when no extra_endpoints is given' do
-      it 'returns the default endpoint and api keys' do
-        client = Dogapi::Client.new api_key, app_key
-        expected_endpoints = { 'http://app.datadoghq.com' => [[api_key, app_key]] }
-        expect(client.instance_variable_get(:@endpoints)).to eq(expected_endpoints)
-      end
-    end
-    context 'when an Array extra_endpoints is given' do
-      it 'returns the endpoint with all the keys' do
-        extra_endpoints = [%w(api_key1 app_key2), ['api_key3', nil]]
-        client = Dogapi::Client.new api_key, app_key, nil, nil, true, nil, extra_endpoints
-        expected_endpoints = { 'http://app.datadoghq.com' => [[api_key, app_key]] + extra_endpoints }
-        expect(client.instance_variable_get(:@endpoints)).to eq(expected_endpoints)
-      end
-    end
-    context 'when a Hash extra_endpoints is given' do
-      it 'returns the endpoints with all the keys' do
-        extra_keys = [%w(api_key1 app_key2), ['api_key3', nil]]
-        extra_endpoints = { 'http://app.datadoghq.com' => [%w(api_key2 app_key2)],
-                            'http://app.example.com' => extra_keys }
-        client = Dogapi::Client.new api_key, app_key, nil, nil, true, nil, extra_endpoints
-        expected_endpoints = { 'http://app.datadoghq.com' => [[api_key, app_key]] + [%w(api_key2 app_key2)],
-                               'http://app.example.com' => extra_keys }
-        expect(client.instance_variable_get(:@endpoints)).to eq(expected_endpoints)
-      end
-    end
-    context 'when a bad extra_endpoints is given' do
-      it 'raises an error' do
-        extra_endpoints = '{}'
-        expect { Dogapi::Client.new api_key, app_key, nil, nil, true, nil, extra_endpoints }.to raise_error(
-          RuntimeError,
-          'extra_endpoints has to be an Array or a Hash: {}'
-        )
-      end
-    end
-  end
 end

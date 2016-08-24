@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.23.0 / Unreleased
+# 1.23.0 / 2016-08-24
 
 * [FEATURE] Add Datadog endpoint to configuration. See [#108][]
 * [FEATURE] Add delete method for events. See [#99][], [#109][]

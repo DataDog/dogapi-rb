@@ -16,7 +16,7 @@ module Dogapi
       raise 'Please provide an API key to submit your data' if api_key.nil?
       @api_key = api_key
       @application_key = application_key
-      @datadog_host = endpoint || Dogapi.find_datadog_host()
+      @datadog_host = endpoint || Dogapi.find_datadog_host
       @host = host || Dogapi.find_localhost
       @device = device
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
@@ -28,8 +28,8 @@ module Dogapi
         service_class = service_type.split('_').map(&:capitalize).join
         instance_variable_set(
           "@#{service_type}_svc",
-          Dogapi.const_get("Dogapi::V1::#{service_class}Service").new(
-            @api_key, @application_key, silent, timeout
+          Dogapi::V1.const_get("#{service_class}Service").new(
+            @api_key, @application_key, silent, timeout, @datadog_host
           )
         )
       end
@@ -467,7 +467,8 @@ module Dogapi
     private
 
     def override_scope(options = {})
-      options = { host: @host, device: @device }.merge(options)
+      defaults = { host: @host, device: @device }
+      options = defaults.merge(options)
       Scope.new(options[:host], options[:device])
     end
 

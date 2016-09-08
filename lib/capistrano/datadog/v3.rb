@@ -1,6 +1,6 @@
-require "benchmark"
-require "sshkit/formatters/pretty"
-require "sshkit/formatters/simple_text"
+require 'benchmark'
+require 'sshkit/formatters/pretty'
+require 'sshkit/formatters/simple_text'
 
 # Capistrano v3 uses Rake's DSL instead of its own
 
@@ -30,7 +30,12 @@ module Capistrano
       end
 
       def write(*args)
-        @wrapped.write(*args)
+        # Check if Capistrano version >= 3.5.0
+        if Gem::Version.new(VERSION) >= Gem::Version.new('3.5.0')
+          @wrapped << args
+        else
+          @wrapped.write(*args)
+        end
         args.each { |arg| Capistrano::Datadog.reporter.record_log(arg) }
       end
       alias :<< :write

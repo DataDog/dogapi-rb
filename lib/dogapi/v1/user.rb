@@ -5,72 +5,36 @@ module Dogapi
 
     class UserService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       # <b>DEPRECATED:</b> Going forward, we're using a new and more restful API,
       # the new methods are get_user, create_user, update_user, disable_user
-      def invite(emails, options = {})
-        warn "[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user"
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
+      def invite(emails, options= {})
+        warn '[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user'
+        body = {
+          'emails' => emails,
+        }.merge options
 
-          body = {
-            'emails' => emails,
-          }.merge options
-
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", params, body, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/invite_users", nil, body, true)
       end
 
       # Create a user
       #
       # :description => Hash: user description containing 'handle' and 'name' properties
-      def create_user(description = {})
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Post, "/api/#{API_VERSION}/user", params, description, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+      def create_user(description= {})
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/user", nil, description, true)
       end
 
       # Retrieve user information
       #
       # :handle => String: user handle
       def get_user(handle)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", nil, nil, false)
       end
 
       # Retrieve all users
-      def get_all_users()
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/user", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+      def get_all_users
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user", nil, nil, false)
       end
 
       # Update a user
@@ -78,33 +42,15 @@ module Dogapi
       # :handle => String: user handle
       # :description => Hash: user description optionally containing 'name', 'email',
       # 'is_admin', 'disabled' properties
-      def update_user(handle, description = {})
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", params, description, true)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+      def update_user(handle, description= {})
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", nil, description, true)
       end
 
       # Disable a user
       #
       # :handle => String: user handle
       def disable_user(handle)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key
-          }
-
-          request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", nil, nil, false)
       end
 
     end

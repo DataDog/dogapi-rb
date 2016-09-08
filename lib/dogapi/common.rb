@@ -28,7 +28,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def connect
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services'
       uri = URI.parse(@host)
       session = Net::HTTP.new(uri.host, uri.port)
       if 'https' == uri.scheme
@@ -41,7 +41,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Going forward, use the newer APIService.
     def request(method, url, params)
-      warn "[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services"
+      warn '[DEPRECATION] Dogapi::Service has been deprecated in favor of the newer V1 services'
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
@@ -69,10 +69,10 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
-    def initialize(api_key, application_key, silent=true, timeout=nil)
+    def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
       @api_key = api_key
       @application_key = application_key
-      @api_host = Dogapi.find_datadog_host()
+      @api_host = endpoint || Dogapi.find_datadog_host()
       @silent = silent
       @timeout = timeout || 5
     end
@@ -82,8 +82,8 @@ module Dogapi
       connection = Net::HTTP
 
       # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
-      if RUBY_VERSION < "2.0.0"
-        proxy = ENV["HTTPS_PROXY"] || ENV["https_proxy"] || ENV["HTTP_PROXY"] || ENV["http_proxy"]
+      if RUBY_VERSION < '2.0.0'
+        proxy = ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
         if proxy
           proxy_uri = URI.parse(proxy)
           connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
@@ -96,17 +96,15 @@ module Dogapi
       session.use_ssl = uri.scheme == 'https'
       session.start do |conn|
         conn.read_timeout = @timeout
-        yield(conn)
+        yield conn
       end
     end
 
     def suppress_error_if_silent(e)
-      if @silent
-        warn e
-        return -1, {}
-      else
-        raise e
-      end
+      raise e unless @silent
+
+      warn e
+      return -1, {}
     end
 
     # Prepares the request and handles the response
@@ -114,43 +112,50 @@ module Dogapi
     # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)
     #
     # +params+ is a Hash that will be converted to request parameters
-    def request(method, url, params, body, send_json)
-      resp_obj = nil
+    def request(method, url, extra_params, body, send_json, with_app_key=true)
       resp = nil
       connect do |conn|
-        if params and params.size > 0
-          qs_params = params.map { |k, v| k.to_s + "=" + v.to_s }
-          qs = "?" + qs_params.join("&")
-          url = url + qs
-        end
+        begin
+          current_url = url + prepare_params(extra_params, with_app_key)
+          req = method.new(current_url)
 
-        req = method.new(url)
-
-        if send_json
-          req.content_type = 'application/json'
-          req.body = MultiJson.dump(body)
-        end
-
-        resp = conn.request(req)
-        resp_str = resp.body
-
-        if resp.code != 204 and resp.body != '' and resp.body != 'null' and resp.body != nil
-          begin
-            resp_obj = MultiJson.load(resp.body)
-          rescue
-            raise 'Invalid JSON Response: ' + resp.body
+          if send_json
+            req.content_type = 'application/json'
+            req.body = MultiJson.dump(body)
           end
-        else
-          resp_obj = {}
+
+          resp = conn.request(req)
+          return handle_response(resp)
+        rescue Exception => e
+          suppress_error_if_silent e
         end
       end
-      return resp.code, resp_obj
+    end
+
+    def prepare_params(extra_params, with_app_key)
+      params = { api_key: @api_key }
+      params[:application_key] = @application_key if with_app_key
+      params = extra_params.merge params unless extra_params.nil?
+      qs_params = params.map { |k, v| k.to_s + '=' + v.to_s }
+      qs = '?' + qs_params.join('&')
+      qs
+    end
+
+    def handle_response(resp)
+      if resp.code == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?
+        return resp.code, {}
+      end
+      begin
+        return resp.code, MultiJson.load(resp.body)
+      rescue
+        raise 'Invalid JSON Response: ' + resp.body
+      end
     end
   end
 
   def Dogapi.find_datadog_host
     # allow env-based overriding, useful for tests
-    ENV["DATADOG_HOST"] || "https://app.datadoghq.com"
+    ENV['DATADOG_HOST'] || 'https://app.datadoghq.com'
   end
 
   # Memoize the hostname as a module variable
@@ -161,8 +166,7 @@ module Dogapi
       # prefer hostname -f over Socket.gethostname
       @@hostname ||= %x[hostname -f].strip
     rescue
-      raise "Cannot determine local hostname via hostname -f"
+      raise 'Cannot determine local hostname via hostname -f'
     end
   end
-
 end

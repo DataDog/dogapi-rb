@@ -1,8 +1,10 @@
 sudo: false
 language: ruby
 rvm:
+- 1.9
+- 2.0
 - 2.1
 - 2.2
-- 2.3.0
+- 2.3.1
 env:
   secure: hKn4OWJZ3gKvdGVZd5VTnpRb7GB5eEtF7qc0+zOwusL1bxxSXvuNTLecqvKZpDH5uCnRCx8Dz52hSA5KzNoBoH2dPhyeC8en4/gZWbxndHYg/2qFBeHO4FP/Li3B9DmZt247IkuzK1oI4k5GkFyVw7OVrjxSVb50hjbanddkkmg=

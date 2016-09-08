@@ -5,20 +5,14 @@ module Dogapi
 
     class SearchService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def search(query)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key,
-            :q => query
-          }
+        extra_params = {
+          :q => query
+        }
 
-          request(Net::HTTP::Get, "/api/#{API_VERSION}/search", params, nil, false)
-        rescue Exception => e
-          suppress_error_if_silent e
-        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/search", extra_params, nil, false)
       end
 
     end

@@ -1,10 +1,19 @@
 Changes
 =======
 
+# 1.23.0 / 2016-08-24
+
+* [FEATURE] Add Datadog endpoint to configuration. See [#108][]
+* [FEATURE] Add delete method for events. See [#99][], [#109][]
+* [IMPROVEMENT] Add Capistrano 3.5+ compatibility. See [#96][]
+* [OTHER] Code style fixes. See [#106][] (thanks [@nots][])
+
 # 1.22.0 / 2016-04-14
+This release breaks compatibility with Ruby 1.8.
 * [FEATURE] Metric query API. See [#88][], [#90][] (thanks [@blakehilscher][])
 
 # 1.21.0 / 2015-10-30
+This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www.ruby-lang.org/en/news/2013/06/30/we-retire-1-8-7/))
 * [FEATURE] User CRUD API. See [#82][]
 * [IMPROVEMENT] Support capistrano SimpleTextFormatter (thanks [@rmoriz][] [#81][])
 
@@ -145,12 +154,18 @@ Changes
 [#82]: https://github.com/DataDog/dogapi-rb/issues/82
 [#88]: https://github.com/DataDog/dogapi-rb/issues/88
 [#90]: https://github.com/DataDog/dogapi-rb/issues/90
+[#96]: https://github.com/DataDog/dogapi-rb/issues/96
+[#99]: https://github.com/DataDog/dogapi-rb/issues/99
+[#106]: https://github.com/DataDog/dogapi-rb/issues/106
+[#108]: https://github.com/DataDog/dogapi-rb/issues/108
+[#109]: https://github.com/DataDog/dogapi-rb/issues/109
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
 [@blakehilscher]: https://github.com/blakehilscher
 [@byroot]: https://github.com/byroot
+[@nots]: https://github.com/nots
 [@rmoriz]: https://github.com/rmoriz
 [@treeder]: https://github.com/treeder
 [@winebarrel]: https://github.com/winebarrel

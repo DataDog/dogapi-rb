@@ -1,5 +1,5 @@
-require "benchmark"
-require "delegate"
+require 'benchmark'
+require 'delegate'
 
 # Capistrano v2
 
@@ -12,7 +12,7 @@ module Capistrano
       # will be raised.
       # Also, capture the time the task took to execute, and the logs it
       # outputted for submission to Datadog
-      def find_and_execute_task(path, hooks = {})
+      def find_and_execute_task(path, hooks= {})
         task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
         result = nil
         reporter = Capistrano::Datadog.reporter
@@ -62,9 +62,9 @@ module Capistrano
       logger.device = Datadog::LogCapture.new logger.device
 
       # Trigger the Datadog submission once all the tasks have run
-      on :exit, "datadog:submit"
+      on :exit, 'datadog:submit'
       namespace :datadog do
-        desc "Submit the tasks that have run to Datadog as events"
+        desc 'Submit the tasks that have run to Datadog as events'
         task :submit do |ns|
           Capistrano::Datadog.submit variables[:datadog_api_key]
         end

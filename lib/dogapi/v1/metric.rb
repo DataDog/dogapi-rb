@@ -6,54 +6,30 @@ module Dogapi
     # Event-specific client affording more granular control than the simple Dogapi::Client
     class MetricService < Dogapi::APIService
 
-      API_VERSION = "v1"
+      API_VERSION = 'v1'
 
       def get(query, from, to)
-        begin
-          params = {
-            :api_key => @api_key,
-            :application_key => @application_key,
-
-            from: from.to_i,
-            to: to.to_i,
-            query: query
-          }
-          request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', params, nil, false)
-        rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
-        end
+        extra_params = {
+          from: from.to_i,
+          to: to.to_i,
+          query: query
+        }
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/query', extra_params, nil, false)
       end
 
       def upload(metrics)
-        begin
-          params = {
-            :api_key => @api_key
-          }
-          body = {
-            :series => metrics
-          }
-          request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', params, body, true)
-        rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
-        end
+        body = {
+          :series => metrics
+        }
+        request(Net::HTTP::Post, '/api/' + API_VERSION + '/series', nil, body, true, false)
       end
 
-      def submit_to_api(metric, points, scope, options = {})
+      def submit_to_api(metric, points, scope, options= {})
         payload = self.make_metric_payload(metric, points, scope, options)
         self.upload([payload])
       end
 
-      def submit_to_buffer(metric, points, scope, options = {})
+      def submit_to_buffer(metric, points, scope, options= {})
         payload = self.make_metric_payload(metric, points, scope, options)
         @buffer << payload
         return 200, {}
@@ -83,10 +59,10 @@ module Dogapi
 
       def make_metric_payload(metric, points, scope, options)
         begin
-          typ = options[:type] || "gauge"
+          typ = options[:type] || 'gauge'
 
-          if typ != "gauge" && typ != "counter"
-            raise ArgumentError, "metric type must be gauge or counter"
+          if typ != 'gauge' && typ != 'counter'
+            raise ArgumentError, 'metric type must be gauge or counter'
           end
 
           metric_payload = {
@@ -104,12 +80,7 @@ module Dogapi
 
           return metric_payload
         rescue Exception => e
-          if @silent
-            warn e
-            return -1, {}
-          else
-            raise e
-          end
+          suppress_error_if_silent e
         end
       end
     end

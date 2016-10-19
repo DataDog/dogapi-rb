@@ -136,7 +136,7 @@ module Dogapi
       params = { api_key: @api_key }
       params[:application_key] = @application_key if with_app_key
       params = extra_params.merge params unless extra_params.nil?
-      qs_params = params.map { |k, v| k.to_s + '=' + v.to_s }
+      qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')
       qs
     end

@@ -34,7 +34,7 @@ module Capistrano
       def write(*args)
         # Check if Capistrano version >= 3.5.0
         if Gem::Version.new(VERSION) >= Gem::Version.new('3.5.0')
-          @wrapped << args
+          @wrapped << args.join
         else
           @wrapped.write(*args)
         end

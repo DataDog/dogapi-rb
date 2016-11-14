@@ -1,4 +1,5 @@
 require 'benchmark'
+require 'delegate'
 require 'sshkit/formatters/pretty'
 require 'sshkit/formatters/simple_text'
 
@@ -24,8 +25,9 @@ end
 
 module Capistrano
   module Datadog
-    class CaptureIO
+    class CaptureIO < SimpleDelegator
       def initialize(wrapped)
+        super
         @wrapped = wrapped
       end
 
@@ -39,10 +41,6 @@ module Capistrano
         args.each { |arg| Capistrano::Datadog.reporter.record_log(arg) }
       end
       alias :<< :write
-
-      def close
-        @wrapped.close
-      end
     end
   end
 end

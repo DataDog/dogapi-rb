@@ -8,21 +8,34 @@ module Rake
   class Task
     alias old_invoke invoke
     def invoke(*args)
-      result = nil
       reporter = Capistrano::Datadog.reporter
-      task_name = name
-      reporter.current_task = task_name
-      timing = Benchmark.measure(task_name) do
-        result = old_invoke(*args)
+      event_filter = Capistrano::Configuration.env.fetch(:datadog_event_filter)
+      if event_filter
+        reporter.event_filter = event_filter
       end
-      reporter.record_task(task_name, timing.real, roles,
-        Capistrano::Configuration.env.fetch(:stage), Capistrano::Configuration.env.fetch(:application))
-      result
+      task_name = name
+      stage = Capistrano::Configuration.env.fetch(:stage)
+      application = Capistrano::Configuration.env.fetch(:application)
+      reporter.record_task(task_name, roles, stage, application) do
+        old_invoke(*args)
+      end
     end
   end
 end
 
 module Capistrano
+  module DSL
+    alias old_on on
+    def on(hosts, *args, &block)
+      old_on(hosts, *args) do |host|
+        if Capistrano::Configuration.env.fetch(:datadog_record_hosts)
+          Capistrano::Datadog.reporter.record_hostname(host)
+        end
+        self.instance_exec(host, &block)
+      end
+    end
+  end
+
   module Datadog
     class CaptureIO
       def initialize(wrapped)

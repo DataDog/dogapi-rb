@@ -14,28 +14,20 @@ module Capistrano
       # outputted for submission to Datadog
       def find_and_execute_task(path, hooks= {})
         task = find_task(path) or raise NoSuchTaskError, "the task `#{path}' does not exist"
-        result = nil
         reporter = Capistrano::Datadog.reporter
         task_name = task.fully_qualified_name
-        timing = Benchmark.measure(task_name) do
-          # Set the current task so that the logger knows which task to
-          # associate the logs with
-          reporter.current_task = task_name
-          trigger(hooks[:before], task) if hooks[:before]
-          result = execute_task(task)
-          trigger(hooks[:after], task) if hooks[:after]
-          reporter.current_task = nil
-        end
 
-        # Record the task name, its timing and roles
         roles = task.options[:roles]
         if roles.is_a? Proc
           roles = roles.call
         end
-        reporter.record_task(task_name, timing.real, roles, task.namespace.variables[:stage], fetch(:application))
 
-        # Return the original result
-        result
+        reporter.record_task(task_name, roles, task.namespace.variables[:stage], fetch(:application)) do
+          trigger(hooks[:before], task) if hooks[:before]
+          result = execute_task(task)
+          trigger(hooks[:after], task) if hooks[:after]
+          result
+        end
       end
     end
   end

@@ -26,8 +26,14 @@ module Capistrano
       begin
         if api_key
           dog = Dogapi::Client.new(api_key)
-          reporter.report.each do |event|
-            dog.emit_event event
+          reporter.report.each do |event, hosts|
+            if hosts.size > 0
+              hosts.each do |host|
+                dog.emit_event event, host: host
+              end
+            else
+              dog.emit_event event
+            end
           end
         else
           puts 'No api key set, not submitting to Datadog'
@@ -41,29 +47,44 @@ module Capistrano
 
     # Collects info about the tasks that ran in order to submit to Datadog
     class Reporter
-      attr_accessor :current_task
+      attr_accessor :event_filter
 
       def initialize()
         @tasks = []
-        @current_task = nil
-        @logging_output = {}
+        @task_stack = []
       end
 
-      def record_task(task_name, timing, roles, stage=nil, application_name=nil)
-        @tasks << {
+      def record_task(task_name, roles, stage=nil, application_name=nil)
+        task = {
           :name   => task_name,
-          :timing => timing,
           :roles  => roles,
           :stage  => stage,
-          :application => application_name
+          :application => application_name,
+          :logs => [],
+          :hosts => []
         }
+        @tasks << task
+        @task_stack << task
+        result = nil
+        timing = Benchmark.measure(task_name) do
+          result = yield
+        end
+        task[:timing] = timing.real
+        @task_stack.pop
+        result
       end
 
       def record_log(message)
-        if not @logging_output[@current_task]
-          @logging_output[@current_task] = []
+        current_task = @task_stack.last
+        if current_task
+          current_task[:logs] << message
         end
-        @logging_output[@current_task] << message
+      end
+
+      def record_hostname(hostname)
+        @task_stack.each do |task|
+          task[:hosts] << hostname
+        end
       end
 
       def report()
@@ -72,6 +93,8 @@ module Capistrano
 
         # Lazy randomness
         aggregation_key = Digest::MD5.hexdigest "#{Time.new}|#{rand}"
+
+        filter = event_filter || proc { |x| x }
 
         # Convert the tasks into Datadog events
         @tasks.map do |task|
@@ -89,21 +112,21 @@ module Capistrano
           type  = 'deploy'
           alert_type = 'success'
           source_type = 'capistrano'
-          message_content = (@logging_output[name] || []).join('')
+          message_content = task[:logs].join('')
           message = if !message_content.empty? then
             # Strip out color control characters
             message_content = sanitize_encoding(message_content).gsub(/\e\[(\d+)m/, '')
             "@@@\n#{message_content}@@@" else '' end
 
-          Dogapi::Event.new(message,
+          [Dogapi::Event.new(message,
             :msg_title        => title,
             :event_type       => type,
             :event_object     => aggregation_key,
             :alert_type       => alert_type,
             :source_type_name => source_type,
             :tags             => tags
-          )
-        end
+          ), task[:hosts]]
+        end.map(&event_filter).reject(&:nil?)
       end
 
       def sanitize_encoding(string)

@@ -7,9 +7,14 @@ group :test do
   gem 'rspec'
   gem 'rubocop', '~> 0.41.2'
   gem 'simplecov'
-  gem 'webmock'
   if RbConfig::CONFIG['ruby_version'].start_with?("1.9")
-  	gem 'json', '< 2'
+    gem 'json', '< 2'
+    gem 'public_suffix', '< 1.5'
+    gem 'rdoc', '< 5'
+    gem 'term-ansicolor', '< 1.4'
+    gem 'webmock', '< 2.3'
+  else
+    gem 'webmock'
   end
 end
 

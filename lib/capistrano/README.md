@@ -6,6 +6,11 @@ To set up your Capfile:
 
     require "capistrano/datadog"
     set :datadog_api_key, "my_api_key"
+    # optionally
+    # create an event for every host
+    set :datadog_record_hosts, true
+    # only push the production event
+    set :datadog_event_filter, proc { |event, hosts| event.msg_title.include?('ran production') ? [event, hosts] : nil }
 
 You can find your Datadog API key [here](https://app.datadoghq.com/account/settings#api). If you don't have a Datadog account, you can sign up for one [here](http://www.datadoghq.com/).
 

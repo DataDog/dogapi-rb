@@ -1,6 +1,12 @@
 Changes
 =======
 
+# 1.24.0 / UNRELEASED
+
+* [FEATURE] Add the ability to record events per host and to filter events. See [#115][] (thanks [@hnovikov][])
+* [BUGFIX] Encode extra\_params to handle spaces. See [#113][] (thanks [@miknight][])
+* [BUGFIX] Fix CaptureIO delegation and output with Capistrano >= 3.5. See [#114][] (thanks [@casperisfine][])
+
 # 1.23.0 / 2016-08-24
 
 * [FEATURE] Add Datadog endpoint to configuration. See [#108][]
@@ -159,12 +165,18 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#106]: https://github.com/DataDog/dogapi-rb/issues/106
 [#108]: https://github.com/DataDog/dogapi-rb/issues/108
 [#109]: https://github.com/DataDog/dogapi-rb/issues/109
+[#113]: https://github.com/DataDog/dogapi-rb/issues/113
+[#114]: https://github.com/DataDog/dogapi-rb/issues/114
+[#115]: https://github.com/DataDog/dogapi-rb/issues/115
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
 [@blakehilscher]: https://github.com/blakehilscher
 [@byroot]: https://github.com/byroot
+[@casperisfine]: https://github.com/casperisfine
+[@hnovikov]: https://github.com/hnovikov
+[@miknight]: https://github.com/miknight
 [@nots]: https://github.com/nots
 [@rmoriz]: https://github.com/rmoriz
 [@treeder]: https://github.com/treeder

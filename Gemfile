@@ -13,6 +13,10 @@ group :test do
     gem 'rdoc', '< 5'
     gem 'term-ansicolor', '< 1.4'
     gem 'webmock', '< 2.3'
+    gem 'nokogiri', '< 1.7'
+  elsif RbConfig::CONFIG['ruby_version'].start_with?("2.0")
+    gem 'nokogiri', '< 1.7'
+    gem 'webmock'
   else
     gem 'webmock'
   end

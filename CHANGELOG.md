@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.24.0 / UNRELEASED
+# 1.24.0 / 2017-01-12
 
 * [FEATURE] Add the ability to record events per host and to filter events. See [#115][] (thanks [@hnovikov][])
 * [BUGFIX] Encode extra\_params to handle spaces. See [#113][] (thanks [@miknight][])

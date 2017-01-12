@@ -2,46 +2,42 @@ require 'time'
 require 'dogapi/v1'
 
 module Dogapi
-
   # A simple DogAPI client
   #
-  # See Dogapi::V1  for the thick underlying clients
+  # See Dogapi::V1 for the thick underlying clients
   #
-  # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
+  # Class methods return a tuple of (+response_code+, +response_body+). Unless
+  # otherwise noted, the response body is deserialized JSON. Up-to-date
+  # information about the JSON object structure is available in the HTTP API
+  # documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client
-
+    # Create a new Client optionally specifying a default host and device
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
-
-      if api_key
-        @api_key = api_key
-      else
-        raise 'Please provide an API key to submit your data'
-      end
-
+      raise 'Please provide an API key to submit your data' if api_key.nil?
+      @api_key = api_key
       @application_key = application_key
-      @datadog_host = endpoint || Dogapi.find_datadog_host()
-      @host = host || Dogapi.find_localhost()
+      @datadog_host = endpoint || Dogapi.find_datadog_host
+      @host = host || Dogapi.find_localhost
       @device = device
-
-      # FIXME: refactor to avoid all this code duplication
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
+
+      %w(
+        metric event tag comment search dash alert user snapshot embed screenboard
+        monitor service_check
+      ).each do |service_type|
+        service_class = service_type.split('_').map(&:capitalize).join
+        instance_variable_set(
+          "@#{service_type}_svc",
+          Dogapi::V1.const_get("#{service_class}Service").new(
+            @api_key, @application_key, silent, timeout, @datadog_host
+          )
+        )
+      end
     end
 
     #
     # METRICS
+    #
 
     # Record a single point of metric data
     #
@@ -57,7 +53,7 @@ module Dogapi
       defaults = { :timestamp => Time.now }
       options = defaults.merge(options)
 
-      self.emit_points(
+      emit_points(
         metric,
         [[options[:timestamp], value]],
         options
@@ -79,7 +75,7 @@ module Dogapi
       scope = override_scope options
 
       points.each do |p|
-        p[0].kind_of? Time or raise 'Not a Time'
+        raise 'Not a Time' unless p[0].is_a? Time
         p[0] = p[0].to_i
         p[1] = p[1].to_f # TODO: stupid to_f will never raise an exception
       end
@@ -97,7 +93,7 @@ module Dogapi
       @metric_svc.get(query, from, to)
     end
 
-    def batch_metrics()
+    def batch_metrics
       @metric_svc.switch_to_batched
       begin
         yield
@@ -109,6 +105,7 @@ module Dogapi
 
     #
     # EVENTS
+    #
 
     # Record an event
     #
@@ -151,8 +148,8 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Recording events with a duration has been deprecated.
     # The functionality will be removed in a later release.
-    def start_event(event, options= {})
-      warn '[DEPRECATION] Dogapi::Client.start_event() is deprecated. Use `emit_event` instead.'
+    def start_event(event, options = {})
+      deprecation_warning('start_event', 'emit_event')
       defaults = { :source_type => nil }
       options = defaults.merge(options)
 
@@ -190,7 +187,6 @@ module Dogapi
       @search_svc.search query
     end
 
-
     #
     # TAGS
     #
@@ -227,7 +223,7 @@ module Dogapi
 
     # <b>DEPRECATED:</b> Spelling mistake temporarily preserved as an alias.
     def detatch_tags(host_id)
-      warn '[DEPRECATION] Dogapi::Client.detatch() is deprecated. Use `detach` instead.'
+      deprecation_warning('detatch', 'detach')
       detach_tags(host_id)
     end
 
@@ -244,27 +240,27 @@ module Dogapi
 
     # Create a dashboard.
     def create_dashboard(title, description, graphs, template_variables=nil)
-      @dash_service.create_dashboard(title, description, graphs, template_variables)
+      @dash_svc.create_dashboard(title, description, graphs, template_variables)
     end
 
     # Update a dashboard.
     def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
-      @dash_service.update_dashboard(dash_id, title, description, graphs, template_variables)
+      @dash_svc.update_dashboard(dash_id, title, description, graphs, template_variables)
     end
 
     # Fetch the given dashboard.
     def get_dashboard(dash_id)
-      @dash_service.get_dashboard(dash_id)
+      @dash_svc.get_dashboard(dash_id)
     end
 
     # Fetch all of the dashboards.
     def get_dashboards
-      @dash_service.get_dashboards
+      @dash_svc.get_dashboards
     end
 
     # Delete the given dashboard.
     def delete_dashboard(dash_id)
-      @dash_service.delete_dashboard(dash_id)
+      @dash_svc.delete_dashboard(dash_id)
     end
 
     #
@@ -287,16 +283,16 @@ module Dogapi
       @alert_svc.delete_alert(alert_id)
     end
 
-    def get_all_alerts()
-      @alert_svc.get_all_alerts()
+    def get_all_alerts
+      @alert_svc.get_all_alerts
     end
 
-    def mute_alerts()
-      @alert_svc.mute_alerts()
+    def mute_alerts
+      @alert_svc.mute_alerts
     end
 
-    def unmute_alerts()
-      @alert_svc.unmute_alerts()
+    def unmute_alerts
+      @alert_svc.unmute_alerts
     end
 
     # User invite
@@ -308,8 +304,8 @@ module Dogapi
       @user_svc.create_user(description)
     end
 
-    def get_all_users()
-      @user_svc.get_all_users()
+    def get_all_users
+      @user_svc.get_all_users
     end
 
     def get_user(handle)
@@ -332,15 +328,16 @@ module Dogapi
     #
     # EMBEDS
     #
-    def get_all_embeds()
-      @embed_svc.get_all_embeds()
+
+    def get_all_embeds
+      @embed_svc.get_all_embeds
     end
 
-    def get_embed(embed_id, description= {})
+    def get_embed(embed_id, description = {})
       @embed_svc.get_embed(embed_id, description)
     end
 
-    def create_embed(graph_json, description= {})
+    def create_embed(graph_json, description = {})
       @embed_svc.create_embed(graph_json, description)
     end
 
@@ -367,8 +364,8 @@ module Dogapi
       @screenboard_svc.get_screenboard(board_id)
     end
 
-    def get_all_screenboards()
-      @screenboard_svc.get_all_screenboards()
+    def get_all_screenboards
+      @screenboard_svc.get_all_screenboards
     end
 
     def delete_screenboard(board_id)
@@ -407,12 +404,12 @@ module Dogapi
       @monitor_svc.get_all_monitors(options)
     end
 
-    def mute_monitors()
-      @monitor_svc.mute_monitors()
+    def mute_monitors
+      @monitor_svc.mute_monitors
     end
 
-    def unmute_monitors()
-      @monitor_svc.unmute_monitors()
+    def unmute_monitors
+      @monitor_svc.unmute_monitors
     end
 
     def mute_monitor(monitor_id, options= {})
@@ -469,10 +466,14 @@ module Dogapi
 
     private
 
-    def override_scope(options= {})
-      defaults = { :host => @host, :device => @device }
+    def override_scope(options = {})
+      defaults = { host: @host, device: @device }
       options = defaults.merge(options)
       Scope.new(options[:host], options[:device])
+    end
+
+    def deprecation_warning(old_method_name, updated_method_name)
+      warn "[DEPRECATION] Dogapi::Client.#{old_method_name}() is deprecated. Use `#{updated_method_name}` instead."
     end
   end
 end

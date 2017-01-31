@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 1.25.0 / UNRELEASED
+
+* [FEATURE] Add Datadog endpoint for metrics metadata. See [#120][]
+
 # 1.24.0 / 2017-01-12
 
 * [FEATURE] Add the ability to record events per host and to filter events. See [#115][] (thanks [@hnovikov][])
@@ -168,6 +172,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#113]: https://github.com/DataDog/dogapi-rb/issues/113
 [#114]: https://github.com/DataDog/dogapi-rb/issues/114
 [#115]: https://github.com/DataDog/dogapi-rb/issues/115
+[#120]: https://github.com/DataDog/dogapi-rb/issues/120
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1

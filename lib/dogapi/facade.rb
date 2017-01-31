@@ -37,6 +37,7 @@ module Dogapi
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
     end
 
@@ -465,6 +466,32 @@ module Dogapi
 
     def service_check(check, host, status, options= {})
       @service_check_svc.service_check(check, host, status, options)
+    end
+
+    #
+    # METADATA
+    #
+
+    # Get metadata information on an existing Datadog metric
+    def get_metadata(metric)
+      @metadata_svc.get(metric)
+    end
+
+    # Update metadata fields for an existing Datadog metric.
+    # If the metadata does not exist for the metric it is created by
+    # the update.
+    # Optional arguments:
+    #   :type             => String, type of the metric (ex. "gauge", "rate", etc.)
+    #                        see http://docs.datadoghq.com/metrictypes/
+    #   :description      => String, description of the metric
+    #   :short_name       => String, short name of the metric
+    #   :unit             => String, unit type associated with the metric (ex. "byte", "operation")
+    #                        see http://docs.datadoghq.com/units/ for full list
+    #   :per_unit         => String, per unit type (ex. "second" as in "queries per second")
+    #                        see http://docs.datadoghq.com/units/ for full
+    #   :statsd_interval  => Integer, statsd flush interval for metric in seconds (if applicable)
+    def update_metadata(metric, options= {})
+      @metadata_svc.update(metric, options)
     end
 
     private

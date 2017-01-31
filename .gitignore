@@ -9,3 +9,6 @@ coverage
 doc/
 pkg/
 .idea
+vendor/
+.bundle/
+*.gem

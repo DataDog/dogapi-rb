@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.25.0 / UNRELEASED
+# 1.25.0 / 2017-02-14
 
 * [FEATURE] Add Datadog endpoint for metrics metadata. See [#120][]
 

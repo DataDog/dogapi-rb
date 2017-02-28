@@ -35,7 +35,7 @@ describe Dogapi::Client do
   describe '#get_all_monitors' do
     it_behaves_like 'an api method with optional params',
                     :get_all_monitors, [],
-                    :get, '/monitor', group_states: %w(custom all), tags: ['test', 'key:value']
+                    :get, '/monitor', group_states: %w(custom all), tags: ['test', 'key:value'], name: 'test'
   end
 
   describe '#mute_monitors' do

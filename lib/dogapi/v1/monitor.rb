@@ -56,6 +56,11 @@ module Dogapi
           extra_params[:tags] = extra_params[:tags].join(',') if extra_params[:tags].respond_to?(:join)
         end
 
+        # :name is a string to filter monitors by name
+        if options[:name]
+          extra_params[:name] = options[:name]
+        end
+
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
       end
 

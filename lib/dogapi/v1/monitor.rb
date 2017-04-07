@@ -25,11 +25,11 @@ module Dogapi
       end
 
       def get_monitor(monitor_id, options = {})
+        extra_params = options.clone
         # :group_states is an optional list of statuses to filter returned
         # groups. If no value is given then no group states will be returned.
         # Possible values are: "all", "ok", "warn", "alert", "no data".
-        extra_params = {}
-        extra_params[:group_states] = options[:group_states].join(',') if options[:group_states]
+        extra_params[:group_states] = extra_params[:group_states].join(',') if extra_params[:group_states]
 
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
       end
@@ -39,27 +39,16 @@ module Dogapi
       end
 
       def get_all_monitors(options = {})
-        extra_params = {}
+        extra_params = options.clone
         # :group_states is an optional list of statuses to filter returned
         # groups. If no value is given then no group states will be returned.
         # Possible values are: "all", "ok", "warn", "alert", "no data".
-        if options[:group_states]
-          extra_params[:group_states] = options[:group_states]
-          extra_params[:group_states] = extra_params[:group_states].join(',') if extra_params[:group_states].respond_to?(:join)
-        end
+        extra_params[:group_states] = extra_params[:group_states].join(',') if extra_params[:group_states].respond_to?(:join)
 
         # :tags is an optional list of scope tags to filter the list of monitors
         # returned. If no value is given, then all monitors, regardless of
         # scope, will be returned.
-        if options[:tags]
-          extra_params[:tags] = options[:tags]
-          extra_params[:tags] = extra_params[:tags].join(',') if extra_params[:tags].respond_to?(:join)
-        end
-
-        # :name is a string to filter monitors by name
-        if options[:name]
-          extra_params[:name] = options[:name]
-        end
+        extra_params[:tags] = extra_params[:tags].join(',') if extra_params[:tags].respond_to?(:join)
 
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
       end
@@ -104,13 +93,7 @@ module Dogapi
       end
 
       def get_all_downtimes(options = {})
-        extra_params = {}
-        if options[:current_only]
-          extra_params[:current_only] = options[:current_only]
-          options.delete :current_only
-        end
-
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", options, nil, false)
       end
 
       #

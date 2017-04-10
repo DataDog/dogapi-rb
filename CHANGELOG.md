@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.26.0 / UNRELEASED
+# 1.26.0 / 2017-04-10
 
 * [IMPROVEMENT] Allow additional options to be passed to monitor API calls. See [#125][] (thanks [@jimmyngo][])
 

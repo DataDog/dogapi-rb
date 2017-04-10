@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 1.26.0 / UNRELEASED
+
+* [IMPROVEMENT] Allow additional options to be passed to monitor API calls. See [#125][] (thanks [@jimmyngo][])
+
 # 1.25.0 / 2017-02-14
 
 * [FEATURE] Add Datadog endpoint for metrics metadata. See [#120][]
@@ -173,6 +177,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#114]: https://github.com/DataDog/dogapi-rb/issues/114
 [#115]: https://github.com/DataDog/dogapi-rb/issues/115
 [#120]: https://github.com/DataDog/dogapi-rb/issues/120
+[#125]: https://github.com/DataDog/dogapi-rb/issues/125
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1
@@ -181,6 +186,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@byroot]: https://github.com/byroot
 [@casperisfine]: https://github.com/casperisfine
 [@hnovikov]: https://github.com/hnovikov
+[@jimmyngo]: https://github.com/jimmyngo
 [@miknight]: https://github.com/miknight
 [@nots]: https://github.com/nots
 [@rmoriz]: https://github.com/rmoriz

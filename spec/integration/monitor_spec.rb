@@ -87,9 +87,9 @@ describe Dogapi::Client do
   end
 
   describe '#get_all_downtimes' do
-    it_behaves_like 'an api method',
+    it_behaves_like 'an api method with optional params',
                     :get_all_downtimes, [],
-                    :get, '/downtime'
+                    :get, '/downtime', current_only: true
   end
 
   describe '#mute_host' do

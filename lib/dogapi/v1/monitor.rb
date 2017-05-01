@@ -53,6 +53,15 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
       end
 
+      def monitor_validate(type, query, options = {})
+        body = {
+          'type' => type,
+          'query' => query,
+        }.merge options
+
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/validate", nil, body, true)
+      end
+
       def mute_monitors
         request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/mute_all", nil, nil, false)
       end

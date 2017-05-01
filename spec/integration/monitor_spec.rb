@@ -38,6 +38,12 @@ describe Dogapi::Client do
                     :get, '/monitor', group_states: %w(custom all), tags: ['test', 'key:value'], name: 'test'
   end
 
+  describe '#validate_monitor' do
+    it_behaves_like 'an api method with options',
+                    :monitor, [MONITOR_TYPE, MONITOR_QUERY],
+                    :post, '/monitor', 'type' => MONITOR_TYPE, 'query' => MONITOR_QUERY
+  end
+
   describe '#mute_monitors' do
     it_behaves_like 'an api method',
                     :mute_monitors, [],

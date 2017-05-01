@@ -408,6 +408,10 @@ module Dogapi
       @monitor_svc.get_all_monitors(options)
     end
 
+    def monitor_validate(type, query, options= {})
+      @monitor_svc.monitor_validate(type, query, options)
+    end
+
     def mute_monitors()
       @monitor_svc.mute_monitors()
     end

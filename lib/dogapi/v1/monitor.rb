@@ -53,7 +53,7 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
       end
 
-      def monitor_validate(type, query, options = {})
+      def validate_monitor(type, query, options = {})
         body = {
           'type' => type,
           'query' => query,

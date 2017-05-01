@@ -40,8 +40,8 @@ describe Dogapi::Client do
 
   describe '#validate_monitor' do
     it_behaves_like 'an api method with options',
-                    :monitor, [MONITOR_TYPE, MONITOR_QUERY],
-                    :post, '/monitor', 'type' => MONITOR_TYPE, 'query' => MONITOR_QUERY
+                    :validate_monitor, [MONITOR_TYPE, MONITOR_QUERY],
+                    :post, '/monitor/validate', 'type' => MONITOR_TYPE, 'query' => MONITOR_QUERY
   end
 
   describe '#mute_monitors' do

@@ -1,6 +1,10 @@
 Changes
 =======
 
+# 1.27.0 / UNRELEASED
+
+* [FEATURE] Add monitor validation endpoint. See [#127][]
+
 # 1.26.0 / 2017-04-10
 
 * [IMPROVEMENT] Allow additional options to be passed to monitor API calls. See [#125][] (thanks [@jimmyngo][])
@@ -178,6 +182,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#115]: https://github.com/DataDog/dogapi-rb/issues/115
 [#120]: https://github.com/DataDog/dogapi-rb/issues/120
 [#125]: https://github.com/DataDog/dogapi-rb/issues/125
+[#127]: https://github.com/DataDog/dogapi-rb/issues/127
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@ansel1]: https://github.com/ansel1

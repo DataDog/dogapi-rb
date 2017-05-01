@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.27.0 / UNRELEASED
+# 1.27.0 / 2017-05-01
 
 * [FEATURE] Add monitor validation endpoint. See [#127][]
 

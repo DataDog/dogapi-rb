@@ -10,4 +10,6 @@
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 111
+  Max: 122
+
+inherit_from: .rubocop_todo.yml

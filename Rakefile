@@ -4,22 +4,7 @@ require 'rdoc/task'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
-default_tests = [:spec, :rubocop]
-
-if !RbConfig::CONFIG['ruby_version'].start_with?("2.3")
-  # Not compatible with Ruby 2.3.x
-  require 'tailor/rake_task'
-  default_tests.unshift(:tailor)
-
-  Tailor::RakeTask.new do |task|
-    task.file_set 'lib/**/*.rb', :code do |style|
-      style.max_line_length 160, :level => :warn
-      style.max_code_lines_in_method 40, :level => :warn
-    end
-  end
-end
-
-task :default => default_tests
+task :default => [:spec, :rubocop]
 
 # Doc stuff
 RDoc::Task.new do |rd|
@@ -33,9 +18,8 @@ end
 RSpec::Core::RakeTask.new(:spec)
 
 RuboCop::RakeTask.new do |task|
-  task.patterns = ['spec']
+  task.patterns = ['spec', 'lib']
 end
-
 
 desc "Find notes in code"
 task :notes do

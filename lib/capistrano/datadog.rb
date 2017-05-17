@@ -108,7 +108,8 @@ module Capistrano
           if !task[:application].nil? and !task[:application].empty? then
             application = ' for ' + task[:application]
           end
-          title = '%s@%s ran %s%s on %s with capistrano in %.2f secs' % [user, hostname, name, application, roles.join(', '), task[:timing]]
+          title = "#{user}@#{hostname} ran #{name}#{application} on #{roles.join(', ')} "\
+                  "with capistrano in #{task[:timing].round(2)} secs"
           type  = 'deploy'
           alert_type = 'success'
           source_type = 'capistrano'

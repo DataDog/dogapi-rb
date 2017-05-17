@@ -7,7 +7,10 @@ module Dogapi
   #
   # See Dogapi::V1  for the thick underlying clients
   #
-  # Class methods return a tuple of (+response_code+, +response_body+). Unless otherwise noted, the response body is deserialized JSON. Up-to-date information about the JSON object structure is available in the HTTP API documentation, here[https://github.com/DataDog/dogapi/wiki].
+  # Class methods return a tuple of (+response_code+, +response_body+). Unless
+  # otherwise noted, the response body is deserialized JSON. Up-to-date
+  # information about the JSON object structure is available in the HTTP API
+  # documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client
 
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)

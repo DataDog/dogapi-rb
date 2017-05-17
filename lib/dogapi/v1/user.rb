@@ -10,7 +10,8 @@ module Dogapi
       # <b>DEPRECATED:</b> Going forward, we're using a new and more restful API,
       # the new methods are get_user, create_user, update_user, disable_user
       def invite(emails, options= {})
-        warn '[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated in favor of Dogapi::V1::UserService::create_user'
+        warn '[DEPRECATION] Dogapi::V1::UserService::invite has been deprecated '\
+             'in favor of Dogapi::V1::UserService::create_user'
         body = {
           'emails' => emails,
         }.merge options

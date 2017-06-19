@@ -29,7 +29,10 @@ module Dogapi
         # :group_states is an optional list of statuses to filter returned
         # groups. If no value is given then no group states will be returned.
         # Possible values are: "all", "ok", "warn", "alert", "no data".
-        extra_params[:group_states] = extra_params[:group_states].join(',') if extra_params[:group_states]
+
+        if extra_params[:group_states].respond_to?(:join)
+          extra_params[:group_states] = extra_params[:group_states].join(',')
+        end
 
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
       end

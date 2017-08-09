@@ -451,6 +451,10 @@ module Dogapi
       @monitor_svc.cancel_downtime(downtime_id)
     end
 
+    def cancel_downtime_by_scope(scope)
+      @monitor_svc.cancel_downtime_by_scope(scope)
+    end
+
     def get_all_downtimes(options= {})
       @monitor_svc.get_all_downtimes(options)
     end

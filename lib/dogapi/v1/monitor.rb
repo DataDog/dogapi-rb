@@ -105,6 +105,14 @@ module Dogapi
       def cancel_downtime(downtime_id)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
       end
+      
+      def cancel_downtime_by_scope(scope)
+        body = {
+          'scope' => scope
+        }
+        
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, body, false)
+      end
 
       def get_all_downtimes(options = {})
         request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", options, nil, false)

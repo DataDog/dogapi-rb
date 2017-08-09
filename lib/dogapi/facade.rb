@@ -11,7 +11,7 @@ module Dogapi
   # otherwise noted, the response body is deserialized JSON. Up-to-date
   # information about the JSON object structure is available in the HTTP API
   # documentation, here[https://github.com/DataDog/dogapi/wiki].
-  class Client
+  class Client # rubocop:disable Metrics/ClassLength
 
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 

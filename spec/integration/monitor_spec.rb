@@ -91,7 +91,7 @@ describe Dogapi::Client do
                     :cancel_downtime, [DOWNTIME_ID],
                     :delete, "/downtime/#{DOWNTIME_ID}"
   end
-  
+
   describe '#cancel_downtime_by_scope' do
     it_behaves_like 'an api method',
                     :cancel_downtime_by_scope, [DOWNTIME_SCOPE],

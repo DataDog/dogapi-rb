@@ -95,7 +95,7 @@ describe Dogapi::Client do
   describe '#cancel_downtime_by_scope' do
     it_behaves_like 'an api method with options',
                     :cancel_downtime_by_scope, [DOWNTIME_SCOPE],
-                    :post, "/downtime/cancel/by_scope", 'scope' => DOWNTIME_SCOPE
+                    :post, '/downtime/cancel/by_scope', 'scope' => DOWNTIME_SCOPE
   end
 
   describe '#get_all_downtimes' do

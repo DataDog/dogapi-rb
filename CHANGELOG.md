@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 1.28.0 / UNRELEASED
+
+* [FEATURE] Accept `group_states` strings for `get_monitor` function. See [#132][] (thanks [@acroos][])
+* [FEATURE] Add cancel\_by\_scope endpoint. See [#133][] (thanks [@martinisoft][])
+
 # 1.27.0 / 2017-05-01
 
 * [FEATURE] Add monitor validation endpoint. See [#127][]
@@ -183,8 +188,11 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#120]: https://github.com/DataDog/dogapi-rb/issues/120
 [#125]: https://github.com/DataDog/dogapi-rb/issues/125
 [#127]: https://github.com/DataDog/dogapi-rb/issues/127
+[#132]: https://github.com/DataDog/dogapi-rb/issues/132
+[#133]: https://github.com/DataDog/dogapi-rb/issues/133
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
+[@acroos]: https://github.com/acroos
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
 [@blakehilscher]: https://github.com/blakehilscher
@@ -192,6 +200,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@casperisfine]: https://github.com/casperisfine
 [@hnovikov]: https://github.com/hnovikov
 [@jimmyngo]: https://github.com/jimmyngo
+[@martinisoft]: https://github.com/martinisoft
 [@miknight]: https://github.com/miknight
 [@nots]: https://github.com/nots
 [@rmoriz]: https://github.com/rmoriz

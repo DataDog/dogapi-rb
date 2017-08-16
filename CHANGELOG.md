@@ -1,7 +1,7 @@
 Changes
 =======
 
-# 1.28.0 / UNRELEASED
+# 1.28.0 / 2017-08-16
 
 * [FEATURE] Accept `group_states` strings for `get_monitor` function. See [#132][] (thanks [@acroos][])
 * [FEATURE] Add cancel\_by\_scope endpoint. See [#133][] (thanks [@martinisoft][])

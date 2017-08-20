@@ -65,7 +65,7 @@ module Dogapi
 
       def make_metric_payload(metric, points, scope, options)
         begin
-          type = options[:type] || 'gauge'
+          type = options[:type]
 
           unless METRIC_TYPES.include?(type)
             raise ArgumentError, 'metric type is invalid'

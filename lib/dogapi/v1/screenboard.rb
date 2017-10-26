@@ -28,7 +28,7 @@ module Dogapi
       end
 
       def share_screenboard(board_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/screen/share/#{board_id}", nil, nil, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/screen/share/#{board_id}", nil, nil, false)
       end
 
       def revoke_screenboard(board_id)

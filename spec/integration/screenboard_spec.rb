@@ -50,7 +50,7 @@ describe Dogapi::Client do
   describe '#share_screenboard' do
     it_behaves_like 'an api method',
                     :share_screenboard, [BOARD_ID],
-                    :get, "/screen/share/#{BOARD_ID}"
+                    :post, "/screen/share/#{BOARD_ID}"
   end
 
   describe '#revoke_screenboard' do

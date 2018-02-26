@@ -94,8 +94,6 @@ module Capistrano
         # Lazy randomness
         aggregation_key = Digest::MD5.hexdigest "#{Time.new}|#{rand}"
 
-        filter = event_filter || proc { |x| x }
-
         # Convert the tasks into Datadog events
         @tasks.map do |task|
           name  = task[:name]
@@ -109,7 +107,7 @@ module Capistrano
             application = ' for ' + task[:application]
           end
           title = "#{user}@#{hostname} ran #{name}#{application} on #{roles.join(', ')} "\
-                  "with capistrano in #{task[:timing].round(2)} secs"
+                  "with capistrano in #{task[:timing].to_f.round(2)} secs"
           type  = 'deploy'
           alert_type = 'success'
           source_type = 'capistrano'

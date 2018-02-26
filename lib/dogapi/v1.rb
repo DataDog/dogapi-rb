@@ -1,6 +1,7 @@
 require 'dogapi/v1/alert'
 require 'dogapi/v1/comment'
 require 'dogapi/v1/dash'
+require 'dogapi/v1/dashboard_list'
 require 'dogapi/v1/embed'
 require 'dogapi/v1/event'
 require 'dogapi/v1/metadata'

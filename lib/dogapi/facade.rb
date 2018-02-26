@@ -33,6 +33,9 @@ module Dogapi
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @dashboard_list_service = Dogapi::V1::DashboardListService.new(
+        @api_key, @application_key, silent, timeout, @datadog_host
+      )
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host)
@@ -269,6 +272,46 @@ module Dogapi
     # Delete the given dashboard.
     def delete_dashboard(dash_id)
       @dash_service.delete_dashboard(dash_id)
+    end
+
+    #
+    # DASHBOARD LISTS
+    #
+
+    def create_dashboard_list(name)
+      @dashboard_list_service.create_dashboard_list(name)
+    end
+
+    def update_dashboard_list(dashboard_list_id, name)
+      @dashboard_list_service.update_dashboard_list(dashboard_list_id, name)
+    end
+
+    def get_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get_dashboard_list(dashboard_list_id)
+    end
+
+    def get_all_dashboard_lists()
+      @dashboard_list_service.all_dashboard_lists()
+    end
+
+    def delete_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.delete_dashboard_list(dashboard_list_id)
+    end
+
+    def add_dashboards_to_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.add_dashboards_to_dashboard_list(dashboard_list_id, dashboards)
+    end
+
+    def update_dashboards_of_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.update_dashboards_of_dashboard_list(dashboard_list_id, dashboards)
+    end
+
+    def delete_dashboards_from_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.delete_dashboards_from_dashboard_list(dashboard_list_id, dashboards)
+    end
+
+    def get_dashboards_for_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get_dashboards_for_dashboard_list(dashboard_list_id)
     end
 
     #

@@ -279,39 +279,39 @@ module Dogapi
     #
 
     def create_dashboard_list(name)
-      @dashboard_list_service.create_dashboard_list(name)
+      @dashboard_list_service.create(name)
     end
 
     def update_dashboard_list(dashboard_list_id, name)
-      @dashboard_list_service.update_dashboard_list(dashboard_list_id, name)
+      @dashboard_list_service.update(dashboard_list_id, name)
     end
 
     def get_dashboard_list(dashboard_list_id)
-      @dashboard_list_service.get_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get(dashboard_list_id)
     end
 
     def get_all_dashboard_lists()
-      @dashboard_list_service.all_dashboard_lists()
+      @dashboard_list_service.get_all()
     end
 
     def delete_dashboard_list(dashboard_list_id)
-      @dashboard_list_service.delete_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.delete(dashboard_list_id)
     end
 
-    def add_dashboards_to_dashboard_list(dashboard_list_id, dashboards)
-      @dashboard_list_service.add_dashboards_to_dashboard_list(dashboard_list_id, dashboards)
+    def add_items_to_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.add_items(dashboard_list_id, dashboards)
     end
 
-    def update_dashboards_of_dashboard_list(dashboard_list_id, dashboards)
-      @dashboard_list_service.update_dashboards_of_dashboard_list(dashboard_list_id, dashboards)
+    def update_items_of_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.update_items(dashboard_list_id, dashboards)
     end
 
-    def delete_dashboards_from_dashboard_list(dashboard_list_id, dashboards)
-      @dashboard_list_service.delete_dashboards_from_dashboard_list(dashboard_list_id, dashboards)
+    def delete_items_from_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.delete_items(dashboard_list_id, dashboards)
     end
 
-    def get_dashboards_for_dashboard_list(dashboard_list_id)
-      @dashboard_list_service.get_dashboards_for_dashboard_list(dashboard_list_id)
+    def get_items_of_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get_items(dashboard_list_id)
     end
 
     #

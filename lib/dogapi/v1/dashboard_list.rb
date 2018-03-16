@@ -30,7 +30,7 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}", nil, nil, false)
       end
 
-      def get_all
+      def all
         request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, nil, false)
       end
 

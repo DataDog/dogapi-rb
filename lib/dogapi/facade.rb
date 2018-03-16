@@ -291,7 +291,7 @@ module Dogapi
     end
 
     def get_all_dashboard_lists()
-      @dashboard_list_service.get_all()
+      @dashboard_list_service.all()
     end
 
     def delete_dashboard_list(dashboard_list_id)

@@ -7,81 +7,83 @@ module Dogapi
     class DashboardListService < Dogapi::APIService
 
       API_VERSION = 'v1'
+      RESOURCE_NAME = 'dashboard/lists/manual'
+      SUB_RESOURCE_NAME = 'dashboards'
 
-      def create_dashboard_list(name)
+      def create(name)
         body = {
           name: name
         }
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/dashboard/lists/manual", nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, body, true)
       end
 
-      def update_dashboard_list(dashboard_list_id, name)
+      def update(resource_id, name)
         body = {
           name: name
         }
 
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}", nil, body, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}", nil, body, true)
       end
 
-      def get_dashboard_list(dashboard_list_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}", nil, nil, false)
+      def get(resource_id)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}", nil, nil, false)
       end
 
-      def all_dashboard_lists
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/dashboard/lists/manual", nil, nil, false)
+      def all
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, nil, false)
       end
 
-      def delete_dashboard_list(dashboard_list_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}", nil, nil, false)
+      def delete(resource_id)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}", nil, nil, false)
       end
 
-      def get_dashboards_for_dashboard_list(dashboard_list_id)
+      def get_items(resource_id)
         request(
           Net::HTTP::Get,
-          "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}/dashboards",
+          "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}/#{SUB_RESOURCE_NAME}",
           nil,
           nil,
           false
         )
       end
 
-      def add_dashboards_to_dashboard_list(dashboard_list_id, dashboards)
+      def add_items(resource_id, dashboards)
         body = {
           dashboards: dashboards
         }
 
         request(
           Net::HTTP::Post,
-          "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}/dashboards",
+          "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}/#{SUB_RESOURCE_NAME}",
           nil,
           body,
           true
         )
       end
 
-      def update_dashboards_of_dashboard_list(dashboard_list_id, dashboards)
+      def update_items(resource_id, dashboards)
         body = {
           dashboards: dashboards
         }
 
         request(
           Net::HTTP::Put,
-          "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}/dashboards",
+          "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}/#{SUB_RESOURCE_NAME}",
           nil,
           body,
           true
         )
       end
 
-      def delete_dashboards_from_dashboard_list(dashboard_list_id, dashboards)
+      def delete_items(resource_id, dashboards)
         body = {
           dashboards: dashboards
         }
 
         request(
           Net::HTTP::Delete,
-          "/api/#{API_VERSION}/dashboard/lists/manual/#{dashboard_list_id}/dashboards",
+          "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{resource_id}/#{SUB_RESOURCE_NAME}",
           nil,
           body,
           true

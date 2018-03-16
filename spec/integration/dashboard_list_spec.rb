@@ -1,6 +1,9 @@
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
+  RESOURCE_NAME = 'dashboard/lists/manual'.freeze
+  SUB_RESOURCE_NAME = 'dashboards'.freeze
+
   DASHBOARD_LIST_ID = 1_234_567
   DASHBOARD_LIST_NAME = 'My new dashboard list'.freeze
 
@@ -26,54 +29,57 @@ describe Dogapi::Client do
   describe '#create_dashboard_list' do
     it_behaves_like 'an api method',
                     :create_dashboard_list, [DASHBOARD_LIST_NAME],
-                    :post, '/dashboard/lists/manual', DASHBOARD_LIST_BODY
+                    :post, "/#{RESOURCE_NAME}", DASHBOARD_LIST_BODY
   end
 
   describe '#update_dashboard_list' do
     it_behaves_like 'an api method',
                     :update_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARD_LIST_NAME],
-                    :put, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}", DASHBOARD_LIST_BODY
+                    :put, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}", DASHBOARD_LIST_BODY
   end
 
   describe '#get_dashboard_list' do
     it_behaves_like 'an api method',
                     :get_dashboard_list, [DASHBOARD_LIST_ID],
-                    :get, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}"
+                    :get, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}"
   end
 
   describe '#get_all_dashboard_lists' do
     it_behaves_like 'an api method',
                     :get_all_dashboard_lists, [],
-                    :get, '/dashboard/lists/manual'
+                    :get, "/#{RESOURCE_NAME}"
   end
 
   describe '#delete_dashboard_list' do
     it_behaves_like 'an api method',
                     :delete_dashboard_list, [DASHBOARD_LIST_ID],
-                    :delete, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}"
+                    :delete, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}"
   end
 
-  describe '#add_dashboards_to_dashboard_list' do
+  describe '#add_items_to_dashboard_list' do
     it_behaves_like 'an api method',
-                    :add_dashboards_to_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
-                    :post, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}/dashboards", DASHBOARD_LIST_WITH_DASHES_BODY
+                    :add_items_to_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :post, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
   end
 
-  describe '#update_dashboards_of_dashboard_list' do
+  describe '#update_items_of_dashboard_list' do
     it_behaves_like 'an api method',
-                    :update_dashboards_of_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
-                    :put, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}/dashboards", DASHBOARD_LIST_WITH_DASHES_BODY
+                    :update_items_of_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :put, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
   end
 
-  describe '#delete_dashboards_from_dashboard_list' do
+  describe '#delete_items_from_dashboard_list' do
     it_behaves_like 'an api method',
-                    :delete_dashboards_from_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
-                    :delete, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}/dashboards", DASHBOARD_LIST_WITH_DASHES_BODY
+                    :delete_items_from_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :delete, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
   end
 
-  describe '#get_dashboards_for_dashboard_list' do
+  describe '#get_items_of_dashboard_list' do
     it_behaves_like 'an api method',
-                    :get_dashboards_for_dashboard_list, [DASHBOARD_LIST_ID],
-                    :get, "/dashboard/lists/manual/#{DASHBOARD_LIST_ID}/dashboards"
+                    :get_items_of_dashboard_list, [DASHBOARD_LIST_ID],
+                    :get, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}"
   end
 end

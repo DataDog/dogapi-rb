@@ -2,9 +2,8 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'rdoc/task'
 require 'rspec/core/rake_task'
-require 'rubocop/rake_task'
 
-task :default => [:spec, :rubocop]
+task :default => :spec
 
 # Doc stuff
 RDoc::Task.new do |rd|
@@ -17,11 +16,11 @@ end
 
 RSpec::Core::RakeTask.new(:spec)
 
-RuboCop::RakeTask.new do |task|
-  task.patterns = ['spec', 'lib']
-end
-
 desc "Find notes in code"
 task :notes do
   puts `grep --exclude=Rakefile -r 'OPTIMIZE:\\|FIXME:\\|TODO:' .`
+end
+
+task :rubocop do
+  sh "rubocop"
 end

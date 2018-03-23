@@ -1,10 +1,16 @@
 sudo: false
 language: ruby
 rvm:
-- 1.9
 - 2.0
 - 2.1
 - 2.2
 - 2.3
 - 2.4
 - 2.5
+script: bundle exec rake $TASK
+env:
+  - TASK=spec
+matrix:
+  include:
+    env: TASK=rubocop
+    rvm: 2.5

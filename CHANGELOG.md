@@ -1,6 +1,11 @@
 Changes
 =======
 
+# 1.29.0 / 2018-03-23
+
+* [FEATURE] Add new endpoints for dashboard lists.
+* [IMPROVEMENT] change http-method GET to POST on api.Screenboard#share. See [#136][] (thanks [@haohcraft][])
+
 # 1.28.0 / 2017-08-16
 
 * [FEATURE] Accept `group_states` strings for `get_monitor` function. See [#132][] (thanks [@acroos][])
@@ -190,6 +195,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#127]: https://github.com/DataDog/dogapi-rb/issues/127
 [#132]: https://github.com/DataDog/dogapi-rb/issues/132
 [#133]: https://github.com/DataDog/dogapi-rb/issues/133
+[#136]: https://github.com/DataDog/dogapi-rb/issues/136
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@acroos]: https://github.com/acroos
@@ -198,6 +204,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@blakehilscher]: https://github.com/blakehilscher
 [@byroot]: https://github.com/byroot
 [@casperisfine]: https://github.com/casperisfine
+[@haohcraft]: https://github.com/haohcraft
 [@hnovikov]: https://github.com/hnovikov
 [@jimmyngo]: https://github.com/jimmyngo
 [@martinisoft]: https://github.com/martinisoft

@@ -95,7 +95,7 @@ module Capistrano
 
       def report()
         hostname = Dogapi.find_localhost
-        user = Etc.getlogin
+        user = Etc.getpwuid.name
 
         # Lazy randomness
         aggregation_key = Digest::MD5.hexdigest "#{Time.new}|#{rand}"

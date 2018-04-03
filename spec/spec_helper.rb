@@ -11,7 +11,7 @@ WebMock.disable_net_connect!(allow_localhost: false)
 # include our code and methods
 require 'dogapi'
 
-DATADOG_HOST = 'app.datadoghq.com'.freeze
+DATADOG_HOST = 'api.datadoghq.com'.freeze
 ENV['DATADOG_HOST'] = 'http://' + DATADOG_HOST
 
 module SpecDog

@@ -155,7 +155,7 @@ module Dogapi
 
   def Dogapi.find_datadog_host
     # allow env-based overriding, useful for tests
-    ENV['DATADOG_HOST'] || 'https://app.datadoghq.com'
+    ENV['DATADOG_HOST'] || 'https://api.datadoghq.com'
   end
 
   # Memoize the hostname as a module variable

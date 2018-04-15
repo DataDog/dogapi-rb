@@ -42,7 +42,7 @@ end
 
 class FakeResponse
   attr_accessor :code, :body, :content_type
-  def initialize(code, body, content_type = "application/json")
+  def initialize(code, body, content_type = 'application/json')
     # Instance variables
     @code = code
     @body = body
@@ -90,8 +90,9 @@ describe Dogapi::APIService do
     context 'when receiving a non json response' do
       it 'raises an error indicating the response Content-Type' do
         dog = dogapi_service
-        resp = FakeResponse.new 202, "<html><body><h1>403 Forbidden</h1>", "text/html"
-        expect { dog.handle_response(resp) }.to raise_error(RuntimeError, "Response Content-Type is not application/json but is text/html: <html><body><h1>403 Forbidden</h1>")
+        resp = FakeResponse.new 202, '<html><body><h1>403 Forbidden</h1>', 'text/html'
+        msg = 'Response Content-Type is not application/json but is text/html: <html><body><h1>403 Forbidden</h1>'
+        expect { dog.handle_response(resp) }.to raise_error(RuntimeError, msg)
       end
     end
     context 'when receiving a bad response' do

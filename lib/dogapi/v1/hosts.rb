@@ -8,7 +8,7 @@ module Dogapi
 
       API_VERSION = 'v1'
 
-      def get_all(options = {})
+      def search(options = {})
         request(Net::HTTP::Get, "/api/#{API_VERSION}/hosts", nil, options, true)
       end
 

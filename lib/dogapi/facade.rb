@@ -553,8 +553,8 @@ module Dogapi
     # HOSTS
     #
 
-    def get_all_hosts(options = {})
-      @hosts_svc.get_all(options)
+    def search_hosts(options = {})
+      @hosts_svc.search(options)
     end
 
     def host_totals()

@@ -45,6 +45,7 @@ module Dogapi
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
+      @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
     end
 
     #
@@ -546,6 +547,18 @@ module Dogapi
     #   :statsd_interval  => Integer, statsd flush interval for metric in seconds (if applicable)
     def update_metadata(metric, options= {})
       @metadata_svc.update(metric, options)
+    end
+
+    #
+    # HOSTS
+    #
+
+    def search_hosts(options = {})
+      @hosts_svc.search(options)
+    end
+
+    def host_totals()
+      @hosts_svc.totals()
     end
 
     private

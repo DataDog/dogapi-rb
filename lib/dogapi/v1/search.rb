@@ -8,6 +8,13 @@ module Dogapi
       API_VERSION = 'v1'
 
       def search(query)
+        # Deprecating search for hosts
+        split_query = query.split(':')
+        if split_query.length > 1 && split_query[0] == 'hosts'
+          warn '[DEPRECATION] Dogapi::V1::SearchService::search has been '\
+            'deprecated for hosts in favor of Dogapi::V1::HostsService::search'
+        end
+
         extra_params = {
           :q => query
         }

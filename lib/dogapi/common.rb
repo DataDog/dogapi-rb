@@ -148,6 +148,8 @@ module Dogapi
       begin
         return resp.code, MultiJson.load(resp.body)
       rescue
+        is_json = resp.content_type == 'application/json'
+        raise "Response Content-Type is not application/json but is #{resp.content_type}: " + resp.body unless is_json
         raise 'Invalid JSON Response: ' + resp.body
       end
     end

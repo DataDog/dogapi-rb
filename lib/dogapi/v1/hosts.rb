@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = 'v1'
 
       def search(options = {})
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/hosts", nil, options, true)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/hosts", options, nil, false)
       end
 
       def totals

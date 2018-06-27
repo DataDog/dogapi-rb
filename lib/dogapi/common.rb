@@ -1,6 +1,5 @@
 require 'cgi'
 require 'net/https'
-require 'pp'
 require 'socket'
 require 'uri'
 

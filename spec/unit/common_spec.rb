@@ -1,14 +1,14 @@
 require_relative '../spec_helper'
 
 describe 'Common' do
-  describe Dogapi::find_datadog_host do
-    it "gives precedence to DATADOG_HOST env var" do
-      allow(ENV).to receive(:[]).with("DATADOG_HOST").and_return('example.com')
-      expect(Dogapi::find_datadog_host).to eq 'example.com'
+  describe Dogapi.find_datadog_host do
+    it 'gives precedence to DATADOG_HOST env var' do
+      allow(ENV).to receive(:[]).with('DATADOG_HOST').and_return('example.com')
+      expect(Dogapi.find_datadog_host).to eq 'example.com'
     end
-    it "falls back to default url when DATADOG_HOST env var is not set" do
-      allow(ENV).to receive(:[]).with("DATADOG_HOST").and_return(nil)
-      expect(Dogapi::find_datadog_host).to eq 'https://api.datadoghq.com'
+    it 'falls back to default url when DATADOG_HOST env var is not set' do
+      allow(ENV).to receive(:[]).with('DATADOG_HOST').and_return(nil)
+      expect(Dogapi.find_datadog_host).to eq 'https://api.datadoghq.com'
     end
   end
 

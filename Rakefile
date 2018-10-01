@@ -24,3 +24,7 @@ end
 task :rubocop do
   sh "rubocop"
 end
+
+task :rubocop_todo do
+  sh "rubocop --auto-gen-config"
+end

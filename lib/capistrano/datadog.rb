@@ -13,7 +13,9 @@ module Capistrano
 
     def self.cap_version()
       if @cap_version.nil? then
-        if Configuration.respond_to? :instance then
+        if not defined? Configuration
+          @cap_version = ''
+        elsif Configuration.respond_to? :instance
           @cap_version = :v2
         else
           @cap_version = :v3
@@ -108,8 +110,9 @@ module Capistrano
           if !task[:application].nil? and !task[:application].empty? then
             application = ' for ' + task[:application]
           end
+          timing = Float(task[:timing]).round(2) rescue 'n/a'
           title = "#{user}@#{hostname} ran #{name}#{application} on #{roles.join(', ')} "\
-                  "with capistrano in #{task[:timing].round(2)} secs"
+                  "with capistrano in #{timing} secs"
           type  = 'deploy'
           alert_type = 'success'
           source_type = 'capistrano'

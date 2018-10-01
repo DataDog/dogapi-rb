@@ -71,7 +71,7 @@ module Capistrano
         timing = Benchmark.measure(task_name) do
           result = yield
         end
-        task[:timing] = timing.real
+        task[:timing] = Float(timing.real)
         @task_stack.pop
         result
       end

@@ -11,6 +11,19 @@ describe Dogapi::Client do
     end
   end
 
+  describe 'Datadog API url' do
+    it 'can be set in initializer' do
+      client = Dogapi::Client.new(api_key, app_key, nil, nil, nil, nil, 'example.com')
+      expect(client.datadog_host).to eq 'example.com'
+    end
+
+    it 'can be set with instance var' do
+      client = Dogapi::Client.new(api_key, app_key)
+      client.datadog_host = 'example.com'
+      expect(client.datadog_host).to eq 'example.com'
+    end
+  end
+
   describe '#emit_point' do
     it 'passes data' do
       @dogmock.emit_point('metric.name', 0, host: 'myhost')

@@ -1,5 +1,10 @@
 # Changes
 
+## 1.31.0 / 2018-10-01
+
+* [FIX] Handle nil values from benchmarks in Capistrano. See [#159][].
+* [IMPROVEMENT] Add getter/setter for datadog_host. See [#160][].
+
 ## 1.30 / 2018-06-05
 
 * [FIX] Change API endpoint. See [#147][].
@@ -204,6 +209,8 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#147]: https://github.com/DataDog/dogapi-rb/issues/147
 [#151]: https://github.com/DataDog/dogapi-rb/issues/151
 [#152]: https://github.com/DataDog/dogapi-rb/issues/152
+[#159]: https://github.com/DataDog/dogapi-rb/issues/159
+[#160]: https://github.com/DataDog/dogapi-rb/issues/160
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@acroos]: https://github.com/acroos

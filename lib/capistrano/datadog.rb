@@ -13,7 +13,7 @@ module Capistrano
 
     def self.cap_version()
       if @cap_version.nil? then
-        if not defined? Configuration
+        if !defined? Configuration
           @cap_version = ''
         elsif Configuration.respond_to? :instance
           @cap_version = :v2

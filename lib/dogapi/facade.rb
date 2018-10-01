@@ -12,6 +12,7 @@ module Dogapi
   # information about the JSON object structure is available in the HTTP API
   # documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client # rubocop:disable Metrics/ClassLength
+    attr_accessor :datadog_host
 
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 

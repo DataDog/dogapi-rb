@@ -49,6 +49,34 @@ to take advantage of automatic tagging with the host's tags.
 If you want to attach events and points to a specific device
 on a host, simply specify the device when calling emit functions.
 
+== Configure the Datadog API Url
+
+
+    require 'rubygems'
+    require 'dogapi'
+
+    api_key = "abcdef123456"
+    application_key = "fedcba654321"
+
+    # by default the API Url will be set to https://api.datadoghq.com
+    dog = Dogapi::Client.new(api_key, application_key)
+    p dog.datadog_host  # prints https://api.datadoghq.com
+
+    # API Url can be passed to the initializer...
+    dog = Dogapi::Client.new(api_key, application_key, nil, nil, nil, nil, 'https://myproxy.local')
+    p dog.datadog_host  # prints https://myproxy.local
+
+    # ...or set on the client instance directly
+    dog = Dogapi::Client.new(api_key, application_key)
+    dog.datadog_host = 'https://myproxy.local'
+    p dog.datadog_host  # prints https://myproxy.local
+
+    # in any case, contents of the DATADOG_HOST env var take precedence
+    ENV['DATADOG_HOST'] = https://myproxy.local
+    dog = Dogapi::Client.new(api_key, application_key)
+    p dog.datadog_host  # prints https://myproxy.local
+
+
 == Submit an event to Datadog
 
 

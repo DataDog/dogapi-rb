@@ -13,6 +13,13 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'http://datadoghq.com/'
   spec.license       = 'BSD'
 
+  spec.metadata      = {
+                         'bug_tracker_uri'   => 'https://github.com/DataDog/dogapi-rb/issues',
+                         'changelog_uri'     => 'https://github.com/DataDog/dogapi-rb/blob/master/CHANGELOG.md',
+                         'documentation_uri' => 'https://docs.datadoghq.com/api/',
+                         'source_code_uri'   => 'https://github.com/DataDog/dogapi-rb',
+                       }
+
   spec.files         = `git ls-files`.split($\)
   spec.executables   = spec.files.grep(%r{^bin/}).map { |f| File.basename(f) }
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})

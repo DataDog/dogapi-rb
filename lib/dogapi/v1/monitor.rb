@@ -83,6 +83,14 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", nil, options, true)
       end
 
+      def search_monitors(options = {})
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/search", options, nil, false)
+      end
+
+      def search_monitor_groups(options = {})
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/groups/search", options, nil, false)
+      end
+
       #
       # DOWNTIMES
 

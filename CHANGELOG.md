@@ -2,7 +2,7 @@
 
 ## 1.32.0 / 2018-10-13
 
-* Add [monitor search](https://docs.datadoghq.com/api/?lang=python#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=python#monitors-group-search) API endpoints.
+* Add [monitor search](https://docs.datadoghq.com/api/?lang=ruby#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=ruby#monitors-group-search) API endpoints.
 
 ## 1.31.0 / 2018-10-01
 

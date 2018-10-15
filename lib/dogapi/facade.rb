@@ -476,6 +476,14 @@ module Dogapi
       @monitor_svc.unmute_monitor(monitor_id, options)
     end
 
+    def search_monitors(options = {})
+      @monitor_svc.search_monitors(options)
+    end
+
+    def search_monitor_groups(options = {})
+      @monitor_svc.search_monitor_groups(options)
+    end
+
     #
     # MONITOR DOWNTIME
     #

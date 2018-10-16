@@ -1,5 +1,9 @@
 # Changes
 
+## 1.32.0 / Unreleased
+
+* Add [monitor search](https://docs.datadoghq.com/api/?lang=ruby#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=ruby#monitors-group-search) API endpoints.
+
 ## 1.31.0 / 2018-10-01
 
 * [FIX] Handle nil values from benchmarks in Capistrano. See [#159][].

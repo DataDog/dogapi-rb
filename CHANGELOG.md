@@ -2,8 +2,8 @@
 
 ## 1.32.0 / 2018-10-23
 
-* [FEATURE] Added [monitor search](https://docs.datadoghq.com/api/?lang=ruby#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=ruby#monitors-group-search) API endpoints. See #163.
-* [FIX] Add project metadata to the gemspec. See #162, thanks @orien.
+* [FEATURE] Added [monitor search](https://docs.datadoghq.com/api/?lang=ruby#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=ruby#monitors-group-search) API endpoints. See [#163][].
+* [FIX] Add project metadata to the gemspec. See [#162][], thanks [@orien][].
 
 ## 1.31.0 / 2018-10-01
 
@@ -216,6 +216,8 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#152]: https://github.com/DataDog/dogapi-rb/issues/152
 [#159]: https://github.com/DataDog/dogapi-rb/issues/159
 [#160]: https://github.com/DataDog/dogapi-rb/issues/160
+[#162]: https://github.com/DataDog/dogapi-rb/issues/162
+[#163]: https://github.com/DataDog/dogapi-rb/issues/163
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@acroos]: https://github.com/acroos
@@ -231,6 +233,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@martinisoft]: https://github.com/martinisoft
 [@miknight]: https://github.com/miknight
 [@nots]: https://github.com/nots
+[@orien]: https://github.com/orien
 [@rmoriz]: https://github.com/rmoriz
 [@treeder]: https://github.com/treeder
 [@winebarrel]: https://github.com/winebarrel

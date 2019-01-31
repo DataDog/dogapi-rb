@@ -1,7 +1,7 @@
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
-  DASHBOARD_ID = "3er-f8j-eus".freeze
+  DASHBOARD_ID = '3er-f8j-eus'.freeze
   TITLE = 'My awesome dashboard'.freeze
   WIDGETS = [{
     'definition' => {
@@ -13,12 +13,10 @@ describe Dogapi::Client do
     },
     'id' => 1234
   }].freeze
-  LAYOUT_TYPE = "ordered".freeze
+  LAYOUT_TYPE = 'ordered'.freeze
   DESCRIPTION = 'Lorem ipsum'.freeze
   IS_READ_ONLY = true
-  NOTIFY_LIST = [
-      "user@domain.com"
-  ].freeze
+  NOTIFY_LIST = ['user@domain.com'].freeze
   TEMPLATE_VARIABLES = [{
     'name' => 'host1',
     'prefix' => 'host',

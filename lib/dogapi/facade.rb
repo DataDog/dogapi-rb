@@ -34,6 +34,7 @@ module Dogapi
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @dashboard_service = Dogapi::V1::DashboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @dashboard_list_service = Dogapi::V1::DashboardListService.new(
         @api_key, @application_key, silent, timeout, @datadog_host
       )
@@ -274,6 +275,30 @@ module Dogapi
     # Delete the given dashboard.
     def delete_dashboard(dash_id)
       @dash_service.delete_dashboard(dash_id)
+    end
+
+    #
+    # DASHBOARDS
+    #
+
+    # Create a dashboard.
+    def create_board(title, widgets, description = nil, is_read_only = false, notify_list = nil, template_variables = nil)
+      @dashboard_service.create_board(title, widgets, description, is_read_only, notify_list, template_variables)
+    end
+
+    # Update a dashboard.
+    def update_board(dashboard_id, title, widgets, description = nil, is_read_only = false, notify_list = nil, template_variables = nil)
+      @dashboard_service.update_board(dashboard_id, title, widgets, description, is_read_only, notify_list, template_variables)
+    end
+
+    # Fetch the given dashboard.
+    def get_board(dashboard_id)
+      @dashboard_service.get_board(dashboard_id)
+    end
+
+    # Delete the given dashboard.
+    def delete_board(dashboard_id)
+      @dashboard_service.delete_board(dashboard_id)
     end
 
     #

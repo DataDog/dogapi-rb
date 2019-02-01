@@ -23,16 +23,20 @@ describe Dogapi::Client do
     'default' => 'my-host'
   }].freeze
 
-  DASHBOARD_PAYLOAD = {
+  REQUIRED_ARGS = {
     title: TITLE,
     widgets: WIDGETS,
-    layout_type: LAYOUT_TYPE,
+    layout_type: LAYOUT_TYPE
+  }.freeze
+
+  OPTIONS = {
     description: DESCRIPTION,
     is_read_only: IS_READ_ONLY,
     notify_list: NOTIFY_LIST,
     template_variables: TEMPLATE_VARIABLES
-  }.freeze
-  DASHBOARD_ARGS = DASHBOARD_PAYLOAD.values - [LAYOUT_TYPE]
+  }
+  DASHBOARD_ARGS = REQUIRED_ARGS.values + [OPTIONS]
+  DASHBOARD_PAYLOAD = REQUIRED_ARGS.merge(OPTIONS)
 
   describe '#create_board' do
     it_behaves_like 'an api method',

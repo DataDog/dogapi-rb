@@ -282,15 +282,13 @@ module Dogapi
     #
 
     # Create a dashboard.
-    def create_board(title, widgets, description = nil, is_read_only = false, notify_list = nil, template_variables = nil)
-      @dashboard_service.create_board(title, widgets, description, is_read_only, notify_list, template_variables)
+    def create_board(title, widgets, layout_type, options= {})
+      @dashboard_service.create_board(title, widgets, layout_type, options)
     end
 
     # Update a dashboard.
-    def update_board(dashboard_id, title, widgets, description = nil, is_read_only = false, notify_list = nil,
-                     template_variables = nil)
-      @dashboard_service.update_board(dashboard_id, title, widgets, description, is_read_only, notify_list,
-                                      template_variables)
+    def update_board(dashboard_id, title, widgets, layout_type, options= {})
+      @dashboard_service.update_board(dashboard_id, title, widgets, layout_type, options)
     end
 
     # Fetch the given dashboard.

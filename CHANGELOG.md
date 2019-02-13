@@ -1,5 +1,10 @@
 # Changes
 
+## 1.33.0 / 2019-02-13
+
+* [IMPROVEMENT] Add submission types mentioned in the API documentation. See [#165][], thanks [@TaylURRE][]
+* [FEATURE] Add support for the new Dashboard API. See [#167][], thanks [@enbashi][]
+
 ## 1.32.0 / 2018-10-23
 
 * [FEATURE] Added [monitor search](https://docs.datadoghq.com/api/?lang=ruby#monitors-search) and [monitor groups search](https://docs.datadoghq.com/api/?lang=ruby#monitors-group-search) API endpoints. See [#163][].
@@ -218,8 +223,11 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#160]: https://github.com/DataDog/dogapi-rb/issues/160
 [#162]: https://github.com/DataDog/dogapi-rb/issues/162
 [#163]: https://github.com/DataDog/dogapi-rb/issues/163
+[#165]: https://github.com/DataDog/dogapi-rb/issues/165
+[#167]: https://github.com/DataDog/dogapi-rb/issues/167
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
+[@TaylURRE]: https://github.com/TaylURRE
 [@acroos]: https://github.com/acroos
 [@ansel1]: https://github.com/ansel1
 [@arielo]: https://github.com/arielo
@@ -227,6 +235,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@byroot]: https://github.com/byroot
 [@casperisfine]: https://github.com/casperisfine
 [@edwardkenfox]: https://github.com/edwardkenfox
+[@enbashi]: https://github.com/enbashi
 [@haohcraft]: https://github.com/haohcraft
 [@hnovikov]: https://github.com/hnovikov
 [@jimmyngo]: https://github.com/jimmyngo

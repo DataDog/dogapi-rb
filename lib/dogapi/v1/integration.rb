@@ -15,7 +15,7 @@ module Dogapi
       def create_integration(source_type_name, config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, config, true)
       end
-      
+
       # Update an integration
       #
       # :source_type_name => String: the name of an integration source

@@ -595,11 +595,11 @@ module Dogapi
     def host_totals()
       @hosts_svc.totals()
     end
-    
+
     #
     # INTEGRATIONS
-    # 
-    
+    #
+
     def create_integration(source_type_name, config)
       @integration_svc.create_integration(source_type_name, config)
     end

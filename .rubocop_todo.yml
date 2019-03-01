@@ -338,6 +338,7 @@ Style/Documentation:
     - 'lib/dogapi/v1/service_check.rb'
     - 'lib/dogapi/v1/snapshot.rb'
     - 'lib/dogapi/v1/user.rb'
+    - 'lib/dogapi/v1/integration.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

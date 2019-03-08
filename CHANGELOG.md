@@ -2,7 +2,7 @@
 
 ## 1.34.0 / 2019-03-08
 
-* [FEATURE] Add /integration endpoints. See #170, thanks @davidcpell.
+* [FEATURE] Add /integration endpoints. See [#170][], thanks [@davidcpell][].
 
 ## 1.33.0 / 2019-02-13
 
@@ -229,6 +229,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#163]: https://github.com/DataDog/dogapi-rb/issues/163
 [#165]: https://github.com/DataDog/dogapi-rb/issues/165
 [#167]: https://github.com/DataDog/dogapi-rb/issues/167
+[#170]: https://github.com/DataDog/dogapi-rb/issues/170
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE
@@ -238,6 +239,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@blakehilscher]: https://github.com/blakehilscher
 [@byroot]: https://github.com/byroot
 [@casperisfine]: https://github.com/casperisfine
+[@davidcpell]: https://github.com/davidcpell
 [@edwardkenfox]: https://github.com/edwardkenfox
 [@enbashi]: https://github.com/enbashi
 [@haohcraft]: https://github.com/haohcraft

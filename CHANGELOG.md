@@ -1,5 +1,9 @@
 # Changes
 
+## 1.34.0 / 2019-03-08
+
+* [FEATURE] Add /integration endpoints. See #170, thanks @davidcpell.
+
 ## 1.33.0 / 2019-02-13
 
 * [IMPROVEMENT] Add submission types mentioned in the API documentation. See [#165][], thanks [@TaylURRE][]

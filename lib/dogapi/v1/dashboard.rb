@@ -14,8 +14,8 @@ module Dogapi
       # Required arguments:
       # :title                 => String: Title of the dashboard
       # :widgets               => JSON: List of widgets to display on the dashboard
-      # :layout_type           => String: Layout type of the dashboard
-      #                           (for now, only "ordered" layout - current timeboard layout - is supported)
+      # :layout_type           => String: Layout type of the dashboard.
+      #                             Allowed values: 'ordered' or 'free'
       # Optional arguments:
       # :description           => String: Description of the dashboard
       # :is_read_only          => Boolean: Whether this dashboard is read-only.
@@ -46,8 +46,8 @@ module Dogapi
       # :dashboard_id          => String: ID of the dashboard
       # :title                 => String: Title of the dashboard
       # :widgets               => JSON: List of widgets to display on the dashboard
-      # :layout_type           => String: Layout type of the dashboard
-      #                           (for now, only "ordered" layout - current timeboard layout - is supported)
+      # :layout_type           => String: Layout type of the dashboard.
+      #                             Allowed values: 'ordered' or 'free'
       # Optional arguments:
       # :description           => String: Description of the dashboard
       # :is_read_only          => Boolean: Whether this dashboard is read-only.
@@ -74,13 +74,34 @@ module Dogapi
 
       # Fetch the given dashboard
       #
+      # Required argument:
       # :dashboard_id          => String: ID of the dashboard
       def get_board(dashboard_id)
         request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{dashboard_id}", nil, nil, false)
       end
 
+      # Fetch all dashboards
+      #
+      # Optional argument:
+      # :layout_type           => String: Layout type of the dashboard.
+      #                             Allowed values: 'ordered' or 'free'
+      #                             If no layout_type provided, all custom dashboards will be returned
+      def get_all_boards(layout_type)
+        if !layout_type
+          query = 'dashboard_type:custom_screenboard,custom_timeboard'
+        elsif layout_type == 'ordered'
+          query = 'dashboard_type:custom_timeboard'
+        elsif layout_type == 'free'
+          query = 'dashboard_type:custom_screenboard'
+        else
+          raise ArgumentError, '"layout_type" type must be "ordered" or "free"'
+        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/dashboards", { query: query }, nil, false)
+      end
+
       # Delete the given dashboard
       #
+      # Required argument:
       # :dashboard_id          => String: ID of the dashboard
       def delete_board(dashboard_id)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{dashboard_id}", nil, nil, false)

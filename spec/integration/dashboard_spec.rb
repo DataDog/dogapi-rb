@@ -56,6 +56,45 @@ describe Dogapi::Client do
                     :get, "/dashboard/#{DASHBOARD_ID}"
   end
 
+  describe '#get_all_boards_no_args' do
+    it 'only queries one endpoint' do
+      url = api_url + '/dashboards'
+      stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:get_all_boards)).to eq ['200', {}]
+      params = { query: 'dashboard_type:custom_screenboard,custom_timeboard' }
+      params.merge! default_query
+      expect(WebMock).to have_requested(:get, url).with(
+        query: params
+      )
+    end
+  end
+
+  describe '#get_all_boards_free_layout' do
+    it 'only queries one endpoint' do
+      url = api_url + '/dashboards'
+      stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:get_all_boards, 'free')).to eq ['200', {}]
+      params = { query: 'dashboard_type:custom_screenboard' }
+      params.merge! default_query
+      expect(WebMock).to have_requested(:get, url).with(
+        query: params
+      )
+    end
+  end
+
+  describe '#get_all_boards_ordered_layout' do
+    it 'only queries one endpoint' do
+      url = api_url + '/dashboards'
+      stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:get_all_boards, 'ordered')).to eq ['200', {}]
+      params = { query: 'dashboard_type:custom_timeboard' }
+      params.merge! default_query
+      expect(WebMock).to have_requested(:get, url).with(
+        query: params
+      )
+    end
+  end
+
   describe '#delete_board' do
     it_behaves_like 'an api method',
                     :delete_board, [DASHBOARD_ID],

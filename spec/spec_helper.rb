@@ -57,6 +57,11 @@ module SpecDog
 
   shared_examples 'an api method with params' do |command, args, request, endpoint, params|
     it 'queries the api with params' do
+      p "command : #{command}"
+      p "args : #{args}"
+      p "request : #{request}"
+      p "endpoint : #{endpoint}"
+      p "params : #{params}"
       url = api_url + endpoint
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, *params.values)).to eq ['200', {}]

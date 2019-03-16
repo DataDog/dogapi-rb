@@ -236,6 +236,7 @@ Style/AccessorMethodName:
     - 'lib/dogapi/v1/dash.rb'
     - 'lib/dogapi/v1/embed.rb'
     - 'lib/dogapi/v1/screenboard.rb'
+    - 'lib/dogapi/v1/dashboard.rb'
     - 'lib/dogapi/v1/user.rb'
 
 # Offense count: 1

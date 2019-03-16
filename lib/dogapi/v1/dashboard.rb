@@ -81,7 +81,7 @@ module Dogapi
       end
 
       # Fetch all custom dashboards
-      def get_all_boards()
+      def get_all_boards
         request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, nil, false)
       end
 

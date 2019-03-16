@@ -80,23 +80,9 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{dashboard_id}", nil, nil, false)
       end
 
-      # Fetch all dashboards
-      #
-      # Optional argument:
-      # :layout_type           => String: Layout type of the dashboard.
-      #                             Allowed values: 'ordered' or 'free'
-      #                             If no layout_type provided, all custom dashboards will be returned
-      def get_all_boards(layout_type)
-        if !layout_type
-          query = 'dashboard_type:custom_screenboard,custom_timeboard'
-        elsif layout_type == 'ordered'
-          query = 'dashboard_type:custom_timeboard'
-        elsif layout_type == 'free'
-          query = 'dashboard_type:custom_screenboard'
-        else
-          raise ArgumentError, '"layout_type" type must be "ordered" or "free"'
-        end
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/dashboards", { query: query }, nil, false)
+      # Fetch all custom dashboards
+      def get_all_boards()
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, nil, false)
       end
 
       # Delete the given dashboard

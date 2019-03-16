@@ -298,8 +298,8 @@ module Dogapi
     end
 
     # Fetch all dashboards.
-    def get_all_boards(layout_type=nil)
-      @dashboard_service.get_all_boards(layout_type)
+    def get_all_boards()
+      @dashboard_service.get_all_boards()
     end
 
     # Delete the given dashboard.

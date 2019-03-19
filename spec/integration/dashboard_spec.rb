@@ -56,6 +56,12 @@ describe Dogapi::Client do
                     :get, "/dashboard/#{DASHBOARD_ID}"
   end
 
+  describe '#get_all_boards' do
+    it_behaves_like 'an api method',
+                    :get_all_boards, [],
+                    :get, '/dashboard'
+  end
+
   describe '#delete_board' do
     it_behaves_like 'an api method',
                     :delete_board, [DASHBOARD_ID],

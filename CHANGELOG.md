@@ -1,5 +1,9 @@
 # Changes
 
+## 1.35.0 / 2019-03-21
+
+* [FEATURE] Add get_all_boards and support for 'free' layout. See [#171][].
+
 ## 1.34.0 / 2019-03-08
 
 * [FEATURE] Add /integration endpoints. See [#170][], thanks [@davidcpell][].
@@ -230,6 +234,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#165]: https://github.com/DataDog/dogapi-rb/issues/165
 [#167]: https://github.com/DataDog/dogapi-rb/issues/167
 [#170]: https://github.com/DataDog/dogapi-rb/issues/170
+[#171]: https://github.com/DataDog/dogapi-rb/issues/171
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE

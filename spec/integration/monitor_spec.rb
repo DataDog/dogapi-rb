@@ -7,6 +7,7 @@ describe Dogapi::Client do
   DOWNTIME_SCOPE = 'host:vagrant-ubuntu-trusty-64'.freeze
   DOWNTIME_ID = 424_242_424_242
   MUTE_HOSTNAME = 'vagrant-ubuntu-trusty-32'.freeze
+  MONITOR_GROUPS = [{ 'check_a' => 'group_x' }, { 'check_a' => 'group_y' }, { 'check_b' => 'ALL_GROUPS' }].freeze
 
   describe '#monitor' do
     it_behaves_like 'an api method with options',
@@ -66,6 +67,12 @@ describe Dogapi::Client do
     it_behaves_like 'an api method',
                     :unmute_monitor, [MONITOR_ID],
                     :post, "/monitor/#{MONITOR_ID}/unmute", {}
+  end
+
+  describe '#resolve_monitors' do
+    it_behaves_like 'an api method with options',
+                    :resolve_monitors, [MONITOR_GROUPS],
+                    :post, '/monitor/bulk_resolve', 'resolve' => MONITOR_GROUPS
   end
 
   describe '#schedule_downtime' do

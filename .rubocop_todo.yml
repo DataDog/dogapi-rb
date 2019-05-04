@@ -209,6 +209,8 @@ Metrics/AbcSize:
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 96
+  Exclude:
+    - 'spec/integration/monitor_spec.rb'
 
 # Offense count: 2
 Metrics/CyclomaticComplexity:
@@ -340,6 +342,7 @@ Style/Documentation:
     - 'lib/dogapi/v1/snapshot.rb'
     - 'lib/dogapi/v1/user.rb'
     - 'lib/dogapi/v1/integration.rb'
+    - 'lib/dogapi/v1/metric.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

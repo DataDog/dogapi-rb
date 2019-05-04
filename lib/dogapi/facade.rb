@@ -514,6 +514,10 @@ module Dogapi
       @monitor_svc.unmute_monitor(monitor_id, options)
     end
 
+    def resolve_monitors(monitor_groups = [], options = {}, version = nil)
+      @monitor_svc.resolve_monitors(monitor_groups, options, version)
+    end
+
     def search_monitors(options = {})
       @monitor_svc.search_monitors(options)
     end

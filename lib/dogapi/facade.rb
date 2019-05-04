@@ -118,6 +118,13 @@ module Dogapi
       end
     end
 
+    # Get a list of active metrics since a given time
+    # +from+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
+    #
+    def get_active_metrics(from)
+      @metric_svc.get_active_metrics(from)
+    end
+
     #
     # EVENTS
 

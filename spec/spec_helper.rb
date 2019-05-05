@@ -29,7 +29,6 @@ module SpecDog
       url = api_url + endpoint
       old_url = old_api_url + endpoint
       stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
-      # stub_request(request, /#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args)).to eq ['200', {}]
 
       body = MultiJson.dump(body) if body
@@ -48,7 +47,6 @@ module SpecDog
       old_url = old_api_url + endpoint
       options = { 'zzz' => 'aaa' }
       stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
-      # stub_request(request, /#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, options)).to eq ['200', {}]
 
       body = MultiJson.dump(body ? (body.merge options) : options)

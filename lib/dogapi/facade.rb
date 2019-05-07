@@ -119,6 +119,13 @@ module Dogapi
       end
     end
 
+    # Get a list of active metrics since a given time
+    # +from+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
+    #
+    def get_active_metrics(from)
+      @metric_svc.get_active_metrics(from)
+    end
+
     #
     # EVENTS
 
@@ -506,6 +513,10 @@ module Dogapi
 
     def unmute_monitor(monitor_id, options= {})
       @monitor_svc.unmute_monitor(monitor_id, options)
+    end
+
+    def resolve_monitors(monitor_groups = [], options = {}, version = nil)
+      @monitor_svc.resolve_monitors(monitor_groups, options, version)
     end
 
     def search_monitors(options = {})

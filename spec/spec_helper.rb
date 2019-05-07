@@ -21,17 +21,19 @@ module SpecDog
   let(:app_key) { 'APP_KEY' }
   let(:dog) { Dogapi::Client.new(api_key, app_key, 'data.dog', nil, false) }
   let(:api_url) { "#{DATADOG_HOST}/api/v1" }
+  let(:old_api_url) { "#{DATADOG_HOST}/api" }
   let(:default_query) { { api_key: api_key, application_key: app_key } }
 
   shared_examples 'an api method' do |command, args, request, endpoint, body|
     it 'queries the api' do
       url = api_url + endpoint
-      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      old_url = old_api_url + endpoint
+      stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args)).to eq ['200', {}]
 
       body = MultiJson.dump(body) if body
 
-      expect(WebMock).to have_requested(request, url).with(
+      expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
         query: default_query,
         body: body
       )
@@ -42,13 +44,14 @@ module SpecDog
     include_examples 'an api method', command, args, request, endpoint, body
     it 'queries the api with options' do
       url = api_url + endpoint
+      old_url = old_api_url + endpoint
       options = { 'zzz' => 'aaa' }
-      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, options)).to eq ['200', {}]
 
       body = MultiJson.dump(body ? (body.merge options) : options)
 
-      expect(WebMock).to have_requested(request, url).with(
+      expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
         query: default_query,
         body: body
       )

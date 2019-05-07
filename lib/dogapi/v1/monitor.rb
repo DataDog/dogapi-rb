@@ -83,6 +83,17 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", nil, options, true)
       end
 
+      def resolve_monitors(monitor_groups = [], options = {}, version = nil)
+        body = {
+          'resolve' => monitor_groups
+        }.merge options
+
+        # Currently not part of v1 at this time but adding future compatibility option
+        endpoint = version.nil? ? '/api/monitor/bulk_resolve' : "/api/#{version}/monitor/bulk_resolve"
+
+        request(Net::HTTP::Post, endpoint, nil, body, true)
+      end
+
       def search_monitors(options = {})
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/search", options, nil, false)
       end
@@ -133,6 +144,5 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", nil, {}, true)
       end
     end
-
   end
 end

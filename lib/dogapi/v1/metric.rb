@@ -83,7 +83,14 @@ module Dogapi
           suppress_error_if_silent e
         end
       end
-    end
 
+      def get_active_metrics(from)
+        params = {
+          from: from.to_i
+        }
+
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/metrics', params, nil, false)
+      end
+    end
   end
 end

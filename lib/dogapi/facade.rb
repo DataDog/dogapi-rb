@@ -49,6 +49,7 @@ module Dogapi
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
       @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
     end
 
     #
@@ -630,6 +631,41 @@ module Dogapi
 
     def delete_integration(source_type_name)
       @integration_svc.delete_integration(source_type_name)
+    end
+
+    #
+    # USAGE
+    #
+
+    # Get hourly usage information for different datadog service
+    # Usage data is delayed by up to 72 hours from when it was incurred. It is retained for the past 15 months.#
+    # format of dates is ISO-8601 UTC YYYY-MM-DDThh
+    # ex:
+    #   require 'time'
+    #   Time.now.utc.strftime('%Y-%m-%dT%H')
+    # => "2019-05-05T13"
+    def get_hosts_usage(start_hr, end_hr = nil)
+      @usage_svc.get_hosts_usage(start_hr, end_hr)
+    end
+
+    def get_logs_usage(start_hr, end_hr = nil)
+      @usage_svc.get_logs_usage(start_hr, end_hr)
+    end
+
+    def get_custom_metrics_usage(start_hr, end_hr = nil)
+      @usage_svc.get_custom_metrics_usage(start_hr, end_hr)
+    end
+
+    def get_traces_usage(start_hr, end_hr = nil)
+      @usage_svc.get_traces_usage(start_hr, end_hr)
+    end
+
+    def get_synthetics_usage(start_hr, end_hr = nil)
+      @usage_svc.get_synthetics_usage(start_hr, end_hr)
+    end
+
+    def get_fargate_usage(start_hr, end_hr = nil)
+      @usage_svc.get_fargate_usage(start_hr, end_hr)
     end
 
     private

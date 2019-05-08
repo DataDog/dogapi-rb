@@ -6,7 +6,6 @@ describe Dogapi::Client do
 
   DASHBOARD_LIST_ID = 1_234_567
   DASHBOARD_LIST_NAME = 'My new dashboard list'.freeze
-
   DASHBOARDS = [
     {
       'type' => 'custom_timeboard',
@@ -79,6 +78,51 @@ describe Dogapi::Client do
 
   describe '#get_items_of_dashboard_list' do
     it_behaves_like 'an api method',
+                    :get_items_of_dashboard_list, [DASHBOARD_LIST_ID],
+                    :get, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}"
+  end
+end
+
+describe Dogapi::ClientV2 do
+  RESOURCE_NAME = 'dashboard/lists/manual'.freeze
+  SUB_RESOURCE_NAME = 'dashboards'.freeze
+
+  DASHBOARD_LIST_ID = 1_234_567
+  DASHBOARD_LIST_NAME = 'My new dashboard list'.freeze
+  DASHBOARDS = [
+    {
+      'type' => 'custom_timeboard',
+      'id' => 1234
+    },
+    {
+      'type' => 'custom_screenboard',
+      'id' => 1234
+    }
+  ].freeze
+
+  describe '#add_items_to_dashboard_list' do
+    it_behaves_like 'an api v2 method',
+                    :add_items_to_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :post, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
+  end
+
+  describe '#update_items_of_dashboard_list' do
+    it_behaves_like 'an api v2 method',
+                    :update_items_of_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :put, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
+  end
+
+  describe '#delete_items_from_dashboard_list' do
+    it_behaves_like 'an api v2 method',
+                    :delete_items_from_dashboard_list, [DASHBOARD_LIST_ID] + [DASHBOARDS],
+                    :delete, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}",
+                    DASHBOARD_LIST_WITH_DASHES_BODY
+  end
+
+  describe '#get_items_of_dashboard_list' do
+    it_behaves_like 'an api v2 method',
                     :get_items_of_dashboard_list, [DASHBOARD_LIST_ID],
                     :get, "/#{RESOURCE_NAME}/#{DASHBOARD_LIST_ID}/#{SUB_RESOURCE_NAME}"
   end

@@ -1,7 +1,50 @@
 require 'time'
 require 'dogapi/v1'
+require 'dogapi/v2'
 
 module Dogapi
+
+  # A simple DogAPI client supporting the version 2.
+  #
+  # See Dogapi::V2  for the thick underlying clients
+  class ClientV2
+    attr_accessor :datadog_host
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
+
+      if api_key
+        @api_key = api_key
+      else
+        raise 'Please provide an API key to submit your data'
+      end
+
+      @application_key = application_key
+      @datadog_host = endpoint || Dogapi.find_datadog_host()
+      @host = host || Dogapi.find_localhost()
+      @device = device
+
+      @dashboard_list_service_v2 = Dogapi::V2::DashboardListService.new(
+        @api_key, @application_key, silent, timeout, @datadog_host
+      )
+
+    end
+
+    def add_items_to_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.add_items(dashboard_list_id, dashboards)
+    end
+
+    def update_items_of_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.update_items(dashboard_list_id, dashboards)
+    end
+
+    def delete_items_from_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.delete_items(dashboard_list_id, dashboards)
+    end
+
+    def get_items_of_dashboard_list(dashboard_list_id)
+      @dashboard_list_service_v2.get_items(dashboard_list_id)
+    end
+
+  end
 
   # A simple DogAPI client
   #
@@ -13,6 +56,8 @@ module Dogapi
   # documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client # rubocop:disable Metrics/ClassLength
     attr_accessor :datadog_host
+    attr_accessor :v2
+    # Support for API version 2.
 
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
@@ -50,6 +95,10 @@ module Dogapi
       @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+
+      # Support for Dashboard List API v2.
+      @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
+
     end
 
     #

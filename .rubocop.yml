@@ -11,5 +11,7 @@
 # URISchemes: http, https
 Metrics/LineLength:
   Max: 122
+Metrics/ModuleLength:
+  Max: 200
 
 inherit_from: .rubocop_todo.yml

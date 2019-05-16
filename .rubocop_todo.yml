@@ -240,6 +240,7 @@ Style/AccessorMethodName:
     - 'lib/dogapi/v1/screenboard.rb'
     - 'lib/dogapi/v1/dashboard.rb'
     - 'lib/dogapi/v1/user.rb'
+    - 'lib/dogapi/v1/synthetic.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.

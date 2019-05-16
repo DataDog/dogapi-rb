@@ -2,7 +2,7 @@ require 'dogapi'
 
 module Dogapi
   class V1 # for namespacing
-
+    # SyntheticService is the class responsible for dealing with the synthetics
     class SyntheticService < Dogapi::APIService
 
       API_VERSION = 'v1'

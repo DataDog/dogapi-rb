@@ -38,7 +38,6 @@ describe Dogapi::Client do
     it_behaves_like 'an api method with options',
                     :synthetic, [SYNTHETIC_TYPE, SYNTHETIC_CONFIG],
                     :post, '/synthetics/tests', 'type' => SYNTHETIC_TYPE, 'config' => SYNTHETIC_CONFIG
-
   end
 
   describe '#update_synthetic' do

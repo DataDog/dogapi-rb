@@ -44,6 +44,7 @@ module Dogapi
       @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @synthetic_svc = Dogapi::V1::SyntheticService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
@@ -469,6 +470,17 @@ module Dogapi
 
     def revoke_screenboard(board_id)
       @screenboard_svc.revoke_screenboard(board_id)
+    end
+
+    #
+    # SYNTHETICS
+    #
+    def synthetic(type, config, options= {})
+      @synthetic_svc.synthetic(type, config, options)
+    end
+
+    def update_synthetic(synthetic_id, config, options= {})
+      @synthetic_svc.update_synthetic(synthetic_id, config, options)
     end
 
     #

@@ -32,7 +32,7 @@ describe Dogapi::Client do
       },
       'body' => 'body to send with the request'
     }
-  }
+  }.freeze
 
   describe '#synthetic' do
     it_behaves_like 'an api method with options',

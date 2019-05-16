@@ -45,4 +45,10 @@ describe Dogapi::Client do
                     :update_synthetic, [SYNTHETIC_ID, SYNTHETIC_CONFIG],
                     :put, "/synthetics/tests/#{SYNTHETIC_ID}", 'config' => SYNTHETIC_CONFIG
   end
+
+  describe '#get_all_synthetics' do
+    it_behaves_like 'an api method',
+                    :get_all_synthetics, [],
+                    :get, '/synthetics/tests'
+  end
 end

@@ -483,6 +483,10 @@ module Dogapi
       @synthetic_svc.update_synthetic(synthetic_id, config, options)
     end
 
+    def get_all_synthetics
+      @synthetic_svc.get_all_synthetics
+    end
+
     #
     # MONITORS
     #

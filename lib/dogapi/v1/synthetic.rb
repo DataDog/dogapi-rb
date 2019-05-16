@@ -24,6 +24,10 @@ module Dogapi
         request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{synthetic_id}", nil, body, true)
       end
 
+      def get_all_synthetics
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests", nil, nil, false)
+      end
+
     end
 
   end

@@ -2,7 +2,7 @@
 
 ## 1.36.0 / 2019-06-05
 
-* [BUGFIX] Pass the options as params to request, not body content. See [#157][], thanks @wonko
+* [BUGFIX] Pass the options as params to request, not body content. See [#157][], thanks [@wonko][]
 * [FEATURE] Add support for dashboard list API v2. See [#174][]
 * [IMPROVEMENT] Add `get_active_metrics` and `resolve_monitors` methods for missing api endpoints. See [#172][]
 * [IMPROVEMENT] Add methods for missing hourly usage api endpoints. See [#173][]
@@ -234,6 +234,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#147]: https://github.com/DataDog/dogapi-rb/issues/147
 [#151]: https://github.com/DataDog/dogapi-rb/issues/151
 [#152]: https://github.com/DataDog/dogapi-rb/issues/152
+[#157]: https://github.com/DataDog/dogapi-rb/issues/157
 [#159]: https://github.com/DataDog/dogapi-rb/issues/159
 [#160]: https://github.com/DataDog/dogapi-rb/issues/160
 [#162]: https://github.com/DataDog/dogapi-rb/issues/162
@@ -242,6 +243,9 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#167]: https://github.com/DataDog/dogapi-rb/issues/167
 [#170]: https://github.com/DataDog/dogapi-rb/issues/170
 [#171]: https://github.com/DataDog/dogapi-rb/issues/171
+[#172]: https://github.com/DataDog/dogapi-rb/issues/172
+[#173]: https://github.com/DataDog/dogapi-rb/issues/173
+[#174]: https://github.com/DataDog/dogapi-rb/issues/174
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE
@@ -264,4 +268,5 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@rmoriz]: https://github.com/rmoriz
 [@treeder]: https://github.com/treeder
 [@winebarrel]: https://github.com/winebarrel
+[@wonko]: https://github.com/wonko
 [@yyuu]: https://github.com/yyuu

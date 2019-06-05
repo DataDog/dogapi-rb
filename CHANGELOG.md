@@ -1,5 +1,12 @@
 # Changes
 
+## 1.36.0 / 2019-06-05
+
+* [BUGFIX] Pass the options as params to request, not body content. See [#157][], thanks @wonko
+* [FEATURE] Add support for dashboard list API v2. See [#174][]
+* [IMPROVEMENT] Add `get_active_metrics` and `resolve_monitors` methods for missing api endpoints. See [#172][]
+* [IMPROVEMENT] Add methods for missing hourly usage api endpoints. See [#173][]
+
 ## 1.35.0 / 2019-03-21
 
 * [FEATURE] Add get_all_boards and support for 'free' layout. See [#171][].

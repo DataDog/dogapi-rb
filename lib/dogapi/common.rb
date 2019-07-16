@@ -2,6 +2,7 @@ require 'cgi'
 require 'net/https'
 require 'socket'
 require 'uri'
+require 'yaml'
 
 require 'rubygems'
 require 'multi_json'
@@ -80,13 +81,12 @@ module Dogapi
     def connect
       connection = Net::HTTP
 
-      # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
-      if RUBY_VERSION < '2.0.0'
-        proxy = ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
-        if proxy
-          proxy_uri = URI.parse(proxy)
-          connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
-        end
+      # Expose using a proxy without setting the HTTPS_PROXY or HTTP_PROXY variables
+      proxy = Dogapi.find_proxy()
+
+      if proxy
+        proxy_uri = URI.parse(proxy)
+        connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
       end
 
       uri = URI.parse(@api_host)
@@ -169,5 +169,11 @@ module Dogapi
     rescue
       raise 'Cannot determine local hostname via hostname -f'
     end
+  end
+
+  def Dogapi.find_proxy
+    ENV['DOGAPI_HTTPS_PROXY'] || ENV['dogapi_https_proxy'] ||
+      ENV['DOGAPI_HTTP_PROXY'] || ENV['dogapi_http_proxy'] ||
+      ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
   end
 end

@@ -141,6 +141,9 @@ module Dogapi
     end
 
     def handle_response(resp)
+      if resp.code >= 400
+        return resp.code, { error: resp.body }
+      end
       if resp.code == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?
         return resp.code, {}
       end

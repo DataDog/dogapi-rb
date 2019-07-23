@@ -164,7 +164,7 @@ module Dogapi
 
   def Dogapi.find_localhost
     begin
-      @@hostname ||= Socket.gethostname.strip
+      @@hostname ||= Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
     rescue
       raise 'Cannot determine local hostname via Socket.gethostname'
     end

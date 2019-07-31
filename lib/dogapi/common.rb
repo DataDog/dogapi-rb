@@ -2,7 +2,6 @@ require 'cgi'
 require 'net/https'
 require 'socket'
 require 'uri'
-require 'yaml'
 
 require 'rubygems'
 require 'multi_json'

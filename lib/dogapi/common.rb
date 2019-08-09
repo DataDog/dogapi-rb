@@ -165,7 +165,7 @@ module Dogapi
   def Dogapi.find_localhost
     begin
       # prefer hostname -f over Socket.gethostname
-      @@hostname ||= %x[hostname -f].strip
+      @@hostname = %x[hostname -f].strip
     rescue
       raise 'Cannot determine local hostname via hostname -f'
     end

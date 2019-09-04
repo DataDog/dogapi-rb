@@ -90,7 +90,7 @@ module Capistrano
       end
 
       def report()
-        hostname = %x[hostname -f].strip
+        hostname = Dogapi.find_localhost
         user = Etc.getlogin
 
         # Lazy randomness

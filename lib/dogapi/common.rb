@@ -2,6 +2,7 @@ require 'cgi'
 require 'net/https'
 require 'socket'
 require 'uri'
+require 'English'
 
 require 'rubygems'
 require 'multi_json'
@@ -163,11 +164,9 @@ module Dogapi
   @@hostname = nil
 
   def Dogapi.find_localhost
-    begin
-      # prefer hostname -f over Socket.gethostname
-      @@hostname ||= %x[hostname -f].strip
-    rescue
-      raise 'Cannot determine local hostname via hostname -f'
-    end
+    @@hostname ||= %x[hostname -f].strip
+  rescue SystemCallError
+    raise $ERROR_INFO unless $ERROR_INFO.class.name == 'Errno::ENOENT'
+    @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 end

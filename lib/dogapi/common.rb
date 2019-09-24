@@ -117,7 +117,6 @@ module Dogapi
       connect do |conn|
         begin
           current_url = url + prepare_params(extra_params, with_app_key)
-          # current_url = url
           req = method.new(current_url)
           req['DD-API-KEY'] = @api_key if @api_key
           req['DD-APPLICATION_KEY'] = @application_key if @application_key

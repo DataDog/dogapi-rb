@@ -1,5 +1,9 @@
 # Changes
 
+## 1.37.0 / 2019-09-24
+
+* [FEATURE] Pass api and application keys to datadog from headers only
+
 ## 1.36.0 / 2019-06-05
 
 * [BUGFIX] Pass the options as params to request, not body content. See [#157][], thanks [@wonko][]

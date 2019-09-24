@@ -37,7 +37,6 @@ describe Dogapi::Client do
       body = MultiJson.dump(EVENT_OPTIONS)
 
       expect(WebMock).to have_requested(:post, url).with(
-        query: { 'api_key' => api_key },
         body: body
       )
     end
@@ -63,7 +62,6 @@ describe Dogapi::Client do
 
       params = STREAM_PARAMS.merge(start: EVENT_START, end: EVENT_END)
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      params.merge! default_query
 
       expect(WebMock).to have_requested(:get, url).with(
         query: params

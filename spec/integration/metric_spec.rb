@@ -48,7 +48,6 @@ describe Dogapi::Client do
       body = MultiJson.dump(body)
 
       expect(WebMock).to have_requested(:post, url).with(
-        query: { 'api_key' => api_key },
         body: body
       )
     end
@@ -64,7 +63,6 @@ describe Dogapi::Client do
       body = MultiJson.dump(EMIT_BODY)
 
       expect(WebMock).to have_requested(:post, url).with(
-        query: { 'api_key' => api_key },
         body: body
       )
     end
@@ -89,7 +87,6 @@ describe Dogapi::Client do
       body = MultiJson.dump(BATCH_BODY)
 
       expect(WebMock).to have_requested(:post, url).with(
-        query: { 'api_key' => api_key },
         body: body
       )
     end

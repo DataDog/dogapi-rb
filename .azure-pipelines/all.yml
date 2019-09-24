@@ -1,0 +1,45 @@
+trigger:
+  batch: false
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+jobs:
+- job: UnitTests
+  pool:
+    vmImage: "Ubuntu-16.04"
+  strategy:
+    matrix:
+      Rb20:
+        RUBY_VERSION: '== 2.0'
+        TASK=spec
+      Rb21:
+        RUBY_VERSION: '== 2.1'
+        TASK=spec
+      Rb22:
+        RUBY_VERSION: '== 2.2'
+        TASK=spec
+      Rb23:
+        RUBY_VERSION: '== 2.3'
+        TASK=spec
+      Rb24:
+        RUBY_VERSION: '== 2.4'
+        TASK=spec
+      Rb25:
+        RUBY_VERSION: '== 2.5'
+        TASK=spec
+      Lint:
+        RUBY_VERSION: '== 2.5'
+        TASK=rubocop
+  steps:
+    - task: UseRubyVersion@0
+      displayName: Use Ruby $(RUBY_VERSION)
+      inputs:
+        versionSpec: $(RUBY_VERSION)
+    - script: bundle exec rake $(TASK)
+      displayName: Run $(TASK) via bundle

@@ -35,5 +35,9 @@ jobs:
       displayName: Use Ruby $(RUBY_VERSION)
       inputs:
         versionSpec: $(RUBY_VERSION)
+    - script: |
+        CALL gem install bundler
+        bundle install --retry=3 --jobs=4
+      displayName: 'bundle install'
     - script: bundle exec rake $(TASK)
       displayName: Run $(TASK) via bundle

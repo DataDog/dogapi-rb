@@ -25,10 +25,10 @@ jobs:
         RUBY_VERSION: '2.5.5'
         TASK: spec
       Rb26:
-        RUBY_VERSION: '2.6.2'
+        RUBY_VERSION: '2.6.3'
         TASK: spec
       Lint:
-        RUBY_VERSION: '2.6.2'
+        RUBY_VERSION: '2.6.3'
         TASK: rubocop
   steps:
     - task: UseRubyVersion@0
@@ -37,7 +37,7 @@ jobs:
         versionSpec: $(RUBY_VERSION)
         addToPath: true
     - script: |
-        CALL gem install bundler
+        gem install bundler
         bundle install --retry=3 --jobs=4
       displayName: 'bundle install'
     - script: bundle exec rake $(TASK)

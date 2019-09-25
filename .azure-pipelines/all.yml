@@ -35,6 +35,7 @@ jobs:
       displayName: Use Ruby $(RUBY_VERSION)
       inputs:
         versionSpec: $(RUBY_VERSION)
+        addToPath: true
     - script: |
         CALL gem install bundler
         bundle install --retry=3 --jobs=4

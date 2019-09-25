@@ -16,19 +16,19 @@ jobs:
   strategy:
     matrix:
       Rb23:
-        RUBY_VERSION: '== 2.3.7'
+        RUBY_VERSION: '2.3.7'
         TASK: spec
       Rb24:
-        RUBY_VERSION: '== 2.4.6'
+        RUBY_VERSION: '2.4.6'
         TASK: spec
       Rb25:
-        RUBY_VERSION: '== 2.5.5'
+        RUBY_VERSION: '2.5.5'
         TASK: spec
       Rb26:
-        RUBY_VERSION: '==2.6.2'
+        RUBY_VERSION: '2.6.2'
         TASK: spec
       Lint:
-        RUBY_VERSION: '== 2.6.2'
+        RUBY_VERSION: '2.6.2'
         TASK: rubocop
   steps:
     - task: UseRubyVersion@0

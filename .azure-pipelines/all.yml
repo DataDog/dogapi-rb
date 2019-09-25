@@ -17,25 +17,25 @@ jobs:
     matrix:
       Rb20:
         RUBY_VERSION: '== 2.0'
-        TASK=spec
+        TASK: spec
       Rb21:
         RUBY_VERSION: '== 2.1'
-        TASK=spec
+        TASK: spec
       Rb22:
         RUBY_VERSION: '== 2.2'
-        TASK=spec
+        TASK: spec
       Rb23:
         RUBY_VERSION: '== 2.3'
-        TASK=spec
+        TASK: spec
       Rb24:
         RUBY_VERSION: '== 2.4'
-        TASK=spec
+        TASK: spec
       Rb25:
         RUBY_VERSION: '== 2.5'
-        TASK=spec
+        TASK: spec
       Lint:
         RUBY_VERSION: '== 2.5'
-        TASK=rubocop
+        TASK: rubocop
   steps:
     - task: UseRubyVersion@0
       displayName: Use Ruby $(RUBY_VERSION)

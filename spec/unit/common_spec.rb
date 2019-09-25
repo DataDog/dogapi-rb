@@ -43,13 +43,17 @@ describe 'Common' do
     it 'respects the endpoint configuration' do
       service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
 
-      expect(service.api_key).to eq 'api_key'
-      expect(service.application_key).to eq 'app_key'
-
       service.connect do |conn|
         expect(conn.address).to eq 'app.example.com'
         expect(conn.port).to eq 443
       end
+    end
+
+    it 'respects http headers' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      expect(service.api_key).to eq 'api_key'
+      expect(service.application_key).to eq 'app_key'
     end
   end
 end

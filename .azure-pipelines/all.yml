@@ -15,26 +15,20 @@ jobs:
     vmImage: "Ubuntu-16.04"
   strategy:
     matrix:
-      Rb20:
-        RUBY_VERSION: '== 2.0'
-        TASK: spec
-      Rb21:
-        RUBY_VERSION: '== 2.1'
-        TASK: spec
-      Rb22:
-        RUBY_VERSION: '== 2.2'
-        TASK: spec
       Rb23:
-        RUBY_VERSION: '== 2.3'
+        RUBY_VERSION: '== 2.3.7'
         TASK: spec
       Rb24:
-        RUBY_VERSION: '== 2.4'
+        RUBY_VERSION: '== 2.4.6'
         TASK: spec
       Rb25:
-        RUBY_VERSION: '== 2.5'
+        RUBY_VERSION: '== 2.5.5'
+        TASK: spec
+      Rb26:
+        RUBY_VERSION: '==2.6.2'
         TASK: spec
       Lint:
-        RUBY_VERSION: '== 2.5'
+        RUBY_VERSION: '== 2.6.2'
         TASK: rubocop
   steps:
     - task: UseRubyVersion@0

@@ -2,7 +2,7 @@
 
 {<img src="https://badge.fury.io/rb/dogapi.png" alt="Gem Version" />}[http://badge.fury.io/rb/dogapi]
 
-{<img src="https://travis-ci.org/DataDog/dogapi-rb.png?branch=master" alt="Build Status" />}[https://travis-ci.org/DataDog/dogapi-rb]
+[![Build Status](https://dev.azure.com/datadoghq/dogapi-rb/_apis/build/status/DataDog.dogapi-rb?branchName=master)](https://dev.azure.com/datadoghq/dogapi-rb/_build/latest?definitionId=16&branchName=master)
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
@@ -166,6 +166,3 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
     query = 'sum:metric.count{*}.as_count()'
 
     dog.get_points(query, from, to)
-
-
-

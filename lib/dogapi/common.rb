@@ -69,6 +69,7 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
+    attr_reader :api_key, :application_key
     def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
       @api_key = api_key
       @application_key = application_key
@@ -116,8 +117,10 @@ module Dogapi
       resp = nil
       connect do |conn|
         begin
-          current_url = url + prepare_params(extra_params, with_app_key)
+          current_url = url + prepare_params(extra_params)
           req = method.new(current_url)
+          req['DD-API-KEY'] = @api_key
+          req['DD-APPLICATION-KEY'] = @application_key if with_app_key
 
           if send_json
             req.content_type = 'application/json'
@@ -132,9 +135,8 @@ module Dogapi
       end
     end
 
-    def prepare_params(extra_params, with_app_key)
-      params = { api_key: @api_key }
-      params[:application_key] = @application_key if with_app_key
+    def prepare_params(extra_params)
+      params = {}
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')

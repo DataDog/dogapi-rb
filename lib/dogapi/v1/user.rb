@@ -23,19 +23,19 @@ module Dogapi
       #
       # :description => Hash: user description containing 'handle' and 'name' properties
       def create_user(description= {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/users", nil, description, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/user", nil, description, true)
       end
 
       # Retrieve user information
       #
       # :handle => String: user handle
       def get_user(handle)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/users/#{handle}", nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user/#{handle}", nil, nil, false)
       end
 
       # Retrieve all users
       def get_all_users
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/users", nil, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/user", nil, nil, false)
       end
 
       # Update a user
@@ -44,14 +44,14 @@ module Dogapi
       # :description => Hash: user description optionally containing 'name', 'email',
       # 'is_admin', 'disabled' properties
       def update_user(handle, description= {})
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/users/#{handle}", nil, description, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/user/#{handle}", nil, description, true)
       end
 
       # Disable a user
       #
       # :handle => String: user handle
       def disable_user(handle)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/users/#{handle}", nil, nil, false)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/user/#{handle}", nil, nil, false)
       end
 
     end

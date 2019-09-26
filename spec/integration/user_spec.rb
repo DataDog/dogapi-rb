@@ -17,30 +17,30 @@ describe Dogapi::Client do
   describe '#create_user' do
     it_behaves_like 'an api method',
                     :create_user, [USER_DESCRIPTION],
-                    :post, '/users', USER_DESCRIPTION
+                    :post, '/user', USER_DESCRIPTION
   end
 
   describe '#get_user' do
     it_behaves_like 'an api method',
                     :get_user, [USER_HANDLE],
-                    :get, "/users/#{USER_HANDLE}"
+                    :get, "/user/#{USER_HANDLE}"
   end
 
   describe '#get_all_users' do
     it_behaves_like 'an api method',
                     :get_all_users, [],
-                    :get, '/users'
+                    :get, '/user'
   end
 
   describe '#update_user' do
     it_behaves_like 'an api method',
                     :update_user, [USER_HANDLE, USER_DESCRIPTION],
-                    :put, "/users/#{USER_HANDLE}", USER_DESCRIPTION
+                    :put, "/user/#{USER_HANDLE}", USER_DESCRIPTION
   end
 
   describe '#disable_user' do
     it_behaves_like 'an api method',
                     :disable_user, [USER_HANDLE],
-                    :delete, "/users/#{USER_HANDLE}"
+                    :delete, "/user/#{USER_HANDLE}"
   end
 end

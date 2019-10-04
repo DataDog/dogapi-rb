@@ -17,9 +17,10 @@ module Dogapi
       end
 
       def update_monitor(monitor_id, query, options)
-        body = {
-          'query' => query,
-        }.merge options
+        body = {}.merge options
+        if query != nil
+          body = body.merge({'query' => query})
+        end
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)
       end

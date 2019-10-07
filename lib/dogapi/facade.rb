@@ -94,8 +94,11 @@ module Dogapi
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
       @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_integration_svc = Dogapi::V1::AwsIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_logs_svc = Dogapi::V1::AwsLogsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-
+      @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
 
@@ -680,6 +683,108 @@ module Dogapi
 
     def delete_integration(source_type_name)
       @integration_svc.delete_integration(source_type_name)
+    end
+
+    #
+    # AWS INTEGRATION
+    #
+    def aws_list
+      @aws_integration_svc.aws_list
+    end
+
+    def create_aws_integration(config)
+      @aws_integration_svc.create_aws_integration(config)
+    end
+
+    def delete_aws_integration(config)
+      @aws_integration_svc.delete_aws_integration(config)
+    end
+
+    def list_aws_namespaces
+      @aws_integration_svc.list_aws_namespaces
+    end
+
+    def generate_external_id(config)
+      @aws_integration_svc.generate_external_id(config)
+    end
+
+    def update_aws_account(existing_config, config)
+      @aws_integration_svc.update_aws_account(existing_config, config)
+    end
+
+    #
+    # AWS Logs Integration
+    #
+
+    def add_aws_logs_lambda(config)
+      @aws_logs_svc.add_aws_logs_lambda(config)
+    end
+
+    def aws_logs_list_services
+      @aws_logs_svc.aws_logs_list_services
+    end
+
+    def aws_logs_save_services(config)
+      @aws_logs_svc.aws_logs_save_services(config)
+    end
+
+    def list_aws_logs_integrations
+      @aws_logs_svc.list_aws_logs_integrations
+    end
+
+    def delete_aws_logs_integration(config)
+      @aws_logs_svc.delete_aws_logs_integration(config)
+    end
+
+    def aws_logs_check_lambda(config)
+      @aws_logs_svc.aws_logs_check_lambda(config)
+    end
+
+    def aws_logs_check_services(config)
+      @aws_logs_svc.aws_logs_check_services(config)
+    end
+
+    #
+    # AZURE INTEGRATION
+    #
+
+    def azure_list
+      @azure_integration_svc.azure_list
+    end
+
+    def create_azure_integration(config)
+      @azure_integration_svc.create_azure_integration(config)
+    end
+
+    def delete_azure_integration(config)
+      @azure_integration_svc.delete_azure_integration(config)
+    end
+
+    def update_azure_host_filters(config)
+      @azure_integration_svc.update_azure_host_filters(config)
+    end
+
+    def update_azure_integration(config)
+      @azure_integration_svc.update_azure_integration(config)
+    end
+
+    #
+    # GCP INTEGRATION
+    #
+    def gcp_list
+      @gcp_integration_svc.gcp_list
+    end
+
+    def delete_gcp_integration(config)
+      @gcp_integration_svc.delete_gcp_integration(config)
+    end
+
+    def create_gcp_integration(config)
+      @gcp_integration_svc.create_gcp_integration(config)
+    end
+
+    def update_gcp_integration(config)
+      @gcp_integration_svc.update_gcp_integration(config)
     end
 
     #

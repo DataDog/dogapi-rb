@@ -1,0 +1,44 @@
+trigger:
+  batch: false
+  branches:
+    include:
+    - master
+
+pr:
+  branches:
+    include:
+    - master
+
+jobs:
+- job: UnitTests
+  pool:
+    vmImage: "Ubuntu-16.04"
+  strategy:
+    matrix:
+      Rb23:
+        RUBY_VERSION: '2.3.7'
+        TASK: spec
+      Rb24:
+        RUBY_VERSION: '2.4.6'
+        TASK: spec
+      Rb25:
+        RUBY_VERSION: '2.5.5'
+        TASK: spec
+      Rb26:
+        RUBY_VERSION: '2.6.3'
+        TASK: spec
+      Lint:
+        RUBY_VERSION: '2.6.3'
+        TASK: rubocop
+  steps:
+    - task: UseRubyVersion@0
+      displayName: Use Ruby $(RUBY_VERSION)
+      inputs:
+        versionSpec: $(RUBY_VERSION)
+        addToPath: true
+    - script: |
+        gem install bundler
+        bundle install --retry=3 --jobs=4
+      displayName: 'bundle install'
+    - script: bundle exec rake $(TASK)
+      displayName: Run $(TASK) via bundle

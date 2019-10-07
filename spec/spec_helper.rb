@@ -25,6 +25,8 @@ module SpecDog
   let(:old_api_url) { "#{DATADOG_HOST}/api" }
   let(:api_v2_url) { "#{DATADOG_HOST}/api/v2" }
 
+  let(:default_query) { { api_key: api_key, application_key: app_key } }
+
   shared_examples 'an api method' do |command, args, request, endpoint, body|
     it 'queries the api' do
       url = api_url + endpoint

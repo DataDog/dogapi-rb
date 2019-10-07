@@ -146,11 +146,11 @@ module Dogapi
 
     def set_api_and_app_keys_in_params(url, with_app_key)
       set_of_urls = Set.new [
-                          '/api/v1/series',
-                          '/api/v1/check_run',
-                          '/api/v1/events',
-                          '/api/v1/screen'
-                          ]
+                              '/api/v1/series',
+                              '/api/v1/check_run',
+                              '/api/v1/events',
+                              '/api/v1/screen'
+                            ]
 
       include_in_params = set_of_urls.include?(url)
 
@@ -162,7 +162,6 @@ module Dogapi
       end
       return params
     end
-
 
     def handle_response(resp)
       if resp.code == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?

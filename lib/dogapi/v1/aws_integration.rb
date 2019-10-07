@@ -3,41 +3,69 @@ require 'dogapi'
 module Dogapi
   class V1 # for namespacing
 
+    # AwsIntegrationService for user interaction with AWS configs.
     class AwsIntegrationService < Dogapi::APIService
 
       API_VERSION = 'v1'
 
-      # Create an integration
-      #
-      # :source_type_name => String: the name of an integration source
-      # :config => Hash: integration config that varies based on the source type.
-      # See https://docs.datadoghq.com/api/#integrations.
-      #   def create_integration(source_type_name, config)
-      #     request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, config, true)
-      #   end
+      # Retrieve AWS integration information
+      def aws_list
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/aws", nil, nil, false)
+      end
 
-      # Update an integration
+      # Create an AWS integration
+      # :config => Hash: integration config.
+      # config = {
+      #   :account_id => '<AWS_ACCOUNT>',
+      #   :host_tags => ['api:example'],
+      #   :role_name => '<AWS_ROLE_NAME>'
+      # }
       #
-      # :source_type_name => String: the name of an integration source
-      # :config => Hash: integration config that varies based on the source type.
-      # source type (https://docs.datadoghq.com/api/#integrations)
-      #   def update_integration(source_type_name, config)
-      #     request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, config, true)
-      #   end
-
-      # Retrieve integration information
+      # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # :source_type_name => String: the name of an integration source
-      def aws_list(source_type_name)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, nil, false)
+      # puts dog.create_aws_integration(config)
+      def create_aws_integration(config)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/aws", nil, config, true)
       end
 
       # Delete an integration
+      # :config => Hash: integration config.
+      # config = {
+      #   :account_id => '<AWS_ACCOUNT>',
+      #   :role_name => '<AWS_ROLE_NAME>'
+      # }
       #
-      # :source_type_name => String: the name of an integration source
-      #   def delete_integration(source_type_name)
-      #     request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, nil, false)
-      #   end
+      # dog = Dogapi::Client.new(api_key, app_key)
+      #
+      # puts dog.delete_aws_integration(config)
+      def delete_aws_integration(config)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/aws", nil, config, true)
+      end
+
+      # List available AWS namespaces
+      def list_aws_namespaces
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/aws/available_namespace_rules", nil, nil, false)
+      end
+
+      # Generate new AWS external ID for a specific integrated account
+      # :config => Hash: integration config.
+      # config = {
+      #   :account_id => '<AWS_ACCOUNT>',
+      #   :role_name => '<AWS_ROLE_NAME>'
+      # }
+      #
+      # dog = Dogapi::Client.new(api_key, app_key)
+      #
+      # puts dog.generate_external_id(config)
+      def generate_external_id(config)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws/generate_new_external_id", nil, config, true)
+      end
+
+      # Update integrated AWS account
+      # :config => Hash: integration config. NOT WORKING CURRENTLY
+      def update_aws_account(existing_config, config)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws", existing_config, config, true)
+      end
 
     end
 

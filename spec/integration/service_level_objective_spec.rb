@@ -13,7 +13,7 @@ describe Dogapi::Client do
   describe '#create_service_level_objective' do
     it_behaves_like 'an api method',
                     :create_service_level_objective, [SLO_TYPE, SLO_NAME, SLO_DESCRIPTION, SLO_TAGS, SLO_THRESHOLDS, SLO_QUERY_NUMERATOR, SLO_QUERY_DENOMINATOR],
-                    :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME
+                    :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME, 'thresholds' => SLO_THRESHOLDS, 'query' => {:numerator => SLO_QUERY_NUMERATOR, :denominator => SLO_QUERY_DENOMINATOR}, 'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
   end
 
   describe '#update_service_level_objective' do
@@ -29,9 +29,9 @@ describe Dogapi::Client do
   end
 
   describe '#search_service_level_objective' do
-    it_behaves_like 'an api method',
+    it_behaves_like 'an api method with params',
                     :search_service_level_objective, [[SLO_ID]],
-                    :get, "/slo", 'ids' => [SLO_ID], 'offset' => 0, 'limit' => 100
+                    :get, "/slo/", 'ids' => SLO_ID
   end
 
   describe '#delete_service_level_objective' do
@@ -49,6 +49,6 @@ describe Dogapi::Client do
   describe '#delete_timeframes_service_level_objective' do
     it_behaves_like 'an api method',
                     :delete_timeframes_service_level_objective, [{SLO_ID => ["7d"]}],
-                    :POST, "/slo/bulk_delete", SLO_ID => ["7d"]
+                    :post, "/slo/bulk_delete", SLO_ID => ["7d"]
   end
 end

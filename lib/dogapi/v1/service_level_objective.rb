@@ -7,7 +7,7 @@ module Dogapi
 
       API_VERSION = 'v1'
 
-      def create_service_level_objective(type, name, description=nil, tags = nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
+      def create_service_level_objective(type, name, description=nil, tags=nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
         body = {
             :type => type,
             :name => name,
@@ -35,7 +35,7 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/slo", nil, body, true)
       end
 
-      def update_service_level_objective(slo_id, type, name=nil, description=nil, tags = nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
+      def update_service_level_objective(slo_id, type, name=nil, description=nil, tags=nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
         body = {
             :type => type,
 
@@ -50,14 +50,16 @@ module Dogapi
         end
 
         if type == 'metric'
-          body[:query] = {
-              :numerator => numerator,
-              :denominator => denominator,
-          }
+          if !numerator.nil? and !denominator.nil?
+            body[:query] = {
+                :numerator => numerator,
+                :denominator => denominator,
+            }
+          end
         else
           if !monitor_search.nil?
             body[:monitor_search] = monitor_search
-          else
+          elsif !monitor_ids.nil?
             body[:monitor_ids] = monitor_ids
           end
         end
@@ -75,13 +77,16 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/#{slo_id}", nil, nil, false)
       end
 
-      def search_service_level_objective(slo_ids=nil, query=nil, offset=0, limit=100)
-        params = {
-            :offset => offset,
-            :limit => limit
-        }
+      def search_service_level_objective(slo_ids=nil, query=nil, offset=nil, limit=nil)
+        params = {}
+        if !offset.nil?
+            params[:offset] = offset
+        end
+        if !limit.nil?
+          params[:limit] = limit
+        end
         if !slo_ids.nil?
-          params[:ids] = slo_ids
+          params[:ids] = slo_ids.join(',')
         else
           params[:query] = query
         end
@@ -94,15 +99,15 @@ module Dogapi
       end
 
       def delete_many_service_level_objective(slo_ids)
-        body = [
+        body = {
             :ids => slo_ids
-        ]
+        }
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/slo/", nil, body, true)
       end
 
       def delete_timeframes_service_level_objective(ops)
         # ops is a hash of slo_id: [<timeframe>] to delete
-        request(Net::HTTP::POST, "/api/#{API_VERSION}/slo/bulk_delete", nil, ops, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/slo/bulk_delete", nil, ops, true)
       end
 
     end

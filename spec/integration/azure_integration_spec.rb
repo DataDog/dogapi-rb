@@ -30,30 +30,30 @@ describe Dogapi::Client do
   describe '#azure_list' do
     it_behaves_like 'an api method',
                     :azure_list, nil,
-                    :get, "/integration/azure"
+                    :get, '/integration/azure'
   end
 
   describe '#create_azure_integration' do
     it_behaves_like 'an api method',
                     :create_azure_integration, [CREATE_CONFIG],
-                    :post, "/integration/azure", CREATE_CONFIG
+                    :post, '/integration/azure', CREATE_CONFIG
   end
 
   describe '#update_azure_host_filters' do
     it_behaves_like 'an api method',
                     :update_azure_host_filters, [UPDATE_HF_CONFIG],
-                    :post, "/integration/azure/host_filters", UPDATE_HF_CONFIG
+                    :post, '/integration/azure/host_filters', UPDATE_HF_CONFIG
   end
 
   describe '#update_azure_integration' do
     it_behaves_like 'an api method',
                     :update_azure_integration, [UPDATE_CONFIG],
-                    :put, "/integration/azure", UPDATE_CONFIG
+                    :put, '/integration/azure', UPDATE_CONFIG
   end
 
   describe '#delete_azure_integration' do
     it_behaves_like 'an api method',
                     :delete_azure_integration, [CONFIG],
-                    :delete, "/integration/azure", CONFIG
+                    :delete, '/integration/azure', CONFIG
   end
 end

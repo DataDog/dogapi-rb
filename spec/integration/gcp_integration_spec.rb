@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 describe Dogapi::Client do
   CONFIG = {
     project_id: "datadog-apitest",
-    client_email: "api-dev@datadog-sandbox.iam.gserviceaccount.com",
+    client_email: "email@example.com",
   }.freeze
 
   CREATE_CONFIG = {
@@ -11,7 +11,7 @@ describe Dogapi::Client do
     project_id: "datadog-apitest",
     private_key_id: "123456789abcdefghi123456789abcdefghijklm",
     private_key: "fake_key",
-    client_email: "api-dev@datadog-sandbox.iam.gserviceaccount.com",
+    client_email: "email@example.com",
     client_id: "123456712345671234567",
     auth_uri: "fake_uri",
     token_uri: "fake_uri",
@@ -22,7 +22,7 @@ describe Dogapi::Client do
 
   UPDATE_CONFIG = {
     project_id: "datadog-apitest",
-    client_email: "api-dev@datadog-sandbox.iam.gserviceaccount.com",
+    client_email: "email@example.com",
     host_filters: "api:test1,api:test2",
     automute: false
   }.freeze

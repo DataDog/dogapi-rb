@@ -59,6 +59,7 @@ module Dogapi
     attr_accessor :v2
     # Support for API version 2.
 
+    # rubocop:disable Metrics/MethodLength, Metrics/LineLength
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
       if api_key
@@ -103,6 +104,7 @@ module Dogapi
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
 
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/LineLength
 
     #
     # METRICS

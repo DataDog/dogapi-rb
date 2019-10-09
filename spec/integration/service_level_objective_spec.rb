@@ -1,19 +1,22 @@
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
-  SLO_ID = "42424242424242424242424242424242"
+  SLO_ID = '42424242424242424242424242424242'.freeze
   SLO_TYPE = 'metric'.freeze
   SLO_NAME = 'test slo'.freeze
   SLO_DESCRIPTION = 'test slo description'.freeze
   SLO_QUERY_NUMERATOR = 'sum:test.metric.metric{type:good}.as_count()'.freeze
   SLO_QUERY_DENOMINATOR = 'sum:test.metric.metric{*}.as_count()'.freeze
-  SLO_TAGS = ["type:test"].freeze
-  SLO_THRESHOLDS = [{:timeframe => "7d", :target => 90}, {:timeframe => "30d", :target=> 95}].freeze
+  SLO_TAGS = ['type:test'].freeze
+  SLO_THRESHOLDS = [{ timeframe: '7d', target: 90 }, { timeframe: '30d', target: 95 }].freeze
 
   describe '#create_service_level_objective' do
     it_behaves_like 'an api method',
-                    :create_service_level_objective, [SLO_TYPE, SLO_NAME, SLO_DESCRIPTION, SLO_TAGS, SLO_THRESHOLDS, SLO_QUERY_NUMERATOR, SLO_QUERY_DENOMINATOR],
-                    :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME, 'thresholds' => SLO_THRESHOLDS, 'query' => {:numerator => SLO_QUERY_NUMERATOR, :denominator => SLO_QUERY_DENOMINATOR}, 'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
+                    :create_service_level_objective, [SLO_TYPE, SLO_NAME, SLO_DESCRIPTION, SLO_TAGS, SLO_THRESHOLDS,
+                                                      SLO_QUERY_NUMERATOR, SLO_QUERY_DENOMINATOR],
+                    :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME, 'thresholds' => SLO_THRESHOLDS,
+                    'query' => { numerator: SLO_QUERY_NUMERATOR, denominator: SLO_QUERY_DENOMINATOR },
+                    'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
   end
 
   describe '#update_service_level_objective' do
@@ -48,7 +51,7 @@ describe Dogapi::Client do
 
   describe '#delete_timeframes_service_level_objective' do
     it_behaves_like 'an api method',
-                    :delete_timeframes_service_level_objective, [{SLO_ID => ["7d"]}],
-                    :post, '/slo/bulk_delete', SLO_ID => ["7d"]
+                    :delete_timeframes_service_level_objective, [{SLO_ID => ['7d']}],
+                    :post, '/slo/bulk_delete', SLO_ID => ['7d']
   end
 end

@@ -3,7 +3,7 @@ require_relative '../spec_helper'
 describe Dogapi::Client do
   CONFIG = {
     project_id: 'datadog-apitest',
-    client_email: 'email@example.com',
+    client_email: 'email@example.com'
   }.freeze
 
   CREATE_CONFIG = {

@@ -75,6 +75,23 @@ module SpecDog
     end
   end
 
+  shared_examples 'an api method with params and body' do |command, args, request, endpoint, params, body|
+    it 'queries the api with params and body' do
+      url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(command, *args)).to eq ['200', {}]
+      params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
+      params = params.merge default_query
+
+      body = MultiJson.dump(body) if body
+
+      expect(WebMock).to have_requested(request, url).with(
+        query: params,
+        body: body
+      )
+    end
+  end
+
   shared_examples 'an api method with optional params' do |command, args, request, endpoint, opt_params|
     include_examples 'an api method', command, args, request, endpoint
     it 'queries the api with optional params' do

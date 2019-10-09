@@ -17,7 +17,7 @@ module Dogapi
       # :config => Hash: integration config.
       # config = {
       #   :project_id => 'datadog-sandbox',
-      #   :client_email => 'ricky-api-dev@datadog-sandbox.iam.gserviceaccount.com'
+      #   :client_email => 'email@example.com'
       # }
       #
       # dog = Dogapi::Client.new(api_key, app_key)

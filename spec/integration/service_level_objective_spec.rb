@@ -15,8 +15,8 @@ describe Dogapi::Client do
                     :create_service_level_objective, [SLO_TYPE, SLO_NAME, SLO_DESCRIPTION, SLO_TAGS, SLO_THRESHOLDS,
                                                       SLO_QUERY_NUMERATOR, SLO_QUERY_DENOMINATOR],
                     :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME, 'thresholds' => SLO_THRESHOLDS,
-                    'query' => { numerator: SLO_QUERY_NUMERATOR, denominator: SLO_QUERY_DENOMINATOR },
-                    'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
+                                   'query' => { numerator: SLO_QUERY_NUMERATOR, denominator: SLO_QUERY_DENOMINATOR },
+                                   'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
   end
 
   describe '#update_service_level_objective' do
@@ -51,7 +51,7 @@ describe Dogapi::Client do
 
   describe '#delete_timeframes_service_level_objective' do
     it_behaves_like 'an api method',
-                    :delete_timeframes_service_level_objective, [{SLO_ID => ['7d']}],
+                    :delete_timeframes_service_level_objective, [{ SLO_ID => ['7d'] }],
                     :post, '/slo/bulk_delete', SLO_ID => ['7d']
   end
 end

@@ -9,68 +9,53 @@ module Dogapi
       API_VERSION = 'v1'
 
       def create_service_level_objective(type, name, description = nil, tags = nil, thresholds = nil, numerator = nil,
-                                         denominator = nil, monitor_ids = nil, monitor_search = nil)
+                                         denominator = nil, monitor_ids = nil, monitor_search = nil, groups = nil)
         body = {
-            type: type,
-            name: name,
-            thresholds: thresholds,
+          type: type,
+          name: name,
+          thresholds: thresholds
         }
         if type == 'metric'
           body[:query] = {
-              numerator: numerator,
-              denominator: denominator,
+            numerator: numerator,
+            denominator: denominator
           }
         else
-          if !monitor_search.nil?
-            body[:monitor_search] = monitor_search
-          else
-            body[:monitor_ids] = monitor_ids
-          end
+          body[:monitor_search] = monitor_search unless monitor_search.nil?
+          body[:monitor_ids] = monitor_ids unless monitor_ids.nil?
+          body[:groups] = groups unless groups.nil?
         end
-        if !tags.nil?
-          body[:tags] = tags
-        end
-        if !description.nil?
-          body[:description] = description
-        end
+        body[:tags] = tags unless tags.nil?
+        body[:description] = description unless description.nil?
 
         request(Net::HTTP::Post, "/api/#{API_VERSION}/slo", nil, body, true)
       end
 
       def update_service_level_objective(slo_id, type, name = nil, description = nil, tags = nil, thresholds = nil,
-                                         numerator = nil, denominator = nil, monitor_ids = nil, monitor_search = nil)
+                                         numerator = nil, denominator = nil, monitor_ids = nil, monitor_search = nil,
+                                         groups = nil)
         body = {
-            type: type,
+          type: type
         }
 
-        if !name.nil?
-          body[:name] = name
-        end
+        body[:name] = name unless name.nil?
 
-        if !thresholds.nil?
-          body[:thresholds] = thresholds
-        end
+        body[:thresholds] = thresholds unless thresholds.nil?
 
         if type == 'metric'
-          if !numerator.nil? and !denominator.nil?
+          if !numerator.nil? && !denominator.nil?
             body[:query] = {
-                numerator: numerator,
-                denominator: denominator,
+              numerator: numerator,
+              denominator: denominator
             }
           end
         else
-          if !monitor_search.nil?
-            body[:monitor_search] = monitor_search
-          elsif !monitor_ids.nil?
-            body[:monitor_ids] = monitor_ids
-          end
+          body[:monitor_search] = monitor_search unless monitor_search.nil?
+          body[:monitor_ids] = monitor_ids unless monitor_ids.nil?
+          body[:groups] = groups unless groups.nil?
         end
-        if !tags.nil?
-          body[:tags] = tags
-        end
-        if !description.nil?
-          body[:description] = description
-        end
+        body[:tags] = tags unless tags.nil?
+        body[:description] = description unless description.nil?
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/slo/#{slo_id}", nil, body, true)
       end
@@ -81,12 +66,8 @@ module Dogapi
 
       def search_service_level_objective(slo_ids = nil, query = nil, offset = nil, limit = nil)
         params = {}
-        if !offset.nil?
-            params[:offset] = offset
-        end
-        if !limit.nil?
-          params[:limit] = limit
-        end
+        params[:offset] = offset unless offset.nil?
+        params[:limit] = limit unless limit.nil?
         if !slo_ids.nil?
           params[:ids] = slo_ids.join(',')
         else
@@ -102,7 +83,7 @@ module Dogapi
 
       def delete_many_service_level_objective(slo_ids)
         body = {
-            ids: slo_ids
+          ids: slo_ids
         }
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/slo/", nil, body, true)
       end
@@ -115,4 +96,3 @@ module Dogapi
     end
   end
 end
-

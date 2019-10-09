@@ -31,7 +31,7 @@ describe Dogapi::Client do
   describe '#search_service_level_objective' do
     it_behaves_like 'an api method with params',
                     :search_service_level_objective, [[SLO_ID]],
-                    :get, "/slo/", 'ids' => SLO_ID
+                    :get, '/slo/', 'ids' => SLO_ID
   end
 
   describe '#delete_service_level_objective' do
@@ -43,12 +43,12 @@ describe Dogapi::Client do
   describe '#delete_many_service_level_objective' do
     it_behaves_like 'an api method',
                     :delete_many_service_level_objective, [[SLO_ID]],
-                    :delete, "/slo/", 'ids' => [SLO_ID]
+                    :delete, '/slo/', 'ids' => [SLO_ID]
   end
 
   describe '#delete_timeframes_service_level_objective' do
     it_behaves_like 'an api method',
                     :delete_timeframes_service_level_objective, [{SLO_ID => ["7d"]}],
-                    :post, "/slo/bulk_delete", SLO_ID => ["7d"]
+                    :post, '/slo/bulk_delete', SLO_ID => ["7d"]
   end
 end

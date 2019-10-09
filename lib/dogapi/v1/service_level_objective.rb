@@ -3,20 +3,22 @@ require 'dogapi'
 module Dogapi
   class V1 # for namespacing
 
+    # Implements Service Level Objectives endpoints
     class ServiceLevelObjectiveService < Dogapi::APIService
 
       API_VERSION = 'v1'
 
-      def create_service_level_objective(type, name, description=nil, tags=nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
+      def create_service_level_objective(type, name, description = nil, tags = nil, thresholds = nil, numerator = nil,
+                                         denominator = nil, monitor_ids = nil, monitor_search = nil)
         body = {
-            :type => type,
-            :name => name,
-            :thresholds => thresholds,
+            type: type,
+            name: name,
+            thresholds: thresholds,
         }
         if type == 'metric'
           body[:query] = {
-              :numerator => numerator,
-              :denominator => denominator,
+              numerator: numerator,
+              denominator: denominator,
           }
         else
           if !monitor_search.nil?
@@ -35,10 +37,10 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/slo", nil, body, true)
       end
 
-      def update_service_level_objective(slo_id, type, name=nil, description=nil, tags=nil, thresholds=nil, numerator=nil, denominator=nil, monitor_ids=nil, monitor_search=nil)
+      def update_service_level_objective(slo_id, type, name = nil, description = nil, tags = nil, thresholds = nil,
+                                         numerator = nil, denominator = nil, monitor_ids = nil, monitor_search = nil)
         body = {
-            :type => type,
-
+            type: type,
         }
 
         if !name.nil?
@@ -52,8 +54,8 @@ module Dogapi
         if type == 'metric'
           if !numerator.nil? and !denominator.nil?
             body[:query] = {
-                :numerator => numerator,
-                :denominator => denominator,
+                numerator: numerator,
+                denominator: denominator,
             }
           end
         else
@@ -77,7 +79,7 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/#{slo_id}", nil, nil, false)
       end
 
-      def search_service_level_objective(slo_ids=nil, query=nil, offset=nil, limit=nil)
+      def search_service_level_objective(slo_ids = nil, query = nil, offset = nil, limit = nil)
         params = {}
         if !offset.nil?
             params[:offset] = offset
@@ -100,7 +102,7 @@ module Dogapi
 
       def delete_many_service_level_objective(slo_ids)
         body = {
-            :ids => slo_ids
+            ids: slo_ids
         }
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/slo/", nil, body, true)
       end

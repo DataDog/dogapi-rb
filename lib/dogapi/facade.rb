@@ -623,15 +623,17 @@ module Dogapi
     #
 
     def create_service_level_objective(type, name, description = nil, tags = nil, thresholds = nil, numerator = nil,
-                                       denominator = nil, monitor_ids = nil, monitor_search = nil)
+                                       denominator = nil, monitor_ids = nil, monitor_search = nil, groups = nil)
       @service_level_objective_svc.create_service_level_objective(type, name, description, tags, thresholds, numerator,
-                                                                  denominator, monitor_ids, monitor_search)
+                                                                  denominator, monitor_ids, monitor_search, groups)
     end
 
     def update_service_level_objective(slo_id, type, name = nil, description = nil, tags = nil, thresholds = nil,
-                                       numerator = nil, denominator = nil, monitor_ids = nil, monitor_search = nil)
+                                       numerator = nil, denominator = nil, monitor_ids = nil, monitor_search = nil,
+                                       groups = nil)
       @service_level_objective_svc.update_service_level_objective(slo_id, type, name, description, tags, thresholds,
-                                                                  numerator, denominator, monitor_ids, monitor_search)
+                                                                  numerator, denominator, monitor_ids, monitor_search,
+                                                                  groups)
     end
 
     def get_service_level_objective(slo_id)

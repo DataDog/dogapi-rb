@@ -35,8 +35,8 @@ module Dogapi
       # Delete an integration
       #
       # :source_type_name => String: the name of an integration source
-      def delete_integration(source_type_name)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, nil, false)
+      def delete_integration(source_type_namen, config)
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/#{source_type_name}", nil, config, false)
       end
 
     end

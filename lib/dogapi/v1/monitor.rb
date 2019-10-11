@@ -18,7 +18,7 @@ module Dogapi
 
       def update_monitor(monitor_id, query, options)
         body = {}.merge options
-        if !query.nil?
+        unless query.nil?
           body = {
             'query' => query
           }.merge body

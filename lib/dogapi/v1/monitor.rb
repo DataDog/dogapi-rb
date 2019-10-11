@@ -17,9 +17,11 @@ module Dogapi
       end
 
       def update_monitor(monitor_id, query, options)
-          body = {}.merge options
+        body = {}.merge options
         if query != nil
-          body = {'query' => query}.merge body
+          body = {
+            'query' => query
+          }.merge body
           warn '[DEPRECATION] query param is no longer required for update'
         end
 

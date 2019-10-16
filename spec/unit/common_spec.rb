@@ -83,7 +83,7 @@ describe 'Common' do
 
       urls.each do |url|
         params = service.set_api_and_app_keys_in_params(url, true)
-        expect(params).to eq ({})
+        expect(params).to eq({})
       end
     end
   end

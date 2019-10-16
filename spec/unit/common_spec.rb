@@ -65,8 +65,7 @@ describe 'Common' do
               '/api/v1/screen']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, with_app_key = true)
-      
+        params = service.set_api_and_app_keys_in_params(url, true)
         expect(params).to have_key(:api_key)
         expect(params[:api_key]).to eq service.api_key
         expect(params).to have_key(:application_key)
@@ -83,7 +82,7 @@ describe 'Common' do
               '/api/v2/users']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, with_app_key = true)
+        params = service.set_api_and_app_keys_in_params(url, true)
         expect(params).to eq ({})
       end
     end

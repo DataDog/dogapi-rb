@@ -22,7 +22,6 @@ module Dogapi
           body = {
             'query' => query
           }.merge body
-          warn '[DEPRECATION] query param is no longer required for update'
         end
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)

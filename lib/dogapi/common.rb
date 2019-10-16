@@ -6,6 +6,7 @@ require 'English'
 
 require 'rubygems'
 require 'multi_json'
+require 'set'
 
 module Dogapi
 
@@ -69,6 +70,7 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
+    attr_reader :api_key, :application_key
     def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
       @api_key = api_key
       @application_key = application_key
@@ -116,8 +118,10 @@ module Dogapi
       resp = nil
       connect do |conn|
         begin
-          current_url = url + prepare_params(extra_params, with_app_key)
+          current_url = url + prepare_params(extra_params, url, with_app_key)
           req = method.new(current_url)
+          req['DD-API-KEY'] = @api_key
+          req['DD-APPLICATION-KEY'] = @application_key if with_app_key
 
           if send_json
             req.content_type = 'application/json'
@@ -132,13 +136,29 @@ module Dogapi
       end
     end
 
-    def prepare_params(extra_params, with_app_key)
-      params = { api_key: @api_key }
-      params[:application_key] = @application_key if with_app_key
+    def prepare_params(extra_params, url, with_app_key)
+      params = set_api_and_app_keys_in_params(url, with_app_key)
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')
       qs
+    end
+
+    def set_api_and_app_keys_in_params(url, with_app_key)
+      set_of_urls = Set.new ['/api/v1/series',
+                             '/api/v1/check_run',
+                             '/api/v1/events',
+                             '/api/v1/screen']
+
+      include_in_params = set_of_urls.include?(url)
+
+      if include_in_params
+        params = { api_key: @api_key }
+        params[:application_key] = @application_key if with_app_key
+      else
+        params = {}
+      end
+      return params
     end
 
     def handle_response(resp)

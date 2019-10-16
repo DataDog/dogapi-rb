@@ -48,6 +48,44 @@ describe 'Common' do
         expect(conn.port).to eq 443
       end
     end
+
+    it 'respects http headers' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      expect(service.api_key).to eq 'api_key'
+      expect(service.application_key).to eq 'app_key'
+    end
+
+    it 'sets api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v1/series',
+              '/api/v1/check_run',
+              '/api/v1/events',
+              '/api/v1/screen']
+
+      urls.each do |url|
+        params = service.set_api_and_app_keys_in_params(url, true)
+        expect(params).to have_key(:api_key)
+        expect(params[:api_key]).to eq service.api_key
+        expect(params).to have_key(:application_key)
+        expect(params[:application_key]).to eq service.application_key
+      end
+    end
+
+    it 'does not set api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v2/series',
+              '/api/v1/random_endpoint',
+              '/api/v1/dashboards',
+              '/api/v2/users']
+
+      urls.each do |url|
+        params = service.set_api_and_app_keys_in_params(url, true)
+        expect(params).to eq({})
+      end
+    end
   end
 end
 

@@ -18,9 +18,7 @@ describe Dogapi::Client do
       stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(:update_comment, COMMENT_ID, options)).to eq ['200', {}]
 
-      expect(WebMock).to have_requested(:put, url).with(
-        query: default_query
-      )
+      expect(WebMock).to have_requested(:put, url)
     end
   end
 

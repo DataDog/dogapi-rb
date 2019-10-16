@@ -59,13 +59,13 @@ describe 'Common' do
     it 'sets api and app keys in params' do
       service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
 
-      urls =['/api/v1/series',
-             '/api/v1/check_run',
-             '/api/v1/events',
-             '/api/v1/screen']
+      urls = ['/api/v1/series',
+              '/api/v1/check_run',
+              '/api/v1/events',
+              '/api/v1/screen']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, with_app_key=true)
+        params = service.set_api_and_app_keys_in_params(url, with_app_key = true)
       
         expect(params).to have_key(:api_key)
         expect(params[:api_key]).to eq service.api_key
@@ -77,13 +77,13 @@ describe 'Common' do
     it 'does not set api and app keys in params' do
       service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
 
-      urls =['/api/v2/series',
-             '/api/v1/random_endpoint',
-             '/api/v1/dashboards',
-             '/api/v2/users']
+      urls = ['/api/v2/series',
+              '/api/v1/random_endpoint',
+              '/api/v1/dashboards',
+              '/api/v2/users']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, with_app_key=true)
+        params = service.set_api_and_app_keys_in_params(url, with_app_key = true)
         expect(params).to eq ({})
       end
     end

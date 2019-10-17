@@ -16,13 +16,15 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", nil, body, true)
       end
 
-      def update_monitor(monitor_id, query, options)
+      def update_monitor(monitor_id, query = nil, options = {})
         body = {}.merge options
         unless query.nil?
           body = {
             'query' => query
           }.merge body
         end
+        warn '[DEPRECATION] query param is not required anymore and should be set to nil.'\
+             ' To update the query, set it in the options parameter instead'
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)
       end

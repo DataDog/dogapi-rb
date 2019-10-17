@@ -31,6 +31,18 @@ describe Dogapi::Client do
                     :get, "/slo/#{SLO_ID}"
   end
 
+  describe '#get_service_level_objective_history' do
+    it_behaves_like 'an api method with params',
+                    :get_service_level_objective_history, [SLO_ID, 0, 1000000],
+                    :get, "/slo/#{SLO_ID}/history", 'from_ts' => 0, 'to_ts' => 1000000
+  end
+
+  describe '#can_deleteservice_level_objective' do
+    it_behaves_like 'an api method',
+                    :can_delete_service_level_objective, [[SLO_ID]],
+                    :get, "/slo/can_delete", 'ids' => [SLO_ID]
+  end
+
   describe '#search_service_level_objective' do
     it_behaves_like 'an api method with params',
                     :search_service_level_objective, [[SLO_ID]],

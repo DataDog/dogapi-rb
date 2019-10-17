@@ -93,6 +93,21 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/slo/bulk_delete", nil, ops, true)
       end
 
+      def get_service_level_objective_history(slo_id, from_ts, to_ts)
+        params = {
+            from_ts: from_ts,
+            to_ts: to_ts
+        }
+        request(Net::HTTP::Get, "api/#{API_VERSION}/slo/#{slo_id}/history", params, nil, false)
+      end
+
+      def can_delete_service_level_objective(slo_ids)
+        params = {
+            ids: slo_ids.join(',')
+        }
+        request(Net::HTTP::Get, "api/#{API_VERSION}/slo/can_delete", params, nil, false)
+      end
+
     end
   end
 end

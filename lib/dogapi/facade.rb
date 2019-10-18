@@ -640,12 +640,16 @@ module Dogapi
       @service_level_objective_svc.get_service_level_objective(slo_id)
     end
 
-    def get_service_level_objective(slo_id, from_ts, to_ts)
+    def get_service_level_objective_history(slo_id, from_ts, to_ts)
       @service_level_objective_svc.get_service_level_objective_history(slo_id, from_ts, to_ts)
     end
 
     def search_service_level_objective(slo_ids = nil, query = nil, offset = nil, limit = nil)
       @service_level_objective_svc.search_service_level_objective(slo_ids, query, offset, limit)
+    end
+
+    def can_delete_service_level_objective(slo_ids)
+      @service_level_objective_svc.can_delete_service_level_objective(slo_ids)
     end
 
     def delete_service_level_objective(slo_id)

@@ -95,13 +95,9 @@ module SpecDog
     it 'queries the api with params' do
       url = api_url + endpoint
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      unless params[:api_key].nil?
-        args[:api_key] = params[:api_key]
-        args[:application_key] = params[:application_key]
-      end
       expect(dog.send(command, **args)).to eq ['200', {}]
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      params = params.merge default_query
+      # hack/note: do not merge with default_query for this test case
 
       expect(WebMock).to have_requested(request, url).with(
           query: params

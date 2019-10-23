@@ -11,17 +11,19 @@ describe Dogapi::Client do
   SLO_THRESHOLDS = [{ timeframe: '7d', target: 90 }, { timeframe: '30d', target: 95 }].freeze
 
   describe '#create_service_level_objective' do
-    it_behaves_like 'an api method',
-                    :create_service_level_objective, [SLO_TYPE, SLO_NAME, SLO_DESCRIPTION, SLO_TAGS, SLO_THRESHOLDS,
-                                                      SLO_QUERY_NUMERATOR, SLO_QUERY_DENOMINATOR],
+    it_behaves_like 'an api method with named args',
+                    :create_service_level_objective, {type: SLO_TYPE, name: SLO_NAME, description: SLO_DESCRIPTION,
+                                                      tags: SLO_TAGS, thresholds: SLO_THRESHOLDS,
+                                                      numerator: SLO_QUERY_NUMERATOR,
+                                                      denominator: SLO_QUERY_DENOMINATOR},
                     :post, '/slo', 'type' => SLO_TYPE, 'name' => SLO_NAME, 'thresholds' => SLO_THRESHOLDS,
                                    'query' => { numerator: SLO_QUERY_NUMERATOR, denominator: SLO_QUERY_DENOMINATOR },
                                    'tags' => SLO_TAGS, 'description' => SLO_DESCRIPTION
   end
 
   describe '#update_service_level_objective' do
-    it_behaves_like 'an api method',
-                    :update_service_level_objective, [SLO_ID, SLO_TYPE, SLO_NAME],
+    it_behaves_like 'an api method with named args',
+                    :update_service_level_objective, {slo_id: SLO_ID, type: SLO_TYPE, name: SLO_NAME},
                     :put, "/slo/#{SLO_ID}", 'type' => SLO_TYPE, 'name' => SLO_NAME
   end
 
@@ -33,19 +35,19 @@ describe Dogapi::Client do
 
   describe '#get_service_level_objective_history' do
     it_behaves_like 'an api method with params',
-                    :get_service_level_objective_history, [SLO_ID, 0, 1000000],
+                    :get_service_level_objective_history, [SLO_ID],
                     :get, "/slo/#{SLO_ID}/history", 'from_ts' => 0, 'to_ts' => 1000000
   end
 
-  describe '#can_deleteservice_level_objective' do
-    it_behaves_like 'an api method',
-                    :can_delete_service_level_objective, [[SLO_ID]],
+  describe '#can_delete_service_level_objective' do
+    it_behaves_like 'an api method with params',
+                    :can_delete_service_level_objective, [],
                     :get, "/slo/can_delete", 'ids' => [SLO_ID]
   end
 
   describe '#search_service_level_objective' do
-    it_behaves_like 'an api method with params',
-                    :search_service_level_objective, [[SLO_ID]],
+    it_behaves_like 'an api method with named args making params',
+                    :search_service_level_objective, {slo_ids: [SLO_ID]},
                     :get, '/slo/', 'ids' => SLO_ID
   end
 

@@ -622,21 +622,22 @@ module Dogapi
     # SERVICE LEVEL OBJECTIVES
     #
 
-    def create_service_level_objective(type, name, description: nil, tags: nil, thresholds: nil, numerator: nil,
+    def create_service_level_objective(type: , name: , description: nil, tags: nil, thresholds: nil, numerator: nil,
                                        denominator: nil, monitor_ids: nil, monitor_search: nil, groups: nil)
-      @service_level_objective_svc.create_service_level_objective(type, name, description: description, tags: tags,
-                                                                  thresholds: thresholds, numerator: numerator,
-                                                                  denominator: denominator, monitor_ids: monitor_ids,
-                                                                  monitor_search: monitor_search, groups: groups)
-    end
-
-    def update_service_level_objective(slo_id, type, name: nil, description: nil, tags: nil, thresholds: nil,
-                                       numerator: nil, denominator: nil, monitor_ids: nil, monitor_search: nil,
-                                       groups: nil)
-      @service_level_objective_svc.update_service_level_objective(slo_id, type, name: name, description: description,
+      @service_level_objective_svc.create_service_level_objective(type: type, name: name, description: description,
                                                                   tags: tags, thresholds: thresholds,
                                                                   numerator: numerator, denominator: denominator,
                                                                   monitor_ids: monitor_ids,
+                                                                  monitor_search: monitor_search, groups: groups)
+    end
+
+    def update_service_level_objective(slo_id: , type: , name: nil, description: nil, tags: nil, thresholds: nil,
+                                       numerator: nil, denominator: nil, monitor_ids: nil, monitor_search: nil,
+                                       groups: nil)
+      @service_level_objective_svc.update_service_level_objective(slo_id: slo_id, type: type, name: name,
+                                                                  description: description, tags: tags,
+                                                                  thresholds: thresholds, numerator: numerator,
+                                                                  denominator: denominator, monitor_ids: monitor_ids,
                                                                   monitor_search: monitor_search, groups: groups)
     end
 

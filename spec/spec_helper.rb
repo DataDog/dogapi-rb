@@ -43,6 +43,22 @@ module SpecDog
     end
   end
 
+  shared_examples 'an api method with named args' do |command, args, request, endpoint, body|
+    it 'queries the api' do
+      url = api_url + endpoint
+      old_url = old_api_url + endpoint
+      stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(command, **args)).to eq ['200', {}]
+
+      body = MultiJson.dump(body) if body
+
+      expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
+          query: default_query,
+          body: body
+      )
+    end
+  end
+
   shared_examples 'an api method with options' do |command, args, request, endpoint, body|
     include_examples 'an api method', command, args, request, endpoint, body
     it 'queries the api with options' do
@@ -71,6 +87,20 @@ module SpecDog
 
       expect(WebMock).to have_requested(request, url).with(
         query: params
+      )
+    end
+  end
+
+  shared_examples 'an api method with named args making params' do |command, args, request, endpoint, params|
+    it 'queries the api with params' do
+      url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(command, **args)).to eq ['200', {}]
+      params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
+      params = params.merge default_query
+
+      expect(WebMock).to have_requested(request, url).with(
+          query: params
       )
     end
   end

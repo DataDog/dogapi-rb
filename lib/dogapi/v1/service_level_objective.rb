@@ -8,8 +8,9 @@ module Dogapi
 
       API_VERSION = 'v1'
 
-      def create_service_level_objective(type, name, description: nil, tags: nil, thresholds: nil, numerator: nil,
-                                         denominator: nil, monitor_ids: nil, monitor_search: nil, groups: nil)
+      def create_service_level_objective(type: , name: , description: nil, tags: nil, thresholds: nil,
+                                         numerator: nil, denominator: nil, monitor_ids: nil, monitor_search: nil,
+                                         groups: nil)
         body = {
           type: type,
           name: name,
@@ -31,9 +32,9 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/slo", nil, body, true)
       end
 
-      def update_service_level_objective(slo_id, type, name: nil, description: nil, tags: nil, thresholds: nil,
-                                         numerator: nil, denominator: nil, monitor_ids: nil, monitor_search: nil,
-                                         groups: nil)
+      def update_service_level_objective(slo_id: , type: , name: nil, description: nil, tags: nil,
+                                         thresholds: nil, numerator: nil, denominator: nil, monitor_ids: nil,
+                                         monitor_search: nil, groups: nil)
         body = {
           type: type
         }
@@ -98,14 +99,17 @@ module Dogapi
             from_ts: from_ts,
             to_ts: to_ts
         }
-        request(Net::HTTP::Get, "api/#{API_VERSION}/slo/#{slo_id}/history", params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/#{slo_id}/history", params, nil, false)
       end
 
       def can_delete_service_level_objective(slo_ids)
-        params = {
-            ids: slo_ids.join(',')
-        }
-        request(Net::HTTP::Get, "api/#{API_VERSION}/slo/can_delete", params, nil, false)
+        params = {}
+        if slo_ids.is_a?Array
+          params[:ids] = slo_ids.join(',')
+        else
+          params[:ids] = slo_ids
+        end
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/can_delete", params, nil, false)
       end
 
     end

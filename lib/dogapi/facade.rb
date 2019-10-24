@@ -95,6 +95,8 @@ module Dogapi
       @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
+                                                                                  timeout, @datadog_host)
 
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
@@ -614,6 +616,58 @@ module Dogapi
 
     def unmute_host(hostname)
       @monitor_svc.unmute_host(hostname)
+    end
+
+    #
+    # SERVICE LEVEL OBJECTIVES
+    #
+
+    def create_service_level_objective(type: , name: , description: nil, tags: nil, thresholds: nil, numerator: nil,
+                                       denominator: nil, monitor_ids: nil, monitor_search: nil, groups: nil)
+      @service_level_objective_svc.create_service_level_objective(type: type, name: name, description: description,
+                                                                  tags: tags, thresholds: thresholds,
+                                                                  numerator: numerator, denominator: denominator,
+                                                                  monitor_ids: monitor_ids,
+                                                                  monitor_search: monitor_search, groups: groups)
+    end
+
+    def update_service_level_objective(slo_id: , type: , name: nil, description: nil, tags: nil, thresholds: nil,
+                                       numerator: nil, denominator: nil, monitor_ids: nil, monitor_search: nil,
+                                       groups: nil)
+      @service_level_objective_svc.update_service_level_objective(slo_id: slo_id, type: type, name: name,
+                                                                  description: description, tags: tags,
+                                                                  thresholds: thresholds, numerator: numerator,
+                                                                  denominator: denominator, monitor_ids: monitor_ids,
+                                                                  monitor_search: monitor_search, groups: groups)
+    end
+
+    def get_service_level_objective(slo_id)
+      @service_level_objective_svc.get_service_level_objective(slo_id)
+    end
+
+    def get_service_level_objective_history(slo_id, from_ts, to_ts)
+      @service_level_objective_svc.get_service_level_objective_history(slo_id, from_ts, to_ts)
+    end
+
+    def search_service_level_objective(slo_ids: nil, query: nil, offset: nil, limit: nil)
+      @service_level_objective_svc.search_service_level_objective(slo_ids: slo_ids, query: query, offset: offset,
+                                                                  limit: limit)
+    end
+
+    def can_delete_service_level_objective(slo_ids)
+      @service_level_objective_svc.can_delete_service_level_objective(slo_ids)
+    end
+
+    def delete_service_level_objective(slo_id)
+      @service_level_objective_svc.delete_service_level_objective(slo_id)
+    end
+
+    def delete_many_service_level_objective(slo_ids)
+      @service_level_objective_svc.delete_many_service_level_objective(slo_ids)
+    end
+
+    def delete_timeframes_service_level_objective(ops)
+      @service_level_objective_svc.delete_timeframes_service_level_objective(ops)
     end
 
     #

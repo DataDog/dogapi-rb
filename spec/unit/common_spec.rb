@@ -65,11 +65,12 @@ describe 'Common' do
               '/api/v1/screen']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, true)
-        expect(params).to have_key(:api_key)
-        expect(params[:api_key]).to eq service.api_key
-        expect(params).to have_key(:application_key)
-        expect(params[:application_key]).to eq service.application_key
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be true
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq("?api_key=#{service.api_key}&application_key=#{service.application_key}")
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be false
+        expect(req.key?('DD-APPLICATION-KEY')).to be false
       end
     end
 
@@ -82,8 +83,14 @@ describe 'Common' do
               '/api/v2/users']
 
       urls.each do |url|
-        params = service.set_api_and_app_keys_in_params(url, true)
-        expect(params).to eq({})
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be false
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq('?')
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be true
+        expect(req['DD-API-KEY']).to eq service.api_key
+        expect(req.key?('DD-APPLICATION-KEY')).to be true
+        expect(req['DD-APPLICATION-KEY']).to eq service.application_key
       end
     end
   end

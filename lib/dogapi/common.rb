@@ -130,7 +130,7 @@ module Dogapi
 
           resp = conn.request(req)
           if resp.code.to_i / 100 == 3
-            resp = handle_redirect(conn,req,resp,0)
+            resp = handle_redirect(conn, req, resp, 0)
           end
           return handle_response(resp)
         rescue Exception => e
@@ -177,11 +177,11 @@ module Dogapi
       end
     end
 
-    def handle_redirect(conn,req,resp, retries)
+    def handle_redirect(conn, req, resp, retries)
       req.uri = URI.parse(resp.header['location'])
       new_response = conn.request(req)
       if new_response.code / 100 == 3 && retries < 10
-        new_response = handle_redirect(conn,req,new_response, retries+1)
+        new_response = handle_redirect(conn, req, new_response, retries + 1)
       end
       new_response
     end

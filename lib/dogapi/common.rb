@@ -129,7 +129,7 @@ module Dogapi
           end
 
           resp = conn.request(req)
-          if resp.code / 100 == 3
+          if resp.code.to_i / 100 == 3
             resp = handle_redirect(conn,req,resp,0)
           end
           return handle_response(resp)

@@ -1,5 +1,9 @@
 # Changes
 
+## 1.37.1 / 2019-11-04
+
+* [BUGFIX] Revert the Service Level Objective feature to remove an issue with older versions of Ruby < 2.0. See [#198][]
+
 ## 1.37.0 / 2019-11-04
 
 * [FEATURE] Add Service Level Objectives support. See [#188][], thanks [@platinummonkey][]
@@ -257,6 +261,7 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#188]: https://github.com/DataDog/dogapi-rb/issues/188
 [#189]: https://github.com/DataDog/dogapi-rb/issues/189
 [#192]: https://github.com/DataDog/dogapi-rb/issues/192
+[#198]: https://github.com/DataDog/dogapi-rb/issues/198
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE

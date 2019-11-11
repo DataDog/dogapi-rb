@@ -1,5 +1,16 @@
 # Changes
 
+## 1.37.1 / 2019-11-04
+
+* [BUGFIX] Revert the Service Level Objective feature to remove an issue with older versions of Ruby < 2.0. See [#198][]
+
+## 1.37.0 / 2019-11-04
+
+* [FEATURE] Add Service Level Objectives support. See [#188][], thanks [@platinummonkey][]
+* [IMPROVEMENTS] Don't fail if `hostname` binary is not installed. See [#179][], thanks [@pschipitsch][]
+* [IMPROVEMENTS] Use headers-only for api and app keys for endpoints that support this. See [#189][], thanks [@ssc3][]
+* [IMPROVEMENTS] Make `query` and `options` optional for `update_monitor` calls. See [#192][], thanks [@unclebconnor][]
+
 ## 1.36.0 / 2019-06-05
 
 * [BUGFIX] Pass the options as params to request, not body content. See [#157][], thanks [@wonko][]
@@ -246,6 +257,11 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#172]: https://github.com/DataDog/dogapi-rb/issues/172
 [#173]: https://github.com/DataDog/dogapi-rb/issues/173
 [#174]: https://github.com/DataDog/dogapi-rb/issues/174
+[#179]: https://github.com/DataDog/dogapi-rb/issues/179
+[#188]: https://github.com/DataDog/dogapi-rb/issues/188
+[#189]: https://github.com/DataDog/dogapi-rb/issues/189
+[#192]: https://github.com/DataDog/dogapi-rb/issues/192
+[#198]: https://github.com/DataDog/dogapi-rb/issues/198
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE
@@ -265,8 +281,12 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [@miknight]: https://github.com/miknight
 [@nots]: https://github.com/nots
 [@orien]: https://github.com/orien
+[@platinummonkey]: https://github.com/platinummonkey
+[@pschipitsch]: https://github.com/pschipitsch
 [@rmoriz]: https://github.com/rmoriz
+[@ssc3]: https://github.com/ssc3
 [@treeder]: https://github.com/treeder
+[@unclebconnor]: https://github.com/unclebconnor
 [@winebarrel]: https://github.com/winebarrel
 [@wonko]: https://github.com/wonko
 [@yyuu]: https://github.com/yyuu

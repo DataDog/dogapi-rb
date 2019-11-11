@@ -6,6 +6,7 @@ require 'English'
 
 require 'rubygems'
 require 'multi_json'
+require 'set'
 
 module Dogapi
 
@@ -69,6 +70,7 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
+    attr_reader :api_key, :application_key
     def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
       @api_key = api_key
       @application_key = application_key
@@ -116,14 +118,8 @@ module Dogapi
       resp = nil
       connect do |conn|
         begin
-          current_url = url + prepare_params(extra_params, with_app_key)
-          req = method.new(current_url)
-
-          if send_json
-            req.content_type = 'application/json'
-            req.body = MultiJson.dump(body)
-          end
-
+          params = prepare_params(extra_params, url, with_app_key)
+          req = prepare_request(method, url, params, body, send_json, with_app_key)
           resp = conn.request(req)
           return handle_response(resp)
         rescue Exception => e
@@ -132,13 +128,37 @@ module Dogapi
       end
     end
 
-    def prepare_params(extra_params, with_app_key)
-      params = { api_key: @api_key }
-      params[:application_key] = @application_key if with_app_key
+    def prepare_request(method, url, params, body, send_json, with_app_key)
+      url_with_params = url + params
+      req = method.new(url_with_params)
+      unless should_set_api_and_app_keys_in_params?(url)
+        req['DD-API-KEY'] = @api_key
+        req['DD-APPLICATION-KEY'] = @application_key if with_app_key
+      end
+
+      if send_json
+        req.content_type = 'application/json'
+        req.body = MultiJson.dump(body)
+      end
+      return req
+    end
+
+    def prepare_params(extra_params, url, with_app_key)
+      if should_set_api_and_app_keys_in_params?(url)
+        params = { api_key: @api_key }
+        params[:application_key] = @application_key if with_app_key
+      else
+        params = {}
+      end
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')
       qs
+    end
+
+    def should_set_api_and_app_keys_in_params?(url)
+      set_of_urls = Set.new ['/api/v1/series', '/api/v1/check_run', '/api/v1/events', '/api/v1/screen']
+      return set_of_urls.include?(url)
     end
 
     def handle_response(resp)

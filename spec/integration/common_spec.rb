@@ -12,9 +12,7 @@ describe Dogapi::APIService do
           stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
           expect(service.request(Net::HTTP::Get, '/api/v1/awesome', nil, nil, true, true)).to eq(['200', {}])
 
-          expect(WebMock).to have_requested(:get, url).with(
-            query: default_query
-          )
+          expect(WebMock).to have_requested(:get, url)
         end
       end
       context 'and it is down' do
@@ -22,9 +20,7 @@ describe Dogapi::APIService do
           stub_request(:get, /#{url}/).to_timeout
           expect(service.request(Net::HTTP::Get, '/api/v1/awesome', nil, nil, true, true)).to eq([-1, {}])
 
-          expect(WebMock).to have_requested(:get, url).with(
-            query: default_query
-          )
+          expect(WebMock).to have_requested(:get, url)
         end
       end
     end

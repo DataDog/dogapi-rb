@@ -79,7 +79,6 @@ module SpecDog
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args)).to eq ['200', {}]
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      params = params.merge default_query
 
       body = MultiJson.dump(body) if body
 

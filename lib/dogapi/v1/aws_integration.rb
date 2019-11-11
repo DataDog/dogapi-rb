@@ -21,6 +21,14 @@ module Dogapi
       #   :role_name => '<AWS_ROLE_NAME>'
       # }
       #
+      # Access Key/Secret Access Key based accounts (GovCloud and China only)
+      #
+      # config = {
+      #   :access_key_id => '<AWS_ACCESS_KEY_ID>',
+      #   :host_tags => ['api:example'],
+      #   :secret_access_key => '<AWS_SECRET_ACCESS_KEY>'
+      # }
+      #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
       # puts dog.create_aws_integration(config)
@@ -33,6 +41,11 @@ module Dogapi
       # config = {
       #   :account_id => '<AWS_ACCOUNT>',
       #   :role_name => '<AWS_ROLE_NAME>'
+      # }
+      # Access Key/Secret Access Key based accounts (GovCloud and China only)
+      #
+      # config = {
+      #   :access_key_id => '<AWS_ACCESS_KEY_ID>',
       # }
       #
       # dog = Dogapi::Client.new(api_key, app_key)
@@ -61,8 +74,35 @@ module Dogapi
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws/generate_new_external_id", nil, config, true)
       end
 
-      # Update integrated AWS account
-      # :config => Hash: integration config. NOT WORKING CURRENTLY
+      # Update integrated AWS account.
+      # :config => Hash: integration config.
+      # existing_config = {
+      #   "account_id": '<EXISTING_AWS_ACCOUNT>',
+      #   "role_name": '<EXISTING_AWS_ROLE_NAME>'
+      # }
+      #
+      # config = {
+      #   "account_id": '<NEW_AWS_ACCOUNT>',
+      #   "host_tags": ['tag:example1,tag:example2'],
+      #   "filter_tags": ['datadog:true']
+      # }
+      #
+      # Access Key/Secret Access Key based accounts (GovCloud and China only)
+      #
+      # existing_config = {
+      #   "access_key_id": '<EXISTING_ACCESS_KEY_ID>',
+      #   "secret_access_key": '<EXISTING_SECRET_ACCESS_KEY>'
+      # }
+      #
+      # config = {
+      #   "access_key_id": '<NEW_ACCESS_KEY_ID>',
+      #   "host_tags": ['new:tags'],
+      #   "filter_tags": ['datadog:true']
+      # }
+      #
+      # dog = Dogapi::Client.new(api_key, app_key)
+
+      # puts dog.update_aws_account(existing_config, config)
       def update_aws_account(existing_config, config)
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws", existing_config, config, true)
       end

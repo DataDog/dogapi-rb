@@ -13,39 +13,39 @@ describe Dogapi::Client do
     role_name: 'DatadogApiTestRole'
   }.freeze
 
-  describe '#create_aws_integration' do
+  describe '#aws_integration_create' do
     it_behaves_like 'an api method',
-                    :create_aws_integration, [CONFIG],
+                    :aws_integration_create, [CONFIG],
                     :post, '/integration/aws', CONFIG
   end
 
-  describe '#aws_list' do
+  describe '#aws_integration_list' do
     it_behaves_like 'an api method',
-                    :aws_list, nil,
+                    :aws_integration_list, nil,
                     :get, '/integration/aws'
   end
 
-  describe '#list_aws_namespaces' do
+  describe '#aws_integration_list_namespaces' do
     it_behaves_like 'an api method',
-                    :list_aws_namespaces, nil,
+                    :aws_integration_list_namespaces, nil,
                     :get, '/integration/aws/available_namespace_rules'
   end
 
-  describe '#generate_external_id' do
+  describe '#aws_integration_generate_external_id' do
     it_behaves_like 'an api method',
-                    :generate_external_id, [CONFIG],
+                    :aws_integration_generate_external_id, [CONFIG],
                     :put, '/integration/aws/generate_new_external_id', CONFIG
   end
 
-  describe '#update_aws_account' do
+  describe '#aws_integration_update' do
     it_behaves_like 'an api method with params and body',
-                    :update_aws_account, [CONFIG, UPDATE_CONFIG],
+                    :aws_integration_update, [CONFIG, UPDATE_CONFIG],
                     :put, '/integration/aws', CONFIG, UPDATE_CONFIG
   end
 
-  describe '#delete_aws_integration' do
+  describe '#aws_integration_delete' do
     it_behaves_like 'an api method',
-                    :delete_aws_integration, [CONFIG],
+                    :aws_integration_delete, [CONFIG],
                     :delete, '/integration/aws', CONFIG
   end
 end

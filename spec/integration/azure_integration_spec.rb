@@ -27,33 +27,33 @@ describe Dogapi::Client do
     new_client_id: 'abcd1234-5678-1234-5678-1234abcd5678'
   }.freeze
 
-  describe '#azure_list' do
+  describe '#azure_integration_list' do
     it_behaves_like 'an api method',
-                    :azure_list, nil,
+                    :azure_integration_list, nil,
                     :get, '/integration/azure'
   end
 
-  describe '#create_azure_integration' do
+  describe '#azure_integration_create' do
     it_behaves_like 'an api method',
-                    :create_azure_integration, [CREATE_CONFIG],
+                    :azure_integration_create, [CREATE_CONFIG],
                     :post, '/integration/azure', CREATE_CONFIG
   end
 
-  describe '#update_azure_host_filters' do
+  describe '#azure_integration_update_host_filters' do
     it_behaves_like 'an api method',
-                    :update_azure_host_filters, [UPDATE_HF_CONFIG],
+                    :azure_integration_update_host_filters, [UPDATE_HF_CONFIG],
                     :post, '/integration/azure/host_filters', UPDATE_HF_CONFIG
   end
 
-  describe '#update_azure_integration' do
+  describe '#azure_integration_update' do
     it_behaves_like 'an api method',
-                    :update_azure_integration, [UPDATE_CONFIG],
+                    :azure_integration_update, [UPDATE_CONFIG],
                     :put, '/integration/azure', UPDATE_CONFIG
   end
 
-  describe '#delete_azure_integration' do
+  describe '#azure_integration_delete' do
     it_behaves_like 'an api method',
-                    :delete_azure_integration, [CONFIG],
+                    :azure_integration_delete, [CONFIG],
                     :delete, '/integration/azure', CONFIG
   end
 end

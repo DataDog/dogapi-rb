@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = 'v1'
 
       # Retrieve gcp integration information
-      def gcp_list
+      def gcp_integration_list
         request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/gcp", nil, nil, false)
       end
 
@@ -22,8 +22,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.delete_gcp_integration(config)
-      def delete_gcp_integration(config)
+      # puts dog.gcp_integration_delete(config)
+      def gcp_integration_delete(config)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/gcp", nil, config, true)
       end
 
@@ -45,8 +45,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.create_gcp_integration(config)
-      def create_gcp_integration(config)
+      # puts dog.gcp_integration_create(config)
+      def gcp_integration_create(config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/gcp", nil, config, true)
       end
 
@@ -61,8 +61,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.update_gcp_integration(config)
-      def update_gcp_integration(config)
+      # puts dog.gcp_integration_update(config)
+      def gcp_integration_update(config)
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/gcp", nil, config, true)
       end
 

@@ -24,18 +24,18 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.add_aws_logs_lambda(config)
-      def add_aws_logs_lambda(config)
+      # puts dog.aws_logs_add_lambda(config)
+      def aws_logs_add_lambda(config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/aws/logs", nil, config, true)
       end
 
       # List all Datadog-AWS Logs integrations configured in your Datadog account.
-      def list_aws_logs_integrations
+      def aws_logs_integrations_list
         request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/aws/logs", nil, nil, false)
       end
 
       # Enable automatic log collection for a list of services.
-      # This should be run after running 'add_aws_logs_lambda' to save the config.
+      # This should be run after running 'aws_logs_add_lambda' to save the config.
       # config = {
       #   :account_id => '<AWS_ACCOUNT>',
       #   :services => ['s3', 'elb', 'elbv2', 'cloudfront', 'redshift', 'lambda']
@@ -57,8 +57,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.delete_aws_logs_integration(config)
-      def delete_aws_logs_integration(config)
+      # puts dog.aws_logs_integration_delete(config)
+      def aws_logs_integration_delete(config)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/aws/logs", nil, config, true)
       end
 

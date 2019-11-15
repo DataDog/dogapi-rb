@@ -27,27 +27,27 @@ describe Dogapi::Client do
     automute: false
   }.freeze
 
-  describe '#gcp_list' do
+  describe '#gcp_integration_list' do
     it_behaves_like 'an api method',
-                    :gcp_list, nil,
+                    :gcp_integration_list, nil,
                     :get, '/integration/gcp'
   end
 
-  describe '#create_gcp_integration' do
+  describe '#gcp_integration_create' do
     it_behaves_like 'an api method',
-                    :create_gcp_integration, [CREATE_CONFIG],
+                    :gcp_integration_create, [CREATE_CONFIG],
                     :post, '/integration/gcp', CREATE_CONFIG
   end
 
-  describe '#update_gcp_integration' do
+  describe '#gcp_integration_update' do
     it_behaves_like 'an api method',
-                    :update_gcp_integration, [UPDATE_CONFIG],
+                    :gcp_integration_update, [UPDATE_CONFIG],
                     :put, '/integration/gcp', UPDATE_CONFIG
   end
 
-  describe '#delete_gcp_integration' do
+  describe '#gcp_integration_delete' do
     it_behaves_like 'an api method',
-                    :delete_gcp_integration, [CONFIG],
+                    :gcp_integration_delete, [CONFIG],
                     :delete, '/integration/gcp', CONFIG
   end
 end

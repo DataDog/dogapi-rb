@@ -690,36 +690,36 @@ module Dogapi
     #
     # AWS INTEGRATION
     #
-    def aws_list
-      @aws_integration_svc.aws_list
+    def aws_integration_list
+      @aws_integration_svc.aws_integration_list
     end
 
-    def create_aws_integration(config)
-      @aws_integration_svc.create_aws_integration(config)
+    def aws_integration_create(config)
+      @aws_integration_svc.aws_integration_create(config)
     end
 
-    def delete_aws_integration(config)
-      @aws_integration_svc.delete_aws_integration(config)
+    def aws_integration_delete(config)
+      @aws_integration_svc.aws_integration_delete(config)
     end
 
-    def list_aws_namespaces
-      @aws_integration_svc.list_aws_namespaces
+    def aws_integration_list_namespaces
+      @aws_integration_svc.aws_integration_list_namespaces
     end
 
-    def generate_external_id(config)
-      @aws_integration_svc.generate_external_id(config)
+    def aws_integration_generate_external_id(config)
+      @aws_integration_svc.aws_integration_generate_external_id(config)
     end
 
-    def update_aws_account(existing_config, config)
-      @aws_integration_svc.update_aws_account(existing_config, config)
+    def aws_integration_update(existing_config, config)
+      @aws_integration_svc.aws_integration_update(existing_config, config)
     end
 
     #
     # AWS Logs Integration
     #
 
-    def add_aws_logs_lambda(config)
-      @aws_logs_svc.add_aws_logs_lambda(config)
+    def aws_logs_add_lambda(config)
+      @aws_logs_svc.aws_logs_add_lambda(config)
     end
 
     def aws_logs_list_services
@@ -730,12 +730,12 @@ module Dogapi
       @aws_logs_svc.aws_logs_save_services(config)
     end
 
-    def list_aws_logs_integrations
-      @aws_logs_svc.list_aws_logs_integrations
+    def aws_logs_integrations_list
+      @aws_logs_svc.aws_logs_integrations_list
     end
 
-    def delete_aws_logs_integration(config)
-      @aws_logs_svc.delete_aws_logs_integration(config)
+    def aws_logs_integration_delete(config)
+      @aws_logs_svc.aws_logs_integration_delete(config)
     end
 
     def aws_logs_check_lambda(config)
@@ -750,43 +750,43 @@ module Dogapi
     # AZURE INTEGRATION
     #
 
-    def azure_list
-      @azure_integration_svc.azure_list
+    def azure_integration_list
+      @azure_integration_svc.azure_integration_list
     end
 
-    def create_azure_integration(config)
-      @azure_integration_svc.create_azure_integration(config)
+    def azure_integration_create(config)
+      @azure_integration_svc.azure_integration_create(config)
     end
 
-    def delete_azure_integration(config)
-      @azure_integration_svc.delete_azure_integration(config)
+    def azure_integration_delete(config)
+      @azure_integration_svc.azure_integration_delete(config)
     end
 
-    def update_azure_host_filters(config)
-      @azure_integration_svc.update_azure_host_filters(config)
+    def azure_integration_update_host_filters(config)
+      @azure_integration_svc.azure_integration_update_host_filters(config)
     end
 
-    def update_azure_integration(config)
-      @azure_integration_svc.update_azure_integration(config)
+    def azure_integration_update(config)
+      @azure_integration_svc.azure_integration_update(config)
     end
 
     #
     # GCP INTEGRATION
     #
-    def gcp_list
-      @gcp_integration_svc.gcp_list
+    def gcp_integration_list
+      @gcp_integration_svc.gcp_integration_list
     end
 
-    def delete_gcp_integration(config)
-      @gcp_integration_svc.delete_gcp_integration(config)
+    def gcp_integration_delete(config)
+      @gcp_integration_svc.gcp_integration_delete(config)
     end
 
-    def create_gcp_integration(config)
-      @gcp_integration_svc.create_gcp_integration(config)
+    def gcp_integration_create(config)
+      @gcp_integration_svc.gcp_integration_create(config)
     end
 
-    def update_gcp_integration(config)
-      @gcp_integration_svc.update_gcp_integration(config)
+    def gcp_integration_update(config)
+      @gcp_integration_svc.gcp_integration_update(config)
     end
 
     #

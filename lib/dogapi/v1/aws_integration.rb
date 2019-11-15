@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = 'v1'
 
       # Retrieve AWS integration information
-      def aws_list
+      def aws_integration_list
         request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/aws", nil, nil, false)
       end
 
@@ -31,8 +31,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.create_aws_integration(config)
-      def create_aws_integration(config)
+      # puts dog.aws_integration_create(config)
+      def aws_integration_create(config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/aws", nil, config, true)
       end
 
@@ -50,13 +50,13 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.delete_aws_integration(config)
-      def delete_aws_integration(config)
+      # puts dog.aws_integration_delete(config)
+      def aws_integration_delete(config)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/aws", nil, config, true)
       end
 
       # List available AWS namespaces
-      def list_aws_namespaces
+      def aws_integration_list_namespaces
         request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/aws/available_namespace_rules", nil, nil, false)
       end
 
@@ -69,8 +69,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.generate_external_id(config)
-      def generate_external_id(config)
+      # puts dog.aws_integration_generate_external_id(config)
+      def aws_integration_generate_external_id(config)
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws/generate_new_external_id", nil, config, true)
       end
 
@@ -102,8 +102,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
 
-      # puts dog.update_aws_account(existing_config, config)
-      def update_aws_account(existing_config, config)
+      # puts dog.aws_integration_update(existing_config, config)
+      def aws_integration_update(existing_config, config)
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws", existing_config, config, true)
       end
 

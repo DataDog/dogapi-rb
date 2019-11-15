@@ -9,7 +9,7 @@ module Dogapi
       API_VERSION = 'v1'
 
       # Retrieve Azure integration information
-      def azure_list
+      def azure_integration_list
         request(Net::HTTP::Get, "/api/#{API_VERSION}/integration/azure", nil, nil, false)
       end
 
@@ -22,8 +22,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.delete_azure_integration(config)
-      def delete_azure_integration(config)
+      # puts dog.azure_integration_delete(config)
+      def azure_integration_delete(config)
         request(Net::HTTP::Delete, "/api/#{API_VERSION}/integration/azure", nil, config, true)
       end
 
@@ -38,8 +38,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.create_azure_integration(config)
-      def create_azure_integration(config)
+      # puts dog.azure_integration_create(config)
+      def azure_integration_create(config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/azure", nil, config, true)
       end
 
@@ -53,8 +53,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.update_azure_host_filters(config)
-      def update_azure_host_filters(config)
+      # puts dog.azure_integration_update_host_filters(config)
+      def azure_integration_update_host_filters(config)
         request(Net::HTTP::Post, "/api/#{API_VERSION}/integration/azure/host_filters", nil, config, true)
       end
 
@@ -70,8 +70,8 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
       #
-      # puts dog.update_azure_integration(config)
-      def update_azure_integration(config)
+      # puts dog.azure_integration_update(config)
+      def azure_integration_update(config)
         request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/azure", nil, config, true)
       end
 

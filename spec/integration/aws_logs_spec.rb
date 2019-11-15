@@ -11,9 +11,9 @@ describe Dogapi::Client do
     services: %w([s3] [elb] [elbv2] [cloudfront] [redshift] [lambda])
   }.freeze
 
-  describe '#add_aws_logs_lambda' do
+  describe '#aws_logs_add_lambda' do
     it_behaves_like 'an api method',
-                    :add_aws_logs_lambda, [CONFIG],
+                    :aws_logs_add_lambda, [CONFIG],
                     :post, '/integration/aws/logs', CONFIG
   end
 
@@ -41,15 +41,15 @@ describe Dogapi::Client do
                     :get, '/integration/aws/logs/services'
   end
 
-  describe '#list_aws_logs_integrations' do
+  describe '#aws_logs_integrations_list' do
     it_behaves_like 'an api method',
-                    :list_aws_logs_integrations, nil,
+                    :aws_logs_integrations_list, nil,
                     :get, '/integration/aws/logs'
   end
 
-  describe '#delete_aws_logs_integration' do
+  describe '#aws_logs_integration_delete' do
     it_behaves_like 'an api method',
-                    :delete_aws_logs_integration, [CONFIG],
+                    :aws_logs_integration_delete, [CONFIG],
                     :delete, '/integration/aws/logs', CONFIG
   end
 end

@@ -710,8 +710,8 @@ module Dogapi
       @aws_integration_svc.aws_integration_generate_external_id(config)
     end
 
-    def aws_integration_update(existing_config, config)
-      @aws_integration_svc.aws_integration_update(existing_config, config)
+    def aws_integration_update(config, new_config)
+      @aws_integration_svc.aws_integration_update(config, new_config)
     end
 
     #

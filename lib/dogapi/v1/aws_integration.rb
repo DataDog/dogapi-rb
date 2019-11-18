@@ -76,12 +76,12 @@ module Dogapi
 
       # Update integrated AWS account.
       # :config => Hash: integration config.
-      # existing_config = {
+      # config = {
       #   "account_id": '<EXISTING_AWS_ACCOUNT>',
       #   "role_name": '<EXISTING_AWS_ROLE_NAME>'
       # }
       #
-      # config = {
+      # new_config = {
       #   "account_id": '<NEW_AWS_ACCOUNT>',
       #   "host_tags": ['tag:example1,tag:example2'],
       #   "filter_tags": ['datadog:true']
@@ -89,12 +89,12 @@ module Dogapi
       #
       # Access Key/Secret Access Key based accounts (GovCloud and China only)
       #
-      # existing_config = {
+      # config = {
       #   "access_key_id": '<EXISTING_ACCESS_KEY_ID>',
       #   "secret_access_key": '<EXISTING_SECRET_ACCESS_KEY>'
       # }
       #
-      # config = {
+      # new_config = {
       #   "access_key_id": '<NEW_ACCESS_KEY_ID>',
       #   "host_tags": ['new:tags'],
       #   "filter_tags": ['datadog:true']
@@ -102,9 +102,9 @@ module Dogapi
       #
       # dog = Dogapi::Client.new(api_key, app_key)
 
-      # puts dog.aws_integration_update(existing_config, config)
-      def aws_integration_update(existing_config, config)
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws", existing_config, config, true)
+      # puts dog.aws_integration_update(config, new_config)
+      def aws_integration_update(config, new_config)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/integration/aws", config, new_config, true)
       end
 
     end

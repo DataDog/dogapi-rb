@@ -59,6 +59,7 @@ module Dogapi
     attr_accessor :v2
     # Support for API version 2.
 
+    # rubocop:disable Metrics/MethodLength, Metrics/LineLength
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
       if api_key
@@ -94,12 +95,16 @@ module Dogapi
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
       @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_integration_svc = Dogapi::V1::AwsIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_logs_svc = Dogapi::V1::AwsLogsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-
+      @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
 
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/LineLength
 
     #
     # METRICS
@@ -680,6 +685,108 @@ module Dogapi
 
     def delete_integration(source_type_name)
       @integration_svc.delete_integration(source_type_name)
+    end
+
+    #
+    # AWS INTEGRATION
+    #
+    def aws_integration_list
+      @aws_integration_svc.aws_integration_list
+    end
+
+    def aws_integration_create(config)
+      @aws_integration_svc.aws_integration_create(config)
+    end
+
+    def aws_integration_delete(config)
+      @aws_integration_svc.aws_integration_delete(config)
+    end
+
+    def aws_integration_list_namespaces
+      @aws_integration_svc.aws_integration_list_namespaces
+    end
+
+    def aws_integration_generate_external_id(config)
+      @aws_integration_svc.aws_integration_generate_external_id(config)
+    end
+
+    def aws_integration_update(config, new_config)
+      @aws_integration_svc.aws_integration_update(config, new_config)
+    end
+
+    #
+    # AWS Logs Integration
+    #
+
+    def aws_logs_add_lambda(config)
+      @aws_logs_svc.aws_logs_add_lambda(config)
+    end
+
+    def aws_logs_list_services
+      @aws_logs_svc.aws_logs_list_services
+    end
+
+    def aws_logs_save_services(config)
+      @aws_logs_svc.aws_logs_save_services(config)
+    end
+
+    def aws_logs_integrations_list
+      @aws_logs_svc.aws_logs_integrations_list
+    end
+
+    def aws_logs_integration_delete(config)
+      @aws_logs_svc.aws_logs_integration_delete(config)
+    end
+
+    def aws_logs_check_lambda(config)
+      @aws_logs_svc.aws_logs_check_lambda(config)
+    end
+
+    def aws_logs_check_services(config)
+      @aws_logs_svc.aws_logs_check_services(config)
+    end
+
+    #
+    # AZURE INTEGRATION
+    #
+
+    def azure_integration_list
+      @azure_integration_svc.azure_integration_list
+    end
+
+    def azure_integration_create(config)
+      @azure_integration_svc.azure_integration_create(config)
+    end
+
+    def azure_integration_delete(config)
+      @azure_integration_svc.azure_integration_delete(config)
+    end
+
+    def azure_integration_update_host_filters(config)
+      @azure_integration_svc.azure_integration_update_host_filters(config)
+    end
+
+    def azure_integration_update(config)
+      @azure_integration_svc.azure_integration_update(config)
+    end
+
+    #
+    # GCP INTEGRATION
+    #
+    def gcp_integration_list
+      @gcp_integration_svc.gcp_integration_list
+    end
+
+    def gcp_integration_delete(config)
+      @gcp_integration_svc.gcp_integration_delete(config)
+    end
+
+    def gcp_integration_create(config)
+      @gcp_integration_svc.gcp_integration_create(config)
+    end
+
+    def gcp_integration_update(config)
+      @gcp_integration_svc.gcp_integration_update(config)
     end
 
     #

@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'dogapi'
 
 # Create a simple client

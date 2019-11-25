@@ -1,6 +1,5 @@
 require 'net/http'
 
-require 'rubygems'
 require 'multi_json'
 
 module Dogapi

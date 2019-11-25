@@ -4,7 +4,6 @@ require 'socket'
 require 'uri'
 require 'English'
 
-require 'rubygems'
 require 'multi_json'
 require 'set'
 

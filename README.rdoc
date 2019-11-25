@@ -51,7 +51,6 @@ on a host, simply specify the device when calling emit functions.
 == Configure the Datadog API Url
 
 
-    require 'rubygems'
     require 'dogapi'
 
     api_key = "abcdef123456"
@@ -79,7 +78,6 @@ on a host, simply specify the device when calling emit functions.
 == Submit an event to Datadog
 
 
-    require 'rubygems'
     require 'dogapi'
 
     api_key = "abcdef123456"
@@ -93,7 +91,6 @@ on a host, simply specify the device when calling emit functions.
 == Tag a host in Datadog
 
 
-    require 'rubygems'
     require 'dogapi'
 
     api_key = "abcdef123456"
@@ -110,7 +107,6 @@ You want to track a new metric called +some+.+metric+.+name+ and have just sampl
 Its value is 50. Here is how you submit the value to Datadog.
 
 
-    require 'rubygems'
     require 'dogapi'
 
     api_key = "abcdef123456"
@@ -126,7 +122,6 @@ You can use the +emit_points+ method (instead of +emit_point+). Since you are su
 data point you will need to pass a list of +Time+, +float+ pairs, instead of a simple +float+ value.
 
 
-    require 'rubygems'
     require 'dogapi'
 
     # Actual sampling takes place
@@ -150,7 +145,6 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
 
 == Get points from a Datadog metric
 
-    require 'rubygems'
     require 'dogapi'
 
     api_key = "abcd123"

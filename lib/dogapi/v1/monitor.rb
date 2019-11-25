@@ -2,9 +2,7 @@ require 'dogapi'
 
 module Dogapi
   class V1 # for namespacing
-
     class MonitorService < Dogapi::APIService
-
       API_VERSION = 'v1'
 
       def monitor(type, query, options = {})
@@ -40,6 +38,17 @@ module Dogapi
         end
 
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
+      end
+
+      def can_delete_monitors(monitor_ids)
+        extra_params =
+          if monitor_ids.respond_to?(:join)
+            { "monitor_ids" => monitor_ids.join(",") }
+          else
+            { "monitor_ids" => monitor_ids }
+          end
+
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/can_delete", extra_params, nil, false)
       end
 
       def delete_monitor(monitor_id)

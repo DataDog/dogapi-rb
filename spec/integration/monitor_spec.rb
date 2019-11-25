@@ -27,6 +27,20 @@ describe Dogapi::Client do
                     :get, "/monitor/#{MONITOR_ID}", group_states: %w(custom all)
   end
 
+  describe '#can_delete_monitors' do
+    context 'with one id' do
+      it_behaves_like 'an api method',
+                      :can_delete_monitors, [MONITOR_ID],
+                      :get, '/monitor/can_delete'
+    end
+
+    context 'with multiple ids' do
+      it_behaves_like 'an api method',
+                      :can_delete_monitors, [[MONITOR_ID, MONITOR_ID + 1, MONITOR_ID + 2]],
+                      :get, '/monitor/can_delete'
+    end
+  end
+
   describe '#delete_monitor' do
     it_behaves_like 'an api method',
                     :delete_monitor, [MONITOR_ID],

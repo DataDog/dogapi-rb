@@ -131,8 +131,8 @@ module Dogapi
         request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, options, true)
       end
 
-      def get_downtime(downtime_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
+      def get_downtime(downtime_id, options = {})
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", options, nil, false)
       end
 
       def cancel_downtime(downtime_id)

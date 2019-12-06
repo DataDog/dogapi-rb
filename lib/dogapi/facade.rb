@@ -597,8 +597,8 @@ module Dogapi
       @monitor_svc.update_downtime(downtime_id, options)
     end
 
-    def get_downtime(downtime_id)
-      @monitor_svc.get_downtime(downtime_id)
+    def get_downtime(downtime_id, options = {})
+      @monitor_svc.get_downtime(downtime_id, options)
     end
 
     def cancel_downtime(downtime_id)

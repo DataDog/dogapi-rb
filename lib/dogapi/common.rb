@@ -46,22 +46,36 @@ module Dogapi
       if !params.has_key? :api_key
         params[:api_key] = @api_key
       end
+      # optionally get the retry params
+      retry_params = params.delete(:retry_params) { |_| {}}
+      retry_max_count = retry_params.fetch(:count, 0)
+      retry_sleep_delay = retry_params.fetch(:delay, 1)
+      retry_count = 0
 
       resp_obj = nil
       connect do |conn|
-        req = method.new(url)
-        req.set_form_data params
-        resp = conn.request(req)
         begin
-          resp_obj = MultiJson.load(resp.body)
-        rescue
-          raise 'Invalid JSON Response: ' + resp.body
-        end
+          req = method.new(url)
+          req.set_form_data params
+          resp = conn.request(req)
+          begin
+            resp_obj = MultiJson.load(resp.body)
+          rescue
+            raise 'Invalid JSON Response: ' + resp.body
+          end
 
-        if resp_obj.has_key? 'error'
-          request_string = params.pretty_inspect
-          error_string = resp_obj['error']
-          raise "Failed request\n#{request_string}#{error_string}"
+          if resp_obj.has_key? 'error'
+            request_string = params.pretty_inspect
+            error_string = resp_obj['error']
+            raise "Failed request\n#{request_string}#{error_string}"
+          end
+        rescue Exception => e
+          if retry_max_count > 0 and retry_count <= retry_max_count
+            retry_count++
+            warn e
+            sleep(retry_sleep_delay)
+            retry
+          end
         end
       end
       resp_obj
@@ -114,8 +128,11 @@ module Dogapi
     # +method+ is an implementation of Net::HTTP::Request (e.g. Net::HTTP::Post)
     #
     # +params+ is a Hash that will be converted to request parameters
-    def request(method, url, extra_params, body, send_json, with_app_key=true)
+    def request(method, url, extra_params, body, send_json, with_app_key=true, retry_params={})
       resp = nil
+      retry_max_count = retry_params.fetch(:count, 0)
+      retry_sleep_delay = retry_params.fetch(:delay, 1)
+      retry_count = 0
       connect do |conn|
         begin
           params = prepare_params(extra_params, url, with_app_key)
@@ -123,6 +140,12 @@ module Dogapi
           resp = conn.request(req)
           return handle_response(resp)
         rescue Exception => e
+          if retry_max_count > 0 and retry_count <= retry_max_count
+            retry_count++
+            warn e
+            sleep(retry_sleep_delay)
+            retry
+          end
           suppress_error_if_silent e
         end
       end

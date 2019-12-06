@@ -541,12 +541,12 @@ module Dogapi
       @monitor_svc.get_monitor(monitor_id, options)
     end
 
-    def can_delete_monitors(monitor_ids)
-      @monitor_svc.can_delete_monitors(monitor_ids)
+    def can_delete_monitors(monitor_ids, options= {})
+      @monitor_svc.can_delete_monitors(monitor_ids, options)
     end
 
-    def delete_monitor(monitor_id)
-      @monitor_svc.delete_monitor(monitor_id)
+    def delete_monitor(monitor_id, options= {})
+      @monitor_svc.delete_monitor(monitor_id, options)
     end
 
     def get_all_monitors(options= {})
@@ -557,12 +557,12 @@ module Dogapi
       @monitor_svc.validate_monitor(type, query, options)
     end
 
-    def mute_monitors()
-      @monitor_svc.mute_monitors()
+    def mute_monitors(options= {})
+      @monitor_svc.mute_monitors(options)
     end
 
-    def unmute_monitors()
-      @monitor_svc.unmute_monitors()
+    def unmute_monitors(options= {})
+      @monitor_svc.unmute_monitors(options)
     end
 
     def mute_monitor(monitor_id, options= {})
@@ -597,16 +597,16 @@ module Dogapi
       @monitor_svc.update_downtime(downtime_id, options)
     end
 
-    def get_downtime(downtime_id)
-      @monitor_svc.get_downtime(downtime_id)
+    def get_downtime(downtime_id, options= {})
+      @monitor_svc.get_downtime(downtime_id, options)
     end
 
-    def cancel_downtime(downtime_id)
-      @monitor_svc.cancel_downtime(downtime_id)
+    def cancel_downtime(downtime_id, options= {})
+      @monitor_svc.cancel_downtime(downtime_id, options)
     end
 
-    def cancel_downtime_by_scope(scope)
-      @monitor_svc.cancel_downtime_by_scope(scope)
+    def cancel_downtime_by_scope(scope, options= {})
+      @monitor_svc.cancel_downtime_by_scope(scope, options)
     end
 
     def get_all_downtimes(options= {})
@@ -621,8 +621,8 @@ module Dogapi
       @monitor_svc.mute_host(hostname, options)
     end
 
-    def unmute_host(hostname)
-      @monitor_svc.unmute_host(hostname)
+    def unmute_host(hostname, options= {})
+      @monitor_svc.unmute_host(hostname, options)
     end
 
     #

@@ -6,15 +6,17 @@ module Dogapi
       API_VERSION = 'v1'
 
       def monitor(type, query, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         body = {
           'type' => type,
           'query' => query,
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", nil, body, true, retry_params)
       end
 
       def update_monitor(monitor_id, query = nil, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         body = {}.merge options
         unless query.nil?
           body = {
@@ -24,10 +26,11 @@ module Dogapi
              ' To update the query, set it in the options parameter instead'
         end
 
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true, retry_params)
       end
 
       def get_monitor(monitor_id, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         extra_params = options.clone
         # :group_states is an optional list of statuses to filter returned
         # groups. If no value is given then no group states will be returned.
@@ -37,10 +40,11 @@ module Dogapi
           extra_params[:group_states] = extra_params[:group_states].join(',')
         end
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false, retry_params)
       end
 
-      def can_delete_monitors(monitor_ids)
+      def can_delete_monitors(monitor_ids, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         extra_params =
           if monitor_ids.respond_to?(:join)
             { "monitor_ids" => monitor_ids.join(",") }
@@ -48,14 +52,16 @@ module Dogapi
             { "monitor_ids" => monitor_ids }
           end
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/can_delete", extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/can_delete", extra_params, nil, false, retry_params)
       end
 
-      def delete_monitor(monitor_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, nil, false)
+      def delete_monitor(monitor_id, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, nil, false, retry_params)
       end
 
       def get_all_monitors(options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         extra_params = options.clone
         # :group_states is an optional list of statuses to filter returned
         # groups. If no value is given then no group states will be returned.
@@ -69,35 +75,41 @@ module Dogapi
         # scope, will be returned.
         extra_params[:tags] = extra_params[:tags].join(',') if extra_params[:tags].respond_to?(:join)
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor", extra_params, nil, false, retry_params)
       end
 
       def validate_monitor(type, query, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         body = {
           'type' => type,
           'query' => query,
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/validate", nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/validate", nil, body, true, retry_params)
       end
 
-      def mute_monitors
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/mute_all", nil, nil, false)
+      def mute_monitors(options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/mute_all", nil, nil, false, retry_params)
       end
 
-      def unmute_monitors
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/unmute_all", nil, nil, false)
+      def unmute_monitors(options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/unmute_all", nil, nil, false, retry_params)
       end
 
       def mute_monitor(monitor_id, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/mute", nil, options, true)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/mute", nil, options, true, retry_params)
       end
 
       def unmute_monitor(monitor_id, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", nil, options, true)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor/#{monitor_id}/unmute", nil, options, true, retry_params)
       end
 
       def resolve_monitors(monitor_groups = [], options = {}, version = nil)
+        retry_params = options.delete(:retry_params) {|_| {}}
         body = {
           'resolve' => monitor_groups
         }.merge options
@@ -105,57 +117,67 @@ module Dogapi
         # Currently not part of v1 at this time but adding future compatibility option
         endpoint = version.nil? ? '/api/monitor/bulk_resolve' : "/api/#{version}/monitor/bulk_resolve"
 
-        request(Net::HTTP::Post, endpoint, nil, body, true)
+        request(Net::HTTP::Post, endpoint, nil, body, true, retry_params)
       end
 
       def search_monitors(options = {})
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/search", options, nil, false)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/search", options, nil, false, retry_params)
       end
 
       def search_monitor_groups(options = {})
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/groups/search", options, nil, false)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/groups/search", options, nil, false, retry_params)
       end
 
       #
       # DOWNTIMES
 
       def schedule_downtime(scope, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
         body = {
           'scope' => scope
         }.merge options
 
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime", nil, body, true)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime", nil, body, true, retry_params)
       end
 
       def update_downtime(downtime_id, options = {})
-        request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, options, true)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, options, true, retry_params)
       end
 
-      def get_downtime(downtime_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
+      def get_downtime(downtime_id, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false, retry_params)
       end
 
-      def cancel_downtime(downtime_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
+      def cancel_downtime(downtime_id, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false, retry_params)
       end
 
-      def cancel_downtime_by_scope(scope)
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, false)
+      def cancel_downtime_by_scope(scope, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, false, retry_params)
       end
 
       def get_all_downtimes(options = {})
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", options, nil, false)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime", options, nil, false, retry_params)
       end
 
       #
       # HOST MUTING
 
       def mute_host(hostname, options = {})
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/mute", nil, options, true)
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/mute", nil, options, true, retry_params)
       end
 
-      def unmute_host(hostname)
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", nil, {}, true)
+      def unmute_host(hostname, options = {})
+        retry_params = options.delete(:retry_params) {|_| {}}
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/host/#{hostname}/unmute", nil, {}, true, retry_params)
       end
     end
   end

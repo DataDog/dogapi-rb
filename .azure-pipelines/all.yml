@@ -42,3 +42,13 @@ jobs:
       displayName: 'bundle install'
     - script: bundle exec rake $(TASK)
       displayName: Run $(TASK) via bundle
+- job: TestRuby19
+  pool:
+    vmImage: "Ubuntu-16.04"
+  container:
+    image: corgibytes/ruby-1.9.3
+  steps:
+    - script: bundle install --retry=3 --jobs=4
+      displayName: bundle install
+    - script: bundle exec rake spec
+      displayName: Run spec via bundle

@@ -140,7 +140,7 @@ module Dogapi
       end
 
       def cancel_downtime_by_scope(scope)
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, true)
       end
 
       def get_all_downtimes(options = {})

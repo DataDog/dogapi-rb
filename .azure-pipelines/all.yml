@@ -42,10 +42,15 @@ jobs:
 - job: TestRuby19
   pool:
     vmImage: "Ubuntu-16.04"
-  container:
-    image: corgibytes/ruby-1.9.3
+  # container:
+  #   image: corgibytes/ruby-1.9.3
   steps:
-    - script: BUNDLE_IGNORE_CONFIG=true bundle install --retry=3 --jobs=4
-      displayName: bundle install
-    - script: bundle exec rake spec
-      displayName: Run spec via bundle
+    # - script: touch /usr/local/bundle/config
+    # - script: whoami
+    # - script: chown `whoami` /usr/local/bundle
+    # - script: ls -la /usr/local/bundle/
+    # - script: bundle install --retry=3 --jobs=4
+    #   displayName: bundle install
+    # - script: bundle exec rake spec
+    #   displayName: Run spec via bundle
+    - script: docker run -v $(Agent.BuildDirectory)/s:/cloned_repo corgibytes/ruby-1.9.3 bin/bash -c "cd cloned_repo; bundle install --retry=3 --jobs=4; bundle exec rake spec"

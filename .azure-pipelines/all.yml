@@ -45,8 +45,7 @@ jobs:
   container:
     image: corgibytes/ruby-1.9.3
   steps:
-    - script: mkdir local_gems
-    - script: bundle install --retry=3 --jobs=4 --path=local_gems
+    - script: BUNDLE_IGNORE_CONFIG=true bundle install --retry=3 --jobs=4
       displayName: bundle install
     - script: bundle exec rake spec
       displayName: Run spec via bundle

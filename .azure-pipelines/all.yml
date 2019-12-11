@@ -44,4 +44,4 @@ jobs:
     vmImage: "Ubuntu-16.04"
   steps:
     - script: docker run -v $(Agent.BuildDirectory)/s:/cloned_repo corgibytes/ruby-1.9.3 bin/bash -c "cd cloned_repo; bundle install --retry=3 --jobs=4; bundle exec rake spec"
-    - displayName: "Run tests with Ruby 1.9.3"
+      displayName: "Run tests with Ruby 1.9.3"

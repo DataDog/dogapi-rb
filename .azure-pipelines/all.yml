@@ -43,5 +43,7 @@ jobs:
   pool:
     vmImage: "Ubuntu-16.04"
   steps:
-    - script: docker run -v $(Agent.BuildDirectory)/s:/cloned_repo corgibytes/ruby-1.9.3 bin/bash -c "cd cloned_repo; bundle install --retry=3 --jobs=4; bundle exec rake spec"
+    # Until the `container` AZP resource supports being root in a container https://github.com/microsoft/azure-pipelines-agent/issues/2619 we need this long single line approach
+    # Mount this repo into the container, overwrite the Gemfile with the Ruby 1.9.3 supported depdencies, and run tests
+    - script: docker run -v $(Agent.BuildDirectory)/s:/cloned_repo corgibytes/ruby-1.9.3 bin/bash -c "cd cloned_repo; mv Gemfile_1.9 Gemfile; bundle install --retry=3 --jobs=4; bundle exec rake spec"
       displayName: "Run tests with Ruby 1.9.3"

@@ -4,7 +4,7 @@
 
 * [BUGFIX] Fix setting keys in both query params and headers. See [#194][]
 * [BUGFIX] Fix `cancel_downtime_by_scope` method by setting `send_json` to `true`. See [#205][]
-* [FEATURE] Add Azure, GCP and AWS integration support. See [#201][]
+* [FEATURE] Add Azure, GCP, AWS, and AWS Logs integration support. See [#201][]
 * [FEATURE] Add support for new `Monitor.can_delete` endpoint. See [#195][]
 * [FEATURE] Add `options` to the `get_downtime` endpoint. See [#206][]
 

@@ -1,5 +1,13 @@
 # Changes
 
+## 1.38.0 / 2019-12-13
+
+* [BUGFIX] Fix setting keys in both query params and headers. See [#194][]
+* [BUGFIX] Fix `cancel_downtime_by_scope` method by setting `send_json` to `true`. See [#205][]
+* [FEATURE] Add Azure, GCP, AWS, and AWS Logs integration support. See [#201][]
+* [FEATURE] Add support for new `Monitor.can_delete` endpoint. See [#195][]
+* [FEATURE] Add `options` to the `get_downtime` endpoint. See [#206][]
+
 ## 1.37.1 / 2019-11-04
 
 * [BUGFIX] Revert the Service Level Objective feature to remove an issue with older versions of Ruby < 2.0. See [#198][]
@@ -261,7 +269,12 @@ This is the last release compatible with Ruby 1.8. ([EOL 2013-06-30](https://www
 [#188]: https://github.com/DataDog/dogapi-rb/issues/188
 [#189]: https://github.com/DataDog/dogapi-rb/issues/189
 [#192]: https://github.com/DataDog/dogapi-rb/issues/192
+[#194]: https://github.com/DataDog/dogapi-rb/issues/194
+[#195]: https://github.com/DataDog/dogapi-rb/issues/195
 [#198]: https://github.com/DataDog/dogapi-rb/issues/198
+[#201]: https://github.com/DataDog/dogapi-rb/issues/201
+[#205]: https://github.com/DataDog/dogapi-rb/issues/205
+[#206]: https://github.com/DataDog/dogapi-rb/issues/206
 [@ArjenSchwarz]: https://github.com/ArjenSchwarz
 [@Kaixiang]: https://github.com/Kaixiang
 [@TaylURRE]: https://github.com/TaylURRE

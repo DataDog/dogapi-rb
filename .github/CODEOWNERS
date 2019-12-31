@@ -6,7 +6,5 @@
 *                       @DataDog/integrations-tools-and-libraries
 
 # Documentation
-*.md                    @DataDog/baklava
-LICENSE                 @DataDog/baklava
-NOTICE                  @DataDog/baklava
-LICENSE-3rdparty.csv    @DataDog/baklava
+*.md                    @DataDog/baklava @DataDog/integrations-tools-and-libraries
+LICENSE                 @DataDog/baklava @DataDog/integrations-tools-and-libraries

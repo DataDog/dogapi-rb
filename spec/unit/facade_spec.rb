@@ -2,7 +2,7 @@
 # This product includes software developed at Datadog (https://www.datadoghq.com/).
 # Copyright 2011-Present Datadog, Inc.
 
-equire 'spec_helper'
+require 'spec_helper'
 
 describe Dogapi::Client do
   before(:each) do

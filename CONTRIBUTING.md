@@ -38,14 +38,14 @@ In order to ease/speed up our review, here are some items you can check/improve 
 
 See [here][4] for more details about changelogs.
 
-Your pull request must pass all CI tests before we will merge it. If you're seeing
+Your pull request must pass all CI tests before. If you're seeing
 an error and don't think it's your fault, it may not be! [Join us on Slack][5] or send us an email, and together we'll 
 get it sorted out.
 
 ### Keep it small, focused
 
 Avoid changing too many things at once. For instance if you're fixing two different
-checks at once, it makes reviewing harder and the _time-to-release_ longer.
+issues at once, it makes reviewing harder and the _time-to-release_ longer.
 
 ### Pull Request title
 
@@ -102,6 +102,8 @@ This section lists the labels we use to help us track and manage issues and pull
 | `severity/minor`              | Issue Only               | Minor severity issue.
 | `severity/normal`             | Issue Only               | Normal severity issue.
 | `stale`                       | Issues and Pull Requests | Stale - Bot reminder.
+| `stale/exempt`                | Issues and Pull Requests | Exempt from being marked as stale.
+
 
 
 [1]: https://github.com/DataDog/dogapi-rb/issues

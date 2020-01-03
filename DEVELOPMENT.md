@@ -1,15 +1,11 @@
 # Development
 
-// TODO
-
-## Setup
-
-// TODO
+The API implementation is located in the [`lib/dogapi`](lib/dogapi) folder.
 
 ## Testing
 
-// TODO
+Test files are located in the [`spec`](spec) folder.
 
 ## Coding conventions
 
-// TODO
+This project uses rubocop for linting.

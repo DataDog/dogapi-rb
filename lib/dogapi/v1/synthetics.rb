@@ -2,8 +2,8 @@ require 'dogapi'
 
 module Dogapi
   class V1 # for namespacing
-    # SyntheticService is the class responsible for dealing with the synthetics
-    class SyntheticService < Dogapi::APIService
+    # SyntheticsService is the class responsible for dealing with the synthetics
+    class SyntheticsService < Dogapi::APIService
 
       API_VERSION = 'v1'
 

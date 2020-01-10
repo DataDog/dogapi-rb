@@ -545,8 +545,8 @@ module Dogapi
       @synthetics_svc.delete_tests(test_ids)
     end
 
-    def star_pause_test(new_status)
-      @synthetics_svc.star_pause_test(new_status)
+    def star_pause_test(test_id, new_status)
+      @synthetics_svc.star_pause_test(test_id, new_status)
     end
 
     def get_all_tests

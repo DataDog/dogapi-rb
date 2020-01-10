@@ -29,13 +29,13 @@ module Dogapi
       # Delete synthetics tests
       def delete_tests(test_ids)
         body = {
-          'public_ids' => public_ids
+          'public_ids' => test_ids
         }
         request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests/delete", nil, body, true)
       end
 
       # Start of pause a synthetics test: POST /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>/status
-      def star_pause_test(tests_id, new_status)
+      def star_pause_test(test_id, new_status)
         body = {
           'new_status' => new_status
         }
@@ -57,7 +57,8 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/results", nil, nil, false)
       end
 
-      # Get a specific result for a synthetics test: GET /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>/results/<RESULT_ID>
+      # Get a specific result for a synthetics test: 
+      # GET /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>/results/<RESULT_ID>
       def get_result(test_id, result_id)
         request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/results/#{result_id}", nil, nil, false)
       end

@@ -1,0 +1,34 @@
+require 'dogapi'
+
+module Dogapi
+  class V1 # for namespacing
+    # SyntheticService is the class responsible for dealing with the synthetics
+    class SyntheticService < Dogapi::APIService
+
+      API_VERSION = 'v1'
+
+      def synthetic(type, config, options = {})
+        body = {
+          'type' => type,
+          'config' => config
+        }.merge(options)
+
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests", nil, body, true)
+      end
+
+      def update_synthetic(synthetic_id, config, options = {})
+        body = {
+          'config' => config
+        }.merge(options)
+
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{synthetic_id}", nil, body, true)
+      end
+
+      def get_all_synthetics
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests", nil, nil, false)
+      end
+
+    end
+
+  end
+end

@@ -2,7 +2,7 @@ require_relative '../spec_helper'
 
 describe Dogapi::Client do
   SYNTHETICS_TEST_PUBLIC_ID = "84r-szk-xpt"
-  SYNTHETICS_TESTS_PUBLIC_IDS = ["84r-szk-xpt", "84r-szk-xpu"]
+  SYNTHETICS_TESTS_PUBLIC_IDS = ["84r-szk-xpt", "sti-s2m-ciz"]
   NEW_STATUS = "paused"
   SYNTHETIC_RESULT_ID = 123_456
   SYNTHETIC_TYPE = 'api'.freeze

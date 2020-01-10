@@ -36,6 +36,13 @@ If you get a LoadError, missing mkmf, you need to install the development packag
 
 = Usage
 
+== Supported Versions
+
+This project currently works with Ruby versions 1.9.3+
+
+*Note* Newer endpoints may no longer support EOL Ruby versions but
+the client should still intialize and allow metric/event submission.
+
 == How to find your API and application keys
 
 Go to your setup page[https://app.datadoghq.com/account/settings].

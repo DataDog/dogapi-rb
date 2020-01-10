@@ -94,7 +94,7 @@ module Dogapi
       @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @synthetic_svc = Dogapi::V1::SyntheticService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @synthetics_svc = Dogapi::V1::SyntheticService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
@@ -533,16 +533,44 @@ module Dogapi
     #
     # SYNTHETICS
     #
-    def synthetic(type, config, options= {})
-      @synthetic_svc.synthetic(type, config, options)
+    def create_test(type, config, options= {})
+      @synthetics_svc.create_test(type, config, options)
     end
 
-    def update_synthetic(synthetic_id, config, options= {})
-      @synthetic_svc.update_synthetic(synthetic_id, config, options)
+    def edit_test(test_id, config, options= {})
+      @synthetics_svc.edit_test(test_id, config, options)
     end
 
-    def get_all_synthetics
-      @synthetic_svc.get_all_synthetics
+    def delete_test(tests_ids)
+      @synthetics_svc.delete_tests(test_ids)
+    end
+
+    def star_pause_test(new_status)
+      @synthetics_svc.star_pause_test(new_status)
+    end
+
+    def get_all_tests
+      @synthetics_svc.get_all_tests()
+    end
+
+    def get_test(test_id)
+      @synthetics_svc.get_test(test_id)
+    end
+    
+    def get_results(test_id)
+      @synthetics_svc.get_results(test_id)
+    end
+
+    def get_result(test_id, result_id)
+      @synthetics_svc.get_result(test_id, result_id)
+    end
+
+    def get_devices
+      @synthetics_svc.get_devices()
+    end
+
+    def get_locations
+      @synthetics_svc.get_locations()
     end
 
     #

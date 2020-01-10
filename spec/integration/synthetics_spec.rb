@@ -2,6 +2,9 @@ require_relative '../spec_helper'
 
 describe Dogapi::Client do
   SYNTHETICS_TEST_PUBLIC_ID = "84r-szk-xpt"
+  SYNTHETICS_TESTS_PUBLIC_IDS = ["84r-szk-xpt", "84r-szk-xpu"]
+  NEW_STATUS = "paused"
+  SYNTHETIC_RESULT_ID = 123_456
   SYNTHETIC_TYPE = 'api'.freeze
   SYNTHETIC_TEST_CONFIG = {
     'assertions' => [
@@ -46,6 +49,18 @@ describe Dogapi::Client do
                     :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}", 'config' => SYNTHETIC_TEST_CONFIG
   end
 
+  describe '#delete_tests' do
+  it_behaves_like 'an api method with options',
+                    :delete_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
+                    :put, "/synthetics/tests/delete", 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
+  end
+
+  describe '#star_pause_test' do
+  it_behaves_like 'an api method with options',
+                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
+                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
+  end
+
   describe '#get_all_tests' do
     it_behaves_like 'an api method',
                     :get_all_tests, [],
@@ -54,8 +69,32 @@ describe Dogapi::Client do
 
   describe '#get_test' do
   it_behaves_like 'an api method',
-                    :get_test, [],
+                    :get_test, [SYNTHETICS_TEST_PUBLIC_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
+  end
+
+  describe '#get_results' do
+  it_behaves_like 'an api method',
+                    :get_results, [SYNTHETICS_TEST_PUBLIC_ID],
+                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results"
+  end
+
+  describe '#get_result' do
+  it_behaves_like 'an api method',
+                    :get_results, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_RESULT_ID],
+                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETIC_RESULT_ID}"
+  end
+
+  describe '#get_devices' do
+    it_behaves_like 'an api method',
+                    :get_devices, [],
+                    :get, '/synthetics/browser/devices'
+  end
+
+  describe '#get_locations' do
+    it_behaves_like 'an api method',
+                    :get_locations, [],
+                    :get, '/synthetics/locations'
   end
 
 end

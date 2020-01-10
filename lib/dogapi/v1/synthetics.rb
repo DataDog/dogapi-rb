@@ -42,7 +42,6 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/status", nil, body, true)
       end
 
-
       # Get all synthetics tests: GET /v1/synthetics/tests
       def get_all_tests
         request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests", nil, nil, false)

@@ -35,7 +35,7 @@ module Dogapi
       end
 
       # Start of pause a synthetics test: POST /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>/status
-      def star_pause_test(new_status)
+      def star_pause_test(tests_id, new_status)
         body = {
           'new_status' => new_status
         }

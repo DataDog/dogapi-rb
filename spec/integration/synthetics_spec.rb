@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
-  SYNTHETICS_TEST_PUBLIC_ID = "84r-szk-xpt"
-  SYNTHETICS_TESTS_PUBLIC_IDS = ["84r-szk-xpt", "sti-s2m-ciz"]
-  NEW_STATUS = "paused"
+  SYNTHETICS_TEST_PUBLIC_ID = '84r-szk-xpt'
+  SYNTHETICS_TESTS_PUBLIC_IDS = ['84r-szk-xpt', 'sti-s2m-ciz']
+  NEW_STATUS = 'paused'
   SYNTHETIC_RESULT_ID = 123_456
   SYNTHETIC_TYPE = 'api'.freeze
   SYNTHETIC_TEST_CONFIG = {
@@ -39,7 +39,7 @@ describe Dogapi::Client do
 
   describe '#create_test' do
     it_behaves_like 'an api method with options',
-                    :synthetic, [SYNTHETIC_TYPE, SYNTHETIC_TEST_CONFIG],
+                    :create_test, [SYNTHETIC_TYPE, SYNTHETIC_TEST_CONFIG],
                     :post, '/synthetics/tests', 'type' => SYNTHETIC_TYPE, 'config' => SYNTHETIC_TEST_CONFIG
   end
 
@@ -50,15 +50,15 @@ describe Dogapi::Client do
   end
 
   describe '#delete_tests' do
-  it_behaves_like 'an api method with options',
+    it_behaves_like 'an api method with options',
                     :delete_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
-                    :put, "/synthetics/tests/delete", 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
+                    :post, "/synthetics/tests/delete", 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
   end
 
   describe '#star_pause_test' do
-  it_behaves_like 'an api method with options',
-                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
-                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
+    it_behaves_like 'an api method with options',
+                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID],
+                    :post, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
   end
 
   describe '#get_all_tests' do
@@ -68,19 +68,19 @@ describe Dogapi::Client do
   end
 
   describe '#get_test' do
-  it_behaves_like 'an api method',
+    it_behaves_like 'an api method',
                     :get_test, [SYNTHETICS_TEST_PUBLIC_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
   end
 
   describe '#get_results' do
-  it_behaves_like 'an api method',
+    it_behaves_like 'an api method',
                     :get_results, [SYNTHETICS_TEST_PUBLIC_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results"
   end
 
   describe '#get_result' do
-  it_behaves_like 'an api method',
+    it_behaves_like 'an api method',
                     :get_results, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_RESULT_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETIC_RESULT_ID}"
   end

@@ -1,9 +1,9 @@
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
-  SYNTHETIC_ID = 123_456
+  SYNTHETICS_TEST_PUBLIC_ID = "84r-szk-xpt"
   SYNTHETIC_TYPE = 'api'.freeze
-  SYNTHETIC_CONFIG = {
+  SYNTHETIC_TEST_CONFIG = {
     'assertions' => [
       {
         'operator' => 'is',
@@ -34,21 +34,28 @@ describe Dogapi::Client do
     }
   }.freeze
 
-  describe '#synthetic' do
+  describe '#create_test' do
     it_behaves_like 'an api method with options',
-                    :synthetic, [SYNTHETIC_TYPE, SYNTHETIC_CONFIG],
-                    :post, '/synthetics/tests', 'type' => SYNTHETIC_TYPE, 'config' => SYNTHETIC_CONFIG
+                    :synthetic, [SYNTHETIC_TYPE, SYNTHETIC_TEST_CONFIG],
+                    :post, '/synthetics/tests', 'type' => SYNTHETIC_TYPE, 'config' => SYNTHETIC_TEST_CONFIG
   end
 
-  describe '#update_synthetic' do
+  describe '#edit_test' do
     it_behaves_like 'an api method with options',
-                    :update_synthetic, [SYNTHETIC_ID, SYNTHETIC_CONFIG],
-                    :put, "/synthetics/tests/#{SYNTHETIC_ID}", 'config' => SYNTHETIC_CONFIG
+                    :edit_test, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_TEST_CONFIG],
+                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}", 'config' => SYNTHETIC_TEST_CONFIG
   end
 
-  describe '#all_synthetics' do
+  describe '#get_all_tests' do
     it_behaves_like 'an api method',
-                    :get_all_synthetics, [],
+                    :get_all_tests, [],
                     :get, '/synthetics/tests'
   end
+
+  describe '#get_test' do
+  it_behaves_like 'an api method',
+                    :get_test, [],
+                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
+  end
+
 end

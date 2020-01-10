@@ -4,8 +4,8 @@ describe Dogapi::Client do
   SYNTHETICS_TEST_PUBLIC_ID = '84r-szk-xpt'
   SYNTHETICS_TESTS_PUBLIC_IDS = ['84r-szk-xpt', 'sti-s2m-ciz']
   NEW_STATUS = 'paused'
-  SYNTHETIC_RESULT_ID = 123_456
-  SYNTHETIC_TYPE = 'api'.freeze
+  SYNTHETICS_RESULT_ID = 123_456
+  SYNTHETICS_TYPE = 'api'.freeze
   SYNTHETIC_TEST_CONFIG = {
     'assertions' => [
       {
@@ -39,8 +39,8 @@ describe Dogapi::Client do
 
   describe '#create_test' do
     it_behaves_like 'an api method with options',
-                    :create_test, [SYNTHETIC_TYPE, SYNTHETIC_TEST_CONFIG],
-                    :post, '/synthetics/tests', 'type' => SYNTHETIC_TYPE, 'config' => SYNTHETIC_TEST_CONFIG
+                    :create_test, [SYNTHETICS_TYPE, SYNTHETIC_TEST_CONFIG],
+                    :post, '/synthetics/tests', 'type' => SYNTHETICS_TYPE, 'config' => SYNTHETIC_TEST_CONFIG
   end
 
   describe '#edit_test' do
@@ -52,12 +52,12 @@ describe Dogapi::Client do
   describe '#delete_tests' do
     it_behaves_like 'an api method with options',
                     :delete_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
-                    :post, "/synthetics/tests/delete", 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
+                    :post, '/synthetics/tests/delete', 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
   end
 
   describe '#star_pause_test' do
     it_behaves_like 'an api method with options',
-                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID],
+                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
                     :post, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
   end
 
@@ -81,8 +81,8 @@ describe Dogapi::Client do
 
   describe '#get_result' do
     it_behaves_like 'an api method',
-                    :get_results, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_RESULT_ID],
-                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETIC_RESULT_ID}"
+                    :get_result, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID],
+                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETICS_RESULT_ID}"
   end
 
   describe '#get_devices' do

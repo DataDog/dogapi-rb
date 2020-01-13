@@ -55,8 +55,8 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/can_delete", extra_params, nil, false)
       end
 
-      def delete_monitor(monitor_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, nil, false)
+      def delete_monitor(monitor_id, options = {})
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", options, nil, false)
       end
 
       def get_all_monitors(options = {})

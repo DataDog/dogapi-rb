@@ -8,20 +8,29 @@ module Dogapi
       API_VERSION = 'v1'
 
       # Create a synthetics test: POST /v1/synthetics/tests/
-      def create_test(type, config, options = {})
+      def create_test(type, config, locations, message, name, tags, options = {})
         body = {
           'type' => type,
-          'config' => config
+          'config' => config,
+          'locations' => locations,
+          'message' => message,
+          'name' => name,
+          'tags' => tags
         }.merge(options)
 
         request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests", nil, body, true)
       end
 
       # Edit a synthetics test: PUT /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>
-      def edit_test(test_id, config, options = {})
-        body = {
-          'config' => config
-        }.merge(options)
+      def edit_test(type, config, locations, message, name, tags, options = {})
+      body = {
+        'type' => type,
+        'config' => config,
+        'locations' => locations,
+        'message' => message,
+        'name' => name,
+        'tags' => tags
+      }.merge(options)
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{test_id}", nil, body, true)
       end

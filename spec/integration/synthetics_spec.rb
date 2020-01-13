@@ -6,7 +6,7 @@ describe Dogapi::Client do
   NEW_STATUS = 'paused'
   SYNTHETICS_RESULT_ID = 123_456
   SYNTHETICS_TYPE = 'api'.freeze
-  SYNTHETIC_TEST_CONFIG = {
+  SYNTHETICS_TEST_CONFIG = {
     'assertions' => [
       {
         'operator' => 'is',
@@ -36,17 +36,25 @@ describe Dogapi::Client do
       'body' => 'body to send with the request'
     }
   }.freeze
+  LOCATIONS = [
+    'aws:us-east-2',
+    'aws:eu-central-1',
+    'aws:ca-central-1'
+  ]
+  MESSAGE = 'Test with API'
+  NAME = 'Test with API'
+  TAGS = ['key1:value1', 'key2:value2']
 
   describe '#create_test' do
     it_behaves_like 'an api method with options',
-                    :create_test, [SYNTHETICS_TYPE, SYNTHETIC_TEST_CONFIG],
-                    :post, '/synthetics/tests', 'type' => SYNTHETICS_TYPE, 'config' => SYNTHETIC_TEST_CONFIG
+                    :create_test, [SYNTHETICS_TYPE, SYNTHETICS_TEST_CONFIG],
+                    :post, '/synthetics/tests', 'type' => SYNTHETICS_TYPE, 'config' => SYNTHETICS_TEST_CONFIG
   end
 
   describe '#edit_test' do
     it_behaves_like 'an api method with options',
                     :edit_test, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_TEST_CONFIG],
-                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}", 'config' => SYNTHETIC_TEST_CONFIG
+                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}", 'config' => SYNTHETICS_TEST_CONFIG
   end
 
   describe '#delete_tests' do

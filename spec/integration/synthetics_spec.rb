@@ -80,8 +80,8 @@ describe Dogapi::Client do
   end
 
   describe '#get_result' do
-    it 'queries the api with options' do
-      url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETICS_RESULT_ID}"
+    it 'queries the api' do
+      url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results/#{SYNTHETICS_RESULT_ID}"
       stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(:get_result, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID)).to eq ['200', {}]
 

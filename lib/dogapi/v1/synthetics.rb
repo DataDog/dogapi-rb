@@ -57,7 +57,7 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/results", nil, nil, false)
       end
 
-      # Get a specific result for a synthetics test: 
+      # Get a specific result for a synthetics test:
       # GET /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>/results/<RESULT_ID>
       def get_result(test_id, result_id)
         request(Net::HTTP::Get, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/results/#{result_id}", nil, nil, false)

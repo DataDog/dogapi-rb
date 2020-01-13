@@ -50,13 +50,13 @@ describe Dogapi::Client do
   end
 
   describe '#delete_tests' do
-    it_behaves_like 'an api method with options',
+    it_behaves_like 'an api method',
                     :delete_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
                     :post, '/synthetics/tests/delete', 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
   end
 
   describe '#star_pause_test' do
-    it_behaves_like 'an api method with options',
+    it_behaves_like 'an api method',
                     :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
                     :post, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
   end
@@ -80,9 +80,13 @@ describe Dogapi::Client do
   end
 
   describe '#get_result' do
-    it_behaves_like 'an api method',
-                    :get_result, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID],
-                    :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETICS_RESULT_ID}"
+    it 'queries the api with options' do
+      url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results#{SYNTHETICS_RESULT_ID}"
+      stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:get_result, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID)).to eq ['200', {}]
+
+      expect(WebMock).to have_requested(:get, url)
+    end
   end
 
   describe '#get_devices' do
@@ -96,5 +100,4 @@ describe Dogapi::Client do
                     :get_locations, [],
                     :get, '/synthetics/locations'
   end
-
 end

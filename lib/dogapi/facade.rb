@@ -541,7 +541,7 @@ module Dogapi
       @synthetics_svc.edit_test(test_id, config, options)
     end
 
-    def delete_tests(tests_ids)
+    def delete_tests(test_ids)
       @synthetics_svc.delete_tests(test_ids)
     end
 
@@ -556,7 +556,7 @@ module Dogapi
     def get_test(test_id)
       @synthetics_svc.get_test(test_id)
     end
-    
+
     def get_results(test_id)
       @synthetics_svc.get_results(test_id)
     end

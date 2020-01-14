@@ -533,12 +533,12 @@ module Dogapi
     #
     # SYNTHETICS
     #
-    def create_test(type, config, options= {})
-      @synthetics_svc.create_test(type, config, options)
+    def create_test(type, config, locations, message, name, tags, options = {})
+      @synthetics_svc.create_test(type, config, locations, message, name, tags, options)
     end
 
-    def edit_test(test_id, config, options= {})
-      @synthetics_svc.edit_test(test_id, config, options)
+    def edit_test(test_id, type, config, locations, message, name, tags, options = {})
+      @synthetics_svc.edit_test(test_id, type, config, locations, message, name, tags, options)
     end
 
     def delete_tests(test_ids)

@@ -5,7 +5,8 @@ describe Dogapi::Client do
   SYNTHETICS_TESTS_PUBLIC_IDS = ['84r-szk-xpt', 'sti-s2m-ciz']
   NEW_STATUS = 'paused'
   SYNTHETICS_RESULT_ID = 123_456
-  SYNTHETICS_TYPE = 'api'.freeze
+
+  SYNTHETICS_TEST_TYPE = 'api'.freeze
   SYNTHETICS_TEST_CONFIG = {
     'assertions' => [
       {
@@ -36,25 +37,41 @@ describe Dogapi::Client do
       'body' => 'body to send with the request'
     }
   }.freeze
-  LOCATIONS = [
+
+  SYNTHETICS_TEST_OPTIONS = {
+    'tick_every' => 60,
+    'min_failure_duration' => 0,
+    'min_location_failed' => 1,
+    'follow_redirects' => true
+  }.freeze
+
+  SYNTHETICS_LOCATIONS = [
     'aws:us-east-2',
     'aws:eu-central-1',
     'aws:ca-central-1'
-  ]
-  MESSAGE = 'Test with API'
-  NAME = 'Test with API'
-  TAGS = ['key1:value1', 'key2:value2']
+  ].freeze
+  SYNTHETICS_TEST_MESSAGE = 'Test with API'.freeze
+  SYNTHETICS_TEST_NAME = 'Test with API'.freeze
+  SYNTHETICS_TEST_TAGS = ['key1:value1', 'key2:value2'].freeze
 
   describe '#create_test' do
-    it_behaves_like 'an api method with options',
-                    :create_test, [SYNTHETICS_TYPE, SYNTHETICS_TEST_CONFIG],
-                    :post, '/synthetics/tests', 'type' => SYNTHETICS_TYPE, 'config' => SYNTHETICS_TEST_CONFIG
+    it 'queries the api' do
+      url = api_url + "/synthetics/tests"
+      stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:create_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG, SYNTHETICS_LOCATIONS, SYNTHETICS_TEST_MESSAGE, SYNTHETICS_TEST_NAME, SYNTHETICS_TEST_TAGS, SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
+
+      expect(WebMock).to have_requested(:post, url)
+    end
   end
 
   describe '#edit_test' do
-    it_behaves_like 'an api method with options',
-                    :edit_test, [SYNTHETICS_TEST_PUBLIC_ID, SYNTHETIC_TEST_CONFIG],
-                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}", 'config' => SYNTHETICS_TEST_CONFIG
+    it 'queries the api' do
+      url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
+      stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:edit_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG, SYNTHETICS_LOCATIONS, SYNTHETICS_TEST_MESSAGE, SYNTHETICS_TEST_NAME, SYNTHETICS_TEST_TAGS, SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
+
+      expect(WebMock).to have_requested(:put, url)
+    end
   end
 
   describe '#delete_tests' do

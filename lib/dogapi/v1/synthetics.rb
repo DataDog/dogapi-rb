@@ -15,22 +15,24 @@ module Dogapi
           'locations' => locations,
           'message' => message,
           'name' => name,
-          'tags' => tags
-        }.merge(options)
+          'tags' => tags,
+          'options' => options
+        }
 
         request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests", nil, body, true)
       end
 
       # Edit a synthetics test: PUT /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>
-      def edit_test(type, config, locations, message, name, tags, options = {})
+      def edit_test(test_id, type, config, locations, message, name, tags, options = {})
       body = {
         'type' => type,
         'config' => config,
         'locations' => locations,
         'message' => message,
         'name' => name,
-        'tags' => tags
-      }.merge(options)
+        'tags' => tags,
+        'options' => options
+      }
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{test_id}", nil, body, true)
       end

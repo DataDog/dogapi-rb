@@ -51,6 +51,17 @@ describe Dogapi::Client do
                     :delete, "/monitor/#{MONITOR_ID}"
   end
 
+  describe '#delete_monitor with options' do
+    it 'queries the api with options' do
+      url = api_url + "/monitor/#{MONITOR_ID}?force=true"
+      options = { 'force' => true }
+      stub_request(:delete, url).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:delete_monitor, MONITOR_ID, options)).to eq ['200', {}]
+
+      expect(WebMock).to have_requested(:delete, url)
+    end
+  end
+
   describe '#get_all_monitors' do
     it_behaves_like 'an api method with optional params',
                     :get_all_monitors, [],

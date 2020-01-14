@@ -549,8 +549,8 @@ module Dogapi
       @monitor_svc.can_delete_monitors(monitor_ids)
     end
 
-    def delete_monitor(monitor_id)
-      @monitor_svc.delete_monitor(monitor_id)
+    def delete_monitor(monitor_id, options = {})
+      @monitor_svc.delete_monitor(monitor_id, options)
     end
 
     def get_all_monitors(options= {})

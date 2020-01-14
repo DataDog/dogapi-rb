@@ -24,15 +24,15 @@ module Dogapi
 
       # Edit a synthetics test: PUT /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>
       def edit_test(test_id, type, config, locations, message, name, tags, options = {})
-      body = {
-        'type' => type,
-        'config' => config,
-        'locations' => locations,
-        'message' => message,
-        'name' => name,
-        'tags' => tags,
-        'options' => options
-      }
+        body = {
+          'type' => type,
+          'config' => config,
+          'locations' => locations,
+          'message' => message,
+          'name' => name,
+          'tags' => tags,
+          'options' => options
+        }
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{test_id}", nil, body, true)
       end

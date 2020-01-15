@@ -41,7 +41,7 @@ module Dogapi
         body = {
           'new_status' => new_status
         }
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/status", nil, body, true)
+        request(Net::HTTP::Put, "/api/#{API_VERSION}/synthetics/tests/#{test_id}/status", nil, body, true)
       end
 
       # Get all synthetics tests: GET /v1/synthetics/tests

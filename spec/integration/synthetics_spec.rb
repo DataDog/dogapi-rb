@@ -84,7 +84,7 @@ describe Dogapi::Client do
   describe '#star_pause_test' do
     it_behaves_like 'an api method',
                     :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
-                    :post, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
+                    :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
   end
 
   describe '#get_all_tests' do

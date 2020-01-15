@@ -8,52 +8,52 @@ describe Dogapi::Client do
 
   SYNTHETICS_TEST_TYPE = 'api'.freeze
   SYNTHETICS_TEST_CONFIG = {
-  'assertions' => [
-    {
-      'operator' => 'is',
-      'type' => 'statusCode',
-      'target' => 403
-    },
-    {
-      'operator' => 'is',
-      'property' => 'content-type',
-      'type' => 'header',
-      'target' => 'text/html'
-    },
-    {
-      'operator' => 'lessThan',
-      'type' => 'responseTime',
-      'target' => 2000
+    'assertions' => [
+      {
+        'operator' => 'is',
+        'type' => 'statusCode',
+        'target' => 403
+      },
+      {
+        'operator' => 'is',
+        'property' => 'content-type',
+        'type' => 'header',
+        'target' => 'text/html'
+      },
+      {
+        'operator' => 'lessThan',
+        'type' => 'responseTime',
+        'target' => 2000
+      }
+    ],
+    'request' => {
+      'method' => 'GET',
+      'url' => 'https://datadoghq.com',
+      'timeout' => 30,
+      'headers' => {
+        'header1' => 'value1',
+        'header2' => 'value2'
+      },
+      'body' => 'body to send with the request'
     }
-  ],
-  'request' => {
-    'method' => 'GET',
-    'url' => 'https://datadoghq.com',
-    'timeout' => 30,
-    'headers' => {
-      'header1' => 'value1',
-      'header2' => 'value2'
-    },
-    'body' => 'body to send with the request'
-  }
-}.freeze
+  }.freeze
 
-SYNTHETICS_TEST_OPTIONS = {
-  'locations' => [
-    'aws:us-east-2',
-    'aws:eu-central-1',
-    'aws:ca-central-1'
-  ],
-  'options' => {
-    'tick_every' => 60,
-    'min_failure_duration' => 0,
-    'min_location_failed' => 1,
-    'follow_redirects' => true
-  },
-  'message' => 'Test with API',
-  'name' => 'Test with API',
-  'tags' => ['key1:value1', 'key2:value2']
-}.freeze
+  SYNTHETICS_TEST_OPTIONS = {
+    'locations' => [
+      'aws:us-east-2',
+      'aws:eu-central-1',
+      'aws:ca-central-1'
+    ],
+    'options' => {
+      'tick_every' => 60,
+      'min_failure_duration' => 0,
+      'min_location_failed' => 1,
+      'follow_redirects' => true
+    },
+    'message' => 'Test with API',
+    'name' => 'Test with API',
+    'tags' => ['key1:value1', 'key2:value2']
+  }.freeze
 
   describe '#create_test' do
     it 'queries the api' do

@@ -20,7 +20,6 @@ module Dogapi
       # Edit a synthetics test: PUT /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>
       def edit_test(test_id, type, config, options = {})
         body = {
-          'test_id' => test_id,
           'type' => type,
           'config' => config
         }.merge(options)

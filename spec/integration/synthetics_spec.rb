@@ -8,59 +8,57 @@ describe Dogapi::Client do
 
   SYNTHETICS_TEST_TYPE = 'api'.freeze
   SYNTHETICS_TEST_CONFIG = {
-    'assertions' => [
-      {
-        'operator' => 'is',
-        'type' => 'statusCode',
-        'target' => 403
-      },
-      {
-        'operator' => 'is',
-        'property' => 'content-type',
-        'type' => 'header',
-        'target' => 'text/html'
-      },
-      {
-        'operator' => 'lessThan',
-        'type' => 'responseTime',
-        'target' => 2000
+    'config' => {
+      'assertions' => [
+        {
+          'operator' => 'is',
+          'type' => 'statusCode',
+          'target' => 403
+        },
+        {
+          'operator' => 'is',
+          'property' => 'content-type',
+          'type' => 'header',
+          'target' => 'text/html'
+        },
+        {
+          'operator' => 'lessThan',
+          'type' => 'responseTime',
+          'target' => 2000
+        }
+      ],
+      'request' => {
+        'method' => 'GET',
+        'url' => 'https://datadoghq.com',
+        'timeout' => 30,
+        'headers' => {
+          'header1' => 'value1',
+          'header2' => 'value2'
+        },
+        'body' => 'body to send with the request'
       }
+    },
+    'options' => {
+      'tick_every' => 60,
+      'min_failure_duration' => 0,
+      'min_location_failed' => 1,
+      'follow_redirects' => true
+    },
+    'locations' => [
+      'aws:us-east-2',
+      'aws:eu-central-1',
+      'aws:ca-central-1'
     ],
-    'request' => {
-      'method' => 'GET',
-      'url' => 'https://datadoghq.com',
-      'timeout' => 30,
-      'headers' => {
-        'header1' => 'value1',
-        'header2' => 'value2'
-      },
-      'body' => 'body to send with the request'
-    }
+    'message' => 'Test with API',
+    'name' => 'Test with API',
+    'tags' => ['key1:value1', 'key2:value2']
   }.freeze
-
-  SYNTHETICS_TEST_OPTIONS = {
-    'tick_every' => 60,
-    'min_failure_duration' => 0,
-    'min_location_failed' => 1,
-    'follow_redirects' => true
-  }.freeze
-
-  SYNTHETICS_LOCATIONS = [
-    'aws:us-east-2',
-    'aws:eu-central-1',
-    'aws:ca-central-1'
-  ].freeze
-  SYNTHETICS_TEST_MESSAGE = 'Test with API'.freeze
-  SYNTHETICS_TEST_NAME = 'Test with API'.freeze
-  SYNTHETICS_TEST_TAGS = ['key1:value1', 'key2:value2'].freeze
 
   describe '#create_test' do
     it 'queries the api' do
       url = api_url + '/synthetics/tests'
       stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:create_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG, SYNTHETICS_LOCATIONS,
-                      SYNTHETICS_TEST_MESSAGE, SYNTHETICS_TEST_NAME, SYNTHETICS_TEST_TAGS,
-                      SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
+      expect(dog.send(:create_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:post, url)
     end
@@ -70,9 +68,8 @@ describe Dogapi::Client do
     it 'queries the api' do
       url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
       stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:edit_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG,
-                      SYNTHETICS_LOCATIONS, SYNTHETICS_TEST_MESSAGE, SYNTHETICS_TEST_NAME, SYNTHETICS_TEST_TAGS,
-                      SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
+      expect(dog.send(:edit_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE,
+                      SYNTHETICS_TEST_CONFIG)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:put, url)
     end

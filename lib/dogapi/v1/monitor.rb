@@ -1,10 +1,12 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'dogapi'
 
 module Dogapi
   class V1 # for namespacing
-
     class MonitorService < Dogapi::APIService
-
       API_VERSION = 'v1'
 
       def monitor(type, query, options = {})
@@ -16,10 +18,15 @@ module Dogapi
         request(Net::HTTP::Post, "/api/#{API_VERSION}/monitor", nil, body, true)
       end
 
-      def update_monitor(monitor_id, query, options)
-        body = {
-          'query' => query,
-        }.merge options
+      def update_monitor(monitor_id, query = nil, options = {})
+        body = {}.merge options
+        unless query.nil?
+          body = {
+            'query' => query
+          }.merge body
+          warn '[DEPRECATION] query param is not required anymore and should be set to nil.'\
+             ' To update the query, set it in the options parameter instead'
+        end
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, body, true)
       end
@@ -37,8 +44,19 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/#{monitor_id}", extra_params, nil, false)
       end
 
-      def delete_monitor(monitor_id)
-        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", nil, nil, false)
+      def can_delete_monitors(monitor_ids)
+        extra_params =
+          if monitor_ids.respond_to?(:join)
+            { "monitor_ids" => monitor_ids.join(",") }
+          else
+            { "monitor_ids" => monitor_ids }
+          end
+
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/monitor/can_delete", extra_params, nil, false)
+      end
+
+      def delete_monitor(monitor_id, options = {})
+        request(Net::HTTP::Delete, "/api/#{API_VERSION}/monitor/#{monitor_id}", options, nil, false)
       end
 
       def get_all_monitors(options = {})
@@ -117,8 +135,8 @@ module Dogapi
         request(Net::HTTP::Put, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, options, true)
       end
 
-      def get_downtime(downtime_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", nil, nil, false)
+      def get_downtime(downtime_id, options = {})
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/downtime/#{downtime_id}", options, nil, false)
       end
 
       def cancel_downtime(downtime_id)
@@ -126,7 +144,7 @@ module Dogapi
       end
 
       def cancel_downtime_by_scope(scope)
-        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/downtime/cancel/by_scope", nil, { 'scope' => scope }, true)
       end
 
       def get_all_downtimes(options = {})

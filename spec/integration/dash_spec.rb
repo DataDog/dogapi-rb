@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
@@ -19,12 +23,14 @@ describe Dogapi::Client do
     'prefix' => 'host',
     'default' => 'host:my-host'
   }].freeze
+  READ_ONLY = false
 
   DASH_BODY = {
     title: TITLE,
     description: DESCRIPTION,
     graphs: GRAPHS,
-    template_variables: TEMPLATE_VARIABLES
+    template_variables: TEMPLATE_VARIABLES,
+    read_only: READ_ONLY
   }.freeze
   DASH_ARGS = DASH_BODY.values
 

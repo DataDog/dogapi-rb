@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe 'Common' do
@@ -46,6 +50,51 @@ describe 'Common' do
       service.connect do |conn|
         expect(conn.address).to eq 'app.example.com'
         expect(conn.port).to eq 443
+      end
+    end
+
+    it 'respects http headers' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      expect(service.api_key).to eq 'api_key'
+      expect(service.application_key).to eq 'app_key'
+    end
+
+    it 'sets api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v1/series',
+              '/api/v1/check_run',
+              '/api/v1/events',
+              '/api/v1/screen']
+
+      urls.each do |url|
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be true
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq("?api_key=#{service.api_key}&application_key=#{service.application_key}")
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be false
+        expect(req.key?('DD-APPLICATION-KEY')).to be false
+      end
+    end
+
+    it 'does not set api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v2/series',
+              '/api/v1/random_endpoint',
+              '/api/v1/dashboards',
+              '/api/v2/users']
+
+      urls.each do |url|
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be false
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq('?')
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be true
+        expect(req['DD-API-KEY']).to eq service.api_key
+        expect(req.key?('DD-APPLICATION-KEY')).to be true
+        expect(req['DD-APPLICATION-KEY']).to eq service.application_key
       end
     end
   end

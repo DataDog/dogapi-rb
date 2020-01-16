@@ -23,12 +23,14 @@ describe Dogapi::Client do
     'prefix' => 'host',
     'default' => 'host:my-host'
   }].freeze
+  READ_ONLY = false
 
   DASH_BODY = {
     title: TITLE,
     description: DESCRIPTION,
     graphs: GRAPHS,
-    template_variables: TEMPLATE_VARIABLES
+    template_variables: TEMPLATE_VARIABLES,
+    read_only: READ_ONLY
   }.freeze
   DASH_ARGS = DASH_BODY.values
 

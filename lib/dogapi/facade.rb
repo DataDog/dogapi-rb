@@ -122,7 +122,7 @@ module Dogapi
     #  :device    => String
     #  :options   => Map
     #
-    # options[:type] = "counter" to specify a counter metric
+    # options[:type] = "count" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options= {})
       defaults = { :timestamp => Time.now }
@@ -144,7 +144,7 @@ module Dogapi
     #  :device => String
     #  :options   => Map
     #
-    # options[:type] = "counter" to specify a counter metric
+    # options[:type] = "count" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_points(metric, points, options= {})
       scope = override_scope options
@@ -593,8 +593,8 @@ module Dogapi
       @monitor_svc.can_delete_monitors(monitor_ids)
     end
 
-    def delete_monitor(monitor_id)
-      @monitor_svc.delete_monitor(monitor_id)
+    def delete_monitor(monitor_id, options = {})
+      @monitor_svc.delete_monitor(monitor_id, options)
     end
 
     def get_all_monitors(options= {})

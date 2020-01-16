@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
@@ -34,6 +38,7 @@ describe Dogapi::Client do
   }.freeze
 
   METRIC_PARAMS = { query: METRIC_QUERY, from: FROM.to_i, to: TO.to_i }.freeze
+  ACTIVE_METRICS_PARAMS = { from: FROM.to_i }.freeze
 
   describe '#emit_point' do
     it 'queries the api' do
@@ -92,5 +97,11 @@ describe Dogapi::Client do
         body: body
       )
     end
+  end
+
+  describe '#get_active_metrics' do
+    it_behaves_like 'an api method with params',
+                    :get_active_metrics, [],
+                    :get, '/metrics', ACTIVE_METRICS_PARAMS
   end
 end

@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'spec_helper'
 
 describe Dogapi::Client do
@@ -8,6 +12,19 @@ describe Dogapi::Client do
     def @service.upload(payload)
       @uploaded << payload
       [200, {}]
+    end
+  end
+
+  describe 'Datadog API url' do
+    it 'can be set in initializer' do
+      client = Dogapi::Client.new(api_key, app_key, nil, nil, nil, nil, 'example.com')
+      expect(client.datadog_host).to eq 'example.com'
+    end
+
+    it 'can be set with instance var' do
+      client = Dogapi::Client.new(api_key, app_key)
+      client.datadog_host = 'example.com'
+      expect(client.datadog_host).to eq 'example.com'
     end
   end
 

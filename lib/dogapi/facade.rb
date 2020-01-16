@@ -1,7 +1,54 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'time'
 require 'dogapi/v1'
+require 'dogapi/v2'
 
 module Dogapi
+
+  # A simple DogAPI client supporting the version 2.
+  #
+  # See Dogapi::V2  for the thick underlying clients
+  class ClientV2
+    attr_accessor :datadog_host
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
+
+      if api_key
+        @api_key = api_key
+      else
+        raise 'Please provide an API key to submit your data'
+      end
+
+      @application_key = application_key
+      @datadog_host = endpoint || Dogapi.find_datadog_host()
+      @host = host || Dogapi.find_localhost()
+      @device = device
+
+      @dashboard_list_service_v2 = Dogapi::V2::DashboardListService.new(
+        @api_key, @application_key, silent, timeout, @datadog_host
+      )
+
+    end
+
+    def add_items_to_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.add_items(dashboard_list_id, dashboards)
+    end
+
+    def update_items_of_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.update_items(dashboard_list_id, dashboards)
+    end
+
+    def delete_items_from_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service_v2.delete_items(dashboard_list_id, dashboards)
+    end
+
+    def get_items_of_dashboard_list(dashboard_list_id)
+      @dashboard_list_service_v2.get_items(dashboard_list_id)
+    end
+
+  end
 
   # A simple DogAPI client
   #
@@ -12,7 +59,11 @@ module Dogapi
   # information about the JSON object structure is available in the HTTP API
   # documentation, here[https://github.com/DataDog/dogapi/wiki].
   class Client # rubocop:disable Metrics/ClassLength
+    attr_accessor :datadog_host
+    attr_accessor :v2
+    # Support for API version 2.
 
+    # rubocop:disable Metrics/MethodLength, Metrics/LineLength
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
 
       if api_key
@@ -33,6 +84,10 @@ module Dogapi
       @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @dashboard_service = Dogapi::V1::DashboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @dashboard_list_service = Dogapi::V1::DashboardListService.new(
+        @api_key, @application_key, silent, timeout, @datadog_host
+      )
       @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host)
@@ -42,7 +97,18 @@ module Dogapi
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
+      @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_integration_svc = Dogapi::V1::AwsIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @aws_logs_svc = Dogapi::V1::AwsLogsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      # Support for Dashboard List API v2.
+      @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
+
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/LineLength
 
     #
     # METRICS
@@ -55,7 +121,7 @@ module Dogapi
     #  :device    => String
     #  :options   => Map
     #
-    # options[:type] = "counter" to specify a counter metric
+    # options[:type] = "count" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_point(metric, value, options= {})
       defaults = { :timestamp => Time.now }
@@ -77,7 +143,7 @@ module Dogapi
     #  :device => String
     #  :options   => Map
     #
-    # options[:type] = "counter" to specify a counter metric
+    # options[:type] = "count" to specify a counter metric
     # options[:tags] = ["tag1", "tag2"] to tag the point
     def emit_points(metric, points, options= {})
       scope = override_scope options
@@ -109,6 +175,13 @@ module Dogapi
       ensure
         @metric_svc.switch_to_single
       end
+    end
+
+    # Get a list of active metrics since a given time
+    # +from+ The seconds since the unix epoch <tt>[Time, Integer]</tt>
+    #
+    def get_active_metrics(from)
+      @metric_svc.get_active_metrics(from)
     end
 
     #
@@ -272,6 +345,75 @@ module Dogapi
     end
 
     #
+    # DASHBOARDS
+    #
+
+    # Create a dashboard.
+    def create_board(title, widgets, layout_type, options= {})
+      @dashboard_service.create_board(title, widgets, layout_type, options)
+    end
+
+    # Update a dashboard.
+    def update_board(dashboard_id, title, widgets, layout_type, options= {})
+      @dashboard_service.update_board(dashboard_id, title, widgets, layout_type, options)
+    end
+
+    # Fetch the given dashboard.
+    def get_board(dashboard_id)
+      @dashboard_service.get_board(dashboard_id)
+    end
+
+    # Fetch all dashboards.
+    def get_all_boards()
+      @dashboard_service.get_all_boards()
+    end
+
+    # Delete the given dashboard.
+    def delete_board(dashboard_id)
+      @dashboard_service.delete_board(dashboard_id)
+    end
+
+    #
+    # DASHBOARD LISTS
+    #
+
+    def create_dashboard_list(name)
+      @dashboard_list_service.create(name)
+    end
+
+    def update_dashboard_list(dashboard_list_id, name)
+      @dashboard_list_service.update(dashboard_list_id, name)
+    end
+
+    def get_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get(dashboard_list_id)
+    end
+
+    def get_all_dashboard_lists()
+      @dashboard_list_service.all()
+    end
+
+    def delete_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.delete(dashboard_list_id)
+    end
+
+    def add_items_to_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.add_items(dashboard_list_id, dashboards)
+    end
+
+    def update_items_of_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.update_items(dashboard_list_id, dashboards)
+    end
+
+    def delete_items_from_dashboard_list(dashboard_list_id, dashboards)
+      @dashboard_list_service.delete_items(dashboard_list_id, dashboards)
+    end
+
+    def get_items_of_dashboard_list(dashboard_list_id)
+      @dashboard_list_service.get_items(dashboard_list_id)
+    end
+
+    #
     # ALERTS
     #
 
@@ -403,8 +545,12 @@ module Dogapi
       @monitor_svc.get_monitor(monitor_id, options)
     end
 
-    def delete_monitor(monitor_id)
-      @monitor_svc.delete_monitor(monitor_id)
+    def can_delete_monitors(monitor_ids)
+      @monitor_svc.can_delete_monitors(monitor_ids)
+    end
+
+    def delete_monitor(monitor_id, options = {})
+      @monitor_svc.delete_monitor(monitor_id, options)
     end
 
     def get_all_monitors(options= {})
@@ -431,6 +577,18 @@ module Dogapi
       @monitor_svc.unmute_monitor(monitor_id, options)
     end
 
+    def resolve_monitors(monitor_groups = [], options = {}, version = nil)
+      @monitor_svc.resolve_monitors(monitor_groups, options, version)
+    end
+
+    def search_monitors(options = {})
+      @monitor_svc.search_monitors(options)
+    end
+
+    def search_monitor_groups(options = {})
+      @monitor_svc.search_monitor_groups(options)
+    end
+
     #
     # MONITOR DOWNTIME
     #
@@ -443,8 +601,8 @@ module Dogapi
       @monitor_svc.update_downtime(downtime_id, options)
     end
 
-    def get_downtime(downtime_id)
-      @monitor_svc.get_downtime(downtime_id)
+    def get_downtime(downtime_id, options = {})
+      @monitor_svc.get_downtime(downtime_id, options)
     end
 
     def cancel_downtime(downtime_id)
@@ -503,6 +661,175 @@ module Dogapi
     #   :statsd_interval  => Integer, statsd flush interval for metric in seconds (if applicable)
     def update_metadata(metric, options= {})
       @metadata_svc.update(metric, options)
+    end
+
+    #
+    # HOSTS
+    #
+
+    def search_hosts(options = {})
+      @hosts_svc.search(options)
+    end
+
+    def host_totals()
+      @hosts_svc.totals()
+    end
+
+    #
+    # INTEGRATIONS
+    #
+
+    def create_integration(source_type_name, config)
+      @integration_svc.create_integration(source_type_name, config)
+    end
+
+    def update_integration(source_type_name, config)
+      @integration_svc.update_integration(source_type_name, config)
+    end
+
+    def get_integration(source_type_name)
+      @integration_svc.get_integration(source_type_name)
+    end
+
+    def delete_integration(source_type_name)
+      @integration_svc.delete_integration(source_type_name)
+    end
+
+    #
+    # AWS INTEGRATION
+    #
+    def aws_integration_list
+      @aws_integration_svc.aws_integration_list
+    end
+
+    def aws_integration_create(config)
+      @aws_integration_svc.aws_integration_create(config)
+    end
+
+    def aws_integration_delete(config)
+      @aws_integration_svc.aws_integration_delete(config)
+    end
+
+    def aws_integration_list_namespaces
+      @aws_integration_svc.aws_integration_list_namespaces
+    end
+
+    def aws_integration_generate_external_id(config)
+      @aws_integration_svc.aws_integration_generate_external_id(config)
+    end
+
+    def aws_integration_update(config, new_config)
+      @aws_integration_svc.aws_integration_update(config, new_config)
+    end
+
+    #
+    # AWS Logs Integration
+    #
+
+    def aws_logs_add_lambda(config)
+      @aws_logs_svc.aws_logs_add_lambda(config)
+    end
+
+    def aws_logs_list_services
+      @aws_logs_svc.aws_logs_list_services
+    end
+
+    def aws_logs_save_services(config)
+      @aws_logs_svc.aws_logs_save_services(config)
+    end
+
+    def aws_logs_integrations_list
+      @aws_logs_svc.aws_logs_integrations_list
+    end
+
+    def aws_logs_integration_delete(config)
+      @aws_logs_svc.aws_logs_integration_delete(config)
+    end
+
+    def aws_logs_check_lambda(config)
+      @aws_logs_svc.aws_logs_check_lambda(config)
+    end
+
+    def aws_logs_check_services(config)
+      @aws_logs_svc.aws_logs_check_services(config)
+    end
+
+    #
+    # AZURE INTEGRATION
+    #
+
+    def azure_integration_list
+      @azure_integration_svc.azure_integration_list
+    end
+
+    def azure_integration_create(config)
+      @azure_integration_svc.azure_integration_create(config)
+    end
+
+    def azure_integration_delete(config)
+      @azure_integration_svc.azure_integration_delete(config)
+    end
+
+    def azure_integration_update_host_filters(config)
+      @azure_integration_svc.azure_integration_update_host_filters(config)
+    end
+
+    def azure_integration_update(config)
+      @azure_integration_svc.azure_integration_update(config)
+    end
+
+    #
+    # GCP INTEGRATION
+    #
+    def gcp_integration_list
+      @gcp_integration_svc.gcp_integration_list
+    end
+
+    def gcp_integration_delete(config)
+      @gcp_integration_svc.gcp_integration_delete(config)
+    end
+
+    def gcp_integration_create(config)
+      @gcp_integration_svc.gcp_integration_create(config)
+    end
+
+    def gcp_integration_update(config)
+      @gcp_integration_svc.gcp_integration_update(config)
+    end
+
+    #
+    # USAGE
+    #
+
+    # Get hourly usage information for different datadog service
+    # Usage data is delayed by up to 72 hours from when it was incurred. It is retained for the past 15 months.#
+    # format of dates is ISO-8601 UTC YYYY-MM-DDThh
+    # ex:
+    #   require 'time'
+    #   Time.now.utc.strftime('%Y-%m-%dT%H')
+    # => "2019-05-05T13"
+    def get_hosts_usage(start_hr, end_hr = nil)
+      @usage_svc.get_hosts_usage(start_hr, end_hr)
+    end
+
+    def get_logs_usage(start_hr, end_hr = nil)
+      @usage_svc.get_logs_usage(start_hr, end_hr)
+    end
+
+    def get_custom_metrics_usage(start_hr, end_hr = nil)
+      @usage_svc.get_custom_metrics_usage(start_hr, end_hr)
+    end
+
+    def get_traces_usage(start_hr, end_hr = nil)
+      @usage_svc.get_traces_usage(start_hr, end_hr)
+    end
+
+    def get_synthetics_usage(start_hr, end_hr = nil)
+      @usage_svc.get_synthetics_usage(start_hr, end_hr)
+    end
+
+    def get_fargate_usage(start_hr, end_hr = nil)
+      @usage_svc.get_fargate_usage(start_hr, end_hr)
     end
 
     private

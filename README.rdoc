@@ -1,8 +1,7 @@
 = Ruby Client for Datadog API
 
-{<img src="https://badge.fury.io/rb/dogapi.png" alt="Gem Version" />}[http://badge.fury.io/rb/dogapi]
-
-{<img src="https://travis-ci.org/DataDog/dogapi-rb.png?branch=master" alt="Build Status" />}[https://travis-ci.org/DataDog/dogapi-rb]
+{<img src="https://badge.fury.io/rb/dogapi.svg" alt="Gem Version" />}[http://badge.fury.io/rb/dogapi]
+{<img src="https://dev.azure.com/datadoghq/dogapi-rb/_apis/build/status/DataDog.dogapi-rb?branchName=master" alt="Build Status" />}[https://dev.azure.com/datadoghq/dogapi-rb/_build/latest?definitionId=16&branchName=master]
 
 The Ruby client is a library suitable for inclusion in existing Ruby projects or for development of standalone scripts. It provides an abstraction on top of Datadog's raw HTTP interface for reporting events and metrics.
 
@@ -37,6 +36,13 @@ If you get a LoadError, missing mkmf, you need to install the development packag
 
 = Usage
 
+== Supported Versions
+
+This project currently works with Ruby versions 1.9.3+
+
+*Note* Newer features and new endpoint support may no longer support EOL Ruby versions but
+the client should still intialize and allow metric/event submission.
+
 == How to find your API and application keys
 
 Go to your setup page[https://app.datadoghq.com/account/settings].
@@ -48,6 +54,34 @@ to take advantage of automatic tagging with the host's tags.
 
 If you want to attach events and points to a specific device
 on a host, simply specify the device when calling emit functions.
+
+== Configure the Datadog API Url
+
+
+    require 'rubygems'
+    require 'dogapi'
+
+    api_key = "abcdef123456"
+    application_key = "fedcba654321"
+
+    # by default the API Url will be set to https://api.datadoghq.com
+    dog = Dogapi::Client.new(api_key, application_key)
+    p dog.datadog_host  # prints https://api.datadoghq.com
+
+    # API Url can be passed to the initializer...
+    dog = Dogapi::Client.new(api_key, application_key, nil, nil, nil, nil, 'https://myproxy.local')
+    p dog.datadog_host  # prints https://myproxy.local
+
+    # ...or set on the client instance directly
+    dog = Dogapi::Client.new(api_key, application_key)
+    dog.datadog_host = 'https://myproxy.local'
+    p dog.datadog_host  # prints https://myproxy.local
+
+    # in any case, contents of the DATADOG_HOST env var take precedence
+    ENV['DATADOG_HOST'] = https://myproxy.local
+    dog = Dogapi::Client.new(api_key, application_key)
+    p dog.datadog_host  # prints https://myproxy.local
+
 
 == Submit an event to Datadog
 
@@ -138,6 +172,3 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
     query = 'sum:metric.count{*}.as_count()'
 
     dog.get_points(query, from, to)
-
-
-

@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'etc'
 require 'digest/md5'
 require 'timeout'
@@ -13,7 +17,9 @@ module Capistrano
 
     def self.cap_version()
       if @cap_version.nil? then
-        if Configuration.respond_to? :instance then
+        if !defined? Configuration
+          @cap_version = ''
+        elsif Configuration.respond_to? :instance
           @cap_version = :v2
         else
           @cap_version = :v3
@@ -88,7 +94,7 @@ module Capistrano
       end
 
       def report()
-        hostname = %x[hostname -f].strip
+        hostname = Dogapi.find_localhost
         user = Etc.getlogin
 
         # Lazy randomness
@@ -108,8 +114,9 @@ module Capistrano
           if !task[:application].nil? and !task[:application].empty? then
             application = ' for ' + task[:application]
           end
+          timing = Float(task[:timing]).round(2) rescue 'n/a'
           title = "#{user}@#{hostname} ran #{name}#{application} on #{roles.join(', ')} "\
-                  "with capistrano in #{task[:timing].round(2)} secs"
+                  "with capistrano in #{timing} secs"
           type  = 'deploy'
           alert_type = 'success'
           source_type = 'capistrano'

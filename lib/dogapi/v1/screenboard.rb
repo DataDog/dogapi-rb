@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'dogapi'
 
 module Dogapi
@@ -28,7 +32,7 @@ module Dogapi
       end
 
       def share_screenboard(board_id)
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/screen/share/#{board_id}", nil, nil, false)
+        request(Net::HTTP::Post, "/api/#{API_VERSION}/screen/share/#{board_id}", nil, nil, false)
       end
 
       def revoke_screenboard(board_id)

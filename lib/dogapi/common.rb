@@ -1,11 +1,16 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'cgi'
 require 'net/https'
-require 'pp'
 require 'socket'
 require 'uri'
+require 'English'
 
 require 'rubygems'
 require 'multi_json'
+require 'set'
 
 module Dogapi
 
@@ -69,6 +74,7 @@ module Dogapi
 
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
+    attr_reader :api_key, :application_key
     def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
       @api_key = api_key
       @application_key = application_key
@@ -116,14 +122,8 @@ module Dogapi
       resp = nil
       connect do |conn|
         begin
-          current_url = url + prepare_params(extra_params, with_app_key)
-          req = method.new(current_url)
-
-          if send_json
-            req.content_type = 'application/json'
-            req.body = MultiJson.dump(body)
-          end
-
+          params = prepare_params(extra_params, url, with_app_key)
+          req = prepare_request(method, url, params, body, send_json, with_app_key)
           resp = conn.request(req)
           return handle_response(resp)
         rescue Exception => e
@@ -132,13 +132,37 @@ module Dogapi
       end
     end
 
-    def prepare_params(extra_params, with_app_key)
-      params = { api_key: @api_key }
-      params[:application_key] = @application_key if with_app_key
+    def prepare_request(method, url, params, body, send_json, with_app_key)
+      url_with_params = url + params
+      req = method.new(url_with_params)
+      unless should_set_api_and_app_keys_in_params?(url)
+        req['DD-API-KEY'] = @api_key
+        req['DD-APPLICATION-KEY'] = @application_key if with_app_key
+      end
+
+      if send_json
+        req.content_type = 'application/json'
+        req.body = MultiJson.dump(body)
+      end
+      return req
+    end
+
+    def prepare_params(extra_params, url, with_app_key)
+      if should_set_api_and_app_keys_in_params?(url)
+        params = { api_key: @api_key }
+        params[:application_key] = @application_key if with_app_key
+      else
+        params = {}
+      end
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')
       qs
+    end
+
+    def should_set_api_and_app_keys_in_params?(url)
+      set_of_urls = Set.new ['/api/v1/series', '/api/v1/check_run', '/api/v1/events', '/api/v1/screen']
+      return set_of_urls.include?(url)
     end
 
     def handle_response(resp)
@@ -148,6 +172,8 @@ module Dogapi
       begin
         return resp.code, MultiJson.load(resp.body)
       rescue
+        is_json = resp.content_type == 'application/json'
+        raise "Response Content-Type is not application/json but is #{resp.content_type}: " + resp.body unless is_json
         raise 'Invalid JSON Response: ' + resp.body
       end
     end
@@ -155,18 +181,16 @@ module Dogapi
 
   def Dogapi.find_datadog_host
     # allow env-based overriding, useful for tests
-    ENV['DATADOG_HOST'] || 'https://app.datadoghq.com'
+    ENV['DATADOG_HOST'] || 'https://api.datadoghq.com'
   end
 
   # Memoize the hostname as a module variable
   @@hostname = nil
 
   def Dogapi.find_localhost
-    begin
-      # prefer hostname -f over Socket.gethostname
-      @@hostname ||= %x[hostname -f].strip
-    rescue
-      raise 'Cannot determine local hostname via hostname -f'
-    end
+    @@hostname ||= %x[hostname -f].strip
+  rescue SystemCallError
+    raise $ERROR_INFO unless $ERROR_INFO.class.name == 'Errno::ENOENT'
+    @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 end

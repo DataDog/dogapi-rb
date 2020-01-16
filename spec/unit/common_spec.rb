@@ -1,6 +1,21 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe 'Common' do
+  describe Dogapi.find_datadog_host do
+    it 'gives precedence to DATADOG_HOST env var' do
+      allow(ENV).to receive(:[]).with('DATADOG_HOST').and_return('example.com')
+      expect(Dogapi.find_datadog_host).to eq 'example.com'
+    end
+    it 'falls back to default url when DATADOG_HOST env var is not set' do
+      allow(ENV).to receive(:[]).with('DATADOG_HOST').and_return(nil)
+      expect(Dogapi.find_datadog_host).to eq 'https://api.datadoghq.com'
+    end
+  end
+
   context 'Scope' do
     it 'validates the Scope class' do
       obj = Dogapi::Scope.new('somehost', 'somedevice')
@@ -37,15 +52,61 @@ describe 'Common' do
         expect(conn.port).to eq 443
       end
     end
+
+    it 'respects http headers' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      expect(service.api_key).to eq 'api_key'
+      expect(service.application_key).to eq 'app_key'
+    end
+
+    it 'sets api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v1/series',
+              '/api/v1/check_run',
+              '/api/v1/events',
+              '/api/v1/screen']
+
+      urls.each do |url|
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be true
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq("?api_key=#{service.api_key}&application_key=#{service.application_key}")
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be false
+        expect(req.key?('DD-APPLICATION-KEY')).to be false
+      end
+    end
+
+    it 'does not set api and app keys in params' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+
+      urls = ['/api/v2/series',
+              '/api/v1/random_endpoint',
+              '/api/v1/dashboards',
+              '/api/v2/users']
+
+      urls.each do |url|
+        expect(service.should_set_api_and_app_keys_in_params?(url)).to be false
+        params = service.prepare_params(nil, url, true)
+        expect(params).to eq('?')
+        req = service.prepare_request(Net::HTTP::Get, url, params, nil, false, true)
+        expect(req.key?('DD-API-KEY')).to be true
+        expect(req['DD-API-KEY']).to eq service.api_key
+        expect(req.key?('DD-APPLICATION-KEY')).to be true
+        expect(req['DD-APPLICATION-KEY']).to eq service.application_key
+      end
+    end
   end
 end
 
 class FakeResponse
-  attr_accessor :code, :body
-  def initialize(code, body)
+  attr_accessor :code, :body, :content_type
+  def initialize(code, body, content_type = 'application/json')
     # Instance variables
     @code = code
     @body = body
+    @content_type = content_type
   end
 end
 
@@ -84,6 +145,14 @@ describe Dogapi::APIService do
         dog = dogapi_service
         resp = FakeResponse.new 202, "{'test2': }"
         expect { dog.handle_response(resp) }.to raise_error(RuntimeError, "Invalid JSON Response: {'test2': }")
+      end
+    end
+    context 'when receiving a non json response' do
+      it 'raises an error indicating the response Content-Type' do
+        dog = dogapi_service
+        resp = FakeResponse.new 202, '<html><body><h1>403 Forbidden</h1>', 'text/html'
+        msg = 'Response Content-Type is not application/json but is text/html: <html><body><h1>403 Forbidden</h1>'
+        expect { dog.handle_response(resp) }.to raise_error(RuntimeError, msg)
       end
     end
     context 'when receiving a bad response' do

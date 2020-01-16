@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
@@ -50,7 +54,7 @@ describe Dogapi::Client do
   describe '#share_screenboard' do
     it_behaves_like 'an api method',
                     :share_screenboard, [BOARD_ID],
-                    :get, "/screen/share/#{BOARD_ID}"
+                    :post, "/screen/share/#{BOARD_ID}"
   end
 
   describe '#revoke_screenboard' do

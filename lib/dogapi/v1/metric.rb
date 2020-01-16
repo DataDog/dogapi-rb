@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'dogapi'
 
 module Dogapi
@@ -61,8 +65,8 @@ module Dogapi
         begin
           typ = options[:type] || 'gauge'
 
-          if typ != 'gauge' && typ != 'counter'
-            raise ArgumentError, 'metric type must be gauge or counter'
+          if typ != 'gauge' && typ != 'counter' && typ != 'count' && typ != 'rate'
+            raise ArgumentError, 'metric type must be gauge or counter or count or rate'
           end
 
           metric_payload = {
@@ -83,7 +87,14 @@ module Dogapi
           suppress_error_if_silent e
         end
       end
-    end
 
+      def get_active_metrics(from)
+        params = {
+          from: from.to_i
+        }
+
+        request(Net::HTTP::Get, '/api/' + API_VERSION + '/metrics', params, nil, false)
+      end
+    end
   end
 end

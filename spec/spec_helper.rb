@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'rspec'
 require 'simplecov'
 require 'webmock/rspec'
@@ -42,22 +46,6 @@ module SpecDog
     end
   end
 
-  shared_examples 'an api method with named args' do |command, args, request, endpoint, body|
-    it 'queries the api' do
-      url = api_url + endpoint
-      old_url = old_api_url + endpoint
-      stub_request(request, /#{url}|#{old_url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(command, **args)).to eq ['200', {}]
-
-      body = MultiJson.dump(body) if body
-
-      expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
-          # ignore query: default_query -- here as in the test it's never properly included
-          body: body
-      )
-    end
-  end
-
   shared_examples 'an api method with options' do |command, args, request, endpoint, body|
     include_examples 'an api method', command, args, request, endpoint, body
     it 'queries the api with options' do
@@ -89,16 +77,19 @@ module SpecDog
     end
   end
 
-  shared_examples 'an api method with named args making params' do |command, args, request, endpoint, params|
-    it 'queries the api with params' do
+  shared_examples 'an api method with params and body' do |command, args, request, endpoint, params, body|
+    it 'queries the api with params and body' do
       url = api_url + endpoint
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(command, **args)).to eq ['200', {}]
+      expect(dog.send(command, *args)).to eq ['200', {}]
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      # hack/note: do not merge with default_query for this test case
+      params = params
+
+      body = MultiJson.dump(body) if body
 
       expect(WebMock).to have_requested(request, url).with(
-          query: params
+        query: params,
+        body: body
       )
     end
   end

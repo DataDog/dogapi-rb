@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'dogapi'
 
 module Dogapi
@@ -7,23 +11,25 @@ module Dogapi
 
       API_VERSION = 'v1'
 
-      def create_dashboard(title, description, graphs, template_variables = nil)
+      def create_dashboard(title, description, graphs, template_variables = nil, read_only = false)
         body = {
           :title => title,
           :description => description,
           :graphs => graphs,
-          :template_variables => (template_variables or [])
+          :template_variables => (template_variables or []),
+          :read_only => read_only
         }
 
         request(Net::HTTP::Post, "/api/#{API_VERSION}/dash", nil, body, true)
       end
 
-      def update_dashboard(dash_id, title, description, graphs, template_variables=nil)
+      def update_dashboard(dash_id, title, description, graphs, template_variables = nil, read_only = false)
         body = {
           :title => title,
           :description => description,
           :graphs => graphs,
-          :template_variables => (template_variables or [])
+          :template_variables => (template_variables or []),
+          :read_only => read_only
         }
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/dash/#{dash_id}", nil, body, true)

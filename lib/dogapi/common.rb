@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'cgi'
 require 'net/https'
 require 'socket'
@@ -118,16 +122,8 @@ module Dogapi
       resp = nil
       connect do |conn|
         begin
-          current_url = url + prepare_params(extra_params, url, with_app_key)
-          req = method.new(current_url)
-          req['DD-API-KEY'] = @api_key
-          req['DD-APPLICATION-KEY'] = @application_key if with_app_key
-
-          if send_json
-            req.content_type = 'application/json'
-            req.body = MultiJson.dump(body)
-          end
-
+          params = prepare_params(extra_params, url, with_app_key)
+          req = prepare_request(method, url, params, body, send_json, with_app_key)
           resp = conn.request(req)
           if resp.code.to_i / 100 == 3
             resp = handle_redirect(conn, req, resp)
@@ -139,29 +135,37 @@ module Dogapi
       end
     end
 
+    def prepare_request(method, url, params, body, send_json, with_app_key)
+      url_with_params = url + params
+      req = method.new(url_with_params)
+      unless should_set_api_and_app_keys_in_params?(url)
+        req['DD-API-KEY'] = @api_key
+        req['DD-APPLICATION-KEY'] = @application_key if with_app_key
+      end
+
+      if send_json
+        req.content_type = 'application/json'
+        req.body = MultiJson.dump(body)
+      end
+      return req
+    end
+
     def prepare_params(extra_params, url, with_app_key)
-      params = set_api_and_app_keys_in_params(url, with_app_key)
+      if should_set_api_and_app_keys_in_params?(url)
+        params = { api_key: @api_key }
+        params[:application_key] = @application_key if with_app_key
+      else
+        params = {}
+      end
       params = extra_params.merge params unless extra_params.nil?
       qs_params = params.map { |k, v| CGI.escape(k.to_s) + '=' + CGI.escape(v.to_s) }
       qs = '?' + qs_params.join('&')
       qs
     end
 
-    def set_api_and_app_keys_in_params(url, with_app_key)
-      set_of_urls = Set.new ['/api/v1/series',
-                             '/api/v1/check_run',
-                             '/api/v1/events',
-                             '/api/v1/screen']
-
-      include_in_params = set_of_urls.include?(url)
-
-      if include_in_params
-        params = { api_key: @api_key }
-        params[:application_key] = @application_key if with_app_key
-      else
-        params = {}
-      end
-      return params
+    def should_set_api_and_app_keys_in_params?(url)
+      set_of_urls = Set.new ['/api/v1/series', '/api/v1/check_run', '/api/v1/events', '/api/v1/screen']
+      return set_of_urls.include?(url)
     end
 
     def handle_response(resp)

@@ -533,44 +533,44 @@ module Dogapi
     #
     # SYNTHETICS
     #
-    def create_test(type, config, options = {})
-      @synthetics_svc.create_test(type, config, options)
+    def create_synthetics_test(type, config, options = {})
+      @synthetics_svc.create_synthetics_test(type, config, options)
     end
 
-    def edit_test(test_id, type, config, options = {})
-      @synthetics_svc.edit_test(test_id, type, config, options)
+    def edit_synthetics_test(test_id, type, config, options = {})
+      @synthetics_svc.edit_synthetics_test(test_id, type, config, options)
     end
 
-    def delete_tests(test_ids)
-      @synthetics_svc.delete_tests(test_ids)
+    def delete_synthetics_tests(test_ids)
+      @synthetics_svc.delete_synthetics_tests(test_ids)
     end
 
-    def star_pause_test(test_id, new_status)
-      @synthetics_svc.star_pause_test(test_id, new_status)
+    def start_pause_synthetics_test(test_id, new_status)
+      @synthetics_svc.start_pause_synthetics_test(test_id, new_status)
     end
 
-    def get_all_tests
-      @synthetics_svc.get_all_tests()
+    def get_all_synthetics_tests
+      @synthetics_svc.get_all_synthetics_tests()
     end
 
-    def get_test(test_id)
-      @synthetics_svc.get_test(test_id)
+    def get_synthetics_test(test_id)
+      @synthetics_svc.get_synthetics_test(test_id)
     end
 
-    def get_results(test_id)
-      @synthetics_svc.get_results(test_id)
+    def get_synthetics_results(test_id)
+      @synthetics_svc.get_synthetics_results(test_id)
     end
 
-    def get_result(test_id, result_id)
-      @synthetics_svc.get_result(test_id, result_id)
+    def get_synthetics_result(test_id, result_id)
+      @synthetics_svc.get_synthetics_result(test_id, result_id)
     end
 
-    def get_devices
-      @synthetics_svc.get_devices()
+    def get_synthetics_devices
+      @synthetics_svc.get_synthetics_devices()
     end
 
-    def get_locations
-      @synthetics_svc.get_locations()
+    def get_synthetics_locations
+      @synthetics_svc.get_synthetics_locations()
     end
 
     #

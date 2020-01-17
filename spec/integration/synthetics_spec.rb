@@ -55,77 +55,77 @@ describe Dogapi::Client do
     'tags' => ['key1:value1', 'key2:value2']
   }.freeze
 
-  describe '#create_test' do
+  describe '#create_synthetics_test' do
     it 'queries the api' do
       url = api_url + '/synthetics/tests'
       stub_request(:post, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:create_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG,
+      expect(dog.send(:create_synthetics_test, SYNTHETICS_TEST_TYPE, SYNTHETICS_TEST_CONFIG,
                       SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:post, url)
     end
   end
 
-  describe '#edit_test' do
+  describe '#edit_synthetics_test' do
     it 'queries the api' do
       url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
       stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:edit_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE,
+      expect(dog.send(:edit_synthetics_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE,
                       SYNTHETICS_TEST_CONFIG, SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:put, url)
     end
   end
 
-  describe '#delete_tests' do
+  describe '#delete_synthetics_tests' do
     it_behaves_like 'an api method',
-                    :delete_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
+                    :delete_synthetics_tests, [SYNTHETICS_TESTS_PUBLIC_IDS],
                     :post, '/synthetics/tests/delete', 'public_ids' => SYNTHETICS_TESTS_PUBLIC_IDS
   end
 
-  describe '#star_pause_test' do
+  describe '#start_pause_synthetics_test' do
     it_behaves_like 'an api method',
-                    :star_pause_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
+                    :start_pause_synthetics_test, [SYNTHETICS_TEST_PUBLIC_ID, NEW_STATUS],
                     :put, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/status", 'new_status' => NEW_STATUS
   end
 
-  describe '#get_all_tests' do
+  describe '#get_all_synthetics_tests' do
     it_behaves_like 'an api method',
-                    :get_all_tests, [],
+                    :get_all_synthetics_tests, [],
                     :get, '/synthetics/tests'
   end
 
-  describe '#get_test' do
+  describe '#get_synthetics_test' do
     it_behaves_like 'an api method',
-                    :get_test, [SYNTHETICS_TEST_PUBLIC_ID],
+                    :get_synthetics_test, [SYNTHETICS_TEST_PUBLIC_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
   end
 
-  describe '#get_results' do
+  describe '#get_synthetics_results' do
     it_behaves_like 'an api method',
-                    :get_results, [SYNTHETICS_TEST_PUBLIC_ID],
+                    :get_synthetics_results, [SYNTHETICS_TEST_PUBLIC_ID],
                     :get, "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results"
   end
 
-  describe '#get_result' do
+  describe '#get_synthetics_result' do
     it 'queries the api' do
       url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}/results/#{SYNTHETICS_RESULT_ID}"
       stub_request(:get, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:get_result, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID)).to eq ['200', {}]
+      expect(dog.send(:get_synthetics_result, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_RESULT_ID)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:get, url)
     end
   end
 
-  describe '#get_devices' do
+  describe '#get_synthetics_devices' do
     it_behaves_like 'an api method',
-                    :get_devices, [],
+                    :get_synthetics_devices, [],
                     :get, '/synthetics/browser/devices'
   end
 
-  describe '#get_locations' do
+  describe '#get_synthetics_locations' do
     it_behaves_like 'an api method',
-                    :get_locations, [],
+                    :get_synthetics_locations, [],
                     :get, '/synthetics/locations'
   end
 end

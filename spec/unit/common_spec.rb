@@ -49,7 +49,7 @@ describe 'Common' do
       end
 
       ENV['https_proxy'] = 'https://www.proxy.com:443'
-      ENV['dd_https_proxy'] = 'https://www.otherproxy.com:443'
+      ENV['dd_proxy_https'] = 'https://www.otherproxy.com:443'
 
       service.connect do |conn|
         expect(conn.proxy_address).to eq 'www.otherproxy.com'
@@ -57,7 +57,7 @@ describe 'Common' do
       end
 
       ENV['https_proxy'] = nil
-      ENV['dd_https_proxy'] = nil
+      ENV['dd_proxy_https'] = nil
     end
 
     it 'respects the endpoint configuration' do

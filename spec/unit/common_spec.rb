@@ -48,16 +48,16 @@ describe 'Common' do
         expect(conn.proxy_port).to be(nil)
       end
 
-      ENV['http_proxy'] = 'https://www.proxy.com:443'
-      ENV['dogapi_http_proxy'] = 'https://www.otherproxy.com:443'
+      ENV['https_proxy'] = 'https://www.proxy.com:443'
+      ENV['dd_https_proxy'] = 'https://www.otherproxy.com:443'
 
       service.connect do |conn|
         expect(conn.proxy_address).to eq 'www.otherproxy.com'
         expect(conn.proxy_port).to eq 443
       end
 
-      ENV['http_proxy'] = nil
-      ENV['dogapi_http_proxy'] = nil
+      ENV['https_proxy'] = nil
+      ENV['dd_https_proxy'] = nil
     end
 
     it 'respects the endpoint configuration' do

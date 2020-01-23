@@ -171,8 +171,8 @@ module Dogapi
   end
 
   def Dogapi.find_proxy
-    ENV['DOGAPI_HTTPS_PROXY'] || ENV['dogapi_https_proxy'] ||
-      ENV['DOGAPI_HTTP_PROXY'] || ENV['dogapi_http_proxy'] ||
+    ENV['DD_HTTPS_PROXY'] || ENV['dd_https_proxy'] ||
+      ENV['DD_HTTP_PROXY'] || ENV['dd_http_proxy'] ||
       ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
   end
 end

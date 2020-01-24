@@ -11,7 +11,7 @@ This project does not have a strict release schedule. However, we would make a r
 ## Prerelease checklist
 
 * Check and upgrade dependencies where it applies and makes sense.
-  - Create a distinct pull request and test your changes since it maybe introduce regressions.
+  - Create a distinct pull request and test your changes since it may introduce regressions.
   - While using the latest versions of dependencies is advised, it may not always be possible due to potential compatibility issues.
   - Upgraded dependencies should be thoroughly considered and tested to ensure they are safe!
 * Make sure tests are passing.

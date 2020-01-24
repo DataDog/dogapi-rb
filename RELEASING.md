@@ -8,11 +8,18 @@ This project does not have a strict release schedule. However, we would make a r
   - No release will be done if no changes got merged to the `master` branch during the above mentioned window.
   - Releases may be done more frequently than the above mentioned window.
 
-## Make Sure Everything Works
+## Prerelease checklist
 
-- Check and upgrade dependencies.
-- Check the build status on `master` is green.
-- Manually test the changes that will be published.
+* Check and upgrade dependencies where it applies and makes sense.
+  - Create a distinct pull request and test your changes since it maybe introduce regressions.
+  - While using latest dependencies is advised it may not always be possible.
+  - Versions upgrade should be thoroughly considered and safe!
+* Make sure tests are passing.
+  - Locally and in the continuous integration system.
+* Manually test changes included in the new release.
+* Make sure documentation is up-to-date.
+* [Update changelog](#update-changelog)
+  - Create a distinct pull request.
 
 ## Update Changelog
 

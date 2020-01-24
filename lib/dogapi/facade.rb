@@ -537,7 +537,7 @@ module Dogapi
       @synthetics_svc.create_synthetics_test(type, config, options)
     end
 
-    def edit_synthetics_test(test_id, type, config, options = {})
+    def update_synthetics_test(test_id, type, config, options = {})
       @synthetics_svc.edit_synthetics_test(test_id, type, config, options)
     end
 

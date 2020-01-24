@@ -66,11 +66,11 @@ describe Dogapi::Client do
     end
   end
 
-  describe '#edit_synthetics_test' do
+  describe '#update_synthetics_test' do
     it 'queries the api' do
       url = api_url + "/synthetics/tests/#{SYNTHETICS_TEST_PUBLIC_ID}"
       stub_request(:put, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
-      expect(dog.send(:edit_synthetics_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE,
+      expect(dog.send(:update_synthetics_test, SYNTHETICS_TEST_PUBLIC_ID, SYNTHETICS_TEST_TYPE,
                       SYNTHETICS_TEST_CONFIG, SYNTHETICS_TEST_OPTIONS)).to eq ['200', {}]
 
       expect(WebMock).to have_requested(:put, url)

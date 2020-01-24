@@ -18,7 +18,7 @@ module Dogapi
       end
 
       # Edit a synthetics test: PUT /v1/synthetics/tests/<SYNTHETICS_TEST_PUBLIC_ID>
-      def edit_synthetics_test(test_id, type, config, options = {})
+      def update_synthetics_test(test_id, type, config, options = {})
         body = {
           'type' => type,
           'config' => config

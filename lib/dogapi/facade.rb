@@ -94,6 +94,7 @@ module Dogapi
       @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @synthetics_svc = Dogapi::V1::SyntheticsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
@@ -527,6 +528,49 @@ module Dogapi
 
     def revoke_screenboard(board_id)
       @screenboard_svc.revoke_screenboard(board_id)
+    end
+
+    #
+    # SYNTHETICS
+    #
+    def create_synthetics_test(type, config, options = {})
+      @synthetics_svc.create_synthetics_test(type, config, options)
+    end
+
+    def update_synthetics_test(test_id, type, config, options = {})
+      @synthetics_svc.update_synthetics_test(test_id, type, config, options)
+    end
+
+    def delete_synthetics_tests(test_ids)
+      @synthetics_svc.delete_synthetics_tests(test_ids)
+    end
+
+    def start_pause_synthetics_test(test_id, new_status)
+      @synthetics_svc.start_pause_synthetics_test(test_id, new_status)
+    end
+
+    def get_all_synthetics_tests
+      @synthetics_svc.get_all_synthetics_tests()
+    end
+
+    def get_synthetics_test(test_id)
+      @synthetics_svc.get_synthetics_test(test_id)
+    end
+
+    def get_synthetics_results(test_id)
+      @synthetics_svc.get_synthetics_results(test_id)
+    end
+
+    def get_synthetics_result(test_id, result_id)
+      @synthetics_svc.get_synthetics_result(test_id, result_id)
+    end
+
+    def get_synthetics_devices
+      @synthetics_svc.get_synthetics_devices()
+    end
+
+    def get_synthetics_locations
+      @synthetics_svc.get_synthetics_locations()
     end
 
     #

@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require_relative '../spec_helper'
 
 describe Dogapi::Client do
@@ -27,10 +31,35 @@ describe Dogapi::Client do
                     :get, "/monitor/#{MONITOR_ID}", group_states: %w(custom all)
   end
 
+  describe '#can_delete_monitors' do
+    context 'with one id' do
+      it_behaves_like 'an api method',
+                      :can_delete_monitors, [MONITOR_ID],
+                      :get, '/monitor/can_delete'
+    end
+
+    context 'with multiple ids' do
+      it_behaves_like 'an api method',
+                      :can_delete_monitors, [[MONITOR_ID, MONITOR_ID + 1, MONITOR_ID + 2]],
+                      :get, '/monitor/can_delete'
+    end
+  end
+
   describe '#delete_monitor' do
     it_behaves_like 'an api method',
                     :delete_monitor, [MONITOR_ID],
                     :delete, "/monitor/#{MONITOR_ID}"
+  end
+
+  describe '#delete_monitor with options' do
+    it 'queries the api with options' do
+      url = api_url + "/monitor/#{MONITOR_ID}?force=true"
+      options = { 'force' => true }
+      stub_request(:delete, url).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(:delete_monitor, MONITOR_ID, options)).to eq ['200', {}]
+
+      expect(WebMock).to have_requested(:delete, url)
+    end
   end
 
   describe '#get_all_monitors' do
@@ -102,7 +131,7 @@ describe Dogapi::Client do
   describe '#cancel_downtime_by_scope' do
     it_behaves_like 'an api method',
                     :cancel_downtime_by_scope, [DOWNTIME_SCOPE],
-                    :post, '/downtime/cancel/by_scope'
+                    :post, '/downtime/cancel/by_scope', 'scope' => DOWNTIME_SCOPE
   end
 
   describe '#get_all_downtimes' do

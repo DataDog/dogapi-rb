@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'rspec'
 require 'simplecov'
 require 'webmock/rspec'
@@ -37,7 +41,6 @@ module SpecDog
       body = MultiJson.dump(body) if body
 
       expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
-        query: default_query,
         body: body
       )
     end
@@ -55,7 +58,6 @@ module SpecDog
       body = MultiJson.dump(body ? (body.merge options) : options)
 
       expect(WebMock).to have_requested(request, /#{url}|#{old_url}/).with(
-        query: default_query,
         body: body
       )
     end
@@ -67,10 +69,27 @@ module SpecDog
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog.send(command, *args, *params.values)).to eq ['200', {}]
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      params = params.merge default_query
+      params = params
 
       expect(WebMock).to have_requested(request, url).with(
         query: params
+      )
+    end
+  end
+
+  shared_examples 'an api method with params and body' do |command, args, request, endpoint, params, body|
+    it 'queries the api with params and body' do
+      url = api_url + endpoint
+      stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
+      expect(dog.send(command, *args)).to eq ['200', {}]
+      params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
+      params = params
+
+      body = MultiJson.dump(body) if body
+
+      expect(WebMock).to have_requested(request, url).with(
+        query: params,
+        body: body
       )
     end
   end
@@ -83,7 +102,7 @@ module SpecDog
       expect(dog.send(command, *args, opt_params)).to eq ['200', {}]
 
       opt_params.each { |k, v| opt_params[k] = v.join(',') if v.is_a? Array }
-      params = opt_params.merge default_query
+      params = opt_params
 
       expect(WebMock).to have_requested(request, url).with(
         query: params
@@ -101,7 +120,6 @@ module SpecDog
       body = MultiJson.dump(body) if body
 
       expect(WebMock).to have_requested(request, url).with(
-        query: default_query,
         body: body
       )
     end
@@ -117,7 +135,6 @@ module SpecDog
       body = MultiJson.dump(body ? (body.merge options) : options)
 
       expect(WebMock).to have_requested(request, url).with(
-        query: default_query,
         body: body
       )
     end
@@ -129,7 +146,7 @@ module SpecDog
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog2.send(command, *args, *params.values)).to eq ['200', {}]
       params.each { |k, v| params[k] = v.join(',') if v.is_a? Array }
-      params = params.merge default_query
+      params = params
 
       expect(WebMock).to have_requested(request, url).with(
         query: params
@@ -144,7 +161,7 @@ module SpecDog
       stub_request(request, /#{url}/).to_return(body: '{}').then.to_raise(StandardError)
       expect(dog2.send(command, *args, opt_params)).to eq ['200', {}]
       opt_params.each { |k, v| opt_params[k] = v.join(',') if v.is_a? Array }
-      params = opt_params.merge default_query
+      params = opt_params
 
       expect(WebMock).to have_requested(request, url).with(
         query: params

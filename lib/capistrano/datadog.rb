@@ -1,3 +1,7 @@
+# Unless explicitly stated otherwise all files in this repository are licensed under the BSD-3-Clause License.
+# This product includes software developed at Datadog (https://www.datadoghq.com/).
+# Copyright 2011-Present Datadog, Inc.
+
 require 'etc'
 require 'digest/md5'
 require 'timeout'
@@ -90,7 +94,7 @@ module Capistrano
       end
 
       def report()
-        hostname = %x[hostname -f].strip
+        hostname = Dogapi.find_localhost
         user = Etc.getlogin
 
         # Lazy randomness

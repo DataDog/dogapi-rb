@@ -1,0 +1,6 @@
+Component,Origin,License,Copyright
+gemfile, rubocop, MIT, Copyright (c) 2012-19 Bozhidar Batsov
+gemfile, rake, MIT, Copyright (c) Jim Weirich
+gemfile, rspec, MIT, Copyright © 2009 Chad Humphries David Chelimsky Copyright © 2006 David Chelimsky The RSpec Development Team Copyright © 2005 Steven Baker
+gemfile, simplecov, MIT, Copyright (c) 2010-2017 Christoph Olszowka
+gemfile, webmock, MIT, Copyright (c) 2009-2010 Bartosz Blimke

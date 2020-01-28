@@ -9,10 +9,12 @@ describe 'Common' do
     it 'raises if tags is not an array' do
       tags = 'foo:bar'
       expect { Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
+      tags = nil
+      expect { Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
     end
     it 'raises if elements of tags are not strings' do
       tags = ['toto:tata', { foo: 'bar' }]
-      expect {Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
+      expect { Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
     end
     it 'passes if tags are correct' do
       tags = ['foo:bar', 'baz']

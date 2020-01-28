@@ -205,4 +205,13 @@ module Dogapi
     raise $ERROR_INFO unless $ERROR_INFO.class.name == 'Errno::ENOENT'
     @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
+
+  def Dogapi.validate_tags(tags)
+    unless tags.is_a? Array
+      raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}"
+    end
+    tags.each do |tag|
+      raise ArgumentError, "Each tag needs to be a string. Current value: #{tag}" unless tag.is_a? String
+    end
+  end
 end

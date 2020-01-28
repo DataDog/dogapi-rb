@@ -11,7 +11,7 @@ describe 'Common' do
       expect { Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
     end
     it 'raises if elements of tags are not strings' do
-      tags = ['toto:tata', {foo: 'bar'}]
+      tags = ['toto:tata', { foo: 'bar' }]
       expect {Dogapi.validate_tags(tags) }.to raise_error(ArgumentError)
     end
     it 'passes if tags are correct' do

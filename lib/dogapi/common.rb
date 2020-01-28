@@ -207,7 +207,9 @@ module Dogapi
   end
 
   def Dogapi.validate_tags(tags)
-    raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}" unless tags.is_a? Array
+    unless tags.is_a? Array do
+      raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}"
+    end
     tags.each do |tag|
       raise ArgumentError, "Each tag needs to be a string. Current value: #{tag}" unless tag.is_a? String
     end

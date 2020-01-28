@@ -124,6 +124,9 @@ module Dogapi
           params = prepare_params(extra_params, url, with_app_key)
           req = prepare_request(method, url, params, body, send_json, with_app_key)
           resp = conn.request(req)
+          if resp.code.to_i / 100 == 3
+            resp = handle_redirect(conn, req, resp)
+          end
           return handle_response(resp)
         rescue Exception => e
           suppress_error_if_silent e
@@ -175,6 +178,15 @@ module Dogapi
         raise "Response Content-Type is not application/json but is #{resp.content_type}: " + resp.body unless is_json
         raise 'Invalid JSON Response: ' + resp.body
       end
+    end
+
+    def handle_redirect(conn, req, resp, retries=10)
+      req.uri = URI.parse(resp.header['location'])
+      new_response = conn.request(req)
+      if retries > 1 && new_response.code / 100 == 3
+        new_response = handle_redirect(conn, req, new_response, retries - 1)
+      end
+      new_response
     end
   end
 

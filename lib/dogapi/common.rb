@@ -212,10 +212,10 @@ module Dogapi
 
   def Dogapi.find_proxy
     ENV['DD_PROXY_HTTPS'] || ENV['dd_proxy_https'] ||
-    ENV['DD_PROXY_HTTP'] || ENV['dd_proxy_http'] ||
-    ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
+      ENV['DD_PROXY_HTTP'] || ENV['dd_proxy_http'] ||
+      ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
   end
-  
+
   def Dogapi.validate_tags(tags)
     unless tags.is_a? Array
       raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}"

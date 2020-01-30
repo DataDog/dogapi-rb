@@ -88,13 +88,12 @@ module Dogapi
     def connect
       connection = Net::HTTP
 
-      # After ruby 2.0 Net::HTTP looks for the env variable but not ruby 1.9
-      if RUBY_VERSION < '2.0.0'
-        proxy = ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
-        if proxy
-          proxy_uri = URI.parse(proxy)
-          connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
-        end
+      # Expose using a proxy without setting the HTTPS_PROXY or HTTP_PROXY variables
+      proxy = Dogapi.find_proxy()
+
+      if proxy
+        proxy_uri = URI.parse(proxy)
+        connection = Net::HTTP::Proxy(proxy_uri.host, proxy_uri.port, proxy_uri.user, proxy_uri.password)
       end
 
       uri = URI.parse(@api_host)
@@ -211,6 +210,12 @@ module Dogapi
     @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 
+  def Dogapi.find_proxy
+    ENV['DD_PROXY_HTTPS'] || ENV['dd_proxy_https'] ||
+    ENV['DD_PROXY_HTTP'] || ENV['dd_proxy_http'] ||
+    ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
+  end
+  
   def Dogapi.validate_tags(tags)
     unless tags.is_a? Array
       raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}"

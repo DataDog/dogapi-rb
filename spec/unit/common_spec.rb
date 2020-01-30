@@ -61,6 +61,26 @@ describe 'Common' do
       ENV['http_proxy'] = nil
     end
 
+    it 'uses-the dogapi specific proxy if set' do
+      service = Dogapi::APIService.new('api_key', 'app_key')
+
+      service.connect do |conn|
+        expect(conn.proxy_address).to be(nil)
+        expect(conn.proxy_port).to be(nil)
+      end
+
+      ENV['https_proxy'] = 'https://www.proxy.com:443'
+      ENV['dd_proxy_https'] = 'https://www.otherproxy.com:443'
+
+      service.connect do |conn|
+        expect(conn.proxy_address).to eq 'www.otherproxy.com'
+        expect(conn.proxy_port).to eq 443
+      end
+
+      ENV['https_proxy'] = nil
+      ENV['dd_proxy_https'] = nil
+    end
+
     it 'respects the endpoint configuration' do
       service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
 

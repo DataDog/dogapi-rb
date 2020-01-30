@@ -28,11 +28,11 @@ module Capistrano
       @cap_version
     end
 
-    def self.submit(api_key)
+    def self.submit(api_key, use_getlogin=true)
       begin
         if api_key
           dog = Dogapi::Client.new(api_key)
-          reporter.report.each do |event, hosts|
+          reporter.report(use_getlogin).each do |event, hosts|
             if hosts.size > 0
               hosts.each do |host|
                 dog.emit_event event, host: host
@@ -93,9 +93,9 @@ module Capistrano
         end
       end
 
-      def report()
+      def report(use_getlogin=true)
         hostname = Dogapi.find_localhost
-        user = Etc.getpwuid.name
+        user = use_getlogin ? Etc.getlogin : Etc.getpwuid.name
 
         # Lazy randomness
         aggregation_key = Digest::MD5.hexdigest "#{Time.new}|#{rand}"

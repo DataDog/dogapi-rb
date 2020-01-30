@@ -80,5 +80,10 @@ end
 
 at_exit do
   api_key = Capistrano::Configuration.env.fetch :datadog_api_key
-  Capistrano::Datadog.submit api_key
+  use_getlogin = Capistrano::Configuration.env.fetch :use_getlogin
+  if use_getlogin.nil?
+    Capistrano::Datadog.submit api_key
+  else
+    Capistrano::Datadog.submit api_key, use_getlogin
+  end
 end

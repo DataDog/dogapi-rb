@@ -11,6 +11,7 @@ require 'English'
 require 'rubygems'
 require 'multi_json'
 require 'set'
+require 'open3'
 
 module Dogapi
 
@@ -199,15 +200,28 @@ module Dogapi
   @@hostname = nil
 
   def Dogapi.find_localhost
-    @@hostname ||= %x[hostname -f].strip
+    unless @@hostname
+      out, status = Open3.capture2('hostname', '-f', err: File::NULL)
+      @@hostname = out.strip
+      # Get status to check if the call was successful
+      raise SystemCallError, 'Could not get hostname with `hostname -f`' unless status.exitstatus.zero?
+    end
   rescue SystemCallError
-    raise $ERROR_INFO unless $ERROR_INFO.class.name == 'Errno::ENOENT'
     @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 
   def Dogapi.find_proxy
     ENV['DD_PROXY_HTTPS'] || ENV['dd_proxy_https'] ||
-      ENV['DD_PROXY_HTTP'] || ENV['dd_proxy_http'] ||
-      ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
+    ENV['DD_PROXY_HTTP'] || ENV['dd_proxy_http'] ||
+    ENV['HTTPS_PROXY'] || ENV['https_proxy'] || ENV['HTTP_PROXY'] || ENV['http_proxy']
+  end
+  
+  def Dogapi.validate_tags(tags)
+    unless tags.is_a? Array
+      raise ArgumentError, "The tags parameter needs to be an array of string. Current value: #{tags}"
+    end
+    tags.each do |tag|
+      raise ArgumentError, "Each tag needs to be a string. Current value: #{tag}" unless tag.is_a? String
+    end
   end
 end

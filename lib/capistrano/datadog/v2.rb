@@ -62,11 +62,11 @@ module Capistrano
       namespace :datadog do
         desc 'Submit the tasks that have run to Datadog as events'
         task :submit do |ns|
-        if variables[:use_getlogin].nil?
-          Capistrano::Datadog.submit variables[:datadog_api_key]
-        else
-          Capistrano::Datadog.submit variables[:datadog_api_key], variables[:use_getlogin]
-        end
+          if variables[:use_getlogin].nil?
+            Capistrano::Datadog.submit variables[:datadog_api_key]
+          else
+            Capistrano::Datadog.submit variables[:datadog_api_key], variables[:use_getlogin]
+          end
         end
       end
     end

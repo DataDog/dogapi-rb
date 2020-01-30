@@ -11,6 +11,7 @@ require 'English'
 require 'rubygems'
 require 'multi_json'
 require 'set'
+require 'open3'
 
 module Dogapi
 
@@ -200,9 +201,13 @@ module Dogapi
   @@hostname = nil
 
   def Dogapi.find_localhost
-    @@hostname ||= %x[hostname -f].strip
+    unless @@hostname
+      out, status = Open3.capture2('hostname', '-f', err: File::NULL)
+      @@hostname = out.strip
+      # Get status to check if the call was successful
+      raise SystemCallError, 'Could not get hostname with `hostname -f`' unless status.exitstatus.zero?
+    end
   rescue SystemCallError
-    raise $ERROR_INFO unless $ERROR_INFO.class.name == 'Errno::ENOENT'
     @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 

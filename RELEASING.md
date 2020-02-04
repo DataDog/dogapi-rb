@@ -43,3 +43,4 @@ Install [bundler](https://bundler.io/) and setup your RubyGems credentials:
 1. Build the gem: `bundle exec gem build dogapi.gemspec`.
 1. Push the gem: `bundle exec gem push dogapi-x.x.x.gem`.
 1. Check that the [Ruby Gem is published](https://rubygems.org/gems/dogapi).
+1. Bump the version again in `lib/dogapi/version.rb` to a dev version (e.g. `1.39.0` -> `1.40.0.dev`), open a PR and merge it to master.

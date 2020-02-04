@@ -1,5 +1,16 @@
 # Changes
 
+## 1.39.0 / 2020-02-04
+
+* [Added] Allow Setting Proxy without Using HTTP_PROXY, etc.. See [#180](https://github.com/DataDog/dogapi-rb/pull/180). Thanks [KingAlex42](https://github.com/KingAlex42).
+* [Added] [capistrano] Add ability to use `etc.getpwuid` instead of `etc.getlogin` to get the user name. See [#146](https://github.com/DataDog/dogapi-rb/pull/146). Thanks [rkul](https://github.com/rkul).
+* [Fixed] Check exit code of `hostname -f` for failures. See [#219](https://github.com/DataDog/dogapi-rb/pull/219).
+* [Added] Add `validate_tags` util to check that tags are an array of strings. See [#218](https://github.com/DataDog/dogapi-rb/pull/218).
+* [Added] Added function to deal with redirection of HTTP requests. See [#200](https://github.com/DataDog/dogapi-rb/pull/200).
+* [Added] Add Synthetics support. See [#210](https://github.com/DataDog/dogapi-rb/pull/210).
+* [Added] Add dashboard read_only option. See [#135](https://github.com/DataDog/dogapi-rb/pull/135). Thanks [tjoyal](https://github.com/tjoyal).
+* [Added] Add options for force delete monitors. See [#213](https://github.com/DataDog/dogapi-rb/pull/213).
+
 ## 1.38.0 / 2019-12-13
 
 * [BUGFIX] Fix setting keys in both query params and headers. See [#194][]

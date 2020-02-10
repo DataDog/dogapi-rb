@@ -50,7 +50,7 @@ module Dogapi
           body[:monitor_ids] = symbolized_options[:monitor_ids] if symbolized_options[:monitor_ids]
           body[:groups] = symbolized_options[:groups] if symbolized_options[:groups]
         end
-        %i[name thresholds tags description].each do |a|
+        [:name, :thresholds, :tags, :description].each do |a|
           body[a] = symbolized_options[a] if symbolized_options[a]
         end
 

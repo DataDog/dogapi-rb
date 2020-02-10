@@ -520,3 +520,6 @@ Style/YodaCondition:
 Style/ZeroLengthPredicate:
   Exclude:
     - 'lib/capistrano/datadog.rb'
+
+Style/SymbolArray:
+  EnforcedStyle: brackets # Since ruby1.9 is supported

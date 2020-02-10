@@ -224,4 +224,14 @@ module Dogapi
       raise ArgumentError, "Each tag needs to be a string. Current value: #{tag}" unless tag.is_a? String
     end
   end
+
+  # Very simplified hash with indifferent access - access to string or symbol
+  # keys via symbols. E.g.:
+  # my_hash = { 'foo' => 1 }
+  # Dogapi.symbolized_access(my_hash)
+  # my_hash[:foo] # => 1
+  def Dogapi.symbolized_access(hash)
+    hash.default_proc = proc { |h, k| h.key?(k.to_s) ? h[k.to_s] : nil }
+    hash
+  end
 end

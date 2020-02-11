@@ -105,6 +105,9 @@ module Dogapi
       @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
       @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
+                                                                                  timeout, @datadog_host)
+
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
 
@@ -671,6 +674,46 @@ module Dogapi
 
     def unmute_host(hostname)
       @monitor_svc.unmute_host(hostname)
+    end
+
+    #
+    # SERVICE LEVEL OBJECTIVES
+    #
+
+    def create_service_level_objective(type, slo_name, thresholds, options = {})
+      @service_level_objective_svc.create_service_level_objective(type, slo_name, thresholds, options)
+    end
+
+    def update_service_level_objective(slo_id, type, options = {})
+      @service_level_objective_svc.update_service_level_objective(slo_id, type, options)
+    end
+
+    def get_service_level_objective(slo_id)
+      @service_level_objective_svc.get_service_level_objective(slo_id)
+    end
+
+    def get_service_level_objective_history(slo_id, from_ts, to_ts)
+      @service_level_objective_svc.get_service_level_objective_history(slo_id, from_ts, to_ts)
+    end
+
+    def search_service_level_objective(slo_ids = nil, query = nil, offset = nil, limit = nil)
+      @service_level_objective_svc.search_service_level_objective(slo_ids, query, offset, limit)
+    end
+
+    def can_delete_service_level_objective(slo_ids)
+      @service_level_objective_svc.can_delete_service_level_objective(slo_ids)
+    end
+
+    def delete_service_level_objective(slo_id)
+      @service_level_objective_svc.delete_service_level_objective(slo_id)
+    end
+
+    def delete_many_service_level_objective(slo_ids)
+      @service_level_objective_svc.delete_many_service_level_objective(slo_ids)
+    end
+
+    def delete_timeframes_service_level_objective(ops)
+      @service_level_objective_svc.delete_timeframes_service_level_objective(ops)
     end
 
     #

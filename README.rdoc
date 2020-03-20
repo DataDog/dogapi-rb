@@ -154,6 +154,13 @@ data point you will need to pass a list of +Time+, +float+ pairs, instead of a s
 
     dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device")
 
+If you want to specify the metric type, using the example above you can pass in a symbol key with :type and a value of a metric type such as counter, gauage, etc.
+
+    dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device", :type => 'counter' )
+
+If you want to add metric tags, using the example above you can pass in a symbol key with :tags and an array of tags.
+
+    dog.emit_points('some.metric.name', [[t1, val1], [t2, val2], [t3, val3]], :host => "my_host", :device => "my_device", :tags => ['frontend', 'app:webserver'] )
 
 == Get points from a Datadog metric
 

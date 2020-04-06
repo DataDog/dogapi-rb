@@ -1,5 +1,9 @@
 # Changes
 
+## 1.40.0 / 2020-04-06
+
+* [Added] Re-add service level objectives support. See [#224](https://github.com/DataDog/dogapi-rb/pull/224).
+
 ## 1.39.0 / 2020-02-04
 
 * [Added] Allow Setting Proxy without Using HTTP_PROXY, etc.. See [#180](https://github.com/DataDog/dogapi-rb/pull/180). Thanks [KingAlex42](https://github.com/KingAlex42).

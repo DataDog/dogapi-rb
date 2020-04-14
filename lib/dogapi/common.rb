@@ -202,9 +202,9 @@ module Dogapi
   def Dogapi.find_localhost
     unless @@hostname
       out, status = Open3.capture2('hostname', '-f', err: File::NULL)
-      @@hostname = out.strip
       # Get status to check if the call was successful
       raise SystemCallError, 'Could not get hostname with `hostname -f`' unless status.exitstatus.zero?
+      @@hostname = out.strip
     end
   rescue SystemCallError
     @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname

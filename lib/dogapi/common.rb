@@ -4,6 +4,7 @@
 
 require 'cgi'
 require 'net/https'
+require 'rbconfig'
 require 'socket'
 require 'uri'
 require 'English'
@@ -13,7 +14,16 @@ require 'multi_json'
 require 'set'
 require 'open3'
 
+require 'dogapi/version'
+
 module Dogapi
+  USER_AGENT = format(
+    'dogapi-rb/%<version>s (ruby %<ruver>s; os %<os>s; arch %<arch>s)',
+    version: VERSION,
+    ruver: RUBY_VERSION,
+    os: RbConfig::CONFIG['host_os'].downcase,
+    arch: RbConfig::CONFIG['host_cpu']
+  )
 
   # Metadata class to hold the scope of an API call
   class Scope
@@ -138,11 +148,11 @@ module Dogapi
     def prepare_request(method, url, params, body, send_json, with_app_key)
       url_with_params = url + params
       req = method.new(url_with_params)
+      req['User-Agent'] = USER_AGENT
       unless should_set_api_and_app_keys_in_params?(url)
         req['DD-API-KEY'] = @api_key
         req['DD-APPLICATION-KEY'] = @application_key if with_app_key
       end
-
       if send_json
         req.content_type = 'application/json'
         req.body = MultiJson.dump(body)

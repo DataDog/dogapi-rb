@@ -4,6 +4,7 @@
 
 require 'cgi'
 require 'net/https'
+require 'rbconfig'
 require 'socket'
 require 'uri'
 require 'English'
@@ -141,6 +142,12 @@ module Dogapi
       unless should_set_api_and_app_keys_in_params?(url)
         req['DD-API-KEY'] = @api_key
         req['DD-APPLICATION-KEY'] = @application_key if with_app_key
+        req['User-Agent'] = 'dogapi-rb/%{version} (ruby %{ruver}; os %{os}; arch %{arch})' % {
+          :version => VERSION,
+          :ruver => RUBY_VERSION,
+          :os => RbConfig::CONFIG['host_os'].downcase,
+          :arch => RbConfig::CONFIG['host_cpu']
+        }
       end
 
       if send_json

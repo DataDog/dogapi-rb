@@ -134,6 +134,15 @@ describe 'Common' do
         expect(req['DD-APPLICATION-KEY']).to eq service.application_key
       end
     end
+
+    it 'properly sets User-Agent header' do
+      service = Dogapi::APIService.new('api_key', 'app_key', true, nil, 'https://app.example.com')
+      params = service.prepare_params(nil, '/api/v1/validate', true)
+      req = service.prepare_request(Net::HTTP::Get, '/api/v1/validate', params, nil, false, true)
+
+      expect(req.key?('User-Agent')).to be true
+      expect(req['User-Agent']).to match(/dogapi-rb\/[^\s]+ \(ruby [^\s]+; os [^\s]+; arch [^\s]+\)/)
+    end
   end
 end
 

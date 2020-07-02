@@ -141,7 +141,7 @@ describe 'Common' do
       req = service.prepare_request(Net::HTTP::Get, '/api/v1/validate', params, nil, false, true)
 
       expect(req.key?('User-Agent')).to be true
-      expect(req['User-Agent']).to match(/dogapi-rb\/[^\s]+ \(ruby [^\s]+; os [^\s]+; arch [^\s]+\)/)
+      expect(req['User-Agent']).to match(%r{dogapi-rb\/[^\s]+ \(ruby [^\s]+; os [^\s]+; arch [^\s]+\)})
     end
   end
 end

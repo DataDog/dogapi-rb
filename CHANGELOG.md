@@ -1,5 +1,10 @@
 # Changes
 
+## 1.41.0 / 2020-07-27
+
+* [Added] Improve user-agent header to include telemetry information. See [#235](https://github.com/DataDog/dogapi-rb/pull/235).
+* [Added] Move setting hostname to end of method body in order to actually return it. See [#233](https://github.com/DataDog/dogapi-rb/pull/233).
+
 ## 1.40.0 / 2020-04-06
 
 * [Added] Re-add service level objectives support. See [#224](https://github.com/DataDog/dogapi-rb/pull/224).

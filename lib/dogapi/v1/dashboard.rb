@@ -28,6 +28,11 @@ module Dogapi
       #                           e.g. '["user1@domain.com", "user2@domain.com"]'
       # :template_variables    => JSON: List of template variables for this dashboard.
       #                           e.g. [{"name": "host", "prefix": "host", "default": "my-host"}]
+      # :template_variable_presets => JSON: List of template variables saved views
+      #                           e.g. {
+      #                                  "name": "my_template_variable_preset",
+      #                                  "template_variables": [{"name": "host", "prefix": "host", "default": "my-host"}]
+      #                                }
       def create_board(title, widgets, layout_type, options)
         # Required arguments
         body = {
@@ -40,6 +45,7 @@ module Dogapi
         body[:is_read_only] = options[:is_read_only] if options[:is_read_only]
         body[:notify_list] = options[:notify_list] if options[:notify_list]
         body[:template_variables] = options[:template_variables] if options[:template_variables]
+        body[:template_variable_presets] = options[:template_variable_presets] if options[:template_variable_presets]
 
         request(Net::HTTP::Post, "/api/#{API_VERSION}/#{RESOURCE_NAME}", nil, body, true)
       end
@@ -60,6 +66,11 @@ module Dogapi
       #                           e.g. '["user1@domain.com", "user2@domain.com"]'
       # :template_variables    => JSON: List of template variables for this dashboard.
       #                           e.g. [{"name": "host", "prefix": "host", "default": "my-host"}]
+      # :template_variable_presets => JSON: List of template variables saved views
+      #                           e.g. {
+      #                                  "name": "my_template_variable_preset",
+      #                                  "template_variables": [{"name": "host", "prefix": "host", "default": "my-host"}]
+      #                                }
       def update_board(dashboard_id, title, widgets, layout_type, options)
         # Required arguments
         body = {
@@ -72,6 +83,7 @@ module Dogapi
         body[:is_read_only] = options[:is_read_only] if options[:is_read_only]
         body[:notify_list] = options[:notify_list] if options[:notify_list]
         body[:template_variables] = options[:template_variables] if options[:template_variables]
+        body[:template_variable_presets] = options[:template_variable_presets] if options[:template_variable_presets]
 
         request(Net::HTTP::Put, "/api/#{API_VERSION}/#{RESOURCE_NAME}/#{dashboard_id}", nil, body, true)
       end

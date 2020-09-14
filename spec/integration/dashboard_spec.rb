@@ -26,6 +26,15 @@ describe Dogapi::Client do
     'prefix' => 'host',
     'default' => 'my-host'
   }].freeze
+  TEMPLATE_VARIABLE_PRESETS = [{
+    'name' => 'preset1',
+    'template_variables' => [
+      {
+        'name' => 'host1',
+        'value' => 'my-host'
+      }
+    ]
+  }].freeze
 
   REQUIRED_ARGS = {
     title: TITLE,
@@ -37,7 +46,8 @@ describe Dogapi::Client do
     description: DESCRIPTION,
     is_read_only: IS_READ_ONLY,
     notify_list: NOTIFY_LIST,
-    template_variables: TEMPLATE_VARIABLES
+    template_variables: TEMPLATE_VARIABLES,
+    template_variable_presets: TEMPLATE_VARIABLE_PRESETS
   }
   DASHBOARD_ARGS = REQUIRED_ARGS.values + [OPTIONS]
   DASHBOARD_PAYLOAD = REQUIRED_ARGS.merge(OPTIONS)

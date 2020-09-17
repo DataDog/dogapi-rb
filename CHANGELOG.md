@@ -1,5 +1,9 @@
 # Changes
 
+## 1.42.0 / 2020-09-17
+
+* [Added] Allow dashboard creation / updates using Template Variable Presets. See [#238](https://github.com/DataDog/dogapi-rb/pull/238).
+
 ## 1.41.0 / 2020-07-27
 
 * [Added] Improve user-agent header to include telemetry information. See [#235](https://github.com/DataDog/dogapi-rb/pull/235).

@@ -9,10 +9,36 @@ pr:
     include:
     - master
 
+resources:
+  containers:
+  - container: datadog-agent
+    image: datadog/agent:7
+    options: --health-cmd="exit 0" --health-interval=1s
+    ports:
+    - 8125:8125
+    - 8126:8126/tcp
+    env:
+      DD_API_KEY: $(ddAPIKey)
+      DD_APM_ENABLED: "true"
+      DD_APM_NON_LOCAL_TRAFFIC: "true"
+      DD_LOGS_ENABLED: "true"
+      DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL: "true"
+      DD_AC_EXCLUDE: "name:datadog-agent"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc/:/host/proc/:ro
+      - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+
 jobs:
 - job: UnitTests
   pool:
     vmImage: "Ubuntu-16.04"
+  container:
+    image: ruby:$(RUBY_VERSION)
+    options: >-
+      -l com.datadoghq.ad.logs="[{\"source\": \"Azure Pipeline\", \"service\": \"dogapi-rb\"}]"
+  services:
+    datadog-agent: datadog-agent
   strategy:
     matrix:
       Rb24:
@@ -31,17 +57,19 @@ jobs:
         RUBY_VERSION: '2.6'
         TASK: rubocop
   steps:
-    - task: UseRubyVersion@0
-      displayName: Use Ruby $(RUBY_VERSION)
-      inputs:
-        versionSpec: $(RUBY_VERSION)
-        addToPath: true
-    - script: |
-        gem install bundler
-        bundle install --retry=3 --jobs=4
+    - script: bundle install --retry=3 --jobs=4
       displayName: 'bundle install'
+      env:
+        GEM_HOME: '~/.gem'
     - script: bundle exec rake $(TASK)
       displayName: Run $(TASK) via bundle
+      env:
+        GEM_HOME: '~/.gem'
+        DD_AGENT_HOST: datadog-agent
+        DD_ENV: ci
+        DD_SERVICE: dogapi-rb
+        DD_TAGS: "team:integration-tools-and-libraries,runtime:ruby-$(RUBY_VERSION),ci.job.name:$(System.JobName),matrix:$(TASK)"
+        DD_TRACE_ANALYTICS_ENABLED: "true"
 - job: TestRuby19
   pool:
     vmImage: "Ubuntu-16.04"

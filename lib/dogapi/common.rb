@@ -212,12 +212,18 @@ module Dogapi
   def Dogapi.find_localhost
     unless @@hostname
       out, status = Open3.capture2('hostname', '-f', err: File::NULL)
-      # Get status to check if the call was successful
-      raise SystemCallError, 'Could not get hostname with `hostname -f`' unless status.exitstatus.zero?
-      @@hostname = out.strip
+      if status.exitstatus.zero?
+        @@hostname = out.strip
+      else
+        begin
+          @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
+        rescue SocketError
+          out, status = Open3.capture2('hostname', '-s', err: File::NULL)
+          raise SystemCallError, 'Could not get hostname. Make sure that `hostname -f` or `hostname -s` are working.' unless status.exitstatus.zero?
+          @@hostname = out.strip
+        end
+      end      
     end
-  rescue SystemCallError
-    @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
   end
 
   def Dogapi.find_proxy

@@ -210,20 +210,17 @@ module Dogapi
   @@hostname = nil
 
   def Dogapi.find_localhost
-    unless @@hostname
-      out, status = Open3.capture2('hostname', '-f', err: File::NULL)
-      if status.exitstatus.zero?
-        @@hostname = out.strip
-      else
-        begin
-          @@hostname = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
-        rescue SocketError
-          out, status = Open3.capture2('hostname', '-s', err: File::NULL)
-          raise SystemCallError, 'Could not get hostname. Make sure that `hostname -f` or `hostname -s` are working.' unless status.exitstatus.zero?
-          @@hostname = out.strip
-        end
-      end      
+    @@hostname if @@hostname
+    out, status = Open3.capture2('hostname', '-f', err: File::NULL)
+    unless status.exitstatus.zero?
+      begin
+        out = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
+      rescue SocketError
+        out, status = Open3.capture2('hostname', '-s', err: File::NULL)
+        raise SystemCallError, 'Both `hostname -f` and `hostname -s` did fail.' unless status.exitstatus.zero?
+      end
     end
+    @@hostname = out.strip
   end
 
   def Dogapi.find_proxy

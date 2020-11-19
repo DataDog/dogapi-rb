@@ -10,7 +10,19 @@ SimpleCov.start do
   add_filter 'spec'
 end
 
-WebMock.disable_net_connect!(allow_localhost: false)
+webmock_allow = []
+
+begin
+  require 'ddtrace'
+  Datadog.configure do |c|
+    c.use :rspec, service_name: 'dogapi-rb'
+  end
+  webmock_allow << "#{Datadog::Transport::HTTP.default_hostname}:#{Datadog::Transport::HTTP.default_port}"
+rescue LoadError
+  puts 'ddtrace gem not found'
+end
+
+WebMock.disable_net_connect!(allow_localhost: false, allow: webmock_allow)
 
 # include our code and methods
 require 'dogapi'

@@ -210,7 +210,7 @@ module Dogapi
   @@hostname = nil
 
   def Dogapi.find_localhost
-    @@hostname if @@hostname
+    return @@hostname if @@hostname
     out, status = Open3.capture2('hostname', '-f', err: File::NULL)
     unless status.exitstatus.zero?
       begin

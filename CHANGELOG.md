@@ -1,5 +1,9 @@
 # Changes
 
+## 1.43.0 / 2020-12-07
+
+* [Fixed] find_localhost: Try both `hostname` and `hostname -f` before raising. See [#242](https://github.com/DataDog/dogapi-rb/pull/242).
+
 ## 1.42.0 / 2020-09-17
 
 * [Added] Allow dashboard creation / updates using Template Variable Presets. See [#238](https://github.com/DataDog/dogapi-rb/pull/238).

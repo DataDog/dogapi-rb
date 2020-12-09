@@ -14,7 +14,7 @@ module Dogapi
   class ClientV2
     attr_accessor :datadog_host
     def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true,
-                   timeout=nil, endpoint=nil, skip_ssl_validation: false)
+                   timeout=nil, endpoint=nil, skip_ssl_validation=false)
 
       if api_key
         @api_key = api_key
@@ -65,7 +65,7 @@ module Dogapi
     # Support for API version 2.
 
     # rubocop:disable Metrics/MethodLength, Metrics/LineLength
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil, skip_ssl_validation: false)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil, skip_ssl_validation=false)
 
       if api_key
         @api_key = api_key

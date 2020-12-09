@@ -13,7 +13,8 @@ module Dogapi
   # See Dogapi::V2  for the thick underlying clients
   class ClientV2
     attr_accessor :datadog_host
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true,
+                   timeout=nil, endpoint=nil, skip_ssl_validation=false)
 
       if api_key
         @api_key = api_key
@@ -27,7 +28,7 @@ module Dogapi
       @device = device
 
       @dashboard_list_service_v2 = Dogapi::V2::DashboardListService.new(
-        @api_key, @application_key, silent, timeout, @datadog_host
+        @api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation
       )
 
     end
@@ -64,7 +65,7 @@ module Dogapi
     # Support for API version 2.
 
     # rubocop:disable Metrics/MethodLength, Metrics/LineLength
-    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil)
+    def initialize(api_key, application_key=nil, host=nil, device=nil, silent=true, timeout=nil, endpoint=nil, skip_ssl_validation=false)
 
       if api_key
         @api_key = api_key
@@ -78,38 +79,38 @@ module Dogapi
       @device = device
 
       # FIXME: refactor to avoid all this code duplication
-      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @dashboard_service = Dogapi::V1::DashboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @metric_svc = Dogapi::V1::MetricService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @event_svc = Dogapi::V1::EventService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @tag_svc = Dogapi::V1::TagService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @comment_svc = Dogapi::V1::CommentService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @search_svc = Dogapi::V1::SearchService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @dash_service = Dogapi::V1::DashService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @dashboard_service = Dogapi::V1::DashboardService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @dashboard_list_service = Dogapi::V1::DashboardListService.new(
-        @api_key, @application_key, silent, timeout, @datadog_host
+        @api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation
       )
-      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @synthetics_svc = Dogapi::V1::SyntheticsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @alert_svc = Dogapi::V1::AlertService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @user_svc = Dogapi::V1::UserService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @snapshot_svc = Dogapi::V1::SnapshotService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @embed_svc = Dogapi::V1::EmbedService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @screenboard_svc = Dogapi::V1::ScreenboardService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @monitor_svc = Dogapi::V1::MonitorService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @synthetics_svc = Dogapi::V1::SyntheticsService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @service_check_svc = Dogapi::V1::ServiceCheckService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @metadata_svc = Dogapi::V1::MetadataService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @legacy_event_svc = Dogapi::EventService.new(@datadog_host)
-      @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @aws_integration_svc = Dogapi::V1::AwsIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @aws_logs_svc = Dogapi::V1::AwsLogsService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
-      @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host)
+      @hosts_svc = Dogapi::V1::HostsService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @integration_svc = Dogapi::V1::IntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @aws_integration_svc = Dogapi::V1::AwsIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @aws_logs_svc = Dogapi::V1::AwsLogsService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @usage_svc = Dogapi::V1::UsageService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @azure_integration_svc = Dogapi::V1::AzureIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
+      @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
-                                                                                  timeout, @datadog_host)
+                                                                                  timeout, @datadog_host, skip_ssl_validation)
 
       # Support for Dashboard List API v2.
-      @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host)
+      @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host, skip_ssl_validation)
 
     end
     # rubocop:enable Metrics/MethodLength, Metrics/LineLength

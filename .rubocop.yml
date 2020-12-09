@@ -14,4 +14,8 @@ Metrics/LineLength:
 Metrics/ModuleLength:
   Max: 200
 
+# Our Client constructor has 8 arguments
+Metrics/ParameterLists:
+  Enabled: false
+
 inherit_from: .rubocop_todo.yml

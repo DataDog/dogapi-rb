@@ -86,11 +86,12 @@ module Dogapi
   # Superclass that deals with the details of communicating with the DataDog API
   class APIService
     attr_reader :api_key, :application_key
-    def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil)
+    def initialize(api_key, application_key, silent=true, timeout=nil, endpoint=nil, skip_ssl_validation=false)
       @api_key = api_key
       @application_key = application_key
       @api_host = endpoint || Dogapi.find_datadog_host()
       @silent = silent
+      @skip_ssl_validation = skip_ssl_validation
       @timeout = timeout || 5
     end
 
@@ -110,6 +111,9 @@ module Dogapi
       session = connection.new(uri.host, uri.port)
       session.open_timeout = @timeout
       session.use_ssl = uri.scheme == 'https'
+      if @skip_ssl_validation
+        session.verify_mode = OpenSSL::SSL::VERIFY_NONE
+      end
       session.start do |conn|
         conn.read_timeout = @timeout
         yield conn

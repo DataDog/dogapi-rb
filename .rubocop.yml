@@ -14,7 +14,7 @@ Metrics/LineLength:
 Metrics/ModuleLength:
   Max: 200
 
-# Do not count keyword arguments towards the argument limit
+# Our Client constructor has 8 arguments
 Metrics/ParameterLists:
   Enabled: false
 

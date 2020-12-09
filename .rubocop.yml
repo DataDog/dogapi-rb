@@ -14,4 +14,8 @@ Metrics/LineLength:
 Metrics/ModuleLength:
   Max: 200
 
+# Do not count keyword arguments towards the argument limit
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
 inherit_from: .rubocop_todo.yml

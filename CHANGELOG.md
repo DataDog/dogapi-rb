@@ -1,5 +1,9 @@
 # Changes
 
+## 1.44.0 / 2020-12-10
+
+* [Added] Allow skipping SSL verification. See [#246](https://github.com/DataDog/dogapi-rb/pull/246).
+
 ## 1.43.0 / 2020-12-07
 
 * [Fixed] find_localhost: Try both `hostname` and `hostname -f` before raising. See [#242](https://github.com/DataDog/dogapi-rb/pull/242).

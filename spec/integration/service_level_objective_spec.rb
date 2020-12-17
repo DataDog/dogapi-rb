@@ -29,6 +29,12 @@ describe Dogapi::Client do
                     :put, "/slo/#{SLO_ID}", 'type' => SLO_TYPE, 'name' => SLO_NAME
   end
 
+  describe '#get_all_service_level_objectives' do
+    it_behaves_like 'an api method',
+                    :get_all_service_level_objectives, [],
+                    :get, '/slo'
+  end
+
   describe '#get_service_level_objective' do
     it_behaves_like 'an api method',
                     :get_service_level_objective, [SLO_ID],

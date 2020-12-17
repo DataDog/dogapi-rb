@@ -61,6 +61,10 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/#{slo_id}", nil, nil, false)
       end
 
+      def get_all_service_level_objectives
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/slo", {}, nil, false)
+      end
+
       def search_service_level_objective(slo_ids, query, offset, limit)
         params = {}
         params[:offset] = offset unless offset.nil?

@@ -693,6 +693,10 @@ module Dogapi
       @service_level_objective_svc.get_service_level_objective(slo_id)
     end
 
+    def get_all_service_level_objectives
+      @service_level_objective_svc.get_all_service_level_objectives
+    end
+
     def get_service_level_objective_history(slo_id, from_ts, to_ts)
       @service_level_objective_svc.get_service_level_objective_history(slo_id, from_ts, to_ts)
     end

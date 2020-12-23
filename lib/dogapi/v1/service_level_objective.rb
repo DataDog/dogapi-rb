@@ -5,7 +5,6 @@ module Dogapi
 
     # Implements Service Level Objectives endpoints
     class ServiceLevelObjectiveService < Dogapi::APIService
-
       API_VERSION = 'v1'
 
       def create_service_level_objective(type, slo_name, thresholds, options = {})

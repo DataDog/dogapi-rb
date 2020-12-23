@@ -108,6 +108,8 @@ module Dogapi
       @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
                                                                                   timeout, @datadog_host, skip_ssl_validation)
+      @slo_correction_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
+                                                                                  timeout, @datadog_host, skip_ssl_validation)
 
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host, skip_ssl_validation)
@@ -715,6 +717,30 @@ module Dogapi
 
     def delete_timeframes_service_level_objective(ops)
       @service_level_objective_svc.delete_timeframes_service_level_objective(ops)
+    end
+
+    #
+    # SLO CORRECTIONS
+    #
+
+    def create_slo_correction(slo_id, timezone, category, options = {})
+      @slo_correction_svc.create_slo_correction(slo_id, timezone, category, options)
+    end
+
+    def update_slo_correction(slo_correction_id, options = {})
+      @slo_correction_svc.update_slo_correction(slo_correction_id, options)
+    end
+
+    def get_slo_correction(slo_correction_id)
+      @slo_correction_svc.get_slo_correction(slo_correction_id)
+    end
+
+    def get_all_slo_corrections
+      @slo_correction_svc.get_all_slo_corrections
+    end
+
+    def delete_slo_correction(slo_correction_id)
+      @slo_correction_svc.delete_slo_correction(slo_correction_id)
     end
 
     #

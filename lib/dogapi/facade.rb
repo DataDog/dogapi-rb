@@ -108,7 +108,7 @@ module Dogapi
       @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
                                                                                   timeout, @datadog_host, skip_ssl_validation)
-      @slo_correction_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
+      @slo_correction_svc = Dogapi::V1::SLOCorrectionService.new(@api_key, @application_key, silent,
                                                                                   timeout, @datadog_host, skip_ssl_validation)
 
       # Support for Dashboard List API v2.

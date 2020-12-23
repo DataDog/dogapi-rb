@@ -11,30 +11,6 @@ module Dogapi
         request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/#{slo_correction_id}", nil, nil, false)
       end
 
-      # Get an SLO correction object for a given SLO correction id.
-      #
-      # URL:
-      #     GET /api/v1/slo/correction/{slo_correction_id}
-      #
-      # Response:
-      #     {
-      #         "data": {
-      #             "type": "correction",
-      #             "id": "<public_id>",
-      #             "attributes": {
-      #                 "slo_id": <slo_id>,
-      #                 "creator": {
-      #                     "data": {
-      #                         "type": "users",
-      #                         "id": "<uuid>",
-      #                         "attributes": {
-      #                             "uuid": "<uuid>"
-      #                         }
-      #                     }
-      #                 }
-      #             }
-      #         }
-      #     }
       def get_slo_correction(slo_correction_id)
         request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/correction/#{slo_correction_id}", nil, nil, false)
       end

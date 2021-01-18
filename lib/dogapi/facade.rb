@@ -108,6 +108,7 @@ module Dogapi
       @gcp_integration_svc = Dogapi::V1::GcpIntegrationService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
       @service_level_objective_svc = Dogapi::V1::ServiceLevelObjectiveService.new(@api_key, @application_key, silent,
                                                                                   timeout, @datadog_host, skip_ssl_validation)
+      @logs_pipeline_svc = Dogapi::V1::LogsPipelineService.new(@api_key, @application_key, silent, timeout, @datadog_host, skip_ssl_validation)
 
       # Support for Dashboard List API v2.
       @v2 = Dogapi::ClientV2.new(@api_key, @application_key, true, true, @datadog_host, skip_ssl_validation)
@@ -715,6 +716,30 @@ module Dogapi
 
     def delete_timeframes_service_level_objective(ops)
       @service_level_objective_svc.delete_timeframes_service_level_objective(ops)
+    end
+
+    #
+    # LOGS PIPELINES
+    #
+
+    def create_logs_pipeline(name, filter, options = {})
+      @logs_pipeline_svc.create_logs_pipeline(name, filter, options)
+    end
+
+    def get_logs_pipeline(pipeline_id)
+      @logs_pipeline_svc.get_logs_pipeline(pipeline_id)
+    end
+
+    def get_all_logs_pipelines
+      @logs_pipeline_svc.get_all_logs_pipelines
+    end
+
+    def update_logs_pipeline(pipeline_id, name, filter, options = {})
+      @logs_pipeline_svc.update_logs_pipeline(pipeline_id, name, filter, options)
+    end
+
+    def delete_logs_pipeline(pipeline_id)
+      @logs_pipeline_svc.delete_logs_pipeline(pipeline_id)
     end
 
     #

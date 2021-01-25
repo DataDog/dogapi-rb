@@ -28,10 +28,10 @@ module Capistrano
       @cap_version
     end
 
-    def self.submit(api_key, use_getlogin=true)
+    def self.submit(api_key, use_getlogin=true, endpoint=nil)
       begin
         if api_key
-          dog = Dogapi::Client.new(api_key)
+          dog = Dogapi::Client.new(api_key, nil, nil, nil, true, nil, endpoint, false)
           reporter.report(use_getlogin).each do |event, hosts|
             if hosts.size > 0
               hosts.each do |host|

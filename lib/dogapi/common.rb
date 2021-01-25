@@ -183,7 +183,7 @@ module Dogapi
     end
 
     def handle_response(resp)
-      if resp.code == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?
+      if resp.code.to_i == 204 || resp.body == '' || resp.body == 'null' || resp.body.nil?
         return resp.code, {}
       end
       begin
@@ -198,7 +198,7 @@ module Dogapi
     def handle_redirect(conn, req, resp, retries=10)
       req.uri = URI.parse(resp.header['location'])
       new_response = conn.request(req)
-      if retries > 1 && new_response.code / 100 == 3
+      if retries > 1 && new_response.code.to_i / 100 == 3
         new_response = handle_redirect(conn, req, new_response, retries - 1)
       end
       new_response

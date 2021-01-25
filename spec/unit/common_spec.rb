@@ -182,21 +182,21 @@ describe Dogapi::APIService do
     context 'when receiving a correct reponse with valid json' do
       it 'parses it and return code and parsed body' do
         dog = dogapi_service
-        resp = FakeResponse.new 202, '{"test2": "test3"}'
-        expect(dog.handle_response(resp)).to eq([202, { 'test2' => 'test3' }])
+        resp = FakeResponse.new '202', '{"test2": "test3"}'
+        expect(dog.handle_response(resp)).to eq(['202', { 'test2' => 'test3' }])
       end
     end
     context 'when receiving a response with invalid json' do
       it 'raises an error' do
         dog = dogapi_service
-        resp = FakeResponse.new 202, "{'test2': }"
+        resp = FakeResponse.new '202', "{'test2': }"
         expect { dog.handle_response(resp) }.to raise_error(RuntimeError, "Invalid JSON Response: {'test2': }")
       end
     end
     context 'when receiving a non json response' do
       it 'raises an error indicating the response Content-Type' do
         dog = dogapi_service
-        resp = FakeResponse.new 202, '<html><body><h1>403 Forbidden</h1>', 'text/html'
+        resp = FakeResponse.new '202', '<html><body><h1>403 Forbidden</h1>', 'text/html'
         msg = 'Response Content-Type is not application/json but is text/html: <html><body><h1>403 Forbidden</h1>'
         expect { dog.handle_response(resp) }.to raise_error(RuntimeError, msg)
       end
@@ -204,12 +204,12 @@ describe Dogapi::APIService do
     context 'when receiving a bad response' do
       it 'returns the error code and an empty body' do
         dog = dogapi_service
-        resp = FakeResponse.new 204, ''
-        expect(dog.handle_response(resp)).to eq([204, {}])
-        resp = FakeResponse.new 202, nil
-        expect(dog.handle_response(resp)).to eq([202, {}])
-        resp = FakeResponse.new 202, 'null'
-        expect(dog.handle_response(resp)).to eq([202, {}])
+        resp = FakeResponse.new '204', ''
+        expect(dog.handle_response(resp)).to eq(['204', {}])
+        resp = FakeResponse.new '202', nil
+        expect(dog.handle_response(resp)).to eq(['202', {}])
+        resp = FakeResponse.new '202', 'null'
+        expect(dog.handle_response(resp)).to eq(['202', {}])
       end
     end
   end

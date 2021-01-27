@@ -1,5 +1,12 @@
 # Changes
 
+## 1.45.0 / 2021-01-27
+
+* [Added] Read `datadog_host` cap variable for specifying Datadog API endpoint. See [#255](https://github.com/DataDog/dogapi-rb/pull/255).
+* [Added] Added support for logs pipelines CRUD methods. See [#252](https://github.com/DataDog/dogapi-rb/pull/252). Thanks [hi-artem](https://github.com/hi-artem).
+* [Fixed] Properly handle string response code. See [#254](https://github.com/DataDog/dogapi-rb/pull/254).
+* [Fixed] Remove circular dependency. See [#253](https://github.com/DataDog/dogapi-rb/pull/253).
+
 ## 1.44.0 / 2020-12-10
 
 * [Added] Allow skipping SSL verification. See [#246](https://github.com/DataDog/dogapi-rb/pull/246).

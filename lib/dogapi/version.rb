@@ -3,5 +3,5 @@
 # Copyright 2011-Present Datadog, Inc.
 
 module Dogapi
-  VERSION = '1.44.1.dev'
+  VERSION = '1.45.0'
 end

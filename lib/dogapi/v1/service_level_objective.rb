@@ -73,7 +73,7 @@ module Dogapi
           params[:query] = query
         end
 
-        request(Net::HTTP::Get, "/api/#{API_VERSION}/slo/", params, nil, false)
+        request(Net::HTTP::Get, "/api/#{API_VERSION}/slo", params, nil, false)
       end
 
       def delete_service_level_objective(slo_id)

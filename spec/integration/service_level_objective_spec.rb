@@ -50,7 +50,7 @@ describe Dogapi::Client do
   describe '#search_service_level_objective' do
     it_behaves_like 'an api method with optional params',
                     :search_service_level_objective, [[SLO_ID]],
-                    :get, '/slo/', 'ids' => SLO_ID
+                    :get, '/slo', 'ids' => SLO_ID
   end
 
   describe '#delete_service_level_objective' do

@@ -215,16 +215,7 @@ module Dogapi
 
   def Dogapi.find_localhost
     return @@hostname if @@hostname
-    out, status = Open3.capture2('hostname', '-f', err: File::NULL)
-    unless status.exitstatus.zero?
-      begin
-        out = Addrinfo.getaddrinfo(Socket.gethostname, nil, nil, nil, nil, Socket::AI_CANONNAME).first.canonname
-      rescue SocketError
-        out, status = Open3.capture2('hostname', err: File::NULL)
-        raise SystemCallError, 'Both `hostname` and `hostname -f` failed.' unless status.exitstatus.zero?
-      end
-    end
-    @@hostname = out.strip
+    @@hostname = Socket.gethostname
   end
 
   def Dogapi.find_proxy

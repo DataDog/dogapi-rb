@@ -3,8 +3,8 @@
 # and another team can own the rest of the directory.
 
 # All your base
-*                       @DataDog/integrations-tools-and-libraries
+*                       @DataDog/api-clients
 
 # Documentation
-*.md                    @DataDog/baklava @DataDog/integrations-tools-and-libraries
-LICENSE                 @DataDog/baklava @DataDog/integrations-tools-and-libraries
+*.md                    @DataDog/documentation @DataDog/api-clients
+LICENSE                 @DataDog/documentation @DataDog/api-clients

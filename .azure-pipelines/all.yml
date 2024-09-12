@@ -32,7 +32,7 @@ resources:
 jobs:
 - job: UnitTests
   pool:
-    vmImage: "Ubuntu-16.04"
+    vmImage: "Ubuntu-22.04"
   container:
     image: ruby:$(RUBY_VERSION)
     options: >-
@@ -72,7 +72,7 @@ jobs:
         DD_TRACE_ANALYTICS_ENABLED: "true"
 - job: TestRuby19
   pool:
-    vmImage: "Ubuntu-16.04"
+    vmImage: "Ubuntu-22.04"
   steps:
     # Until the `container` AZP resource supports being root in a container https://github.com/microsoft/azure-pipelines-agent/issues/2619 we need this long single line approach
     # By default AZP clones the repo into a folder called `s` - https://docs.microsoft.com/en-us/azure/devops/pipelines/repos/pipeline-options-for-git?view=azure-devops#checkout-path

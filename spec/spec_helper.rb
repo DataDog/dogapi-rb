@@ -13,9 +13,10 @@ end
 webmock_allow = []
 
 begin
-  require 'ddtrace'
+  require 'datadog'
+  require 'datadog/ci'
   Datadog.configure do |c|
-    c.use :rspec, service_name: 'dogapi-rb'
+    c.ci.instrument :rspec, service_name: 'dogapi-rb'
   end
   webmock_allow << "#{Datadog::Transport::HTTP.default_hostname}:#{Datadog::Transport::HTTP.default_port}"
 rescue LoadError

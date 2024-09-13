@@ -27,7 +27,7 @@ Install [bundler](https://bundler.io/) and setup your RubyGems credentials:
 ---
 :rubygems_api_key: $RUBYGEMS_APIKEY
 ```
-1. Install [datadog_checks_dev](https://datadog-checks-base.readthedocs.io/en/latest/datadog_checks_dev.cli.html#installation) using Python 3.
+1. Install [datadog_checks_dev](https://datadoghq.dev/integrations-core/setup/#ddev) using Python 3.
 
 ### Update Changelog
 #### Commands

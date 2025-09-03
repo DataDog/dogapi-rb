@@ -6,5 +6,5 @@
 *                       @DataDog/web-frameworks
 
 # Documentation
-*.md                    @DataDog/documentation @DataDog/web-frameworks
-LICENSE                 @DataDog/documentation @DataDog/web-frameworks
+*.md                    @DataDog/web-frameworks
+LICENSE                 @DataDog/web-frameworks

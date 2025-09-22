@@ -59,6 +59,11 @@ to take advantage of automatic tagging with the host's tags.
 If you want to attach events and points to a specific device
 on a host, simply specify the device when calling emit functions.
 
+Note that auto-host detection can create an excessive number of custom metrics.
+For example, in a Kubernetes CronJob the pod's hostname can be unique
+everytime it runs.  To prevent the creation of excessive number of custom metrics,
+be sure that the "host" is set appropriately.
+
 == Configure the Datadog API Url
 
 

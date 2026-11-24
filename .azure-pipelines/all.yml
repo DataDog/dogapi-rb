@@ -12,7 +12,7 @@ pr:
 resources:
   containers:
   - container: datadog-agent
-    image: datadog/agent:7
+    image: registry.datadoghq.com/agent:7
     options: --health-cmd="exit 0" --health-interval=1s
     ports:
     - 8125:8125
